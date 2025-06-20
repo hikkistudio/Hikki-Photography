@@ -1,11 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Hikki Photography</title>
     <meta charset="utf-8">
-  </head>
-  <body>
-    <h1>Welcome to Hikki's Photography Website!</h1>
-    <p>More beautiful works coming soon...</p>
-  </body>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+        section {
+            padding: 100px 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#booking">Booking</a>
+    </nav>
+
+    <section id="home">
+        <h1>Hikki Photography</h1>
+        <img src="images/yourphoto1.jpg" alt="Hero Photo">
+    </section>
+
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <img src="images/yourphoto2.jpg" alt="Photo 2">
+        <img src="images/yourphoto3.jpg" alt="Photo 3">
+    </section>
+
+    <section id="about">
+        <h2>About</h2>
+        <p style="max-width: 600px; margin: 0 auto; text-align: center;">
+            I am a passionate photographer who loves capturing moments. 
+            Specializing in portrait and pet photography.
+        </p>
+    </section>
+
+    <section id="booking">
+        <h2>Booking</h2>
+        <p style="text-align: center;">
+            <iframe src="https://calendly.com/你的Calendly-link" width="320" height="500" frameborder="0"></iframe>
+        </p>
+    </section>
+
+</body>
 </html>
