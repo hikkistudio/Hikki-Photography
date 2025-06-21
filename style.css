@@ -34,8 +34,9 @@ html, body {
 }
 
 .logo-section .logo {
-    width: 30vw;      /* 改細啲 */
-    max-width: 400px; /* 最大 400px */
+    width: auto;
+    max-width: 250px;  /* fix size，唔會大過 250px */
+    height: auto;
 }
 
 /* 右下角 Menu */
@@ -65,4 +66,3 @@ html, body {
     padding: 6px;
     border-radius: 6px;
 }
-
