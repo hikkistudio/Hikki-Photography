@@ -1,4 +1,4 @@
-//* Reset */
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +11,7 @@ html, body {
     background-color: black;
 }
 
-/* 背景相 */
+/* 背景相用 background-image，唔會變形，唔會太 zoom-in */
 .background {
     position: fixed;
     top: 0;
@@ -19,7 +19,7 @@ html, body {
     width: 100%;
     height: 100%;
     background-image: url("Background.JPG");
-    background-size: cover;
+    background-size: contain;  /* 保持比例，唔會 zoom-in */
     background-position: center;
     background-repeat: no-repeat;
     z-index: -1;
@@ -34,8 +34,8 @@ html, body {
 }
 
 .logo-section .logo {
-    max-width: 800px;
-    width: 100%;
+    width: 80vw;        /* Responsive 大 logo，螢幕 80% */
+    max-width: 1000px;  /* 最大可以到 1000px */
 }
 
 /* 右下角 Menu */
@@ -52,15 +52,4 @@ html, body {
 }
 
 .menu a {
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.menu a:hover {
-    background-color: grey;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-}
+    text-deco
