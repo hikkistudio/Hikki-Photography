@@ -35,7 +35,7 @@ html, body {
 
 .logo-section .logo {
     width: 60vw;      /* 改細啲 */
-    max-width: 800px; /* 最大 800px */
+    max-width: 600px; /* 最大 800px */
 }
 
 /* 右下角 Menu */
