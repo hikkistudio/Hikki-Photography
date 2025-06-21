@@ -4,31 +4,41 @@ body {
     background-color: black;
     color: white;
     text-align: center;
+    min-height: 100vh; /* Minimum full height */
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
     background-color: black;
-    overflow: hidden;
     display: flex;
     justify-content: center;
+    gap: 20px; /* Spacing between buttons */
+    padding: 14px 0;
+    position: sticky; /* Stick to the top */
+    top: 0;
 }
 
 .navbar a {
     color: white;
-    padding: 14px 20px;
+    padding: 8px 12px;
     text-decoration: none;
+    font-size: 18px;
 }
 
 .navbar a:hover {
     background-color: grey;
+    border-radius: 4px;
 }
 
 .content {
-    padding: 60px 20px;
+    padding: 40px 20px;
+    flex: 1; /* Push footer to bottom */
 }
 
 .main-image {
-    width: 300px;
-    max-width: 80%;
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
     margin-bottom: 20px;
 }
