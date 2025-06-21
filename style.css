@@ -11,7 +11,7 @@ html, body {
     background-color: black;
 }
 
-/* 背景相用 background-image，唔會變形，唔會太 zoom-in */
+/* 背景相 */
 .background {
     position: fixed;
     top: 0;
@@ -19,8 +19,8 @@ html, body {
     width: 100%;
     height: 100%;
     background-image: url("Background.JPG");
-    background-size: contain;  /* 保持比例，唔會 zoom-in */
-    background-position: center;
+    background-size: cover; /* 鋪滿成個畫面 */
+    background-position: center center; /* 置中 */
     background-repeat: no-repeat;
     z-index: -1;
 }
@@ -34,22 +34,10 @@ html, body {
 }
 
 .logo-section .logo {
-    width: 80vw;        /* Responsive 大 logo，螢幕 80% */
-    max-width: 1000px;  /* 最大可以到 1000px */
+    width: 90vw;        /* 佔螢幕 90% */
+    max-width: 1200px;  /* 最大到 1200px，大 Logo */
 }
 
 /* 右下角 Menu */
 .menu {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.menu a {
-    text-deco
+    position
