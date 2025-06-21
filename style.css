@@ -5,10 +5,9 @@
     box-sizing: border-box;
 }
 
-body, html {
+html, body {
     height: 100%;
     font-family: Arial, sans-serif;
-    color: white;
     background-color: black;
 }
 
@@ -23,7 +22,7 @@ body, html {
     z-index: -1;
 }
 
-/* 中間 logo 同文字 */
+/* 中間 Logo 同文字 */
 .logo-section {
     position: absolute;
     top: 50%;
@@ -38,9 +37,10 @@ body, html {
 }
 
 .logo-section .text {
-    color: black;
     background-color: white;
-    padding: 10px;
+    color: black;
+    display: inline-block;
+    padding: 10px 20px;
     margin-top: 10px;
     font-size: 14px;
 }
@@ -50,13 +50,12 @@ body, html {
     margin-top: 5px;
 }
 
-/* 右下角 menu */
+/* 右下角 Menu */
 .menu {
     position: fixed;
     bottom: 20px;
     right: 20px;
     background-color: rgba(255, 255, 255, 0.8);
-    color: black;
     padding: 10px 20px;
     border-radius: 8px;
     display: flex;
