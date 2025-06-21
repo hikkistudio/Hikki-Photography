@@ -11,7 +11,7 @@ html, body {
     background-color: black;
 }
 
-/* 背景相 */
+/* 背景 */
 .background {
     position: fixed;
     top: 0;
@@ -19,8 +19,8 @@ html, body {
     width: 100%;
     height: 100%;
     background-image: url("Background.JPG");
-    background-size: cover; /* 鋪滿成個畫面 */
-    background-position: center center; /* 置中 */
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
     z-index: -1;
 }
@@ -34,10 +34,34 @@ html, body {
 }
 
 .logo-section .logo {
-    width: 90vw;        /* 佔螢幕 90% */
-    max-width: 1200px;  /* 最大到 1200px，大 Logo */
+    width: 80vw;
+    max-width: 1200px;
 }
 
 /* 右下角 Menu */
 .menu {
-    position
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 12px 24px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.menu a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu a:hover {
+    background-color: grey;
+    color: white;
+    padding: 6px;
+    border-radius: 6px;
+}
