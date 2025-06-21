@@ -18,7 +18,7 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("Background.JPG");
+    background-image: url("Background.JPG"); /* 確認 maple 相叫咁 */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -34,8 +34,8 @@ html, body {
 }
 
 .logo-section .logo {
-    width: 80vw;
-    max-width: 1200px;
+    width: 60vw;      /* 改細啲 */
+    max-width: 800px; /* 最大 800px */
 }
 
 /* 右下角 Menu */
