@@ -1,45 +1,79 @@
-body {
+/* 令到頁面 reset margin 同 box-sizing */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
     font-family: Arial, sans-serif;
-    background-color: black;
     color: white;
+    background-color: black;
+}
+
+/* 背景相 */
+.background img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* 中間 logo 同文字 */
+.logo-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    min-height: 100vh; /* Minimum full height */
+}
+
+.logo-section .logo {
+    max-width: 400px;
+    width: 100%;
+}
+
+.logo-section .text {
+    color: black;
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.logo-section .location {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* 右下角 menu */
+.menu {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    padding: 10px 20px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
-.navbar {
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Spacing between buttons */
-    padding: 14px 0;
-    position: sticky; /* Stick to the top */
-    top: 0;
-}
-
-.navbar a {
-    color: white;
-    padding: 8px 12px;
+.menu a {
     text-decoration: none;
-    font-size: 18px;
+    color: black;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.navbar a:hover {
+.menu a:hover {
     background-color: grey;
-    border-radius: 4px;
-}
-
-.content {
-    padding: 40px 20px;
-    flex: 1; /* Push footer to bottom */
-}
-
-.main-image {
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
 }
