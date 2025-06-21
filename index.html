@@ -1,72 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-HK">
 <head>
-    <title>Hikki Photography</title>
-    <meta charset="utf-8">
-    <style>
-        body {
-            margin: 0;
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hikki Photography</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
 
-        nav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            padding: 20px;
-            z-index: 100;
-        }
+    .section-title {
+      margin-bottom: 30px;
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 16px;
-        }
+    .section-title img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
 
-        section {
-            padding: 100px 20px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-        }
-
-        h1, h2 {
-            text-align: center;
-        }
-    </style>
+    /* 你可以再加多啲 CSS，配合你個網站 style */
+  </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#HOME">HOME</a>
-        <a href="#ABOUT US">ABOUT US</a>
-        <a href="#WORK">WORK</a>
-        <a href="#CONTACT US">CONTACT US</a>
-    </nav>
+  <section id="WORK">
+    <h2 class="section-title">
+      <img src="Logo Negative.webp" alt="Hikki Photography Logo">
+    </h2>
 
-    <section id="home">
-        <h1>Hikki Photography</h1>
-        <img src="IMG_2986.JPG" alt="Hero Photo">
-    </section>
-
-    <section id="portfolio">
-        <h2>Portfolio</h2>
-        <img src="images/yourphoto2.jpg" alt="Photo 2">
-        <img src="images/yourphoto3.jpg" alt="Photo 3">
-    </section>
-
-    <section id="about">
-        <h2>About</h2>
-    
-    </section>
-
+    <!-- 呢度可以放返你啲 WORK 內容 -->
+    <div class="work-gallery">
+      <!-- example content -->
+      <p>呢度係你啲相集 content.</p>
+    </div>
+  </section>
 
 </body>
 </html>
