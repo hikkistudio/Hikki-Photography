@@ -51,20 +51,23 @@
     .gallery-wrapper {
       max-width: 1200px;
       margin: 0 auto 20px;
-      padding: 100px 10px 10px; /* Adjust top padding based on header */
+      padding: 100px 10px 10px;
       box-sizing: border-box;
-      scroll-margin-top: 100px; /* Helps offset for anchor link */
+      scroll-margin-top: 100px;
     }
 
     .gallery {
-      column-count: 4;
-      column-gap: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
     }
 
     .gallery img {
-      width: 100%;
+      width: calc(25% - 10px);
+      min-width: 200px;
+      max-width: 100%;
       display: block;
-      margin-bottom: 10px;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
@@ -103,19 +106,15 @@
       user-select: none;
     }
 
-    @media (max-width: 1024px) {
-      .gallery {
-        column-count: 3;
-      }
-    }
     @media (max-width: 768px) {
-      .gallery {
-        column-count: 2;
+      .gallery img {
+        width: calc(50% - 10px);
       }
     }
+
     @media (max-width: 480px) {
-      .gallery {
-        column-count: 1;
+      .gallery img {
+        width: 100%;
       }
     }
   </style>
@@ -125,7 +124,7 @@
   <!-- Header -->
   <div class="header-bar">
     <div class="header-title">Of time, souls and cities.</div>
-    <a href="index.html">About</a>
+    <a href="testing5 with wording.html">About</a>
     <a href="#gallery">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -133,10 +132,14 @@
   <!-- Gallery Section -->
   <div class="gallery-wrapper" id="gallery">
     <div class="gallery">
-      <img src="demo1.jpg" alt="Photo 1">
-      <img src="demo2.jpg" alt="Photo 2">
-      <img src="demo3.jpg" alt="Photo 3">
-      <img src="demo5.jpg" alt="Photo 4">
+      <img src="demo1.jpeg" alt="Photo 1">
+      <img src="demo2.jpeg" alt="Photo 2">
+      <img src="demo3.jpeg" alt="Photo 3">
+      <img src="demo4.jpg" alt="Photo 4">
+      <img src="demo6.jpg" alt="Photo 5">
+      <img src="demo7.jpg" alt="Photo 6">
+      <img src="demo8.jpg" alt="Photo 7">
+      <img src="demo9.jpg" alt="Photo 8">
     </div>
   </div>
 
