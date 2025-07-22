@@ -166,20 +166,16 @@
       flex-wrap: wrap;
       z-index: 5;
     }
- .img4 {
-  position: fixed;
-  bottom: 5vh;
-  right: 5vw; /* ✅ Pushes it to the right side cleanly */
-  z-index: 10;
-  visibility: hidden;
-  opacity: 0;
-
-  max-width: 600px;
-  max-height: 80vh;
-  height: auto;
-  width: auto;
-}
-
+    .images img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 5vh;
+      display: block;
+      background-color: transparent;
+      transition: transform 0.4s ease, z-index 0.4s ease;
+      position: relative;
+    }
     .img1, .img2, .img3 { z-index: 3; }
     .img3 { z-index: 5; }
     .slide-text {
@@ -202,17 +198,20 @@
       font-weight: normal;
       margin-top: 10px;
     }
-   .img4 {
-   position: fixed;
-   bottom: 5vh;
-   left: 50%;
-   transform: translateX(-50%);
-   z-index: 10;
-   visibility: hidden;
-   opacity: 0;
-   max-width: 100%;
-   height: auto;
-   }
+    .img4 {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vw; /* ✅ Pushes it to the right side cleanly */
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+
+  max-width: 600px;
+  max-height: 80vh;
+  height: auto;
+  width: auto;
+}
+
     .trigger-img4 {
       height: 1px;
       margin-top: 1200px;
