@@ -166,17 +166,16 @@
       flex-wrap: wrap;
       z-index: 5;
     }
-    .img4 {
+ .img4 {
   position: fixed;
   bottom: 5vh;
-  left: 100%;
-  transform: translateX(-50%);
+  right: 5vw; /* ✅ Pushes it to the right side cleanly */
   z-index: 10;
   visibility: hidden;
   opacity: 0;
 
-  max-width: 600px;  /* Limit width to 90% of viewport width */
-  max-height: 80vh; /* Limit height to 90% of viewport height */
+  max-width: 600px;
+  max-height: 80vh;
   height: auto;
   width: auto;
 }
