@@ -29,7 +29,6 @@
       align-items: center;
       padding: 0 5vw;
       box-sizing: border-box;
-      flex-wrap: wrap;
     }
     .header-bar a {
       font-family: "Courier New", monospace;
@@ -57,37 +56,38 @@
       position: sticky;
       top: 150px;
       display: flex;
-      gap: 2vw;
-      justify-content: center;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
       width: 90vw;
       margin: 100px auto 0;
+      padding: 0 5vw;
       z-index: 10;
-      transition: transform 1s ease, gap 1s ease;
       flex-wrap: wrap;
     }
     .logo-overlay-text {
-      position: absolute;
-      top: 12;
-      left: 0;
-      width: 90%;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
       font-family: "Courier New", monospace;
       color: #000;
       font-size: 1rem;
       line-height: 1.6;
       text-align: left;
-      padding: 5vw;
       z-index: 100;
-      background: rgba(255, 255, 255, 0);
-      box-sizing: border-box;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
+      pointer-events: auto;
     }
     .scroll-down-btn {
       cursor: pointer;
       font-size: 2rem;
-      text-align: center;
-      margin-top: 1rem;
+      font-family: "Courier New", monospace;
+      text-align: left;
+      padding-left: 0;
+      margin: 20px 0 0 0;
+    }
+    .not-imitate {
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
     }
     .block {
       position: relative;
@@ -160,14 +160,17 @@
       font-size: 4vw;
       font-weight: normal;
       margin-top: 10px;
+      font-family: "Courier New", monospace;
     }
     .img4 {
       position: fixed;
       width: 60vw;
-      max-width: 400px;
-      height: auto;
-      bottom: -400px;
-      left: 5vw;
+      max-width: 600px;
+      max-height: 60vh;
+      object-fit: contain;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 10;
       visibility: hidden;
       opacity: 0;
@@ -228,7 +231,6 @@
       .img4 {
         width: 30vw;
         max-width: 450px;
-        left: calc(50% + 120px);
       }
     }
   </style>
@@ -244,15 +246,10 @@
   <div class="logo-wrapper">
     <div class="logo">
       <div class="logo-overlay-text">
-        <p>We stand against the mass production of images that plagues today’s photography industry—
-        the flood of magic moments, AI-generated images and the kitschy filters.</p>
-        <p>Photography should convey emotions, not imitate perfection.</p>
-        <p>We strive to capture the most beautiful side of who you are—
-        not what you pretend to be,
-        not a stiff smile for someone else's story,
-        but the quiet light that belongs only to you.</p>
-        <p>We offer professional photography that is honest, distinct, and deeply human.</p>
-        <p>All job invitations are welcome.</p>
+        <p>We stand against the mass production of images that plagues today’s photography industry—the flood of magic moments, AI-generated images and the kitschy filters.</p>
+        <p>Photography should convey emotions, <span class="not-imitate">not imitate perfection.</span></p>
+        <p>We strive to capture the most beautiful side of who you are—not what you pretend to be, not a stiff smile for someone else's story, but the quiet light that belongs only to you.</p>
+        <p>We offer professional photography that is honest, distinct, and deeply human.<br>Job invitations are welcome.</p>
         <p class="scroll-down-btn">▼</p>
       </div>
       <div class="block bar1"><div class="arm"></div></div>
@@ -263,7 +260,6 @@
     </div>
   </div>
 
-  <!-- Scroll Target -->
   <div id="scroll-target"></div>
 
   <div class="images" id="gallery">
@@ -285,65 +281,39 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animations...
-    gsap.timeline({scrollTrigger:{trigger:".images",start:"top 80%",end:"top 20%",scrub:true}})
-      .to(".big-heading", {y:"0%", ease:"power4.out"})
-      .to(".small-heading", {y:"0%", ease:"power4.out"},"-=0.5")
-      .to(".underline",{y:"0%", ease:"power4.out"},"-=0.5");
-
-    const masterTL = gsap.timeline({scrollTrigger:{trigger:".logo-wrapper",start:"top top",end:"200% top",scrub:true,pin:true}});
-    masterTL.to({}, {}, "+=0.5")
-      .to(".cut1",{opacity:1, duration:0.3})
-      .to(".cut2",{opacity:1, duration:0.3})
-      .to(".logo-overlay-text",{opacity:0, duration:0.3},"+=0.2")
-      .to(".bar1",{x:"+=160",duration:0.4},"+=0.1")
-      .to(".bar5",{x:"-=160",duration:0.4},"<")
-      .to(".bar2",{x:"+=160",duration:0.4},"+=0.2")
-      .to(".bar4",{x:"-=160",duration:0.4},"<")
-      .to(".logo",{gap:0, duration:0.5})
-      .to([".cut1",".cut2"],{opacity:0, duration:0.5})
-      .to(".logo",{scale:6, transformOrigin:"center", duration:0.2})
-      .to("body",{backgroundColor:"#000", duration:0.2},"<");
-
-    gsap.timeline({scrollTrigger:{trigger:".images",start:"top bottom",end:"top center",scrub:true}})
-      .to(".logo",{opacity:0, scale:0.7});
-
-    gsap.to(".images img",{scrollTrigger:{trigger:".logo-wrapper",start:"top 80%",end:"top 30%",scrub:true}, y:0, stagger:0.2});
-
-    const imgWidth = window.innerWidth/3;
-    gsap.timeline({scrollTrigger:{trigger:".images",start:"top center",end:"+=600%",scrub:true}})
-      .to(".img1",{x:imgWidth*2, scale:1, zIndex:1})
-      .to(".img2",{x:imgWidth, scale:1, zIndex:2},"<");
-
-    gsap.fromTo(".slide-text", {opacity:0, y:50}, {scrollTrigger:{trigger:".trigger-img4",start:"top center",end:"top top",scrub:true}, opacity:1, y:0, ease:"power2.out"});
-
-    gsap.timeline({scrollTrigger:{trigger:".trigger-img4", start:"top center", end:"top -300%", scrub:true}})
-      .set(".img4",{visibility:"visible"})
-      .to(".img4",{bottom:"20px", opacity:1, duration:3});
-
-    gsap.to(".scroll-words", {scrollTrigger:{trigger:"body", start:"bottom bottom", toggleActions:"play none none reverse"}, opacity:1, y:0, duration:1});
-
-    // Dynamic Header Text
-    const sentences=["Of time, souls and cities.","Know thyself.","静かな光。","10% off for rescued animals.","YYJ > YVR","We don’t shoot for road ragers.","那人却在灯火阑珊处。","You want it darker."];
-    const headerEl=document.getElementById("headerTitle");
-    let lastIndex=-1;
-    function getRandomIndex(exclude){ let idx; do{ idx=Math.floor(Math.random()*sentences.length); } while(idx===exclude); return idx; }
-    function animateHeaderText(){
-      const nextIndex=getRandomIndex(lastIndex);
-      lastIndex=nextIndex;
-      gsap.to(headerEl,{y:-20, opacity:0, duration:0.3, ease:"power1.in", onComplete:()=>{
-        headerEl.textContent=sentences[nextIndex];
-        gsap.set(headerEl,{y:20});
-        gsap.to(headerEl,{y:0, opacity:1, duration:0.4, ease:"power1.out"});
-      }});
-    }
-    setInterval(animateHeaderText,3000);
-
-    // Scroll-down Button Function
-    document.querySelector('.scroll-down-btn').addEventListener('click', function() {
-      const target = document.getElementById('scroll-target');
-      window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+    document.querySelector('.scroll-down-btn').addEventListener('click', () => {
+      document.getElementById('scroll-target').scrollIntoView({ behavior: 'smooth' });
     });
+
+    const sentences = [
+      "Of time, souls and cities.",
+      "Know thyself.",
+      "静かな光。",
+      "10% off for rescued animals.",
+      "YYJ > YVR",
+      "We don’t shoot for road ragers.",
+      "那人却在灯火阑珊处。",
+      "You want it darker."
+    ];
+    const headerEl = document.getElementById("headerTitle");
+    let lastIndex = -1;
+    function getRandomIndex(exclude) {
+      let idx;
+      do { idx = Math.floor(Math.random() * sentences.length); } while (idx === exclude);
+      return idx;
+    }
+    function animateHeaderText() {
+      const nextIndex = getRandomIndex(lastIndex);
+      lastIndex = nextIndex;
+      gsap.to(headerEl, {
+        y: -20, opacity: 0, duration: 0.3, ease: "power1.in", onComplete: () => {
+          headerEl.textContent = sentences[nextIndex];
+          gsap.set(headerEl, { y: 20 });
+          gsap.to(headerEl, { y: 0, opacity: 1, duration: 0.4, ease: "power1.out" });
+        }
+      });
+    }
+    setInterval(animateHeaderText, 3000);
   </script>
 </body>
 </html>
