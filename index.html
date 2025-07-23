@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hikki Studio</title>
+  <title>Hikki</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     :root {
-      --max-content-width: 1600px;
+      --max-width: 1600px;
     }
 
     body {
@@ -69,7 +69,7 @@
       gap: 1.5vw;
       justify-content: center;
       align-items: flex-end;
-      width: min(95%, var(--max-content-width));
+      width: min(95%, var(--max-width));
       height: auto;
       margin: 100px auto 0 auto;
       z-index: 10;
@@ -108,7 +108,7 @@
     }
 
     .gallery-heading {
-      max-width: var(--max-content-width);
+      max-width: var(--max-width);
       margin: 0 auto 100px auto;
       padding: 80px 5vw 40px 5vw;
       display: flex;
@@ -287,11 +287,156 @@
   <section id="contact"></section>
 
   <script>
-    // ScrollTrigger animations preserved as-is
     gsap.registerPlugin(ScrollTrigger);
 
-    // Add your animations here (already in your original code)
-    // ... (same script as you posted, omitted for brevity)
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".images",
+        start: "top 80%",
+        end: "top 20%",
+        scrub: true
+      }
+    })
+    .to(".big-heading", { y: "0%", ease: "power4.out" })
+    .to(".small-heading", { y: "0%", ease: "power4.out" }, "-=0.5")
+    .to(".underline", { y: "0%", ease: "power4.out" }, "-=0.5");
+
+    const masterTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".logo-wrapper",
+        start: "top top",
+        end: "200% top",
+        scrub: true,
+        pin: true
+      }
+    });
+    masterTL
+      .to({}, {}, "+=0.5")
+      .to(".cut1", { opacity: 1, duration: 0.3 })
+      .to(".cut2", { opacity: 1, duration: 0.3 })
+      .to(".bar1", { x: "+=160", duration: 0.4 }, "+=0.1")
+      .to(".bar5", { x: "-=160", duration: 0.4 }, "<")
+      .to(".bar2", { x: "+=160", duration: 0.4 }, "+=0.2")
+      .to(".bar4", { x: "-=160", duration: 0.4 }, "<")
+      .to(".logo", { gap: 0, duration: 0.5 })
+      .to([".cut1", ".cut2"], { opacity: 0, duration: 0.5 })
+      .to(".logo", { scale: 6, transformOrigin: "center", duration: 0.2 })
+      .to("body", { backgroundColor: "#000", duration: 0.2 }, "<");
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".images",
+        start: "top bottom",
+        end: "top center",
+        scrub: true
+      }
+    }).to(".logo", { opacity: 0, scale: 0.7 });
+
+    gsap.to(".images img", {
+      scrollTrigger: {
+        trigger: ".logo-wrapper",
+        start: "top 80%",
+        end: "top 30%",
+        scrub: true
+      },
+      y: 0,
+      stagger: 0.2
+    });
+
+    const imgWidth = window.innerWidth / 3;
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".images",
+        start: "top center",
+        end: "+=600%",
+        scrub: true
+      }
+    })
+    .to(".img1", { x: imgWidth * 2, scale: 1, zIndex: 1 })
+    .to(".img2", { x: imgWidth, scale: 1, zIndex: 2 }, "<");
+
+    gsap.fromTo(".slide-text", 
+      { opacity: 0, y: 50 }, 
+      {
+        scrollTrigger: {
+          trigger: ".trigger-img4",
+          start: "top center",
+          end: "top top",
+          scrub: true
+        },
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+      }
+    );
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".trigger-img4",
+        start: "top center",
+        end: "top -300%",
+        scrub: true
+      }
+    })
+    .set(".img4", { visibility: "visible" })
+    .to(".img4", { bottom: "20px", opacity: 1, duration: 3 });
+
+    gsap.to(".scroll-words", {
+      scrollTrigger: {
+        trigger: "body",
+        start: "bottom bottom",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 1,
+      y: 0,
+      duration: 1
+    });
+
+    const sentences = [
+      "Of time, souls and cities.",
+      "Know thyself.",
+      "静かな光。",
+      "10% off for rescued animals.",
+      "YYJ > YVR",
+      "We don’t shoot for road ragers.",
+      "那人却在灯火阑珊处。",
+      "You want it darker."
+    ];
+
+    const headerEl = document.getElementById("headerTitle");
+    let lastIndex = -1;
+
+    function getRandomIndex(exclude) {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * sentences.length);
+      } while (idx === exclude);
+      return idx;
+    }
+
+    function animateHeaderText() {
+      const nextIndex = getRandomIndex(lastIndex);
+      lastIndex = nextIndex;
+
+      gsap.to(headerEl, {
+        y: -20,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power1.in",
+        onComplete: () => {
+          headerEl.textContent = sentences[nextIndex];
+          gsap.set(headerEl, { y: 20 });
+          gsap.to(headerEl, {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power1.out"
+          });
+        }
+      });
+    }
+
+    setInterval(animateHeaderText, 3000);
   </script>
 </body>
 </html>
