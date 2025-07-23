@@ -183,7 +183,7 @@
 
     .slide-text {
       position: fixed;
-      bottom: 20vh;
+      bottom: 65vh;
       left: 5vw;
       max-width: 90vw;
       color: #fff;
@@ -200,6 +200,16 @@
       font-size: clamp(14px, 2vw, 24px);
       font-weight: normal;
       margin-top: 10px;
+    }
+
+    .slide-underline {
+      height: 4px;           /* Thickness */
+      width: 180px;          /* Length */
+      background: #fff;      /* Color */
+      margin-top: 8px;
+      transform-origin: left;
+      transform: scaleX(0);
+      opacity: 0;
     }
 
     .img4 {
@@ -283,6 +293,7 @@
   <div class="slide-text">
     Emotions,<br />
     <span>not imitate perfection.</span>
+    <div class="slide-underline"></div>
   </div>
 
   <section id="about"></section>
@@ -291,6 +302,37 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
+    gsap.fromTo(".slide-text", 
+      { opacity: 0, y: 50 }, 
+      {
+        scrollTrigger: {
+          trigger: ".trigger-img4",
+          start: "top center",
+          end: "top top",
+          scrub: true
+        },
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+      }
+    );
+
+    gsap.fromTo(".slide-underline",
+      { scaleX: 0, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: ".trigger-img4",
+          start: "top center",
+          end: "top top",
+          scrub: true
+        },
+        scaleX: 1,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    // all other scripts below unchanged
     gsap.timeline({
       scrollTrigger: {
         trigger: ".images",
@@ -356,21 +398,6 @@
     })
     .to(".img1", { x: imgWidth * 2, scale: 1, zIndex: 1 })
     .to(".img2", { x: imgWidth, scale: 1, zIndex: 2 }, "<");
-
-    gsap.fromTo(".slide-text", 
-      { opacity: 0, y: 50 }, 
-      {
-        scrollTrigger: {
-          trigger: ".trigger-img4",
-          start: "top center",
-          end: "top top",
-          scrub: true
-        },
-        opacity: 1,
-        y: 0,
-        ease: "power2.out"
-      }
-    );
 
     gsap.timeline({
       scrollTrigger: {
