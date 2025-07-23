@@ -203,13 +203,25 @@
     }
 
     .slide-underline {
-      height: 4px;           /* Thickness */
-      width: 3000px;          /* Length */
-      background: #fff;      /* Color */
+      height: 4px;
+      width: 300px;
+      background: #fff;
       margin-top: 8px;
       transform-origin: left;
       transform: scaleX(0);
       opacity: 0;
+    }
+
+    .learn-more {
+      display: inline-block;
+      margin-top: 5px;
+      font-family: Helvetica, sans-serif;
+      font-size: clamp(16px, 2vw, 24px);
+      color: #fff;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .img4 {
@@ -294,6 +306,7 @@
     Emotions,<br />
     <span>not imitate perfection.</span>
     <div class="slide-underline"></div>
+    <a href="gallery.html" class="learn-more">Learn More ►</a>
   </div>
 
   <section id="about"></section>
@@ -332,7 +345,21 @@
       }
     );
 
-    // all other scripts below unchanged
+    gsap.fromTo(".learn-more",
+      { opacity: 0, y: 20 },
+      {
+        scrollTrigger: {
+          trigger: ".trigger-img4",
+          start: "top center",
+          end: "top top",
+          scrub: true
+        },
+        opacity: 1,
+        y: 0,
+        ease: "power2.out"
+      }
+    );
+
     gsap.timeline({
       scrollTrigger: {
         trigger: ".images",
