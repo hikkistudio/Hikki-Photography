@@ -498,7 +498,7 @@
 
     setInterval(animateHeaderText, 3000);
   </script>
-  <!-- 放在 <body> 最後 或者某個 section 入面 -->
+ 
 <div class="bottom-bio-text">
   <h2>Alex Hikki-Iao</h2>
   <p>7+ year in photography &amp; graphic design<br>
@@ -518,37 +518,39 @@
     z-index: 999999;
     line-height: 1;
     text-align: left;
+    opacity: 0;
+    transform: translateY(30px);
     transition: all 1s ease;
   }
 
-  .bottom-bio-text h2 {
-    font-size: clamp(5px, 2vw, 13px);
-    line-height: 1;
-    font-weight: 400;
-    margin: 0 0 10px 0;
-    letter-spacing: 0.01em;
-  }
-
+  .bottom-bio-text h2,
   .bottom-bio-text p {
     font-size: clamp(5px, 2vw, 13px);
     line-height: 1;
     font-weight: 300;
     margin: 0;
     letter-spacing: 0.01em;
-    white-space: pre-line;
+  }
+
+  .bottom-bio-text h2 {
+    font-weight: 400;
+    margin-bottom: 10px;
   }
 </style>
 
 <script>
+  gsap.registerPlugin(ScrollTrigger);
+
   gsap.to(".bottom-bio-text", {
     scrollTrigger: {
-      trigger: "body",
+      trigger: document.body,
       start: "bottom bottom",
-      end: "bottom top",
-      toggleActions: "play none none reverse"
+      end: "bottom bottom",
+      toggleActions: "play none none reverse",
+      once: true
     },
-    y: -250,
     opacity: 1,
+    y: -30,
     duration: 1,
     ease: "power2.out"
   });
