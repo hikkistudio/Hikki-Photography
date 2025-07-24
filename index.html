@@ -501,8 +501,8 @@
  
 <div class="bottom-bio-text">
   <h2>Alex Hikki-Iao</h2>
-  <p>7+ year in photography &amp; graphic design<br>
-  Born. Portuguese Macau<br>
+  <p>7+ year exp in photography &amp; graphic design<br>
+  Born. Macau<br>
   Fav. Camera<br>
   Voigtlander Ultramatic<br>
   w/ Skoparex 35mm/f3.4</p>
@@ -512,18 +512,24 @@
   .bottom-bio-text {
     position: fixed;
     bottom: 25px;
-    left: 40vw;
+    left: 30vw;
     color: #fff;
     font-family: "Courier New", monospace;
     z-index: 999999;
     line-height: 1;
-    text-align: left;
+    text-align: right;
     opacity: 0;
     transform: translateY(30px);
     transition: all 1s ease;
   }
 
   .bottom-bio-text h2,
+    font-size: clamp(10px, 2vw, 20px);
+    line-height: 1;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
   .bottom-bio-text p {
     font-size: clamp(5px, 2vw, 13px);
     line-height: 1;
