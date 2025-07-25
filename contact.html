@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hikki</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Hikki</title>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    /* —————— RESET & BASE —————— */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;    /* ← 新增：關閉上下捲動 */
+}
+
     body {
       margin: 0;
       padding: 0;
-      font-family: "Courier New", monospace;
-      background: url('Background.JPG') no-repeat center center fixed;
-      background-size: cover;
+      /* 背景圖片 */
+      background: url('bg.jpg') center/cover no-repeat;
+      position: relative;
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      
     }
     .header-bar {
       position: fixed;
@@ -21,7 +29,7 @@
       left: 0;
       width: 100%;
       height: 60px;
-      background: rgba(255, 255, 255, 0.9);
+      background: #fff;
       z-index: 9999;
       border-bottom: 1px solid #ddd;
       display: flex;
@@ -30,71 +38,184 @@
       padding: 0 40px;
       box-sizing: border-box;
     }
-    .header-title {
-      margin-right: auto;
-      font-size: 18px;
-      color: #000;
-    }
+
     .header-bar a {
+      font-family: "Courier New", monospace;
       font-size: 18px;
       color: #000;
       text-decoration: none;
       margin-left: 40px;
       transition: color 0.3s ease;
     }
+
     .header-bar a:hover {
       color: #f1c232;
     }
 
-    .contact-wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 100px 20px 20px;
+    .header-bar a.active {
+      color: #e74c3c;
+    }
+
+    .header-title {
+      margin-right: auto;
+      font-family: "Courier New", monospace;
+      font-size: 18px;
+      color: #000;
+    }
+
+
+    /* —————— 日／英文字體區分 —————— */
+    [lang="ja"] { font-family: 'MS Mincho', serif; }
+    [lang="en"] { font-family: 'Courier New', monospace; }
+
+    /* —————— 佈局：左右各半 —————— */
+    .contact-page {
+      display: flex;
+      width: 100%;
+      min-height: calc();
+      padding-top: 100px;
+
+    }
+    .left-col,
+    .right-col {
+      width: 50%;
+    }
+
+    /* 左側：半透明 Logo */
+    .left-col {
+      background: url('Logo_Contact.png') center/contain no-repeat;
+      opacity: 0.9;
+    }
+
+    /* 右側文字排版 */
+    .right-col {
+      padding: 60px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      min-height: 100vh;
-      text-align: center;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.4); /* subtle overlay */
+      gap: 32px;
     }
 
-    .contact-logo {
-      width: 500px;
-      height: auto;
-      margin-bottom: 30px;
-    }
-
-    .contact-info {
+    /* 聯絡資訊 (英文) */
+    .contact-info p[lang="en"] {
       font-size: 18px;
-      line-height: 1.8;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 10px;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
     }
+    .contact-info a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+  color: #F1c232;
+}
+
+.contact-info a:visited {
+  color: #F1c232;
+}
+
+.contact-info a:hover {
+  border-bottom-color: #fff;
+}
+
+    /* 詩句區塊 */
+    .poem p[lang="ja"] {
+      font-size:15px;
+      line-height: 1.6;
+    }
+    .poem p[lang="en"] {
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: 8px;
+      color: #ddd;
+    }
+
+    /* 版權宣告 */
+    .copyright p {
+      font-size: 14px;
+      line-height: 1.4;
+      color: #ddd;
+      margin-top: 16px;
+    }
+
+    /* —————— 底部動畫影片區 —————— */
+    .video-section {
+      width: 100%;
+      overflow: hidden;
+    }
+    .video-section video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .contact-page {
+  perspective: 800px;          /* 啟用 3D 透視 */
+}
+
+.left-col {
+  /* 保留原本 background 設定 */
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  animation: spinY 8s linear infinite;
+}
+
+@keyframes spinY {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+    
   </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <div class="header-bar" id="header">
-    <div class="header-title">Of time, souls and cities.</div>
-    <a href="index.html">About</a>
-    <a href="gallery.html">Gallery</a>
+<div class="header-bar">
+    <div class="header-title">Of time, souls and cities</div>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
     <a href="#contact">Contact</a>
   </div>
+  <div class="contact-page">
+    <!-- 左側半透明 Logo（已在圖檔處理透明度） -->
+    <div class="left-col"></div>
 
-  <!-- Contact Section -->
-  <div class="contact-wrapper" id="contact">
-    <img src="Logo.webp" alt="Logo" class="contact-logo" />
+    <!-- 右側文字內容 -->
+    <div class="right-col">
+      <!-- 聯絡資訊 -->
     <div class="contact-info">
-      <p><strong>Email:</strong> example@email.com</p>
-      <p><strong>Phone:</strong> (123) 456-7890</p>
-      <p><strong>Address:</strong> 123 Dream Blvd, Imagination City</p>
+  <p lang="en">
+    <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">
+      Instagram
+    </a><br>
+    info@hikki.ca<br>
+    250-986-9516
+  </p>
+</div>
+
+
+      <!-- 詩句區塊 -->
+      <div class="poem">
+        <p lang="ja">紅葉に染まり，</p>
+        <p lang="ja">
+          流れる水が，紅色に見える。いまだかつて，神々も経験したことがない景色。真っ赤な水が，流れているのだ。そんな時代を，生きたのだ。
+        </p>
+        <p lang="en">
+          Even in the age when gods still walked the earth,<br>
+          no one had ever seen such a sight—<br>
+          the Tatsuta River,<br>
+          its waters bound in crimson threads,<br>
+          dyed by the scattering of autumn leaves.
+        </p>
+      </div>
+
+      <!-- 版權宣告 -->
+      <div class="copyright">
+        <p lang="en">
+          © 2025 Hikki photography &amp; philosophy.<br>
+          All rights reserved. <span lang="ja">無断転載を禁じます。</span>
+        </p>
+      </div>
     </div>
   </div>
+
 
 </body>
 </html>
