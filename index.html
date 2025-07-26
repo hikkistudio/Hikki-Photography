@@ -17,13 +17,13 @@
       background: #000;
       color: #000;
     }
-    /* —— 背景视频 —— */
+  
     .bg-video {
       position: fixed; top:0; left:0;
       width:100%; height:100%;
       object-fit:cover; z-index:-1;
     }
-    /* —— 第一階段 完全不變 —— */
+  
     .content {
       position:absolute; top:80px; left:60px; z-index:1;
     }
@@ -74,14 +74,12 @@
       font-family:'Courier New',monospace;
       letter-spacing:-0.005em;
     }
-    /* —— 第二階段 全屏黑幕 —— */
     .overlay {
       display:none;
       position:fixed; top:0; left:0;
       width:100%; height:100%;
       background:#000; z-index:3;
     }
-    /* —— 第三階段：Grid滑入+比例調整 —— */
     .post {
       position:fixed; top:80px; left:60px;
       width:calc(100% - 120px);
@@ -136,7 +134,7 @@
       display:flex;
       height:100%;
     }
-    /* 左侧文字区域 */
+    
     .team-text {
       flex: 1;
       display: flex;
@@ -164,11 +162,11 @@
     white-space: nowrap;
     overflow: visible;
   }
-  /* 队列文字区不收缩 */
+
   .team-text {
     flex: 0 0 auto;
   }
-    /* 右侧图片区 */
+   
     .team .photo {
       flex:2;
       background-size:cover;
@@ -249,10 +247,10 @@
     </div>
   </div>
 
-  <!-- 第2階段 黑幕 -->
+ 
   <div class="overlay"></div>
 
-  <!-- 第3階段 滑入 -->
+  
   <div id="post" class="post">
     <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline></video>
     <div class="text">
@@ -370,7 +368,7 @@
     }
     setInterval(animateHeader,3000);
 
-    // 第三階段輪播（3秒切換一組）
+    
     (function(){
       const wrap=document.querySelector('.team-container');
       let idx=0;
