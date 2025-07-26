@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emotions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
+  <style>
+    /* —— Reset —— */
+    * { margin:0; padding:0; box-sizing:border-box }
+    body {
+      font-family: Helvetica, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 200vh;
+      background: #000;
+      color: #000;
+    }
+    /* —— 背景视频 —— */
+    .bg-video {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-1;
+    }
+    /* —— 第一階段 完全不變 —— */
+    .content {
+      position:absolute; top:80px; left:60px; z-index:1;
+    }
+    h1 { position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
+    .grid-container {
+      display:grid;
+      grid-template-columns:auto 1fr;
+      grid-template-rows:auto auto;
+      grid-template-areas:
+        "subtitle subtitle"
+        "left     chinese";
+      column-gap:60px; row-gap:60px;
+      margin-top:8px;
+    }
+    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.02em; }
+    .left { grid-area:left }
+    .left h3 {
+      position:relative; left:-0.1ch;
+      font-family:'Courier New',monospace;
+      font-weight:100; font-size:30px; line-height:10px;
+      white-space:nowrap; letter-spacing:-0.01em;
+    }
+    .locations {
+      margin-top:22px; list-style:none;
+      font-family:'Courier New',monospace;
+      font-size:20px; line-height:18px;
+      letter-spacing:-0.005em;
+    }
+    .locations li + li { margin-top:4px }
+    .square {
+      position:fixed; bottom:0; left:0;
+      width:70px; height:70px;
+      background:#000;
+      animation:blink 3s infinite;
+      transform-origin:bottom left;
+      transform:scale(1);
+      z-index:2;
+    }
+    @keyframes blink { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+    .chinese {
+      grid-area:chinese;
+      font-family:'Noto Serif JP',serif;
+      font-size:16px; line-height:24px;
+      max-width:400px; letter-spacing:0;
+    }
+    .chinese .english {
+      display:block; margin-top:1ch;
+      font-family:'Courier New',monospace;
+      letter-spacing:-0.005em;
+    }
+    /* —— 第二階段 全屏黑幕 —— */
+    .overlay {
+      display:none;
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      background:#000; z-index:3;
+    }
+    /* —— 第三階段：Grid滑入+比例調整 —— */
+    .post {
+      position:fixed; top:80px; left:60px;
+      width:calc(100% - 120px);
+      height:calc(100vh - 80px);
+      display:grid;
+      grid-template-columns:2fr 3fr;
+      grid-template-rows:80px 1fr auto;
+      grid-template-areas:
+        "hl     right"
+        "txt    right"
+        "sig    right";
+      column-gap:60px; row-gap:24px;
+      opacity:0; z-index:4;
+      transition:opacity .3s ease-out .2s;
+    }
+    .post > * {
+      opacity:0;
+      transition:opacity .8s ease-out .4s, transform .8s ease-out .4s;
+    }
+    .post .highlight,
+    .post .text,
+    .post .signature-block { transform:translateX(-100%) }
+    .post .post-right        { transform:translateX(100%) }
+    .post .highlight { grid-area:hl; }
+    .post .text {
+      grid-area:txt;
+      font-family:'Courier New',monospace;
+      font-size:14px; line-height:14px;
+      color:#fff; overflow-y:auto;
+      align-self:start; letter-spacing:-0.02em;
+    }
+    .post .signature-block {
+      grid-area:sig;
+      display:flex; flex-direction:column;
+      justify-content:flex-end;
+    }
+    /* 右侧轮播容器 */
+    .post-right {
+      grid-area:right;
+      overflow:hidden;
+      position:relative;
+      background:transparent;
+    }
+    .team-container {
+      display:flex;
+      width:300%;
+      height:100%;
+      transition:transform .8s ease;
+    }
+    .team {
+      flex:0 0 33.3333%;
+      display:flex;
+      height:100%;
+    }
+    /* 左侧文字区域 */
+    .team-text {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;      /* 靠底对齐 */
+      justify-content: flex-end;  /* 文字右对齐 */
+      padding: 0 20px 20px;       /* 底部留空 */
+      background: rgba(0,0,0,0.5);
+    }
+    .team-info {
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 16px;
+      line-height: 18px;
+      text-align: right;
+    }
+    /* 姓名用 Helvetica */
+    .team-info .name {
+      display: block;
+      font-family: Helvetica, sans-serif;
+      font-size: 50px;
+      line-height: 24px;
+    }
+      .team-info .name {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: visible;
+  }
+  /* 队列文字区不收缩 */
+  .team-text {
+    flex: 0 0 auto;
+  }
+    /* 右侧图片区 */
+    .team .photo {
+      flex:2;
+      background-size:cover;
+      background-position:center;
+    }
+    .post.enter {
+      opacity:1;
+    }
+    .post.enter > .highlight,
+    .post.enter > .text,
+    .post.enter > .signature-block,
+    .post.enter > .post-right {
+      opacity:1; transform:translateX(0);
+    }
+    /* —— Header Bar —— */
+    .header-bar {
+      position:fixed; top:0; left:0;
+      width:100%; height:60px;
+      background:#fff; z-index:9999;
+      border-bottom:1px solid #ddd;
+      display:flex; align-items:center;
+      padding:0 40px; box-sizing:border-box;
+    }
+    .header-title {
+      margin-right:auto;
+      font-family:'Courier New',monospace;
+      font-size:18px; color:#000;
+      overflow:hidden; white-space:nowrap;
+    }
+    .header-bar a {
+      font-family:'Courier New',monospace;
+      font-size:18px; color:#000;
+      text-decoration:none; margin-left:40px;
+      transition:color .3s ease;
+    }
+    .header-bar a:hover { color:#f1c232 }
+    .header-bar a.active { color:#e74c3c }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
+    <a href="index.html">Index</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- 背景视频 -->
+  <video class="bg-video" src="hero.mp4" autoplay muted playsinline loop></video>
+
+  <!-- 第1階段 原樣 -->
+  <div class="content">
+    <h1>EMOTIONS,</h1>
+    <div class="grid-container">
+      <h2>not imitate perfection.</h2>
+      <div class="left">
+        <h3>Hikki Photography & Philosophy</h3>
+        <ul class="locations">
+          <li>Vancouver</li>
+          <li>Hong Kong</li>
+          <li>Macau</li>
+        </ul>
+        <div class="square"></div>
+      </div>
+      <div class="chinese">
+        ><br>
+        ><br>
+        光在她睫毛下方折成一道道細影，微微顫動。她輕聲如耳語。穿透空氣的疲倦，像白襯衫上的海水乾了又濕。<br>
+        <span class="english">
+          Light breaks beneath her lashes—<br>
+          thin shadows trembling.<br>
+          She wishper,<br>
+          like salt drying<br>
+          on a white shirt,<br>
+          soon to be wet again  ■<br>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第2階段 黑幕 -->
+  <div class="overlay"></div>
+
+  <!-- 第3階段 滑入 -->
+  <div id="post" class="post">
+    <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline></video>
+    <div class="text">
+      We stand against the mass production of images that plagues today’s photography industry—<br>
+      the flood of magic moments, AI-generated images and kitschy filters.<br>
+      <br>
+      Photography should convey emotions, not imitate perfection.<br>
+      <br>
+      We strive capture the most beautiful side of who you are—
+      <br>
+      not what you pretend to be,
+      but the quiet light that belongs only to you and your loved ones.
+      <br>
+      We offer professional photography that is honest, distinct, and deeply human.<br>
+      <br>
+      All job invitations are welcomed.<br>
+    </div>
+    <div class="signature-block"><!-- 保留空白 --></div>
+    <div class="post-right">
+      <div class="team-container">
+        <!-- Alex 组 -->
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">Alex Hikki–Iao</span><br>
+              7+ year exp. in photography<br>
+              & graphic design<br>
+              Born. Macau<br>
+              Fav. Camera<br>
+              Voigtlander Ultramatic<br>
+               w/ Skoparex 35mm/f3.4<br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Alex.jpg')"></div>
+        </div>
+        <!-- HANG 组 -->
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">HANG</span><br>
+              Based. Macau,<br>
+              Expert in videography,<br> 
+              he is now launching his own brand<br>
+              crafting Macau-centric stories<br>
+              through textiles.<br>
+              <br>
+              Fav. philosopher: St. Augustine<br>
+              Hates：Nikon AF<br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Hang.jpg')"></div>
+        </div>
+        <!-- DALLAS 组 -->
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">Dallas</span><br>
+               Pivot from marketing manager,<br>
+               6+ years exp. in photography, <br>
+               his background trained him well<br>
+               on how to bring visions to life.<br>
+              <br>
+              Fav. philosopher: Mencius<br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Dallas.jpg')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const sq      = document.querySelector('.content .square');
+      const overlay = document.querySelector('.overlay');
+      const post    = document.getElementById('post');
+      function calcMax(){
+        return Math.max(window.innerWidth, window.innerHeight)/60;
+      }
+      let maxScale = calcMax();
+      function onScroll(){
+        const pct = Math.min(window.scrollY/(document.body.scrollHeight-window.innerHeight),1);
+        if(pct>0 && sq.style.animation) sq.style.animation='none';
+        sq.style.transform = `scale(${1 + pct*(maxScale-1)})`;
+        if(pct>=1){
+          overlay.style.display='block';
+          post.classList.add('enter');
+        } else {
+          overlay.style.display='none';
+          post.classList.remove('enter');
+          sq.style.animation='blink 3s infinite';
+        }
+      }
+      window.addEventListener('scroll',onScroll);
+      window.addEventListener('resize',()=>{ maxScale=calcMax(); onScroll(); });
+      onScroll();
+    })();
+
+    // Header 文字循环
+    const sentences = [
+      "Of time, souls and cities.","Know thyself.","静かな光。",
+      "10% off for rescued animals.","YYJ > YVR",
+      "We don’t shoot for road ragers.","那人却在灯火阑珊处。","You want it darker."
+    ];
+    const headerEl = document.getElementById("headerTitle");
+    let last=-1;
+    function rnd(ex){ let i; do{i=Math.floor(Math.random()*sentences.length);}while(i===ex);return i;}
+    function animateHeader(){
+      const next=rnd(last); last=next;
+      gsap.to(headerEl,{y:-20,opacity:0,duration:0.3,ease:"power1.in",onComplete(){
+        headerEl.textContent=sentences[next];
+        gsap.set(headerEl,{y:20});
+        gsap.to(headerEl,{y:0,opacity:1,duration:0.4,ease:"power1.out"});
+      }});
+    }
+    setInterval(animateHeader,3000);
+
+    // 第三階段輪播（3秒切換一組）
+    (function(){
+      const wrap=document.querySelector('.team-container');
+      let idx=0;
+      setInterval(()=>{
+        idx=(idx+1)%3;
+        wrap.style.transform=`translateX(-${idx*33.3333}%)`;
+      },7000);
+    })();
+  </script>
+</body>
+</html>
