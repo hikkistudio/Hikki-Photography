@@ -4,50 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hikki</title>
+
+  <!-- 引入 GSAP，用於文字淡入淡出動畫 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       padding: 0;
       font-family: "Courier New", monospace;
       background: #000;
     }
+
+    /* —— Header Bar —— */
     .header-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 60px;
       background: #f4f2f0;
       z-index: 9999;
       border-bottom: 1px solid #f4f2f0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 40px;
-      box-sizing: border-box;
+      display: flex; align-items: center;
+      padding: 0 40px; box-sizing: border-box;
     }
+    /* → 加上 id 以便 JS 操作 */
     .header-title {
       margin-right: auto;
       font-size: 18px;
       color: #000;
+      overflow: hidden; white-space: nowrap;
     }
     .header-bar a {
-      font-size: 18px;
-      color: #000;
-      text-decoration: none;
-      margin-left: 40px;
+      font-size: 18px; color: #000;
+      text-decoration: none; margin-left: 40px;
       transition: color 0.3s ease;
     }
-    .header-bar a:hover {
-      color: #f1c232;
-    }
-    .header-bar a.active {
-      color: #e74c3c;
-    }
+    .header-bar a:hover { color: #f1c232; }
+    .header-bar a.active { color: #e74c3c; }
 
+    /* —— Gallery —— */
     .gallery-wrapper {
       max-width: 1200px;
       margin: 0 auto 20px;
@@ -55,14 +50,12 @@
       box-sizing: border-box;
       scroll-margin-top: 100px;
     }
-
     .gallery {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
     }
-
     .gallery img {
       width: calc(25% - 10px);
       min-width: 200px;
@@ -71,17 +64,15 @@
       cursor: pointer;
       transition: transform 0.3s ease;
     }
-
     .gallery img:hover {
       transform: scale(1.03);
     }
 
+    /* —— Overlay Lightbox —— */
     .overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background: rgba(0,0,0,0.9);
       display: none;
       justify-content: center;
@@ -89,33 +80,23 @@
       z-index: 10000;
       flex-direction: column;
     }
-
     .overlay img {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 90%; max-height: 90%;
     }
-
     .close-btn {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 20px; left: 20px;
       color: #f4f2f0;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
+      font-size: 28px; font-weight: bold;
+      cursor: pointer; user-select: none;
     }
 
+    /* —— RWD —— */
     @media (max-width: 768px) {
-      .gallery img {
-        width: calc(50% - 10px);
-      }
+      .gallery img { width: calc(50% - 10px); }
     }
-
     @media (max-width: 480px) {
-      .gallery img {
-        width: 100%;
-      }
+      .gallery img { width: 100%; }
     }
   </style>
 </head>
@@ -123,7 +104,7 @@
 
   <!-- Header -->
   <div class="header-bar">
-    <div class="header-title">Of time, souls and cities.</div>
+    <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
     <a href="index.html">About</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
@@ -144,19 +125,58 @@
       <img src="g10.jpg" alt="Photo 10">
       <img src="g11.jpg" alt="Photo 11">
       <img src="g12.jpg" alt="Photo 12">
-
     </div>
   </div>
 
-  <!-- Overlay -->
+  <!-- Overlay / Lightbox -->
   <div class="overlay" id="overlay">
     <span class="close-btn" id="closeBtn">×</span>
     <img src="" alt="Expanded Photo" id="overlayImg">
   </div>
 
+  <!-- —— 動態文字輪播腳本 —— -->
   <script>
-    const images = document.querySelectorAll('.gallery img');
-    const overlay = document.getElementById('overlay');
+    const sentences = [
+      "Of time, souls and cities.",
+      "Know thyself.",
+      "静かな光。",
+      "10% off for rescued animals.",
+      "YYJ > YVR",
+      "We don’t shoot for road ragers.",
+      "那人却在灯火阑珊处。",
+      "You want it darker."
+    ];
+    const headerEl = document.getElementById("headerTitle");
+    let lastIndex = -1;
+    function rnd(ex) {
+      let i;
+      do { i = Math.floor(Math.random() * sentences.length); }
+      while (i === ex);
+      return i;
+    }
+    function animateHeader() {
+      const next = rnd(lastIndex);
+      lastIndex = next;
+      gsap.to(headerEl, {
+        y: -20, opacity: 0,
+        duration: 0.3, ease: "power1.in",
+        onComplete() {
+          headerEl.textContent = sentences[next];
+          gsap.set(headerEl, { y: 20 });
+          gsap.to(headerEl, {
+            y: 0, opacity: 1,
+            duration: 0.4, ease: "power1.out"
+          });
+        }
+      });
+    }
+    setInterval(animateHeader, 3000);
+  </script>
+
+  <!-- —— Gallery Lightbox 腳本 —— -->
+  <script>
+    const images   = document.querySelectorAll('.gallery img');
+    const overlay  = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
     const closeBtn = document.getElementById('closeBtn');
 
@@ -170,12 +190,10 @@
     closeBtn.addEventListener('click', () => {
       overlay.style.display = 'none';
     });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === "Escape") {
-        overlay.style.display = 'none';
-      }
+    document.addEventListener('keydown', e => {
+      if (e.key === "Escape") overlay.style.display = 'none';
     });
   </script>
+
 </body>
 </html>
