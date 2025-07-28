@@ -24,16 +24,31 @@
     }
 
     /* —— Header Bar —— */
-    .header-bar {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 60px;
-      background: #f4f2f0;
-      z-index: 9999;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      padding: 0 40px;
-      box-sizing: border-box;
+   .header-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 60px;
+  background: #f4f2f0;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+/* 手机端专属覆盖 */
+@media only screen and (max-width: 767px) {
+  /* 隐藏左侧滚动文字 */
+  .header-title {
+    display: none !important;
+  }
+  /* 链接水平居中、间距加宽 */
+  .header-bar {
+    justify-content: center !important;
+  }
+  .header-bar a {
+    margin: 0 37px !important;  /* 左右各 30px */
+  }
     }
     .header-title {
       margin-right: auto;
