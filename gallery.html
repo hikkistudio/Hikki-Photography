@@ -1,30 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact | Hikki</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hikki</title>
 
   <!-- 引入 GSAP，用於文字淡入淡出動畫 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
-    /* —————— RESET & BASE —————— */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;    /* ← 關閉上下捲動 */
-    }
+    html { scroll-behavior: smooth; }
     body {
-      background: url('bg.jpg') center/cover no-repeat;
-      position: relative;
-      font-family: 'Courier New', monospace;
-      color: #f4f2f0;
+      margin: 0;
+      padding: 0;
+      font-family: "Courier New", monospace;
+      background: #000;
     }
 
     /* —— Header Bar —— */
-   .header-bar {
+    /* —— 基础样式（与你桌面版相同，可不重复） —— */
+.header-bar {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 60px;
@@ -49,156 +44,115 @@
   .header-bar a {
     margin: 0 37px !important;  /* 左右各 30px */
   }
-    }
+}
+    /* → 加上 id 以便 JS 操作 */
     .header-title {
       margin-right: auto;
-      font-family: "Courier New", monospace;
       font-size: 18px;
       color: #000;
-      overflow: hidden;
-      white-space: nowrap;
+      overflow: hidden; white-space: nowrap;
     }
     .header-bar a {
-      font-family: "Courier New", monospace;
-      font-size: 18px;
-      color: #000;
-      text-decoration: none;
-      margin-left: 40px;
+      font-size: 18px; color: #000;
+      text-decoration: none; margin-left: 40px;
       transition: color 0.3s ease;
     }
     .header-bar a:hover { color: #f1c232; }
     .header-bar a.active { color: #e74c3c; }
 
-    /* —————— 日／英文字體區分 —————— */
-    [lang="ja"] { font-family: 'MS Mincho', serif; }
-    [lang="en"] { font-family: 'Courier New', monospace; }
-
-    /* —————— 佈局：左右各半 —————— */
-    .contact-page {
+    /* —— Gallery —— */
+    .gallery-wrapper {
+      max-width: 1200px;
+      margin: 0 auto 20px;
+      padding: 100px 10px 10px;
+      box-sizing: border-box;
+      scroll-margin-top: 100px;
+    }
+    .gallery {
       display: flex;
-      width: 100%;
-      min-height: calc();
-      padding-top: 100px;
-      perspective: 800px; /* 啟用 3D 透視 */
-    }
-    .left-col,
-    .right-col { width: 50%; }
-
-    /* 左側：半透明 Logo + 旋轉動畫 */
-    .left-col {
-      background: url('Logo_Contact.png') center/contain no-repeat;
-      opacity: 0.92;
-      transform-style: preserve-3d;
-      transform-origin: center center;
-      animation: spinY 8s linear infinite;
-    }
-    @keyframes spinY {
-      from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
-    }
-
-    /* 右側文字排版 */
-    .right-col {
-      padding: 60px 40px;
-      display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 10px;
       justify-content: center;
-      gap: 32px;
     }
-
-    /* 聯絡資訊 (英文) */
-    .contact-info p[lang="en"] {
-      font-size: 18px;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
-    }
-    .contact-info a {
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
-      color: #F1c232;
-    }
-    .contact-info a:visited { color: #F1c232; }
-    .contact-info a:hover { border-bottom-color: #f4f2f0; }
-
-    /* 詩句區塊 */
-    .poem p[lang="ja"] {
-      font-size:15px;
-      line-height: 1.6;
-    }
-    .poem p[lang="en"] {
-      font-size: 11px;
-      line-height: 1.6;
-      margin-top: 8px;
-      color: #f4f2f0;
-    }
-
-    /* 版權宣告 */
-    .copyright p {
-      font-size: 14px;
-      line-height: 1.4;
-      color: #f4f2f0;
-      margin-top: 16px;
-    }
-
-    /* —————— 底部動畫影片區 —————— */
-    .video-section {
-      width: 100%;
-      overflow: hidden;
-    }
-    .video-section video {
-      width: 100%;
-      height: auto;
+    .gallery img {
+      width: calc(25% - 10px);
+      min-width: 200px;
+      max-width: 100%;
       display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    /* —— Overlay Lightbox —— */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      flex-direction: column;
+    }
+    .overlay img {
+      max-width: 90%; max-height: 90%;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px; left: 20px;
+      color: #f4f2f0;
+      font-size: 28px; font-weight: bold;
+      cursor: pointer; user-select: none;
+    }
+
+    /* —— RWD —— */
+    @media (max-width: 768px) {
+      .gallery img { width: calc(50% - 10px); }
+    }
+    @media (max-width: 480px) {
+      .gallery img { width: 100%; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <div class="header-bar">
-    <!-- 左側動態滾動文字（加上 id 以便 JS 操作） -->
     <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
     <a href="index.html">About</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
 
-  <div class="contact-page">
-    <div class="left-col"></div>
-    <div class="right-col">
-      <div class="contact-info">
-        <p lang="en">
-          <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">
-            Instagram
-          </a><br>
-          info@hikki.ca<br>
-          250-986-9516
-        </p>
-      </div>
-      <div class="poem">
-        <p lang="ja">紅葉に染まり，流れる水が，紅色に見える。</p>
-        <p lang="ja">
-          いまだかつて，神々も経験したことがない景色。<br>
-          真っ赤な水が，流れているのだ。そんな時代を，生きたのだ。
-        </p>
-        <p lang="en">
-          Even in the age when gods still walked the earth,<br>
-          no one had ever seen such a sight—<br>
-          the Tatsuta River,<br>
-          its waters bound in crimson threads,<br>
-          dyed by the scattering of autumn leaves ■
-        </p>
-      </div>
-      <div class="copyright">
-        <p lang="en">
-          © 2025 Hikki photography &amp; philosophy.<br>
-          All rights reserved. <span lang="ja">無断転載を禁じます。</span>
-        </p>
-      </div>
+  <!-- Gallery Section -->
+  <div class="gallery-wrapper" id="gallery">
+    <div class="gallery">
+      <img src="g1.jpg" alt="Photo 1">
+      <img src="g2.jpg" alt="Photo 2">
+      <img src="g3.jpg" alt="Photo 3">
+      <img src="g4.jpg" alt="Photo 4">
+      <img src="g5.jpg" alt="Photo 5">
+      <img src="g6.jpg" alt="Photo 6">
+      <img src="g7.jpg" alt="Photo 7">
+      <img src="g8.jpg" alt="Photo 8">
+      <img src="g9.jpg" alt="Photo 9">
+      <img src="g10.jpg" alt="Photo 10">
+      <img src="g11.jpg" alt="Photo 11">
+      <img src="g12.jpg" alt="Photo 12">
     </div>
   </div>
 
-  <!-- 動態文字輪播腳本 -->
+  <!-- Overlay / Lightbox -->
+  <div class="overlay" id="overlay">
+    <span class="close-btn" id="closeBtn">×</span>
+    <img src="" alt="Expanded Photo" id="overlayImg">
+  </div>
+
+  <!-- —— 動態文字輪播腳本 —— -->
   <script>
     const sentences = [
       "Of time, souls and cities.",
@@ -210,42 +164,54 @@
       "那人却在灯火阑珊处。",
       "You want it darker."
     ];
-
     const headerEl = document.getElementById("headerTitle");
     let lastIndex = -1;
-
-    function rnd(exclude) {
+    function rnd(ex) {
       let i;
-      do {
-        i = Math.floor(Math.random() * sentences.length);
-      } while (i === exclude);
+      do { i = Math.floor(Math.random() * sentences.length); }
+      while (i === ex);
       return i;
     }
-
     function animateHeader() {
       const next = rnd(lastIndex);
       lastIndex = next;
-
       gsap.to(headerEl, {
-        y: -20,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.in",
+        y: -20, opacity: 0,
+        duration: 0.3, ease: "power1.in",
         onComplete() {
           headerEl.textContent = sentences[next];
           gsap.set(headerEl, { y: 20 });
           gsap.to(headerEl, {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            ease: "power1.out"
+            y: 0, opacity: 1,
+            duration: 0.4, ease: "power1.out"
           });
         }
       });
     }
-
-    // 每 3 秒自動輪播一次
     setInterval(animateHeader, 3000);
   </script>
+
+  <!-- —— Gallery Lightbox 腳本 —— -->
+  <script>
+    const images   = document.querySelectorAll('.gallery img');
+    const overlay  = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlayImg');
+    const closeBtn = document.getElementById('closeBtn');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        overlayImg.src = img.src;
+        overlay.style.display = 'flex';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === "Escape") overlay.style.display = 'none';
+    });
+  </script>
+
 </body>
 </html>
