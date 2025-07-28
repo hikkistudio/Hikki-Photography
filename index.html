@@ -45,7 +45,7 @@
       column-gap:60px; row-gap:60px;
       margin-top:8px;
     }
-    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.0001em; }
+    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
     .left { grid-area:left }
     .left h3 {
       position:relative; left:-0.1ch;
@@ -202,6 +202,35 @@
     .header-bar a.active { color:#e74c3c }
 
       @media only screen and (max-width: 767px) {
+        .content h1 {
+  font-size: 60px !important;    /* 从 80px 调小到 60px */
+  line-height: 1.1 !important;    /* 增大行高防止叠字 */
+}
+
+/* 2. 副标题 “not imitate…” */
+.grid-container h2 {
+  font-size: 22px !important;     /* 从 24px 调到 22px */
+  line-height: 1.2 !important;
+  margin-bottom: 8px !important;
+}
+
+/* 3. 城市列表 */
+.locations li {
+  font-size: 16px !important;     /* 保留 16px */
+  line-height: 1.4 !important;    /* 增大行高 */
+  margin-bottom: 4px !important;
+}
+
+/* 4. 中文正文 */
+.chinese {
+  font-size: 14px !important;     /* 14px */
+  line-height: 1.6 !important;    /* 增大到 1.6 */
+}
+/* 5. 英文诗句 */
+.chinese .english {
+  font-size: 13px !important;     /* 稍微小一点 */
+  line-height: 1.4 !important;
+}
     /* —— 1. 锁定整个页面不可滚动 —— */
     html, body {
       height: 100vh !important;
@@ -276,10 +305,9 @@
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
-
-  <!-- 背景视频 -->
-  <video class="bg-video" src="hero.mp4" autoplay muted playsinline loop></video>
-
+<video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+  <source src="hero.mp4" type="video/mp4">
+</video>
   <!-- 第1階段 原樣 -->
   <div class="content">
     <h1>EMOTIONS,</h1>
