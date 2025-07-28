@@ -7,23 +7,30 @@
   <title>Emotions</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
   <style>
-    /* —— Reset —— */
+    [lang="ja"] { font-family: 'MS Mincho', serif; }
+    [lang="en"] { font-family: 'Courier New', monospace; }
+    @keyframes blink3 {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75%        { opacity: 0; }
+}
     * { margin:0; padding:0; box-sizing:border-box }
     body {
-      font-family: Helvetica, sans-serif;
+      font-family: Helvetica, sans-serif, ;
       position: relative;
       overflow-x: hidden;
       min-height: 200vh;
       background: #000;
       color: #000;
     }
-    /* —— 背景视频 —— */
+     .blink-block {
+    display: inline-block;
+    animation: blink3 3s infinite;
+  }
     .bg-video {
       position: fixed; top:0; left:0;
       width:100%; height:100%;
       object-fit:cover; z-index:-1;
     }
-    /* —— 第一階段 完全不變 —— */
     .content {
       position:absolute; top:80px; left:60px; z-index:1;
     }
@@ -38,13 +45,13 @@
       column-gap:60px; row-gap:60px;
       margin-top:8px;
     }
-    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.02em; }
+    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.0001em; }
     .left { grid-area:left }
     .left h3 {
       position:relative; left:-0.1ch;
       font-family:'Courier New',monospace;
       font-weight:100; font-size:30px; line-height:10px;
-      white-space:nowrap; letter-spacing:-0.01em;
+      white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px
     }
     .locations {
       margin-top:22px; list-style:none;
@@ -74,14 +81,12 @@
       font-family:'Courier New',monospace;
       letter-spacing:-0.005em;
     }
-    /* —— 第二階段 全屏黑幕 —— */
     .overlay {
       display:none;
       position:fixed; top:0; left:0;
       width:100%; height:100%;
       background:#000; z-index:3;
     }
-    /* —— 第三階段：Grid滑入+比例調整 —— */
     .post {
       position:fixed; top:80px; left:60px;
       width:calc(100% - 120px);
@@ -109,7 +114,7 @@
     .post .text {
       grid-area:txt;
       font-family:'Courier New',monospace;
-      font-size:14px; line-height:16px;
+      font-size:14px; line-height:14px;
       color:#f4f2f0; overflow-y:auto;
       align-self:start; letter-spacing:-0.02em;
     }
@@ -195,6 +200,73 @@
     }
     .header-bar a:hover { color:#f1c232 }
     .header-bar a.active { color:#e74c3c }
+
+      @media only screen and (max-width: 767px) {
+    /* —— 1. 锁定整个页面不可滚动 —— */
+    html, body {
+      height: 100vh !important;
+      overflow: hidden !important;
+    }
+    /* —— 2. 手机端的中文诗句字号 & 行高 —— */
+    .content .chinese,
+    .content .chinese .english {
+      font-family: 'Courier New'，'MS Mincho', monospace !important;
+      font-size: 10px !important;
+      line-height: 1.6 !important;
+    }
+    .header-title { display: none !important; }
+
+    /* 链接居中、间距加宽 */
+    .header-bar {
+      justify-content: center !important;
+    }
+    .header-bar a {
+      margin: 0 37px !important;    /* 左右各30px */
+    }
+
+    /* 第一阶段：单列 */
+    .content {
+      position: relative !important;
+      top: auto !important; left: auto !important;
+      width: 100% !important; height: auto !important;
+      padding: 80px 20px !important;
+    }
+    .grid-container { display: block !important; }
+    .content h1      { font-size: 70px !important; line-height: 1 !important; }
+    .grid-container h2 {
+      font-size: 22px !important;
+      line-height: 1.2 !important;
+      margin: 0 0 8px !important;
+    }
+    .left h3       { font-size: 20px !important; line-height: 1 !important; }
+    .locations     {
+      font-size: 10px !important;
+      line-height: 1 !important;
+      margin-top: 4px !important;
+    }
+
+    /* 彻底静态：除 hero.mp4 外全隐藏动画区 */
+    .square,
+    .mobile-square,
+    .overlay,
+    #post { display: none !important; }
+
+    /* 原诗句隐藏，改为静态宣言 */
+    .chinese-original { display: none !important; }
+    .chinese-mobile {
+      display: block !important;
+      font-family: 'Courier New', monospace !important;
+      font-size: 8px !important; line-height: 1.6 !important;
+      color: #000 !important;
+      margin-top: 10px !important;
+    }
+
+    /* 禁用一切动画/过渡 */
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none  !important;
+    }
+  }
   </style>
 </head>
 <body>
@@ -232,7 +304,10 @@
           She wishper,<br>
           like salt drying<br>
           on a white shirt,<br>
-          soon to be wet again  ■<br>
+          soon to be wet again  <span class="blink-block">■</span><br>
+          <br>
+          <br>
+          © 2025 Hikki photography &amp; philosophy.<br>
         </span>
       </div>
     </div>
@@ -245,14 +320,14 @@
   <div id="post" class="post">
     <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline></video>
     <div class="text">
-      We stand against the mass production of images that plagues today’s photography industry—<br><br>
+      We stand against the mass production of images that plagues today’s photography industry—<br>
       the flood of magic moments, AI-generated images and kitschy filters.<br><br>
       Photography should convey emotions, not imitate perfection.<br><br>
-      We strive capturing the most beautiful side of who you are—<br>
-      not what you pretend to be,but the quiet light that belongs only to you and your loved ones.<br><br>
-      We offer professional photography that is honest, distinct, and deeply human.<br>
-      <br>
-      All job invitations are welcomed. ■<br>
+      We strive capture the most beautiful side of who you are—<br>
+      not what you pretend to be,<br>
+      but the quiet light that belongs only to you and your loved ones.<br><br>
+      We offer professional photography that is honest, distinct, and deeply human.<br><br>
+      All job invitations are welcomed. <span class="blink-block">■</span><br>
     </div>
     <div class="signature-block"><!-- 保留空白 --></div>
     <div class="post-right">
@@ -262,12 +337,12 @@
           <div class="team-text">
             <div class="team-info">
               <span class="name">Alex Hikki–Iao</span><br>
-              <br>
               7+ year exp. in photography<br>
               & graphic design<br>
               Born. Macau<br>
-              Fav. Camera: Voigtländer Ultramatic<br>
-              w/ Skoparex 35mm/f3.4<br>
+              Fav. Camera<br>
+              Voigtlander Ultramatic<br>
+              w/ Skoparex 35mm/f3.4<span class="blink-block">■</span><br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Alex.jpg')"></div>
@@ -276,14 +351,14 @@
         <div class="team">
           <div class="team-text">
             <div class="team-info">
-              <span class="name">HANG</span><br><br>
+              <span class="name">HANG</span><br>
               Based. Macau,<br>
-              Expert in videography<br>
-              Launching his own brand<br>
+              Expert in videography,<br>
+              launching his own brand<br>
               crafting Macau-centric stories<br>
               through textiles.<br><br>
-              Fav. philosopher: Plato<br>
-              Hates: Nikon AF<br>
+              Fav. philosopher: St. Augustine<br>
+              Hates: Nikon AF<span class="blink-block">■</span><br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Hang.jpg')"></div>
@@ -292,12 +367,12 @@
         <div class="team">
           <div class="team-text">
             <div class="team-info">
-              <span class="name">Dallas</span><br><br>
-              Pivot from marketing manager<br>
-              6+ years exp. in photography<br>
-              Trained to bring visions to life.<br><br>
-              also a calligrapher<br>
-              Fav. philosopher: Mencius<br>
+              <span class="name">Dallas</span><br>
+              Pivot from marketing manager,<br>
+              6+ years exp. in photography,<br>
+              trained to bring visions to life.<br><br>
+              Pottery is love,<br><br>
+              Fav. philosopher: Mencius<span class="blink-block">■</span><br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Dallas.jpg')"></div>
@@ -306,12 +381,11 @@
         <div class="team">
           <div class="team-text">
             <div class="team-info">
-              <span class="name">William<br>
-                </span><br>
-              Our Community Manager<br>
-              Also a registered Kinesiologist<br>
-              Loves analog cameras<br>
-              Fav. camera: Minolta AF-E<br>
+              <span class="name">William</span><br>
+              our Community Manager<br>
+              Also a registered kinesiologist <br>
+              どうぞよろしくお願いします。<br><br>
+              Fav. camera: Minolta AF-E<span class="blink-block">■</span><br>
             </div>
           </div>
           <div class="photo" style="background-image:url('William.jpg')"></div>
