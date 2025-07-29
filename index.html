@@ -308,7 +308,7 @@
 </head>
 <body>
   <div class="header-bar">
-    <div class="header-title" id="headerTitle">Of time, souls and cities.  </div>
+    <div class="header-title" id="headerTitle">Of time, souls and cities.  <span class="blink-block">■</span></div>
     <a href="index.html">Index</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
@@ -320,7 +320,7 @@
   <div class="content">
     <h1>EMOTIONS,</h1>
     <div class="grid-container">
-      <h2>not imitate perfection.  <span class="blink-block">■</span></h2>
+      <h2>not imitate perfection.</h2>
       <div class="left">
         <h3>Hikki Photography & Philosophy</h3>
         <ul class="locations">
@@ -343,7 +343,7 @@
           soon to be wet again.  <span class="blink-block">■</span><br>
           <br>
           <br>
-          © 2025 Hikki photography &amp; philosophy.  <span class="blink-block">■</span><br>
+          © 2025 Hikki photography &amp; philosophy  <span class="blink-block">■</span><br>
         </span>
       </div>
     </div>
@@ -442,7 +442,7 @@
       function onScroll(){
         const pct = Math.min(window.scrollY/(document.body.scrollHeight-window.innerHeight),1);
         if(pct>0 && sq.style.animation) sq.style.animation='none';
-        sq.style.transform = scale(${1 + pct*(maxScale-1)});
+        sq.style.transform = `scale(${1 + pct*(maxScale-1)})`;
         if(pct>=1){
           overlay.style.display='block';
           post.classList.add('enter');
@@ -459,7 +459,6 @@
 
     const headerEl = document.getElementById("headerTitle");
 
-// 你的句子数组
 const sentences = [
   "Of time, souls and cities.",
   "Know thyself.",
@@ -467,8 +466,11 @@ const sentences = [
   "10% off for rescued animals.",
   "YYJ > YVR",
   "We don’t shoot for road ragers.",
-  "那人却在灯火阑珊处。",
-  "You want it darker."
+  "Get a quote today.",
+  "絢爛如電，虛幻如霧",
+  "Wake the fuck up samurai-",
+  "father anderson...",
+  "also try max noodle house"
 ];
 
 let lastIndex = -1;
@@ -484,6 +486,7 @@ function animateHeader() {
   const next = rnd(lastIndex);
   lastIndex = next;
   const text  = sentences[next];
+  // 判断是否含 CJK 文字
   const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
 
   // 动画淡出
@@ -507,9 +510,7 @@ function animateHeader() {
     }
   });
 }
-animateHeader(); 
 setInterval(animateHeader, 3000);
-    // 第三階段輪播（7秒切換一組，共4組）
     (function(){
       const wrap = document.querySelector('.team-container');
       let idx = 0;
@@ -517,7 +518,7 @@ setInterval(animateHeader, 3000);
       const step = 100/total; // 25
       setInterval(()=>{
         idx = (idx + 1) % total;
-        wrap.style.transform = translateX(-${idx*step}%);
+        wrap.style.transform = `translateX(-${idx*step}%)`;
       },7000);
     })();
   </script>
