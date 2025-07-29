@@ -441,18 +441,23 @@
       let i; do{i=Math.floor(Math.random()*sentences.length);}while(i===ex);
       return i;
     }
-    function animateHeader(){
-      const next=rnd(last); last=next;
-      const txt=sentences[next];
-      const isCJK=/[\u4E00-\u9FFF\u3040-\u30FF]/.test(txt);
-      gsap.to(headerEl,{y:-20,opacity:0,duration:0.3,ease:"power1.in",onComplete(){
-        headerEl.classList.toggle("ja", isCJK);
-        headerEl.classList.toggle("en", !isCJK);
-        headerEl.textContent=txt;
-        gsap.set(headerEl,{y:20});
-        gsap.to(headerEl,{y:0,opacity:1,duration:0.4,ease:"power1.out"});
-      }});
+   function animateHeader(){
+  const next = rnd(lastIndex);
+  lastIndex = next;
+  const txt  = sentences[next];
+  const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(txt);
+
+  gsap.to(headerEl, {
+    y:-20, opacity:0, duration:0.3, ease:"power1.in",
+    onComplete(){
+      // 改變屬性而不是 class
+      headerEl.setAttribute('lang', isCJK ? 'ja' : 'en');
+      headerEl.textContent = txt;
+      gsap.set(headerEl, { y:20 });
+      gsap.to(headerEl, { y:0, opacity:1, duration:0.4, ease:"power1.out" });
     }
+  });
+}
     animateHeader();
     setInterval(animateHeader,3000);
 
