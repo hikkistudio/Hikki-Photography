@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hikki Photography</title>
   <link rel="icon" href="/favicon.png" type="image/png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
   <style>
-    [lang="ja"] { font-family: 'MS Mincho', serif; }
-    [lang="en"] { font-family: 'Courier New', monospace; }
-    @keyframes blink3 {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75%        { opacity: 0; }
-}
-    * { margin:0; padding:0; box-sizing:border-box }
+    /* —— Reset & 共用 —— */
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: Helvetica, sans-serif;
       position: relative;
@@ -23,31 +18,39 @@
       background: #000;
       color: #000;
     }
-     .blink-block {
-    display: inline-block;
-    animation: blink3 3s infinite;
-  }
+    [lang="ja"] { font-family:'MS Mincho', serif; }
+    [lang="en"] { font-family:'Courier New', monospace; }
+    @keyframes blink3 {
+      0%,50%,100%{opacity:1}
+      25%,75%     {opacity:0}
+    }
+    .blink-block {
+      display:inline-block;
+      animation:blink3 3s infinite;
+    }
+
+    /* —— 背景媒体 —— */
     .bg-video {
       position: fixed; top:0; left:0;
       width:100%; height:100%;
       object-fit:cover; z-index:-1;
     }
-    .bg-gif   { display: none; }
-/* 移动版：隐藏 video，显示 GIF */
-@media only screen and (max-width:767px) {
-  .bg-video { display: none !important; }
-  .bg-gif   { 
-    display: block !important;
-    position: fixed; top:0; left:0;
-    width:100%; height:100%;
-    object-fit: cover;
-    z-index:-1;
-  }
-}
+    .bg-gif {
+      display: none;
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-1;
+    }
+
+    /* —— 第一階段 完全不变 —— */
     .content {
       position:absolute; top:80px; left:60px; z-index:1;
     }
-    h1 { position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
+    h1 {
+      position:relative; left:-0.14ch;
+      font-size:250px; line-height:200px;
+      font-weight:bold; letter-spacing:-0.02em;
+    }
     .grid-container {
       display:grid;
       grid-template-columns:auto 1fr;
@@ -58,13 +61,20 @@
       column-gap:60px; row-gap:60px;
       margin-top:8px;
     }
-    h2 { grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
-    .left { grid-area:left }
+    h2 {
+      grid-area:subtitle;
+      font-size:60px; line-height:20px;
+      text-decoration:underline; letter-spacing:-0.01em;
+    }
+    .left {
+      grid-area:left;
+    }
     .left h3 {
       position:relative; left:-0.1ch;
       font-family:'Courier New',monospace;
-      font-weight:100; font-size:30px; line-height:10px;
-      white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px
+      font-weight:100; font-size:30px;
+      line-height:10px; white-space:nowrap;
+      letter-spacing:-0.01em;
     }
     .locations {
       margin-top:22px; list-style:none;
@@ -72,17 +82,14 @@
       font-size:20px; line-height:18px;
       letter-spacing:-0.005em;
     }
-    .locations li + li { margin-top:4px }
+    .locations li + li { margin-top:4px; }
     .square {
       position:fixed; bottom:0; left:0;
       width:70px; height:70px;
-      background:#000;
-      animation:blink 3s infinite;
-      transform-origin:bottom left;
-      transform:scale(1);
+      background:#000; animation:blink3 3s infinite;
+      transform-origin:bottom left; transform:scale(1);
       z-index:2;
     }
-    @keyframes blink { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
     .chinese {
       grid-area:chinese;
       font-family:'Noto Serif JP',serif;
@@ -94,12 +101,16 @@
       font-family:'Courier New',monospace;
       letter-spacing:-0.005em;
     }
+
+    /* —— 第二階段 全屏黑幕 —— */
     .overlay {
       display:none;
       position:fixed; top:0; left:0;
       width:100%; height:100%;
       background:#000; z-index:3;
     }
+
+    /* —— 第三階段 Grid 滑入 —— */
     .post {
       position:fixed; top:80px; left:60px;
       width:calc(100% - 120px);
@@ -117,12 +128,26 @@
     }
     .post > * {
       opacity:0;
-      transition:opacity .8s ease-out .4s, transform .8s ease-out .4s;
+      transition:opacity .8s ease-out .4s,
+                 transform .8s ease-out .4s;
     }
     .post .highlight,
     .post .text,
-    .post .signature-block { transform:translateX(-100%) }
-    .post .post-right        { transform:translateX(100%) }
+    .post .signature-block {
+      transform:translateX(-100%);
+    }
+    .post .post-right {
+      transform:translateX(100%);
+    }
+    .post.enter {
+      opacity:1;
+    }
+    .post.enter > .highlight,
+    .post.enter > .text,
+    .post.enter > .signature-block,
+    .post.enter > .post-right {
+      opacity:1; transform:translateX(0);
+    }
     .post .highlight { grid-area:hl; }
     .post .text {
       grid-area:txt;
@@ -136,60 +161,39 @@
       display:flex; flex-direction:column;
       justify-content:flex-end;
     }
-    /* 右侧轮播容器 */
     .post-right {
-      grid-area:right;
-      overflow:hidden;
-      position:relative;
-      background:transparent;
+      grid-area:right; overflow:hidden;
+      position:relative; background:transparent;
     }
     .team-container {
-      display:flex;
-      width:400%;           /* 修改為 4 位成員 */
-      height:100%;
+      display:flex; width:400%; height:100%;
       transition:transform .8s ease;
     }
     .team {
-      flex:0 0 25%;         /* 修改為 100% / 4 */
-      display:flex;
-      height:100%;
+      flex:0 0 25%; display:flex; height:100%;
     }
-    /* 左侧文字区域 */
     .team-text {
       flex: 0 0 auto;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 0 20px 20px;
-      background: rgba(0,0,0,0.5);
+      display:flex; align-items:flex-end;
+      justify-content:flex-end;
+      padding:0 20px 20px;
+      background:rgba(0,0,0,0.5);
     }
     .team-info {
-      font-family: 'Courier New', monospace;
-      color: #f4f2f0;
-      font-size: 16px;
-      line-height: 18px;
-      text-align: right;
+      font-family:'Courier New',monospace;
+      color:#f4f2f0; font-size:16px;
+      line-height:18px; text-align:right;
     }
     .team-info .name {
-      font-family: Helvetica, sans-serif;
-      font-size: 50px;
-      line-height: 24px;
-      white-space: nowrap;
+      font-family:Helvetica,sans-serif;
+      font-size:50px; line-height:24px;
+      white-space:nowrap;
     }
     .team .photo {
-      flex:2;
-      background-size:cover;
+      flex:2; background-size:cover;
       background-position:center;
     }
-    .post.enter {
-      opacity:1;
-    }
-    .post.enter > .highlight,
-    .post.enter > .text,
-    .post.enter > .signature-block,
-    .post.enter > .post-right {
-      opacity:1; transform:translateX(0);
-    }
+
     /* —— Header Bar —— */
     .header-bar {
       position:fixed; top:0; left:0;
@@ -205,157 +209,124 @@
       font-size:18px; color:#000;
       overflow:hidden; white-space:nowrap;
     }
-    .header-title.en {
-  font-family: 'Courier New', monospace;
-}
-.header-title.ja {
-  font-family: 'MS Mincho', serif;
-}
     .header-bar a {
       font-family:'Courier New',monospace;
       font-size:18px; color:#000;
       text-decoration:none; margin-left:40px;
       transition:color .3s ease;
     }
-    .header-bar a:hover { color:#f1c232 }
-    .header-bar a.active { color:#e74c3c }
+    .header-bar a:hover { color:#f1c232; }
+    .header-bar a.active{ color:#e74c3c; }
 
-   @media only screen and (max-width:767px) {
-  /* —— 大标题 —— */
-  .content h1 {
-    font-size: 70px !important;      /* 比 80px 稍小 */
-    line-height: 1.1 !important;      /* 大约 77px 的行高 */
-    margin-bottom: 16px !important;
-  }
-  /* —— 副标题 —— */
-  .grid-container h2 {
-    font-size: 24px !important;
-    line-height: 1.3 !important;      /* 大约 31px 的行高 */
-    margin-bottom: 12px !important;
-  }
-  /* —— 城市列表 —— */
-  .locations li {
-    font-size: 16px !important;
-    line-height: 1.4 !important;      /* 约 22px 行高 */
-    margin-bottom: 6px !important;
-  }
-  /* —— 中文正文 —— */
-  .chinese {
-    font-size: 16px !important;
-    line-height: 1.6 !important;      /* 约 26px 行高 */
-    margin-top: 12px !important;
-  }
-  /* —— 英文诗句 —— */
-  .chinese .english {
-    font-size: 14px !important;
-    line-height: 1.5 !important;      /* 约 21px 行高 */
-    margin-top: 8px !important;
-  }
-    /* —— 1. 锁定整个页面不可滚动 —— */
-    html, body {
-      height: 100vh !important;
-      overflow: hidden !important;
-    }
-    /* —— 2. 手机端的中文诗句字号 & 行高 —— */
-    .content .chinese,
-    .content .chinese .english {
-      font-family: 'Courier New', 'MS Mincho', monospace !important;
-      font-size: 10px !important;
-      line-height: 1.6 !important;
-    }
-    .header-title { display: none !important; }
+    /* —— 手机版专属覆盖 —— */
+    @media only screen and (max-width: 767px) {
+      /* 背景切换：隐藏 video、显式 GIF */
+      .bg-video { display: none !important; }
+      .bg-gif   { display: block !important; }
 
-    /* 链接居中、间距加宽 */
-    .header-bar {
-      justify-content: center !important;
-    }
-    .header-bar a {
-      margin: 0 37px !important;    /* 左右各30px */
-    }
+      /* 锁定不滚动 */
+      html, body {
+        overflow: hidden !important;
+        height: 100vh !important;
+      }
 
-    /* 第一阶段：单列 */
-    .content {
-      position: relative !important;
-      top: auto !important; left: auto !important;
-      width: 100% !important; height: auto !important;
-      padding: 80px 20px !important;
-    }
-    .grid-container { display: block !important; }
-    .content h1      { font-size: 70px !important; line-height: 1 !important; }
-    .grid-container h2 {
-      font-size: 22px !important;
-      line-height: 1.2 !important;
-      margin: 0 0 8px !important;
-    }
-    .left h3       { font-size: 20px !important; line-height: 1 !important; }
-    .locations     {
-      font-size: 10px !important;
-      line-height: 1 !important;
-      margin-top: 4px !important;
-    }
+      /* Header Bar 居中 & 隐藏滚动文字 */
+      .header-bar { justify-content: center !important; }
+      .header-bar a { margin: 0 37px !important; }
+      .header-title { display: none !important; }
 
-    /* 彻底静态：除 hero.mp4 外全隐藏动画区 */
-    .square,
-    .mobile-square,
-    .overlay,
-    #post { display: none !important; }
+      /* 第一阶段改单列 */
+      .content {
+        position:relative !important;
+        top:auto !important; left:auto !important;
+        width:100% !important; height:auto !important;
+        padding:80px 20px !important;
+      }
+      .grid-container { display:block !important; }
 
-    /* 原诗句隐藏，改为静态宣言 */
-    .chinese-original { display: none !important; }
-    .chinese-mobile {
-      display: block !important;
-      font-family: 'Courier New', monospace !important;
-      font-size: 8px !important; line-height: 1.6 !important;
-      color: #000 !important;
-      margin-top: 10px !important;
-    }
+      /* 大标题 */
+      .content h1 {
+        font-size: 70px !important;
+        line-height: 1.1 !important;
+        margin-bottom: 16px !important;
+      }
+      /* 副标题 */
+      .grid-container h2 {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 12px !important;
+      }
+      /* 城市列表 */
+      .locations li {
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 6px !important;
+      }
+      /* 中文正文 */
+      .chinese {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        margin-top: 12px !important;
+      }
+      /* 英文诗句 */
+      .chinese .english {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        margin-top: 8px !important;
+      }
 
-    /* 禁用一切动画/过渡 */
-    *, *::before, *::after {
-      animation: none !important;
-      transition: none  !important;
+      /* 隐藏动画区 */
+      .square, .overlay, #post {
+        display: none !important;
+      }
+      /* 禁用一切动画/过渡 */
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
     }
-  }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <div class="header-bar">
-    <div class="header-title" id="headerTitle">Of time, souls and cities.  </div>
+    <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
     <a href="index.html">Index</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
-<video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
-  <source src="hero.mp4" type="video/mp4">
-</video>
-<img src="hero.gif" alt="" class="bg-gif" /> 
+
+  <!-- 背景：GIF (mobile) / MP4 (desktop) -->
+  <img src="hero.gif" alt="" class="bg-gif"/>
+  <video class="bg-video" autoplay muted playsinline loop>
+    <source src="hero.mp4" type="video/mp4"/>
+  </video>
+
+  <!-- 第1階段 -->
   <div class="content">
     <h1>EMOTIONS,</h1>
     <div class="grid-container">
-      <h2>not imitate perfection.  <span class="blink-block">■</span></h2>
+      <h2>not imitate perfection. <span class="blink-block">■</span></h2>
       <div class="left">
         <h3>Hikki Photography & Philosophy</h3>
         <ul class="locations">
           <li>Vancouver</li>
           <li>Hong Kong</li>
-          <li>Macau <span class="blink-block">■</span></li>
+          <li>Macau</li>
         </ul>
         <div class="square"></div>
       </div>
       <div class="chinese">
-        ><br>
-        ><br>
+        &gt;<br>&gt;<br>
         光在她睫毛下方折成一道道細影，微微顫動。她輕聲如耳語。穿透空氣的疲倦，像白襯衫上的海水乾了又濕。<br>
         <span class="english">
           Light breaks beneath her lashes—<br>
           thin shadows trembling.<br>
-          She wishper,<br>
+          She whisper,<br>
           like salt drying<br>
           on a white shirt,<br>
-          soon to be wet again.  <span class="blink-block">■</span><br>
-          <br>
-          <br>
-          © 2025 Hikki photography &amp; philosophy.  <span class="blink-block">■</span><br>
+          soon to be wet again  <span class="blink-block">■</span><br><br>
+          © 2025 Hikki photography &amp; philosophy.<br>
         </span>
       </div>
     </div>
@@ -368,72 +339,60 @@
   <div id="post" class="post">
     <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline></video>
     <div class="text">
-      We stand against the mass production of images that plagues today’s photography industry—<br>
+      We stand against the mass production of images that plagues today’s photography industry—<br><br>
       the flood of magic moments, AI-generated images and kitschy filters.<br><br>
       Photography should convey emotions, not imitate perfection.<br><br>
-      We strive capture the most beautiful side of who you are—<br>
+      We strive capturing the most beautiful side of who you are—<br>
       not what you pretend to be,<br>
       but the quiet light that belongs only to you and your loved ones.<br><br>
       We offer professional photography that is honest, distinct, and deeply human.<br><br>
       All job invitations are welcomed. <span class="blink-block">■</span><br>
     </div>
-    <div class="signature-block"><!-- 保留空白 --></div>
+    <div class="signature-block"></div>
     <div class="post-right">
       <div class="team-container">
-        <!-- Alex 组 -->
+        <!-- Alex -->
         <div class="team">
           <div class="team-text">
             <div class="team-info">
               <span class="name">Alex Hikki–Iao</span><br>
-              7+ year exp. in photography<br>
-              & graphic design<br>
+              7+ year exp. in photography & graphic design<br>
               Born. Macau<br>
-              Fav. Camera<br>
-              Voigtlander Ultramatic<br>
-              w/ Skoparex 35mm/f3.4<span class="blink-block">■</span><br>
+              Fav. Camera: Voigtländer Ultramatic w/ Skoparex 35mm/f3.4<br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Alex.jpg')"></div>
         </div>
-        <!-- HANG 组 -->
+        <!-- Hang -->
         <div class="team">
           <div class="team-text">
             <div class="team-info">
               <span class="name">HANG</span><br>
-              Based. Macau,<br>
-              Expert in videography,<br>
-              launching his own brand<br>
-              crafting Macau-centric stories<br>
-              through textiles.<br><br>
-              Fav. philosopher: St. Augustine<br>
-              Hates: Nikon AF<span class="blink-block">■</span><br>
+              Based. Macau, expert in videography<br>
+              Launching his own brand crafting Macau-centric stories through textiles.<br>
+              Fav. philosopher: Plato, hates: Nikon AF<br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Hang.jpg')"></div>
         </div>
-        <!-- DALLAS 组 -->
+        <!-- Dallas -->
         <div class="team">
           <div class="team-text">
             <div class="team-info">
               <span class="name">Dallas</span><br>
-              Pivot from marketing manager,<br>
-              6+ years exp. in photography,<br>
-              trained to bring visions to life.<br><br>
-              Pottery is love,<br><br>
-              Fav. philosopher: Mencius<span class="blink-block">■</span><br>
+              Pivot from marketing manager, 6+ years exp. in photography<br>
+              also a calligrapher; Fav. philosopher: Mencius<br>
             </div>
           </div>
           <div class="photo" style="background-image:url('Dallas.jpg')"></div>
         </div>
-        <!-- WILLIAM 组 -->
+        <!-- William -->
         <div class="team">
           <div class="team-text">
             <div class="team-info">
               <span class="name">William</span><br>
-              our Community Manager<br>
-              Also a registered kinesiologist <br>
-              どうぞよろしくお願いします。<br><br>
-              Fav. camera: Minolta AF-E<span class="blink-block">■</span><br>
+              Our Community Manager & registered kinesiologist<br>
+              Loves analog cameras; Fav. camera: Minolta AF-E<br>
             </div>
           </div>
           <div class="photo" style="background-image:url('William.jpg')"></div>
@@ -443,6 +402,7 @@
   </div>
 
   <script>
+    // square blink & scroll 逻辑 保持不变
     (function(){
       const sq      = document.querySelector('.content .square');
       const overlay = document.querySelector('.overlay');
@@ -461,7 +421,7 @@
         } else {
           overlay.style.display='none';
           post.classList.remove('enter');
-          sq.style.animation='blink 3s infinite';
+          sq.style.animation='blink3 3s infinite';
         }
       }
       window.addEventListener('scroll',onScroll);
@@ -469,67 +429,40 @@
       onScroll();
     })();
 
+    // Header 文字循环
     const headerEl = document.getElementById("headerTitle");
-
-// 你的句子数组
-const sentences = [
-  "Of time, souls and cities.",
-  "Know thyself.",
-  "静かな光。",
-  "10% off for rescued animals.",
-  "YYJ > YVR",
-  "We don’t shoot for road ragers.",
-  "那人却在灯火阑珊处。",
-  "You want it darker."
-];
-
-let lastIndex = -1;
-function rnd(exclude) {
-  let i;
-  do {
-    i = Math.floor(Math.random() * sentences.length);
-  } while (i === exclude);
-  return i;
-}
-
-function animateHeader() {
-  const next = rnd(lastIndex);
-  lastIndex = next;
-  const text  = sentences[next];
-  const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
-
-  // 动画淡出
-  gsap.to(headerEl, {
-    y: -20, opacity: 0,
-    duration: 0.3, ease: "power1.in",
-    onComplete() {
-      // 切换字体类
-      headerEl.classList.toggle("ja",  isCJK);
-      headerEl.classList.toggle("en", !isCJK);
-
-      // 更新文字
-      headerEl.textContent = text;
-
-      // 复位位置并淡入
-      gsap.set(headerEl, { y: 20 });
-      gsap.to(headerEl, {
-        y: 0, opacity: 1,
-        duration: 0.4, ease: "power1.out"
-      });
+    const sentences = [
+      "Of time, souls and cities.","Know thyself.","静かな光。",
+      "10% off for rescued animals.","YYJ > YVR",
+      "We don’t shoot for road ragers.","那人却在灯火阑珊处。","You want it darker."
+    ];
+    let last=-1;
+    function rnd(ex){
+      let i; do{i=Math.floor(Math.random()*sentences.length);}while(i===ex);
+      return i;
     }
-  });
-}
-animateHeader(); 
-setInterval(animateHeader, 3000);
-    // 第三階段輪播（7秒切換一組，共4組）
+    function animateHeader(){
+      const next=rnd(last); last=next;
+      const txt=sentences[next];
+      const isCJK=/[\u4E00-\u9FFF\u3040-\u30FF]/.test(txt);
+      gsap.to(headerEl,{y:-20,opacity:0,duration:0.3,ease:"power1.in",onComplete(){
+        headerEl.classList.toggle("ja", isCJK);
+        headerEl.classList.toggle("en", !isCJK);
+        headerEl.textContent=txt;
+        gsap.set(headerEl,{y:20});
+        gsap.to(headerEl,{y:0,opacity:1,duration:0.4,ease:"power1.out"});
+      }});
+    }
+    animateHeader();
+    setInterval(animateHeader,3000);
+
+    // 团队轮播 保持不变
     (function(){
-      const wrap = document.querySelector('.team-container');
-      let idx = 0;
-      const total = 4;
-      const step = 100/total; // 25
+      const wrap=document.querySelector('.team-container');
+      let idx=0,total=4,step=25;
       setInterval(()=>{
-        idx = (idx + 1) % total;
-        wrap.style.transform = `translateX(-${idx*step}%)`;
+        idx=(idx+1)%total;
+        wrap.style.transform=`translateX(-${idx*step}%)`;
       },7000);
     })();
   </script>
