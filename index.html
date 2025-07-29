@@ -193,6 +193,12 @@
       font-size:18px; color:#000;
       overflow:hidden; white-space:nowrap;
     }
+    .header-title.en {
+  font-family: 'Courier New', monospace;
+}
+.header-title.ja {
+  font-family: 'MS Mincho', serif;
+}
     .header-bar a {
       font-family:'Courier New',monospace;
       font-size:18px; color:#000;
@@ -451,25 +457,60 @@
       onScroll();
     })();
 
-    // Header 文字循环
-    const sentences = [
-      "Of time, souls and cities.","Know thyself.","静かな光。",
-      "10% off for rescued animals.","YYJ > YVR",
-      "We don’t shoot for road ragers.","那人却在灯火阑珊处。","You want it darker."
-    ];
     const headerEl = document.getElementById("headerTitle");
-    let last = -1;
-    function rnd(ex){ let i; do{i = Math.floor(Math.random()*sentences.length);}while(i===ex); return i; }
-    function animateHeader(){
-      const next = rnd(last); last = next;
-      gsap.to(headerEl,{ y:-20, opacity:0, duration:0.3, ease:"power1.in", onComplete(){
-        headerEl.textContent = sentences[next];
-        gsap.set(headerEl,{ y:20 });
-        gsap.to(headerEl,{ y:0, opacity:1, duration:0.4, ease:"power1.out" });
-      }});
-    }
-    setInterval(animateHeader,3000);
 
+// 你的句子数组
+const sentences = [
+  "Of time, souls and cities.",
+  "Know thyself.",
+  "静かな光。",
+  "10% off for rescued animals.",
+  "YYJ > YVR",
+  "We don’t shoot for road ragers.",
+  "那人却在灯火阑珊处。",
+  "You want it darker."
+];
+
+let lastIndex = -1;
+function rnd(exclude) {
+  let i;
+  do {
+    i = Math.floor(Math.random() * sentences.length);
+  } while (i === exclude);
+  return i;
+}
+
+function animateHeader() {
+  const next = rnd(lastIndex);
+  lastIndex = next;
+  const text  = sentences[next];
+  // 判断是否含 CJK 文字
+  const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
+
+  // 动画淡出
+  gsap.to(headerEl, {
+    y: -20, opacity: 0,
+    duration: 0.3, ease: "power1.in",
+    onComplete() {
+      // 切换字体类
+      headerEl.classList.toggle("ja",  isCJK);
+      headerEl.classList.toggle("en", !isCJK);
+
+      // 更新文字
+      headerEl.textContent = text;
+
+      // 复位位置并淡入
+      gsap.set(headerEl, { y: 20 });
+      gsap.to(headerEl, {
+        y: 0, opacity: 1,
+        duration: 0.4, ease: "power1.out"
+      });
+    }
+  });
+}
+
+// 每 3 秒调用一次
+setInterval(animateHeader, 3000);
     // 第三階段輪播（7秒切換一組，共4組）
     (function(){
       const wrap = document.querySelector('.team-container');
