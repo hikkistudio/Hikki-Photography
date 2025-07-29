@@ -308,7 +308,7 @@
 </head>
 <body>
   <div class="header-bar">
-    <div class="header-title" id="headerTitle">Of time, souls and cities.  <span class="blink-block">■</span></div>
+    <div class="header-title" id="headerTitle">Of time, souls and cities.  </div>
     <a href="index.html">Index</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
@@ -320,7 +320,7 @@
   <div class="content">
     <h1>EMOTIONS,</h1>
     <div class="grid-container">
-      <h2>not imitate perfection.</h2>
+      <h2>not imitate perfection.  <span class="blink-block">■</span></h2>
       <div class="left">
         <h3>Hikki Photography & Philosophy</h3>
         <ul class="locations">
@@ -484,7 +484,6 @@ function animateHeader() {
   const next = rnd(lastIndex);
   lastIndex = next;
   const text  = sentences[next];
-  // 判断是否含 CJK 文字
   const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
 
   // 动画淡出
