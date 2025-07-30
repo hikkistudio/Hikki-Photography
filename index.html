@@ -310,7 +310,7 @@
 <body>
   <div class="header-bar">
     <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
-    <a href="index.html">Index</a>
+    <a href="index.html">About</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -473,11 +473,11 @@ const sentences = [
   "絢爛如電，虛幻如霧",
   "Wake the fuck up samurai-",
   "father Anderson...",
-  "also try max noodle house",
+  "Also try max noodle house.",
   "晚星墜落處，自成橋梁。",
   "father Anderson...",
   "Elegance is about breaking the rules.",
-  "Hesitation is defeat",
+  "Hesitation is defeat.",
   "男性は本質を愛し、女性は習慣を愛する。",
   "い～や　い～や　い～や",
   "sksksk",
@@ -517,7 +517,6 @@ function animateHeader() {
   const next = rnd(lastIndex);
   lastIndex = next;
   const text  = sentences[next];
-  // 判断是否含 CJK 文字
   const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
 
   // 动画淡出
@@ -528,11 +527,7 @@ function animateHeader() {
       // 切换字体类
       headerEl.classList.toggle("ja",  isCJK);
       headerEl.classList.toggle("en", !isCJK);
-
-      // 更新文字
       headerEl.textContent = text;
-
-      // 复位位置并淡入
       gsap.set(headerEl, { y: 20 });
       gsap.to(headerEl, {
         y: 0, opacity: 1,
