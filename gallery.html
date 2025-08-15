@@ -34,12 +34,9 @@
       margin-right: auto;
       font-size: 18px;
       overflow: hidden; white-space: nowrap;
-      /* 初始為英文模式 */
       font-family: "Courier New", monospace;
     }
-    .header-title.ja {
-      font-family: "MS Mincho", serif;
-    }
+    .header-title.ja { font-family: "MS Mincho", serif; }
     .header-bar a {
       margin-left: 40px;
       font-size: 18px;
@@ -50,23 +47,54 @@
     .header-bar a:hover  { color: #f1c232; }
     .header-bar a.active { color: #e74c3c; }
 
-    /* 使 ■ 也能閃爍 */
-    @keyframes blink3 {
-      0%,50%,100% { opacity: 1; }
-      25%,75%     { opacity: 0; }
+    /* —— 內容避開固定 Header —— */
+    .header-spacer { height: 60px; }
+
+    /* —— Filter Bar（獨立，字體 Courier New） —— */
+    .filter-bar{
+      width: 100%;
+      background: #000;
+      border-bottom: 1px solid #000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 40px;
+      box-sizing: border-box;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-family: "Courier New", monospace;
     }
-    .blink-block {
-      display: inline-block;
-      animation: blink3 3s infinite;
+    .filter-label{
+      font-size: 14px;
+      color:#f4f2f0;
+      margin-right: 8px;
+      white-space: nowrap;
+      user-select: none;
+      font-family: "Courier New", monospace;
     }
+    .filter-btn{
+      appearance: none;
+      border: 1px solid #f4f2f0;
+      background: #fff;
+      color:#222;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
+      white-space: nowrap;
+      font-family: "Courier New", monospace;
+    }
+    .filter-btn:hover{ background:#f4f2f0; border-color:#f4f2f0; }
+    .filter-btn:active{ transform: translateY(1px); }
+    .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
 
     /* —— Gallery —— */
     .gallery-wrapper {
       max-width: 1200px;
       margin: 0 auto 20px;
-      padding: 100px 10px 10px; /* 預留 header 高度 */
+      padding: 20px 10px 10px;
       box-sizing: border-box;
-      scroll-margin-top: 100px;
     }
     .gallery {
       display: flex;
@@ -74,15 +102,19 @@
       gap: 10px;
       justify-content: center;
     }
+    /* ✅ 統一縮圖比例為 3:2（中心裁切）*/
     .gallery img {
       width: calc(25% - 10px);
       min-width: 200px;
+      aspect-ratio: 2 / 3;       /* 固定顯示 3:2 */
+      height: auto;              /* 由寬度 + aspect-ratio 推算高度 */
+      object-fit: cover;         /* 填滿並裁切 */
+      object-position: center;   /* 以中心裁切 */
+      background: #111;          /* 圖片未載入時的底色 */
       cursor: pointer;
-      transition: transform .3s ease;
+      transition: transform .3s ease, opacity .2s ease;
     }
-    .gallery img:hover {
-      transform: scale(1.03);
-    }
+    .gallery img:hover { transform: scale(1.03); }
 
     /* —— Overlay Lightbox —— */
     .overlay {
@@ -96,10 +128,8 @@
       flex-direction: column;
       z-index: 10000;
     }
-    .overlay img {
-      max-width: 90%;
-      max-height: 90%;
-    }
+    .overlay img { max-width: 90%; max-height: 90%; } /* 保留原始比例顯示 */
+
     .close-btn {
       position: absolute;
       top: 20px; left: 20px;
@@ -111,6 +141,7 @@
     /* —— RWD —— */
     @media (max-width: 768px) {
       .gallery img { width: calc(50% - 10px); }
+      .filter-bar{ padding: 10px 16px; }
     }
     @media (max-width: 480px) {
       .gallery img { width: 100%; }
@@ -118,17 +149,9 @@
 
     /* —— 手機端專屬覆蓋 —— */
     @media only screen and (max-width: 767px) {
-      /* 隱藏左側滾動文字 */
-      .header-title {
-        display: none !important;
-      }
-      /* 將連結置中並調整間距 */
-      .header-bar {
-        justify-content: center !important;
-      }
-      .header-bar a {
-        margin: 0 37px !important;
-      }
+      .header-title { display: none !important; }
+      .header-bar { justify-content: center !important; }
+      .header-bar a { margin: 0 37px !important; }
     }
   </style>
 </head>
@@ -144,21 +167,57 @@
     <a href="contact.html">Contact</a>
   </div>
 
+  <!-- 讓內容避開固定 Header -->
+  <div class="header-spacer" aria-hidden="true"></div>
+
+  <!-- —— Filter Bar（獨立） —— -->
+  <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn" data-filter="Souls" aria-pressed="false">Souls</button>
+    <button class="filter-btn" data-filter="Times"  aria-pressed="false">Times</button>
+    <button class="filter-btn" data-filter="Cities"   aria-pressed="false">Cities</button>
+  </div>
+
   <!-- —— Gallery Section —— -->
   <div class="gallery-wrapper" id="gallery">
     <div class="gallery">
-      <img src="g1.jpg"  alt="Photo 1">
-      <img src="g2.jpg"  alt="Photo 2">
-      <img src="g3.jpg"  alt="Photo 3">
-      <img src="g4.jpg"  alt="Photo 4">
-      <img src="g5.jpg"  alt="Photo 5">
-      <img src="g6.jpg"  alt="Photo 6">
-      <img src="g7.jpg"  alt="Photo 7">
-      <img src="g8.jpg"  alt="Photo 8">
-      <img src="g9.jpg"  alt="Photo 9">
-      <img src="g10.jpg" alt="Photo 10">
-      <img src="g11.jpg" alt="Photo 11">
-      <img src="g12.jpg" alt="Photo 12">
+      <!-- 依實際情況調整 data-cat 類別；loading=lazy 可保效能 -->
+      <img src="g1.jpg"  alt="Photo 1"  loading="lazy" data-cat="Times">
+      <img src="g2.jpg"  alt="Photo 2"  loading="lazy" data-cat="Cities">
+      <img src="g3.jpg"  alt="Photo 3"  loading="lazy" data-cat="Souls">
+      <img src="g4.jpg"  alt="Photo 4"  loading="lazy" data-cat="Souls">
+      <img src="g5.jpg"  alt="Photo 5"  loading="lazy" data-cat="Souls">
+      <img src="g6.jpg"  alt="Photo 6"  loading="lazy" data-cat="Souls">
+      <img src="g7.jpg"  alt="Photo 7"  loading="lazy" data-cat="Cities">
+      <img src="g8.jpg"  alt="Photo 8"  loading="lazy" data-cat="Cities">
+      <img src="g9.jpg"  alt="Photo 9"  loading="lazy" data-cat="Cities">
+      <img src="g10.jpg" alt="Photo 10" loading="lazy" data-cat="Cities">
+      <img src="g11.jpg" alt="Photo 11" loading="lazy" data-cat="Cities">
+      <img src="g12.jpg" alt="Photo 12" loading="lazy" data-cat="Souls">
+      <img src="g13.jpg" alt="Photo 13" loading="lazy" data-cat="Times">
+      <img src="g14.jpg" alt="Photo 14" loading="lazy" data-cat="Cities">
+      <img src="g15.jpg" alt="Photo 15" loading="lazy" data-cat="Cities">
+      <img src="g16.jpg" alt="Photo 16" loading="lazy" data-cat="Cities">
+      <img src="g17.jpg" alt="Photo 17" loading="lazy" data-cat="Times">
+      <img src="g18.jpg" alt="Photo 18" loading="lazy" data-cat="Cities">
+      <img src="g19.JPG" alt="Photo 19" loading="lazy" data-cat="Cities">
+      <img src="g20.jpg" alt="Photo 20" loading="lazy" data-cat="Cities">
+      <img src="g21.jpg" alt="Photo 21" loading="lazy" data-cat="Cities">
+      <img src="g22.jpg" alt="Photo 22" loading="lazy" data-cat="Cities">
+      <img src="g23.jpg" alt="Photo 23" loading="lazy" data-cat="Cities">
+      <img src="g24.jpg" alt="Photo 24" loading="lazy" data-cat="Times">
+      <img src="g25.jpg" alt="Photo 25" loading="lazy" data-cat="Timess">
+      <img src="g26.jpg" alt="Photo 26" loading="lazy" data-cat="Souls">
+      <img src="g27.jpg" alt="Photo 27" loading="lazy" data-cat="Souls">
+      <img src="g28.jpg" alt="Photo 28" loading="lazy" data-cat="Times">
+      <img src="g29.jpg" alt="Photo 29" loading="lazy" data-cat="Times">
+      <img src="g30.jpg" alt="Photo 30" loading="lazy" data-cat="Times">
+      <img src="g31.jpg" alt="Photo 31" loading="lazy" data-cat="Times">
+      <img src="g32.jpg" alt="Photo 32" loading="lazy" data-cat="Times">
+      <img src="g33.jpg" alt="Photo 33" loading="lazy" data-cat="Cities">
+      <img src="g34.jpg" alt="Photo 34" loading="lazy" data-cat="Times">
+      <img src="g35.jpg" alt="Photo 35" loading="lazy" data-cat="Times">
+
     </div>
   </div>
 
@@ -171,86 +230,50 @@
   <!-- —— Header 動態文字輪播腳本 —— -->
   <script>
     const sentences = [
-  "Of time, souls and cities.",
-  "Know thyself.",
-  "静かな光。",
-  "10% off for rescued animals.",
-  "YYJ > YVR",
-  "We don’t shoot for road ragers.",
-  "Get a quote today.",
-  "絢爛如電，虛幻如霧",
-  "Wake the fuck up samurai-",
-  "father Anderson...",
-  "also try max noodle house",
-  "晚星墜落處，自成橋梁。",
-  "father Anderson...",
-  "Elegance is about breaking the rules.",
-  "Hesitation is defeat",
-  "男性は本質を愛し、女性は習慣を愛する。",
-  "い～や　い～や　い～や",
-  "sksksk",
-  "Come on and join our convoy.",
-  "I am in flames!",
-  "CBT is a lie, try Carl Jung.",
-  "Be your own reason to smile.",
-  "其為質則金玉不足喻其貴。",
-  "사진은 기억이야.",
-  "影は真実を語る。",
-  "빛은 거짓말하지 않아.",
-  "Light reveals. Shadow defines.",
-  "Some people are worth melting for.",
-  "ひとりって切ないくらい自由。",
-  "The name of the rose is all that remains.",
-  "Οἷ’ ἥβης ἄνθεα...",
-  "Hoyne pilsner O man",
-  "Discount for foster families!",
-  "DM for shushi recommandation.",
-  "φαίνεταί μοι",
-  "(づ｡◕‿‿◕｡)づ　",
-  "(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-  "Shanghai fog, yes.",
-  "悲喜千般同幻夢。",
-  "那些都是很好很好的，偏偏我不喜欢。"
-  
-
-];
-
+      "Of time, souls and cities.","Know thyself.","静かな光。",
+      "10% off for rescued animals.","YYJ > YVR",
+      "We don’t shoot for road ragers.","Get a quote today.",
+      "絢爛如電，虛幻如霧","Wake the fuck up samurai-",
+      "father Anderson...","also try max noodle house",
+      "晚星墜落處，自成橋梁。","father Anderson...",
+      "Elegance is about breaking the rules.","Hesitation is defeat",
+      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
+      "sksksk","Come on and join our convoy.","I am in flames!",
+      "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
+      "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
+      "Some people are worth melting for.","ひとりって切ないくらい自由。",
+      "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
+      "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+      "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜欢。"
+    ];
     const headerEl = document.getElementById("headerTitle");
-   let lastIndex = -1;
-  function rnd(exclude) {
-    let i;
-    do {
-      i = Math.floor(Math.random() * sentences.length);
-    } while (i === exclude);
-    return i;
-  }
-
-  function animateHeader() {
-    const next = rnd(lastIndex);
-    lastIndex = next;
-    const text = sentences[next];
-    // 檢測有沒有 CJK（中日韓）字元
-    const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
-
-    gsap.to(headerEl, {
-      y: -20, opacity: 0,
-      duration: 0.3, ease: "power1.in",
-      onComplete() {
-        headerEl.classList.toggle("ja", isCJK);
-        headerEl.classList.toggle("en", !isCJK);
-        headerEl.textContent = text;
-        gsap.set(headerEl, { y: 20 });
-        gsap.to(headerEl, { y: 0, opacity: 1, duration: 0.4, ease: "power1.out" });
-      }
-    });
-  }
-
-    // 首次執行並每 3 秒切換一次
+    let lastIndex = -1;
+    function rnd(exclude) {
+      let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude);
+      return i;
+    }
+    function animateHeader() {
+      const next = rnd(lastIndex);
+      lastIndex = next;
+      const text = sentences[next];
+      const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
+      gsap.to(headerEl, {
+        y: -20, opacity: 0, duration: 0.3, ease: "power1.in",
+        onComplete() {
+          headerEl.classList.toggle("ja", isCJK);
+          headerEl.classList.toggle("en", !isCJK);
+          headerEl.textContent = text;
+          gsap.set(headerEl, { y: 20 });
+          gsap.to(headerEl, { y: 0, opacity: 1, duration: 0.4, ease: "power1.out" });
+        }
+      });
+    }
     animateHeader();
     setInterval(animateHeader, 3000);
   </script>
 
-  <!-- —— Gallery Lightbox 腳本 —— -->
+  <!-- —— Gallery + Filter 腳本 —— -->
   <script>
     const images     = document.querySelectorAll('.gallery img');
     const overlay    = document.getElementById('overlay');
@@ -263,13 +286,40 @@
         overlay.style.display = 'flex';
       });
     });
+    closeBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
+    document.addEventListener('keydown', e => { if (e.key === "Escape") overlay.style.display = 'none'; });
 
-    closeBtn.addEventListener('click', () => {
-      overlay.style.display = 'none';
+    /* —— Filter 功能 —— */
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let activeFilter = ""; // 空字串 = 全部
+
+    const applyFilter = () => {
+      images.forEach(img => {
+        const show = !activeFilter || img.dataset.cat === activeFilter;
+        img.style.display = show ? "" : "none";
+        img.style.opacity = show ? "1" : "0";
+      });
+    };
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.filter;
+        const isActive = btn.classList.contains('active');
+
+        filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+
+        if (isActive) {
+          activeFilter = "";
+        } else {
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed','true');
+          activeFilter = value;
+        }
+        applyFilter();
+      });
     });
-    document.addEventListener('keydown', e => {
-      if (e.key === "Escape") overlay.style.display = 'none';
-    });
+
+    applyFilter(); // 初始顯示全部
   </script>
 </body>
 </html>
