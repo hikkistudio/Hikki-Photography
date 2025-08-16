@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hikki</title>
 
-  <!-- GSAP，用於文字淡入淡出動畫 -->
+  <!-- 預連線：加速載入 CDN -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+  <!-- GSAP，用於文字淡入淡出與進場動畫 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
@@ -18,30 +22,39 @@
       color: #000;
     }
 
+    /* —— Mobile Rotator（手機版上方輪播列） —— */
+    .mobile-rotator{
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 36px;
+      background: #f4f2f0; color:#000;
+      display: none; /* 僅手機顯示 */
+      align-items: center; justify-content: center;
+      padding: 0 12px; box-sizing: border-box;
+      z-index: 10001; /* 高於 header(9999)，低於 overlay */
+      font-size: 14px; line-height: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-family: "Courier New", monospace;
+    }
+    .mobile-rotator.ja { font-family: "MS Mincho", serif; }
+
     /* —— Header Bar —— */
     .header-bar {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 60px;
       background: #f4f2f0;
-      display: flex;
-      align-items: center;
-      padding: 0 40px;
-      box-sizing: border-box;
+      display: flex; align-items: center;
+      padding: 0 40px; box-sizing: border-box;
       z-index: 9999;
     }
     .header-title {
-      margin-right: auto;
-      font-size: 18px;
+      margin-right: auto; font-size: 18px;
       overflow: hidden; white-space: nowrap;
       font-family: "Courier New", monospace;
     }
     .header-title.ja { font-family: "MS Mincho", serif; }
     .header-bar a {
-      margin-left: 40px;
-      font-size: 18px;
-      color: #000;
-      text-decoration: none;
+      margin-left: 40px; font-size: 18px;
+      color: #000; text-decoration: none;
       transition: color .3s ease;
     }
     .header-bar a:hover  { color: #f1c232; }
@@ -55,37 +68,26 @@
       width: 100%;
       background: #000;
       border-bottom: 1px solid #000;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 40px;
-      box-sizing: border-box;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 40px; box-sizing: border-box;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
       font-family: "Courier New", monospace;
     }
     .filter-label{
-      font-size: 14px;
-      color:#f4f2f0;
-      margin-right: 8px;
-      white-space: nowrap;
-      user-select: none;
+      font-size: 14px; color:#f4f2f0; margin-right: 8px;
+      white-space: nowrap; user-select: none;
       font-family: "Courier New", monospace;
     }
     .filter-btn{
       appearance: none;
       border: 1px solid #f4f2f0;
-      background: #fff;
-      color:#222;
-      padding: 6px 12px;
-      font-size: 14px;
-      border-radius: 999px;
-      cursor: pointer;
+      background: #fff; color:#222;
+      padding: 6px 12px; font-size: 14px;
+      border-radius: 999px; cursor: pointer;
       transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
-      white-space: nowrap;
-      font-family: "Courier New", monospace;
+      white-space: nowrap; font-family: "Courier New", monospace;
     }
-    .filter-btn:hover{ background:#f4f2f0; border-color:#f4f2f0; }
+    .filter-btn:hover { background:#f4f2f0; border-color:#f4f2f0; }
     .filter-btn:active{ transform: translateY(1px); }
     .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
 
@@ -97,45 +99,60 @@
       box-sizing: border-box;
     }
     .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
     }
-    /* ✅ 統一縮圖比例為 3:2（中心裁切）*/
+
     .gallery img {
       width: calc(25% - 10px);
       min-width: 200px;
-      aspect-ratio: 2 / 3;       /* 固定顯示 3:2 */
-      height: auto;              /* 由寬度 + aspect-ratio 推算高度 */
-      object-fit: cover;         /* 填滿並裁切 */
-      object-position: center;   /* 以中心裁切 */
-      background: #111;          /* 圖片未載入時的底色 */
+      aspect-ratio: 2 / 3;      /* 你已調整比例，保持不動 */
+      height: auto;
+      object-fit: cover; object-position: center;
+      background: #111;
       cursor: pointer;
       transition: transform .3s ease, opacity .2s ease;
+      will-change: transform, opacity;
+
+      /* 讓瀏覽器略過離屏內容的佈局與繪製，加速初載 */
+      content-visibility: auto;
+      contain-intrinsic-size: 400px 267px; /* 避免 CLS（可依你比例調整） */
+      opacity: 0; transform: translateY(14px); /* 初始狀態供動畫使用 */
     }
+    .gallery img.is-visible { opacity: 1; transform: none; } /* 動畫後清理 */
     .gallery img:hover { transform: scale(1.03); }
+
+    /* —— Load More —— */
+    .load-more-wrap{
+      display:flex; justify-content:center; padding:16px 0 32px;
+    }
+    .load-more-btn{
+      appearance: none;
+      border: 1px solid #f4f2f0;
+      background: #000; color:#f4f2f0;
+      padding: 10px 18px; font-size: 14px; border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
+      font-family: "Courier New", monospace;
+    }
+    .load-more-btn:hover { background:#111; }
+    .load-more-btn:active{ transform: translateY(1px); }
+    .no-results{
+      color:#f4f2f0; text-align:center; padding: 24px 0;
+      font-size:14px;
+    }
 
     /* —— Overlay Lightbox —— */
     .overlay {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; inset: 0;
       width: 100vw; height: 100vh;
       background: rgba(0,0,0,0.9);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 10000;
+      display: none; justify-content: center; align-items: center; flex-direction: column;
+      z-index: 10002; /* 高於 rotator & header */
     }
     .overlay img { max-width: 90%; max-height: 90%; } /* 保留原始比例顯示 */
-
     .close-btn {
-      position: absolute;
-      top: 20px; left: 20px;
-      font-size: 28px; color: #f4f2f0;
-      cursor: pointer;
-      user-select: none;
+      position: absolute; top: 20px; left: 20px;
+      font-size: 28px; color: #f4f2f0; cursor: pointer; user-select: none;
     }
 
     /* —— RWD —— */
@@ -144,10 +161,26 @@
       .filter-bar{ padding: 10px 16px; }
     }
     @media (max-width: 480px) {
-      .gallery img { width: 100%; }
+      /* 顯示手機輪播列，並讓 header 下移 */
+      .mobile-rotator{ display:flex; }
+      .header-bar{ top: 36px; }
+      .header-spacer{ height: 96px; } /* 36 + 60 */
+      .header-title { display: none !important; }
+
+      /* 手機：一列 4 張 */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        justify-items: stretch;
+      }
+      .gallery img {
+        width: 100%;
+        min-width: 0;
+      }
     }
 
-    /* —— 手機端專屬覆蓋 —— */
+    /* —— 保留原手機導覽調整 —— */
     @media only screen and (max-width: 767px) {
       .header-title { display: none !important; }
       .header-bar { justify-content: center !important; }
@@ -156,6 +189,11 @@
   </style>
 </head>
 <body>
+
+  <!-- —— 手機版上方輪播列 —— -->
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">
+    Of time, souls and cities.
+  </div>
 
   <!-- —— Header —— -->
   <div class="header-bar">
@@ -173,52 +211,73 @@
   <!-- —— Filter Bar（獨立） —— -->
   <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
     <span class="filter-label">Filter:</span>
-    <button class="filter-btn" data-filter="Souls" aria-pressed="false">Souls</button>
+    <button class="filter-btn" data-filter="Souls"  aria-pressed="false">Souls</button>
     <button class="filter-btn" data-filter="Times"  aria-pressed="false">Times</button>
-    <button class="filter-btn" data-filter="Cities"   aria-pressed="false">Cities</button>
+    <button class="filter-btn" data-filter="Cities" aria-pressed="false">Cities</button>
   </div>
 
   <!-- —— Gallery Section —— -->
   <div class="gallery-wrapper" id="gallery">
     <div class="gallery">
-      <!-- 依實際情況調整 data-cat 類別；loading=lazy 可保效能 -->
-      <img src="g1.jpg"  alt="Photo 1"  loading="lazy" data-cat="Times">
-      <img src="g2.jpg"  alt="Photo 2"  loading="lazy" data-cat="Cities">
-      <img src="g3.jpg"  alt="Photo 3"  loading="lazy" data-cat="Souls">
-      <img src="g4.jpg"  alt="Photo 4"  loading="lazy" data-cat="Souls">
-      <img src="g5.jpg"  alt="Photo 5"  loading="lazy" data-cat="Souls">
-      <img src="g6.jpg"  alt="Photo 6"  loading="lazy" data-cat="Souls">
-      <img src="g7.jpg"  alt="Photo 7"  loading="lazy" data-cat="Cities">
-      <img src="g8.jpg"  alt="Photo 8"  loading="lazy" data-cat="Cities">
-      <img src="g9.jpg"  alt="Photo 9"  loading="lazy" data-cat="Cities">
-      <img src="g10.jpg" alt="Photo 10" loading="lazy" data-cat="Cities">
-      <img src="g11.jpg" alt="Photo 11" loading="lazy" data-cat="Cities">
-      <img src="g12.jpg" alt="Photo 12" loading="lazy" data-cat="Souls">
-      <img src="g13.jpg" alt="Photo 13" loading="lazy" data-cat="Times">
-      <img src="g14.jpg" alt="Photo 14" loading="lazy" data-cat="Cities">
-      <img src="g15.jpg" alt="Photo 15" loading="lazy" data-cat="Cities">
-      <img src="g16.jpg" alt="Photo 16" loading="lazy" data-cat="Cities">
-      <img src="g17.jpg" alt="Photo 17" loading="lazy" data-cat="Times">
-      <img src="g18.jpg" alt="Photo 18" loading="lazy" data-cat="Cities">
-      <img src="g19.JPG" alt="Photo 19" loading="lazy" data-cat="Cities">
-      <img src="g20.jpg" alt="Photo 20" loading="lazy" data-cat="Cities">
-      <img src="g21.jpg" alt="Photo 21" loading="lazy" data-cat="Cities">
-      <img src="g22.jpg" alt="Photo 22" loading="lazy" data-cat="Cities">
-      <img src="g23.jpg" alt="Photo 23" loading="lazy" data-cat="Cities">
-      <img src="g24.jpg" alt="Photo 24" loading="lazy" data-cat="Times">
-      <img src="g25.jpg" alt="Photo 25" loading="lazy" data-cat="Timess">
-      <img src="g26.jpg" alt="Photo 26" loading="lazy" data-cat="Souls">
-      <img src="g27.jpg" alt="Photo 27" loading="lazy" data-cat="Souls">
-      <img src="g28.jpg" alt="Photo 28" loading="lazy" data-cat="Times">
-      <img src="g29.jpg" alt="Photo 29" loading="lazy" data-cat="Times">
-      <img src="g30.jpg" alt="Photo 30" loading="lazy" data-cat="Times">
-      <img src="g31.jpg" alt="Photo 31" loading="lazy" data-cat="Times">
-      <img src="g32.jpg" alt="Photo 32" loading="lazy" data-cat="Times">
-      <img src="g33.jpg" alt="Photo 33" loading="lazy" data-cat="Cities">
-      <img src="g34.jpg" alt="Photo 34" loading="lazy" data-cat="Times">
-      <img src="g35.jpg" alt="Photo 35" loading="lazy" data-cat="Times">
-
+      <!-- 保留你的清單；真正延遲載入將在 JS 內把 src 轉為 data-src -->
+      <img src="g1.jpg"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times">
+      <img src="g2.jpg"  alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g3.jpg"  alt="Photo 3"  loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g4.jpg"  alt="Photo 4"  loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g5.jpg"  alt="Photo 5"  loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g6.jpg"  alt="Photo 6"  loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g7.jpg"  alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g8.jpg"  alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g9.jpg"  alt="Photo 9"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g10.jpg" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g11.jpg" alt="Photo 11" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g12.jpg" alt="Photo 12" loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g13.jpg" alt="Photo 13" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g14.jpg" alt="Photo 14" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g15.jpg" alt="Photo 15" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g16.jpg" alt="Photo 16" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g17.jpg" alt="Photo 17" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g18.jpg" alt="Photo 18" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g19.JPG" alt="Photo 19" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g20.jpg" alt="Photo 20" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g21.jpg" alt="Photo 21" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g22.jpg" alt="Photo 22" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g23.jpg" alt="Photo 23" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g24.jpg" alt="Photo 24" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g25.jpg" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g26.jpg" alt="Photo 26" loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g27.jpg" alt="Photo 27" loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g28.jpg" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g29.jpg" alt="Photo 29" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g30.jpg" alt="Photo 30" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g31.jpg" alt="Photo 31" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g32.jpg" alt="Photo 32" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g33.jpg" alt="Photo 33" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g34.jpg" alt="Photo 34" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g35.jpg" alt="Photo 35" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g36.jpg" alt="Photo 36" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g37.jpg" alt="Photo 37" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g38.jpg" alt="Photo 38" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g39.jpg" alt="Photo 39" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g40.jpg" alt="Photo 40" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g41.jpg" alt="Photo 41" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g42.jpg" alt="Photo 42" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g43.jpg" alt="Photo 43" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g44.jpg" alt="Photo 44" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g45.jpg" alt="Photo 45" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g46.jpg" alt="Photo 46" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g47.jpg" alt="Photo 47" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g48.jpg" alt="Photo 48" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g49.jpg" alt="Photo 49" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g50.jpg" alt="Photo 50" loading="lazy" decoding="async" data-cat="Times">
+    
     </div>
+
+    <!-- Load More + 無結果訊息 -->
+    <div class="load-more-wrap">
+      <button id="loadMore" class="load-more-btn">Load More</button>
+    </div>
+    <div id="noResults" class="no-results" hidden>No images found.</div>
   </div>
 
   <!-- —— Overlay / Lightbox —— -->
@@ -232,11 +291,29 @@
     const sentences = [
       "Of time, souls and cities.","Know thyself.","静かな光。",
       "10% off for rescued animals.","YYJ > YVR",
-      "We don’t shoot for road ragers.","Get a quote today.",
-      "絢爛如電，虛幻如霧","Wake the fuck up samurai-",
+      "Get a quote today for free！",
+      "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
       "father Anderson...","also try max noodle house",
-      "晚星墜落處，自成橋梁。","father Anderson...",
-      "Elegance is about breaking the rules.","Hesitation is defeat",
+      "晚星墜落處，自成橋梁。",
+      "Elegance is about breaking the rules.",
+      "Hesitation is defeat",
+      "賺菲林錢",
+      "假作真時真亦假，無為有處有還無。",
+      "死生契闊，與子成說。 ",
+      "ネットは広大だわ。",
+      "恥の多い生涯を送ってきました。",
+      "Demain, dès l’aube…",
+      "Je pense, donc je suis.",
+      "Il faut imaginer Sisyphe heureux.",
+      "Stay gold, Ponyboy.",
+      "What’s in a name? that which we call a rose…",
+      "I drink your milkshake!",
+      "The horror! The horror!",
+      "Le temps détruit tout.",
+      "翩翩不富，皆失实也。",
+      "云上于天，需；君子以饮食宴乐。",
+      "天下有山，遯。",
+      "元者，善之长也；亨者，嘉之会也。",
       "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
       "sksksk","Come on and join our convoy.","I am in flames!",
       "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
@@ -246,80 +323,166 @@
       "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
       "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
       "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜欢。"
+  
     ];
     const headerEl = document.getElementById("headerTitle");
+    const mobileEl = document.getElementById("mobileRotator");
     let lastIndex = -1;
-    function rnd(exclude) {
-      let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude);
-      return i;
+
+    function rnd(exclude) { let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude); return i; }
+
+    function applyText(el, text, isCJK){
+      if(!el) return;
+      el.classList.toggle("ja", isCJK);
+      el.classList.toggle("en", !isCJK);
+      el.textContent = text;
     }
+
     function animateHeader() {
-      const next = rnd(lastIndex);
-      lastIndex = next;
+      const next = rnd(lastIndex); lastIndex = next;
       const text = sentences[next];
       const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
-      gsap.to(headerEl, {
-        y: -20, opacity: 0, duration: 0.3, ease: "power1.in",
-        onComplete() {
-          headerEl.classList.toggle("ja", isCJK);
-          headerEl.classList.toggle("en", !isCJK);
-          headerEl.textContent = text;
-          gsap.set(headerEl, { y: 20 });
-          gsap.to(headerEl, { y: 0, opacity: 1, duration: 0.4, ease: "power1.out" });
-        }
+
+      [headerEl, mobileEl].filter(Boolean).forEach(t => {
+        gsap.to(t, {
+          y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
+          onComplete() {
+            applyText(t, text, isCJK);
+            gsap.set(t, { y: 16 });
+            gsap.to(t, { y: 0, opacity: 1, duration: 0.35, ease: "power1.out" });
+          }
+        });
       });
     }
     animateHeader();
-    setInterval(animateHeader, 3000);
+    setInterval(animateHeader, 4000);
   </script>
 
-  <!-- —— Gallery + Filter 腳本 —— -->
+  <!-- —— Gallery + Filter + 動畫 + Load More + 速度優化 —— -->
   <script>
-    const images     = document.querySelectorAll('.gallery img');
     const overlay    = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
     const closeBtn   = document.getElementById('closeBtn');
 
-    images.forEach(img => {
-      img.addEventListener('click', () => {
-        overlayImg.src = img.src;
-        overlay.style.display = 'flex';
-      });
-    });
-    closeBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
-    document.addEventListener('keydown', e => { if (e.key === "Escape") overlay.style.display = 'none'; });
-
-    /* —— Filter 功能 —— */
+    const allImgs    = Array.from(document.querySelectorAll('.gallery img'));
     const filterBtns = document.querySelectorAll('.filter-btn');
-    let activeFilter = ""; // 空字串 = 全部
+    const loadMoreBtn= document.getElementById('loadMore');
+    const noResults  = document.getElementById('noResults');
 
-    const applyFilter = () => {
-      images.forEach(img => {
-        const show = !activeFilter || img.dataset.cat === activeFilter;
-        img.style.display = show ? "" : "none";
-        img.style.opacity = show ? "1" : "0";
+    // ---- 進場動畫設定 ----
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animateIn = (els) => {
+      if (reduceMotion || !els.length) { els.forEach(el => el.classList.add('is-visible')); return; }
+      gsap.fromTo(els, { y: 14, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.05,
+        onComplete() { els.forEach(el => el.classList.add('is-visible')); }
       });
     };
 
+    // ---- 真正延遲載入：把 src 轉為 data-src，先塞 1x1 透明圖，以 IO 進視窗才換回 ----
+    const TRANSPARENT_1x1 = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    allImgs.forEach((img, idx) => {
+      img.dataset.index = idx;
+      if (!img.dataset.src) {
+        img.dataset.src = img.src;
+        img.src = TRANSPARENT_1x1;
+      }
+      if (idx < 4) img.fetchPriority = "high";
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        if (img.dataset.src && img.src !== img.dataset.src) {
+          img.src = img.dataset.src;
+        }
+        io.unobserve(img);
+      });
+    }, { rootMargin: "200px 0px" });
+
+    // ---- 分頁批次與篩選 ----
+    const BATCH = 12;
+    let activeFilter = "";
+    let visibleCount = BATCH;
+
+    function getFilteredList() {
+      return allImgs.filter(img => !activeFilter || img.dataset.cat === activeFilter);
+    }
+
+    function refreshGrid(reset=false) {
+      const list = getFilteredList();
+
+      if (reset) visibleCount = BATCH;
+      const toShow = list.slice(0, visibleCount);
+
+      // 先全部隱藏
+      allImgs.forEach(img => { img.style.display = "none"; });
+
+      // 顯示需要的，並交給 IO 進視窗時載入
+      toShow.forEach(img => {
+        img.style.display = "";
+        img.classList.remove('is-visible'); // 讓動畫可重跑
+        io.observe(img);
+      });
+
+      // 動畫（下一影格啟動，避免 style 抵觸）
+      requestAnimationFrame(() => animateIn(toShow));
+
+      // Load More 顯示與否
+      loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-flex' : 'none';
+
+      // 無結果訊息
+      noResults.hidden = list.length > 0;
+
+      // 閒置時預抓下一批
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          list.slice(visibleCount, visibleCount + 4).forEach(img => {
+            if (img.dataset.src) {
+              const pre = new Image();
+              pre.decoding = "async";
+              pre.src = img.dataset.src;
+            }
+          });
+        });
+      }
+    }
+
+    // 初始渲染
+    refreshGrid(true);
+
+    // Load More
+    loadMoreBtn.addEventListener('click', () => {
+      visibleCount += BATCH;
+      refreshGrid(false);
+    });
+
+    // Filter
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const value = btn.dataset.filter;
         const isActive = btn.classList.contains('active');
-
         filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-
         if (isActive) {
           activeFilter = "";
         } else {
           btn.classList.add('active');
           btn.setAttribute('aria-pressed','true');
-          activeFilter = value;
+          activeFilter = btn.dataset.filter;
         }
-        applyFilter();
+        refreshGrid(true);
       });
     });
 
-    applyFilter(); // 初始顯示全部
+    // Lightbox
+    allImgs.forEach(img => {
+      img.addEventListener('click', () => {
+        overlayImg.src = img.currentSrc || img.dataset.src || img.src;
+        overlay.style.display = 'flex';
+      });
+    });
+    closeBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
+    document.addEventListener('keydown', e => { if (e.key === "Escape") overlay.style.display = 'none'; });
   </script>
 </body>
 </html>
