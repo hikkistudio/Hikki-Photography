@@ -5,172 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Hikki</title>
 
-  <!-- 引入 GSAP，用於文字淡入淡出動畫 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Preconnect / fonts -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
+
+  <!-- Preload bg -->
+  <link rel="preload" as="image" href="bg.jpg">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
-    /* —————— RESET & BASE —————— */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;    /* ← 關閉上下捲動 */
-    }
-    body {
-      background: url('bg.jpg') center/cover no-repeat;
-      position: relative;
-      font-family: 'Courier New', monospace;
-      color: #f4f2f0;
+    :root{
+      --mono: "Courier New", Courier, "Liberation Mono", "Nimbus Mono L",
+              "DejaVu Sans Mono", "SFMono-Regular", monospace;
     }
 
-    /* —— Header Bar —— */
-   .header-bar {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 60px;
-  background: #f4f2f0;
-  display: flex;
-  align-items: center;
-  padding: 0 40px;
-  box-sizing: border-box;
-  z-index: 9999;
-}
-
-/* 手机端专属覆盖 */
-@media only screen and (max-width: 767px) {
-  /* 隐藏左侧滚动文字 */
-  .header-title {
-    display: none !important;
-  }
-  /* 链接水平居中、间距加宽 */
-  .header-bar {
-    justify-content: center !important;
-  }
-  .header-bar a {
-    margin: 0 37px !important;  /* 左右各 30px */
-  }
-    }
-    .header-title {
-      margin-right: auto;
-      font-family: "Courier New", monospace;
-      font-size: 18px;
-      color: #000;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .header-bar a {
-      font-family: "Courier New", monospace;
-      font-size: 18px;
-      color: #000;
-      text-decoration: none;
-      margin-left: 40px;
-      transition: color 0.3s ease;
-    }
-    .header-bar a:hover { color: #f1c232; }
-    .header-bar a.active { color: #e74c3c; }
-
-    /* —————— 日／英文字體區分 —————— */
-    [lang="ja"] { font-family: 'MS Mincho', serif; }
-    [lang="en"] { font-family: 'Courier New', monospace; }
-
-    /* —————— 佈局：左右各半 —————— */
-    .contact-page {
-      display: flex;
-      width: 100%;
-      min-height: calc();
-      padding-top: 100px;
-      perspective: 800px; /* 啟用 3D 透視 */
-    }
-    .left-col,
-    .right-col { width: 50%; }
-
-    /* 左側：半透明 Logo + 旋轉動畫 */
-    .left-col {
-      background: url('Logo_Contact.png') center/contain no-repeat;
-      opacity: 0.92;
-      transform-style: preserve-3d;
-      transform-origin: center center;
-      animation: spinY 8s linear infinite;
-    }
-    @keyframes spinY {
-      from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;overflow:hidden}
+    body{
+      background:url('bg.jpg') center/cover no-repeat;
+      font-family: var(--mono);
+      color:#f4f2f0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position:relative;
     }
 
-    /* 右側文字排版 */
-    .right-col {
-      padding: 60px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 32px;
+    /* Mobile rotator */
+    .mobile-rotator{
+      position:fixed;top:0;left:0;width:100%;height:36px;
+      background:#f4f2f0;color:#000;display:none;
+      align-items:center;justify-content:center;
+      padding:0 12px;z-index:10001;font-size:14px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      font-family: var(--mono);
+    }
+    .mobile-rotator.ja{font-family:'Noto Serif JP','MS Mincho',serif}
+
+    /* Header */
+    .header-bar{
+      position:fixed;top:0;left:0;width:100%;height:60px;
+      background:#f4f2f0;display:flex;align-items:center;
+      padding:0 40px;z-index:9999;
+    }
+    .header-title{
+      margin-right:auto;font-size:18px;color:#000;white-space:nowrap;overflow:hidden;
+      font-family: var(--mono);
+      will-change: transform, opacity;
+    }
+    .header-title.ja{font-family:'Noto Serif JP','MS Mincho',serif}
+    .header-bar a{font-family:var(--mono);font-size:18px;color:#000;text-decoration:none;margin-left:40px;transition:color .3s}
+    .header-bar a:hover{color:#f1c232}
+    .header-bar a.active{color:#e74c3c}
+
+    /* 字體掛勾：英文→等寬；日文→Noto Serif JP（含子孫與拆字 span） */
+    [lang="en"], [lang="en"] *{ font-family: var(--mono) !important; font-variant-ligatures: none; }
+    [lang="ja"], [lang="ja"] *{ font-family:'Noto Serif JP','MS Mincho',serif !important; font-variant-ligatures: none; }
+
+    /* layout */
+    .contact-page{display:flex;width:100%;min-height:100vh;padding-top:100px;perspective:800px}
+    .left-col,.right-col{width:50%}
+
+    .left-col{
+      background:url('Logo_Contact.png') center/contain no-repeat;
+      opacity:.92;transform-style:preserve-3d;transform-origin:center;
+      backface-visibility:hidden;will-change:transform;animation:spinY 8s linear infinite;
+    }
+    @keyframes spinY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+
+    /* 右欄：全面左對齊 */
+    .right-col{
+      padding:60px 40px;display:flex;flex-direction:column;gap:32px;
+      justify-content:center;align-items:flex-start;text-align:left;contain:content;
+    }
+    .right-col *{text-align:left}
+
+    .contact-info p[lang="en"]{font-size:18px;line-height:1.4;letter-spacing:.02em}
+    .contact-info a{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s ease;color:#F1c232}
+    .contact-info a:visited{color:#F1c232}
+    .contact-info a:hover{border-bottom-color:#f4f2f0}
+
+    .poem p[lang="ja"]{font-size:15px;line-height:1.6}
+    .poem p[lang="en"]{font-size:11px;line-height:1.6;margin-top:8px;color:#f4f2f0}
+
+    .copyright p{font-size:14px;line-height:1.4;margin-top:16px}
+
+    /* Matrix：保留單字間空白與換行；避免首行縮排造成左邊「歪」。 */
+    .matrix-scope p{ white-space: pre-wrap; }
+    .matrix-char{
+      display:inline-block;
+      white-space: pre;
+      will-change: transform, opacity;
     }
 
-    /* 聯絡資訊 (英文) */
-    .contact-info p[lang="en"] {
-      font-size: 18px;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
-    }
-    .contact-info a {
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
-      color: #F1c232;
-    }
-    .contact-info a:visited { color: #F1c232; }
-    .contact-info a:hover { border-bottom-color: #f4f2f0; }
+    /* Mobile */
+    @media (max-width:767px){
+      .mobile-rotator{display:flex}
+      .header-bar{top:36px;justify-content:center}
+      .header-title{display:none!important}
+      .header-bar a{margin:0 37px!important}
 
-    /* 詩句區塊 */
-    .poem p[lang="ja"] {
-      font-size:15px;
-      line-height: 1.6;
-    }
-    .poem p[lang="en"] {
-      font-size: 11px;
-      line-height: 1.6;
-      margin-top: 8px;
-      color: #f4f2f0;
+      .left-col{display:none!important}
+      .right-col{
+        width:100%!important;padding:24px 20px 40px!important;
+        align-items:flex-start!important;text-align:left!important;margin:0 auto!important;
+      }
+      .right-col .contact-info,.right-col .poem,.right-col .copyright{
+        width:100%;max-width:560px;margin:0 auto;
+      }
+      .contact-page{padding-top:136px!important;justify-content:center!important;align-items:flex-start!important}
     }
 
-    /* 版權宣告 */
-    .copyright p {
-      font-size: 14px;
-      line-height: 1.4;
-      color: #f4f2f0;
-      margin-top: 16px;
-    }
-
-    /* —————— 底部動畫影片區 —————— */
-    .video-section {
-      width: 100%;
-      overflow: hidden;
-    }
-    .video-section video {
-      width: 100%;
-      height: auto;
-      display: block;
+    @media (prefers-reduced-motion:reduce){
+      .left-col{animation:none!important}
+      *,*::before,*::after{animation:none!important;transition:none!important}
     }
   </style>
 </head>
 <body>
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">Of time, souls and cities.</div>
 
   <div class="header-bar">
-    <!-- 左側動態滾動文字（加上 id 以便 JS 操作） -->
-    <div class="header-title" id="headerTitle">Of time, souls and cities.</div>
+    <div class="header-title en" id="headerTitle">Of time, souls and cities.</div>
     <a href="index.html">About</a>
     <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="active">Contact</a>
   </div>
 
   <div class="contact-page">
     <div class="left-col"></div>
-    <div class="right-col">
+    <div class="right-col matrix-scope">
       <div class="contact-info">
         <p lang="en">
-          <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">
-            Instagram
-          </a><br>
+          <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">Instagram</a><br>
           info@hikki.ca<br>
           250-986-9516
         </p>
@@ -198,54 +168,130 @@
     </div>
   </div>
 
-  <!-- 動態文字輪播腳本 -->
   <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    /* ===== Header Rotator ===== */
+    const headerEl = document.getElementById('headerTitle');
+    const mobileEl = document.getElementById('mobileRotator');
+    const targets  = [headerEl, mobileEl].filter(Boolean);
+
     const sentences = [
-      "Of time, souls and cities.",
-      "Know thyself.",
-      "静かな光。",
-      "10% off for rescued animals.",
-      "YYJ > YVR",
-      "We don’t shoot for road ragers.",
-      "那人却在灯火阑珊处。",
-      "You want it darker."
+      "Of time, souls and cities.","Know thyself.","静かな光。",
+      "10% off for rescued animals.","YYJ > YVR",
+      "Get a quote today for free！",
+      "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
+      "father Anderson...","also try max noodle house",
+      "晚星墜落處，自成橋梁。",
+      "Elegance is about breaking the rules.",
+      "Hesitation is defeat",
+      "賺菲林錢",
+      "假作真時真亦假，無為有處有還無。",
+      "死生契闊，與子成說。",
+      "ネットは広大だわ。",
+      "恥の多い生涯を送ってきました。",
+      "Demain, dès l’aube…",
+      "Je pense, donc je suis.",
+      "Il faut imaginer Sisyphe heureux.",
+      "Stay gold, Ponyboy.",
+      "What’s in a name? that which we call a rose…",
+      "I drink your milkshake!",
+      "The horror! The Horror!",
+      "Le temps détruit tout.",
+      "翩翩不富，皆失实也。",
+      "云上于天，需；君子以饮食宴乐。",
+      "天下有山，遯。",
+      "元者，善之长也；亨者，嘉之会也。",
+      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
+      "sksksk","Come on and join our convoy.","I am in flames!",
+      "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
+      "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
+      "Some people are worth melting for.","ひとりって切ないくらい自由。",
+      "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
+      "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+      "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜欢。"
     ];
 
-    const headerEl = document.getElementById("headerTitle");
-    let lastIndex = -1;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let last = -1;
+    const hasCJK = s => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
 
-    function rnd(exclude) {
-      let i;
-      do {
-        i = Math.floor(Math.random() * sentences.length);
-      } while (i === exclude);
-      return i;
+    function apply(el, txt){
+      if(!el) return;
+      const cjk = hasCJK(txt);
+      el.classList.toggle('ja', cjk);
+      el.classList.toggle('en', !cjk);
+      el.setAttribute('lang', cjk ? 'ja' : 'en');
+      el.textContent = txt;
     }
-
-    function animateHeader() {
-      const next = rnd(lastIndex);
-      lastIndex = next;
-
-      gsap.to(headerEl, {
-        y: -20,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.in",
-        onComplete() {
-          headerEl.textContent = sentences[next];
-          gsap.set(headerEl, { y: 20 });
-          gsap.to(headerEl, {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            ease: "power1.out"
-          });
+    function pick(){
+      let i = Math.floor(Math.random()*sentences.length);
+      if (i === last) i = (i+1) % sentences.length;
+      last = i; return sentences[i];
+    }
+    function rotate(){
+      const txt = pick();
+      if (reduce || !window.gsap){ targets.forEach(t => apply(t, txt)); return; }
+      gsap.to(targets, { y:-12, opacity:0, duration:.18, ease:'power1.in',
+        onComplete(){
+          targets.forEach(t => { apply(t, txt); gsap.set(t,{y:12}); });
+          gsap.to(targets, { y:0, opacity:1, duration:.24, ease:'power1.out' });
         }
       });
     }
+    rotate(); setInterval(rotate, 4000);
 
-    // 每 3 秒自動輪播一次
-    setInterval(animateHeader, 3000);
+    /* ===== Matrix：去除段落開頭縮排 & <br> 後縮排，避免 Instagram 行偏右 ===== */
+    if (!reduce && window.gsap) {
+      const scope = document.querySelector('.matrix-scope');
+      if (scope){
+        const ps = scope.querySelectorAll('p');
+
+        const trimIndent = (p) => {
+          // 移除段落起始的純空白節點
+          while (p.firstChild && p.firstChild.nodeType === 3 && /^\s+$/.test(p.firstChild.nodeValue)) {
+            p.removeChild(p.firstChild);
+          }
+          // 清除每個 <br> 之後緊接的縮排空白
+          p.querySelectorAll('br').forEach(br => {
+            const n = br.nextSibling;
+            if (n && n.nodeType === 3) n.nodeValue = n.nodeValue.replace(/^[\t ]+/, '');
+          });
+        };
+
+        ps.forEach(p => {
+          trimIndent(p);
+
+          const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, {
+            acceptNode(n){ return n.textContent.replace(/\s/g,'').length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
+          });
+          const nodes = [];
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+
+          nodes.forEach(node => {
+            const parent = node.parentNode;
+            // 保留詞間空白與換行；移除行首縮排（保險一次）
+            const text = node.textContent.replace(/\r/g,'').replace(/^[\t ]+/gm,'');
+            const frag = document.createDocumentFragment();
+            for (const ch of text){
+              const s = document.createElement('span');
+              s.className = 'matrix-char';
+              s.textContent = ch;
+              frag.appendChild(s);
+            }
+            parent.replaceChild(frag, node);
+          });
+        });
+
+        const chars = scope.querySelectorAll('.matrix-char');
+        gsap.set(chars, { y:-18, opacity:0 });
+        gsap.to(chars, {
+          y:0, opacity:1, duration:.30, ease:'power1.out',
+          stagger:{ each:.0035, from:'random' }
+        });
+      }
+    }
+  });
   </script>
 </body>
 </html>
