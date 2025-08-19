@@ -5,6 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hikki</title>
 
+  <!-- SEO: 基本 -->
+  <meta name="description" content="Hikki gallery — wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau. Explore Souls, Times, Cities, and Friends collections." />
+  <link rel="canonical" href="https://hikki.ca/gallery.html" />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Hikki photography & philosophy" />
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hikki photography & philosophy" />
+  <meta property="og:title" content="Gallery | Hikki" />
+  <meta property="og:description" content="Wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau. Browse Souls, Times, Cities, Friends." />
+  <meta property="og:url" content="https://hikki.ca/gallery.html" />
+  <meta property="og:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp" />
+
+  <!-- SEO: Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gallery | Hikki" />
+  <meta name="twitter:description" content="Wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau." />
+  <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp" />
+
+  <!-- SEO: JSON-LD 結構化資料 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://hikki.ca/#website",
+        "url": "https://hikki.ca/",
+        "name": "Hikki photography & philosophy",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://hikki.ca/#org" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://hikki.ca/#org",
+        "name": "Hikki photography & philosophy",
+        "url": "https://hikki.ca/",
+        "email": "will@hikki.ca",
+        "telephone": "+1-250-986-9516",
+        "sameAs": ["https://www.instagram.com/hikki_with_her_camera"],
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://hikki.ca/Logo_Contact.png"
+        },
+        "contactPoint": [{
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "will@hikki.ca",
+          "telephone": "+1-250-986-9516",
+          "areaServed": ["CA","HK","MO"],
+          "availableLanguage": ["en","zh-Hant","ja"]
+        }]
+      },
+      {
+        "@type": "ImageGallery",
+        "@id": "https://hikki.ca/gallery.html#gallery",
+        "url": "https://hikki.ca/gallery.html",
+        "name": "Hikki Gallery",
+        "inLanguage": "en",
+        "about": { "@id": "https://hikki.ca/#org" },
+        "hasPart": [
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g1_vancouver_prewedding_cityview.webp", "name": "Photo 1", "keywords": ["Times","Souls"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g2_hongkong_art_skycraper.webp", "name": "Photo 2", "keywords": ["Cities"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g3_portrait_with_orange_tabby.webp", "name": "Photo 3", "keywords": ["Friends"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g4_black_and_white_dog_running.webp", "name": "Photo 4", "keywords": ["Friends"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g5_pet_owner_Wheatfield_family_photo.webp", "name": "Photo 5", "keywords": ["Friends"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g6_Portrait_film_Vintage.webp", "name": "Photo 6", "keywords": ["Souls"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g7_Kerrisdale_moment_poverty.webp", "name": "Photo 7", "keywords": ["Cities"] },
+          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g8_macau_architecture_concrete.webp", "name": "Photo 8", "keywords": ["Cities"] }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",    "item": "https://hikki.ca/" },
+          { "@type": "ListItem", "position": 2, "name": "Gallery", "item": "https://hikki.ca/gallery.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <!-- 預連線：加速載入 CDN -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
@@ -206,7 +289,11 @@
     <a href="gallery.html" class="active">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
+
+  <!-- 讓內容避開固定 Header -->
   <div class="header-spacer" aria-hidden="true"></div>
+
+  <!-- —— Filter Bar（獨立） —— -->
   <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
     <span class="filter-label"></span>
     <button class="filter-btn" data-filter="Souls"   aria-pressed="false">Souls</button>
@@ -223,7 +310,7 @@
       <img src="g2_hongkong_art_skycraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
       <img src="g4_black_and_white_dog_running.webp"    alt="Photo 4"  loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g5_pet_owner_Wheatfield_family_photo.webp"  alt="Photo 5"  loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g5_pet_owner_Wheatfield_family_photo.webp"    alt="Photo 5"  loading="lazy" decoding="async" data-cat="Friends">
       <img src="g6_Portrait_film_Vintage.webp"          alt="Photo 6"  loading="lazy" decoding="async" data-cat="Souls">
       <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g8_macau_architecture_concrete.webp"    alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
@@ -443,9 +530,7 @@
 
       // 初次或切換篩選：直接對當前批次做進場；LoadMore：只對新顯示做進場
       const targets = (reset ? toShow : newlyShown);
-      // 若無法動畫也要確保可見
       if (!targets.length) {
-        // 沒有新目標，但初次 render 仍需讓首批可見
         if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
       } else {
         requestAnimationFrame(() => animateIn(targets));
@@ -495,7 +580,6 @@
 
         refreshGrid(true, 'filter');
 
-        // 滾到圖牆頂緣（不是頁面最上），避免迷路
         const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
         const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60;
         window.scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
