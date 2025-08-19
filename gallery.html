@@ -3,52 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery — Hikki photography & philosophy</title>
+  <title>Hikki</title>
 
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.png" type="image/png" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
-
-  <!-- Preconnect CDN -->
+  <!-- 預連線：加速載入 CDN -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-  <!-- Hero/首屏圖預載（挑兩張即可） -->
-  <link rel="preload" as="image" href="g1_vancouver_prewedding_cityview.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="g2_hongkong_art_skycraper.webp">
-
-  <!-- SEO 基礎 -->
-  <link rel="canonical" href="https://hikki.ca/gallery.html">
-  <meta name="description" content="Hikki photography & philosophy — Souls, Times, Cities. Wedding · Portrait · Pets · Street · Concrete jungle aesthetics. Vancouver · Hong Kong · Macau.">
-  <meta name="author" content="Hikki photography & philosophy">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#000000">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Hikki photography & philosophy">
-  <meta property="og:title" content="Gallery — Hikki photography & philosophy">
-  <meta property="og:description" content="Souls · Times · Cities — wedding, portrait, pets, street & concrete aesthetics.">
-  <meta property="og:url" content="https://hikki.ca/gallery.html">
-  <meta property="og:image" content="https://hikki.ca/og/og-gallery.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gallery — Hikki photography & philosophy">
-  <meta name="twitter:description" content="Souls · Times · Cities — wedding, portrait, pets, street & concrete aesthetics.">
-  <meta name="twitter:image" content="https://hikki.ca/og/og-gallery.jpg">
-
-  <!-- 多語（如未提供可保留 x-default） -->
-  <link rel="alternate" href="https://hikki.ca/gallery.html" hreflang="en">
-  <link rel="alternate" href="https://hikki.ca/zh-hant/gallery.html" hreflang="zh-Hant">
-  <link rel="alternate" href="https://hikki.ca/gallery.html" hreflang="x-default">
-
-  <!-- GSAP -->
+  <!-- GSAP，用於文字淡入淡出與進場動畫 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
@@ -56,7 +16,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: "Courier New", Courier, "Liberation Mono", "Nimbus Mono L", "DejaVu Sans Mono", "SFMono-Regular", monospace;
+      font-family: "Courier New", monospace;
       background: #000;
       color: #000;
     }
@@ -74,7 +34,7 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       font-family: "Courier New", monospace;
     }
-    .mobile-rotator.ja { font-family: "MS Mincho", 'Noto Serif JP', serif; }
+    .mobile-rotator.ja { font-family: "MS Mincho", serif; }
 
     /* —— Header Bar —— */
     .header-bar {
@@ -89,13 +49,13 @@
       margin-right: auto; font-size: 18px;
       overflow: hidden; white-space: nowrap;
       font-family: "Courier New", monospace;
+      will-change: transform, opacity;
     }
-    .header-title.ja { font-family: "MS Mincho", 'Noto Serif JP', serif; }
+    .header-title.ja { font-family: "MS Mincho", serif; }
     .header-bar a {
       margin-left: 40px; font-size: 18px;
       color: #000; text-decoration: none;
       transition: color .3s ease;
-      font-family: "Courier New", monospace;
     }
     .header-bar a:hover  { color: #f1c232; }
     .header-bar a.active { color: #e74c3c; }
@@ -112,6 +72,7 @@
       padding: 10px 40px; box-sizing: border-box;
       overflow-x: auto; -webkit-overflow-scrolling: touch;
       font-family: "Courier New", monospace;
+      position: sticky; top: 60px; z-index: 5; /* 讓 Filter 跟隨在 Header 下方 */
     }
     .filter-label{
       font-size: 14px; color:#f4f2f0; margin-right: 8px;
@@ -141,12 +102,11 @@
     .gallery {
       display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
     }
-    .gallery[role="list"] img[role="listitem"] 
 
     .gallery img {
       width: calc(25% - 10px);
       min-width: 200px;
-      aspect-ratio: 2 / 3;      /* 以 3:2 顯示區塊（你先前設定） */
+      aspect-ratio: 2 / 3;      /* 保持既有比例呈現 */
       height: auto;
       object-fit: cover; object-position: center;
       background: #111;
@@ -154,12 +114,11 @@
       transition: transform .3s ease, opacity .2s ease;
       will-change: transform, opacity;
 
-      /* 效能優化 */
+      /* 避免 CLS、仍保留你原來的進場基線（JS 會把第一批動畫打開） */
       content-visibility: auto;
-      contain-intrinsic-size: 400px 267px; /* 近似 3:2，降低 CLS */
-      opacity: 0; transform: translateY(14px); /* 初始狀態供動畫使用 */
+      contain-intrinsic-size: 400px 267px;
+      opacity: 0; transform: translateY(14px);
     }
-    .gallery img.is-visible { opacity: 1; transform: none; } /* 動畫後清理 */
     .gallery img:hover { transform: scale(1.03); }
 
     /* —— Load More —— */
@@ -208,7 +167,7 @@
       .header-spacer{ height: 96px; } /* 36 + 60 */
       .header-title { display: none !important; }
 
-      /* 手機：一列 4 張 */
+      /* 手機：一列 4 張（保留你的設定） */
       .gallery {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -219,6 +178,8 @@
         width: 100%;
         min-width: 0;
       }
+      /* Filter 也保持置頂貼齊 Header */
+      .filter-bar{ top: 96px; position: sticky; }
     }
 
     /* —— 保留原手機導覽調整 —— */
@@ -252,84 +213,85 @@
   <!-- —— Filter Bar（獨立） —— -->
   <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
     <span class="filter-label">Filter:</span>
-    <button class="filter-btn" data-filter="Souls"  aria-pressed="false">Souls</button>
-    <button class="filter-btn" data-filter="Times"  aria-pressed="false">Times</button>
-    <button class="filter-btn" data-filter="Cities" aria-pressed="false">Cities</button>
+    <button class="filter-btn" data-filter=""        aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="Souls"   aria-pressed="false">Souls</button>
+    <button class="filter-btn" data-filter="Times"   aria-pressed="false">Times</button>
+    <button class="filter-btn" data-filter="Cities"  aria-pressed="false">Cities</button>
     <button class="filter-btn" data-filter="Friends" aria-pressed="false">Friends</button>
   </div>
 
   <!-- —— Gallery Section —— -->
-  <div class="gallery-wrapper" id="gallery" role="region" aria-label="Photo gallery">
-    <div class="gallery" role="list">
-      <!-- 多分類：用逗號/空白/豎線分隔皆可，如 data-cat="Times, Souls" -->
-      <img role="listitem" src="g1_vancouver_prewedding_cityview.webp"  alt="Vancouver city view pre-wedding"  loading="lazy" decoding="async" data-cat="Times, Souls">
-      <img role="listitem" src="g2_hongkong_art_skycraper.webp"        alt="Hong Kong art skyscraper"        loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g3_portrait_with_orange_tabby.webp"     alt="Portrait with orange tabby cat"  loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g4_black_and_white_dog_running.webp"    alt="Black and white dog running"     loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g5_pet_owner_Wheatfield_family_photo.webp" alt="Owner and pet in wheatfield" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g6_Portrait_film_Vintage.webp"          alt="Vintage film portrait"           loading="lazy" decoding="async" data-cat="Souls">
-      <img role="listitem" src="g7_Kerrisdale_moment_poverty.webp"      alt="Kerrisdale street moment"        loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g8_macau_architecture_concrete.webp"    alt="Macau concrete architecture"     loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g9_oriental_confused_moment_misty.webp" alt="Misty oriental street moment"    loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g10_asia_brutalist_textures_b&w.webp"   alt="Asian brutalist textures"        loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g11_vancouver_kitsilano_lonely_fastfood.webp" alt="Kitsilano lonely fast food" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g12_Shelti_smile_field_vancouver.webp"  alt="Smiling Sheltie in field"        loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g13_burnaby_wedding_dance_couple.webp"  alt="Burnaby wedding dance couple"    loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g14_crane_poise_modern_construction.webp" alt="Crane and construction lines"  loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g15_macau_alley_market_dreams.webp"     alt="Macau alley market dreams"       loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g16_redline_utility_core_noise_barrier.webp" alt="Red line utility core"      loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g17_wedding_photography_crew_victoria_BC.jpg" alt="Wedding crew Victoria BC"  loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g18_courtyard_stillness_temple_bells.webp" alt="Courtyard and temple bells"   loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g19_macau_brutalist_facade_raw_concrete.webp" alt="Macau brutalist facade"    loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g20_infrastructural_romance_deconstructivist_angles.webp" alt="Infrastructural romance angles" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g21_light_warm_nightime.webp"           alt="Warm nighttime light"            loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g22_sunset_burnaby_streets_respite.webp" alt="Burnaby street sunset respite"  loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g23_wall_offset_grid_liminal_city.webp" alt="Wall grid liminal city"          loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g24_Vinyl_slience_man_couple_wedding.jpg" alt="Vinyl silence couple wedding"  loading="lazy" decoding="async" data-cat="Times, Souls">
-      <img role="listitem" src="g25_party_wedding_ccd_moment_souls.webp" alt="Wedding party CCD moment"       loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g26_shelti_mountain_northvan_hiking.webp" alt="Sheltie mountain hiking"       loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g27_dog_portrait_moment_capture_home.webp" alt="Dog portrait at home"         loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g28_wedding_b&w_emotion_momment_forgotten.webp" alt="B&W wedding emotion"     loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g29_portrait_couple_classic_love_wedding.webp" alt="Classic couple portrait"  loading="lazy" decoding="async" data-cat="Times Friends">
-      <img role="listitem" src="g30_moment_joy_caring_wedding.webp"      alt="Joy caring wedding moment"      loading="lazy" decoding="async" data-cat="Times Friends">
-      <img role="listitem" src="g31_portrait_oldschool_traitional_emotions.webp" alt="Old-school emotional portrait" loading="lazy" decoding="async" data-cat="Times Friends">
-      <img role="listitem" src="g32_party_wedding_food_friendship.webp"  alt="Wedding party and food"         loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g33_urban_cat_outdoor_owner.webp"        alt="Urban cat with owner"           loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g34_vow_wedding_preperation_moment.webp" alt="Wedding vow preparation"        loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g35_toss_wedding_wine_champaign_rose.webp" alt="Wedding wine toss"           loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g36_adopted_stray_dog_mixed_rescued.webp" alt="Adopted stray dog"            loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g37_prefab_panels_ribbed_slab.webp"      alt="Prefab ribbed slab panels"      loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g38_late_capital_vistas_concrete_jungle_dream.webp" alt="Concrete jungle dream" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g39_gilmore_monochrome_city_highrise_intimacy.webp" alt="Monochrome high-rise intimacy" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp" alt="Sound wall prefab panels" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g41_b&w_wedding_grand_dressing_timeless_breath.webp" alt="Timeless dressing breath" loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g42_victoria_marketsquare_photographer_model_art_lens.webp" alt="Market Square model" loading="lazy" decoding="async" data-cat="Souls">
-      <img role="listitem" src="g43_dog_disability_running_speed_moment.webp" alt="Disabled dog running"     loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g44_shelti_cornfield_sun_outdoor_love.webp" alt="Sheltie in cornfield sun"  loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g45_blueberry_dog_korean_instragram.webp" alt="Blueberry dog portrait"       loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g46_portrait_dog_pet_german.webp"        alt="German dog pet portrait"       loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g47_neighbour_unexpected_pitbull_pet_nighttime.webp" alt="Neighbour pitbull night" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g48_elegant_dog_hunt_river_white.webp"   alt="Elegant dog by river"          loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g49_dog_portrait_mountain_vancouver_capilano_commercial_photoshoot.webp" alt="Dog portrait Capilano" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g50_window_light_portrait_shadow_play_leading_lines_symmetry_balance.webp" alt="Window light shadow play" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g51_Macau_asian_concrete_jungle.webp"    alt="Macau Asian concrete jungle"   loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g52_macau_bay_darkness_wings_storm.webp" alt="Macau bay storm wings"         loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g53_street_cat_store_memory_macau.webp"  alt="Street cat store memory"       loading="lazy" decoding="async" data-cat="Cities, Friends">
-      <img role="listitem" src="g54_red_architecture_mong_kok_night_liminal_.webp" alt="Mong Kok red architecture" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g55_stairwell_geometry_window_building.webp" alt="Stairwell geometry"        loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g56_analog_portrait_chinatown_family_warm_vibe.jpg" alt="Analog portrait Chinatown" loading="lazy" decoding="async" data-cat="Times">
-      <img role="listitem" src="g57_professional_camera_ginger_tabby_maine_coon_lens.webp" alt="Ginger tabby photographer" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g58_ceramics_sculpture_glaze_earthware_stoneware.webp" alt="Ceramics sculpture glaze" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g59_Westvan_beachside_social_photography_billboard.webp" alt="West Van beachside social" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g60_street_barber_glimpse_vauged_eyes_warm.webp" alt="Street barber warm glimpse" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g61_japanese_girl_cat_main_coon_playing.webp" alt="Japanese girl and Maine Coon" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g62_straydog_adoption_leash_dogwalk_petphoto.webp" alt="Stray dog adoption walk" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g63_mushroom_burnaby_product_photography_lighting_zoom.webp" alt="Mushroom product lighting" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g64_eastvan_streetview_silence_moment_sunlight.webp" alt="East Van silent sunlight" loading="lazy" decoding="async" data-cat="Cities">
-      <img role="listitem" src="g65_stray_dog_leash_foster_family_photography_pet.webp" alt="Stray dog foster family" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g66_wheelchair_pet_owner_feeding_portrait.webp" alt="Wheelchair owner feeding pet" loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g67_dog_portrait_smile_capturing_moments.webp" alt="Smiling dog portrait"    loading="lazy" decoding="async" data-cat="Friends">
-      <img role="listitem" src="g68_dogs_playing_grooming_petphoto_evening.webp" alt="Dogs grooming in evening" loading="lazy" decoding="async" data-cat="Friends">
+  <div class="gallery-wrapper" id="gallery">
+    <div class="gallery">
+      <!-- 支援多分類：data-cat="Times, Souls" 或 "Cities Friends" 都可以 -->
+      <img src="g1_vancouver_prewedding_cityview.webp"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times, Souls">
+      <img src="g2_hongkong_art_skycraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g4_black_and_white_dog_running.webp"    alt="Photo 4"  loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g5_pet_owner_Wheatfield_family_photo.webp"  alt="Photo 5"  loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g6_Portrait_film_Vintage.webp"          alt="Photo 6"  loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g8_macau_architecture_concrete.webp"    alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g9_oriental_confused_moment_misty.webp" alt="Photo 9"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g10_asia_brutalist_textures_b&w.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g11_vancouver_kitsilano_lonely_fastfood.webp" alt="Photo 11" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g12_Shelti_smile_field_vancouver.webp"  alt="Photo 12" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g13_burnaby_wedding_dance_couple.webp"  alt="Photo 13" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g14_crane_poise_modern_construction.webp" alt="Photo 14" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g15_macau_alley_market_dreams.webp"     alt="Photo 15" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g16_redline_utility_core_noise_barrier.webp" alt="Photo 16" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g17_wedding_photography_crew_victoria_BC.jpg" alt="Photo 17" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g18_courtyard_stillness_temple_bells.webp" alt="Photo 18" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g19_macau_brutalist_facade_raw_concrete.webp" alt="Photo 19" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g20_infrastructural_romance_deconstructivist_angles.webp" alt="Photo 20" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g21_light_warm_nightime.webp"           alt="Photo 21" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g22_sunset_burnaby_streets_respite.webp" alt="Photo 22" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g23_wall_offset_grid_liminal_city.webp" alt="Photo 23" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g24_Vinyl_slience_man_couple_wedding.jpg" alt="Photo 24" loading="lazy" decoding="async" data-cat="Times, Souls">
+      <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g26_shelti_mountain_northvan_hiking.webp" alt="Photo 26" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g27_dog_portrait_moment_capture_home.webp" alt="Photo 27" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g28_wedding_b&w_emotion_momment_forgotten.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g29_portrait_couple_classic_love_wedding.webp" alt="Photo 29" loading="lazy" decoding="async" data-cat="Times, Friends">
+      <img src="g30_moment_joy_caring_wedding.webp"     alt="Photo 30" loading="lazy" decoding="async" data-cat="Times, Friends">
+      <img src="g31_portrait_oldschool_traitional_emotions.webp" alt="Photo 31" loading="lazy" decoding="async" data-cat="Times, Friends">
+      <img src="g32_party_wedding_food_friendship.webp" alt="Photo 32" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g33_urban_cat_outdoor_owner.webp"       alt="Photo 33" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g34_vow_wedding_preperation_moment.webp" alt="Photo 34" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g35_toss_wedding_wine_champaign_rose.webp" alt="Photo 35" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g36_adopted_stray_dog_mixed_rescued.webp" alt="Photo 36" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g37_prefab_panels_ribbed_slab.webp"     alt="Photo 37" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g38_late_capital_vistas_concrete_jungle_dream.webp" alt="Photo 38" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g39_gilmore_monochrome_city_highrise_intimacy.webp" alt="Photo 39" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp" alt="Photo 40" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g41_b&w_wedding_grand_dressing_timeless_breath.webp" alt="Photo 41" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g42_victoria_marketsquare_photographer_model_art_lens.webp" alt="Photo 42" loading="lazy" decoding="async" data-cat="Souls">
+      <img src="g43_dog_disability_running_speed_moment.webp" alt="Photo 43" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g44_shelti_cornfield_sun_outdoor_love.webp" alt="Photo 44" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g45_blueberry_dog_korean_instragram.webp" alt="Photo 45" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g46_portrait_dog_pet_german.webp"       alt="Photo 46" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g47_neighbour_unexpected_pitbull_pet_nighttime.webp" alt="Photo 47" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g48_elegant_dog_hunt_river_white.webp"  alt="Photo 48" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g49_dog_portrait_mountain_vancouver_capilano_commercial_photoshoot.webp" alt="Photo 49" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g50_window_light_portrait_shadow_play_leading_lines_symmetry_balance.webp" alt="Photo 50" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g51_Macau_asian_concrete_jungle.webp"   alt="Photo 51" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g52_macau_bay_darkness_wings_storm.webp" alt="Photo 52" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g53_street_cat_store_memory_macau.webp" alt="Photo 53" loading="lazy" decoding="async" data-cat="Cities, Friends">
+      <img src="g54_red_architecture_mong_kok_night_liminal_.webp" alt="Photo 54" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g55_stairwell_geometry_window_building.webp" alt="Photo 55" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g56_analog_portrait_chinatown_family_warm_vibe.jpg" alt="Photo 56" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g57_professional_camera_ginger_tabby_maine_coon_lens.webp" alt="Photo 57" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g58_ceramics_sculpture_glaze_earthware_stoneware.webp" alt="Photo 58" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g59_Westvan_beachside_social_photography_billboard.webp" alt="Photo 59" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g60_street_barber_glimpse_vauged_eyes_warm.webp" alt="Photo 60" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g61_japanese_girl_cat_main_coon_playing.webp" alt="Photo 61" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g62_straydog_adoption_leash_dogwalk_petphoto.webp" alt="Photo 62" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g63_mushroom_burnaby_product_photography_lighting_zoom.webp" alt="Photo 63" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g64_eastvan_streetview_silence_moment_sunlight.webp" alt="Photo 64" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g65_stray_dog_leash_foster_family_photography_pet.webp" alt="Photo 65" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g66_wheelchair_pet_owner_feeding_portrait.webp" alt="Photo 66" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g67_dog_portrait_smile_capturing_moments.webp" alt="Photo 67" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g68_dogs_playing_grooming_petphoto_evening.webp" alt="Photo 68" loading="lazy" decoding="async" data-cat="Friends">
     </div>
 
     <!-- Load More + 無結果訊息 -->
@@ -345,7 +307,7 @@
     <img src="" alt="Expanded Photo" id="overlayImg">
   </div>
 
-  <!-- —— Header Rotator —— -->
+  <!-- —— Header 動態文字輪播腳本 —— -->
   <script>
     const sentences = [
       "Of time, souls and cities.","Know thyself.","静かな光。",
@@ -388,16 +350,19 @@
     let lastIndex = -1;
 
     function rnd(exclude) { let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude); return i; }
+
     function applyText(el, text, isCJK){
       if(!el) return;
       el.classList.toggle("ja", isCJK);
       el.classList.toggle("en", !isCJK);
       el.textContent = text;
     }
+
     function animateHeader() {
       const next = rnd(lastIndex); lastIndex = next;
       const text = sentences[next];
       const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
+
       [headerEl, mobileEl].filter(Boolean).forEach(t => {
         gsap.to(t, {
           y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
@@ -413,222 +378,145 @@
     setInterval(animateHeader, 4000);
   </script>
 
-  <!-- —— Gallery + Filter + 動畫 + Load More + 速度優化 —— -->
+  <!-- —— Gallery + Filter + 動畫 + Load More（防抖動版） —— -->
   <script>
+  (() => {
+    const galleryEl = document.querySelector('.gallery');
+    if (!galleryEl) return;
+
+    // —— 基本節點 —— 
     const overlay    = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
     const closeBtn   = document.getElementById('closeBtn');
 
-    const allImgs    = Array.from(document.querySelectorAll('.gallery img'));
+    const allImgs    = Array.from(galleryEl.querySelectorAll('img'));
     const filterBtns = document.querySelectorAll('.filter-btn');
     const loadMoreBtn= document.getElementById('loadMore');
     const noResults  = document.getElementById('noResults');
 
-    // ---- 進場動畫設定 ----
+    // —— 動畫設定 —— 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const animateIn = (els) => {
-      if (reduceMotion || !els.length) { els.forEach(el => el.classList.add('is-visible')); return; }
-      gsap.fromTo(els, { y: 14, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.35, ease: "power2.out", stagger: 0.04,
-        onComplete() { els.forEach(el => el.classList.add('is-visible')); }
-      });
+      if (!els || !els.length) return;
+      if (reduceMotion || !window.gsap) {
+        els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+        return;
+      }
+      gsap.fromTo(els, { y:14, opacity:0 }, { y:0, opacity:1, duration:0.35, ease:'power2.out', stagger:0.04 });
     };
 
-    // ---- 真正延遲載入：把 src 轉為 data-src，先塞 1x1 透明圖，以 IO 進視窗才換回 ----
-    const TRANSPARENT_1x1 = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    allImgs.forEach((img, idx) => {
-      img.dataset.index = idx;
-      if (!img.dataset.src) {
-        img.dataset.src = img.src;
-        img.src = TRANSPARENT_1x1;
-      }
-      if (idx < 6) img.fetchPriority = "high";
-      img.decoding = "async";
-    });
-
-    const io = new IntersectionObserver((entries) => {
+    // —— Lazy（安全：不再強制把 src 換透明圖；若已有 data-src 仍會讀取） —— 
+    const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const img = entry.target;
-        if (img.dataset.src && img.src !== img.dataset.src) {
-          img.src = img.dataset.src;
-        }
+        if (img.dataset.src && img.src !== img.dataset.src) img.src = img.dataset.src;
         io.unobserve(img);
       });
-    }, { rootMargin: "200px 0px" });
+    }, { rootMargin: '200px 0px' });
+    allImgs.forEach(img => { if (img.dataset.src) io.observe(img); img.decoding = 'async'; });
 
-    // ---- 多分類支援 + 分頁批次與篩選 ----
-    const BATCH = 24; // ↑ 一次載入更多
-    let activeFilter = "";
+    // —— 分頁 / 篩選 —— 
+    const BATCH = 24;           // 一次載入更多
+    let activeFilter = '';
     let visibleCount = BATCH;
 
-    function parseCats(el){
-      return (el.dataset.cat || '').split(/[,|\s]+/).filter(Boolean);
-    }
-    function getFilteredList(){
-      if (!activeFilter) return allImgs;
-      return allImgs.filter(img => parseCats(img).includes(activeFilter));
-    }
+    const splitCats = s => s.split(/[,|\s]+/).filter(Boolean);
+    const parseCats = el => splitCats(el.dataset.cat || '');
+    const getFilteredList = () => activeFilter ? allImgs.filter(img => parseCats(img).includes(activeFilter)) : allImgs;
 
-    function refreshGrid(reset=false) {
+    function refreshGrid(reset=false, origin='update'){
       const list = getFilteredList();
-      if (reset) visibleCount = BATCH;
+      if (reset) visibleCount = Math.min(BATCH, list.length);
 
-      // 計算本次顯示的範圍
-      const prevCount = Math.min(visibleCount, list.length);
       const toShow = list.slice(0, visibleCount);
+      const showSet = new Set(toShow);
+      const newlyShown = [];
 
-      // 先全部隱藏
-      allImgs.forEach(img => { img.style.display = "none"; });
-
-      // 顯示需要的，並交給 IO 進視窗時載入
-      toShow.forEach(img => {
-        img.style.display = "";
-        img.classList.remove('is-visible'); // 讓動畫可重跑
-        io.observe(img);
+      // 僅調整必要的元素，避免高度大幅變動造成回頂
+      allImgs.forEach(img => {
+        const shouldShow = showSet.has(img);
+        const hidden = (img.style.display === 'none');
+        if (shouldShow && hidden) {
+          img.style.display = '';
+          newlyShown.push(img);
+          if (img.dataset.src) io.observe(img);
+        } else if (!shouldShow && !hidden) {
+          img.style.display = 'none';
+        }
       });
 
-      // 動畫（下一影格啟動，避免 style 抵觸）
-      requestAnimationFrame(() => animateIn(toShow.slice(prevCount)));
+      // 初次或切換篩選：直接對當前批次做進場；LoadMore：只對新顯示做進場
+      const targets = (reset ? toShow : newlyShown);
+      // 若無法動畫也要確保可見
+      if (!targets.length) {
+        // 沒有新目標，但初次 render 仍需讓首批可見
+        if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
+      } else {
+        requestAnimationFrame(() => animateIn(targets));
+      }
 
-      // Load More 顯示與否
+      // 控制 Load More 顯示
       loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-flex' : 'none';
-
-      // 無結果訊息
+      // 無結果
       noResults.hidden = list.length > 0;
     }
 
-    // 初始渲染
-    refreshGrid(true);
+    // —— 初始渲染 —— 
+    refreshGrid(true, 'init');
 
-    // Load More —— 避免手機回到頂端：記住按鈕與新圖，滾動到第一張新圖的頂端再微調
+    // —— Load More：捲到新批第一張（避免回頂/抖動） —— 
     loadMoreBtn.addEventListener('click', () => {
       const list = getFilteredList();
       const oldCount = Math.min(visibleCount, list.length);
       visibleCount = Math.min(visibleCount + BATCH, list.length);
+      const firstNew = list[oldCount];
 
-      const firstNew = list[oldCount]; // 第一張新圖
-      refreshGrid(false);
+      refreshGrid(false, 'more');
 
       if (firstNew) {
-        // 關閉平滑滾動，避免慢動畫造成「卡、跳」
         const html = document.documentElement;
-        const previousBehavior = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto';
-
-        // 捲到新內容處，再往上補一點避免被 header 擋住
-        firstNew.scrollIntoView({ block: 'start', inline: 'nearest' });
-        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60; // mobile rotator + header
+        const prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto'; // 暫停平滑以免彈跳
+        firstNew.scrollIntoView({ block:'start' });
+        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60; // rotator + header + 緩衝
         window.scrollBy({ top: -headerOffset, left: 0, behavior: 'auto' });
-
-        // 還原全域平滑設定
-        html.style.scrollBehavior = previousBehavior || '';
+        html.style.scrollBehavior = prev || '';
       }
     });
 
-    // Filter
+    // —— Filter —— 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const isActive = btn.classList.contains('active');
+        const wasActive = btn.classList.contains('active');
         filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-        if (isActive) {
-          activeFilter = "";
-        } else {
+
+        activeFilter = '';
+        if (!wasActive) {
           btn.classList.add('active');
           btn.setAttribute('aria-pressed','true');
-          activeFilter = btn.dataset.filter;
+          activeFilter = btn.dataset.filter || '';
         }
-        refreshGrid(true);
 
-        // 篩選後讓畫面停留在圖牆起點（不跳到最頂）
-        const wrapperTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
+        refreshGrid(true, 'filter');
+
+        // 滾到圖牆頂緣（不是頁面最上），避免迷路
+        const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
         const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60;
-        window.scrollTo({ top: wrapperTop - headerOffset, behavior: 'auto' });
+        window.scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
       });
     });
 
-    // Lightbox
+    // —— Lightbox —— 
     allImgs.forEach(img => {
       img.addEventListener('click', () => {
         overlayImg.src = img.currentSrc || img.dataset.src || img.src;
         overlay.style.display = 'flex';
       });
     });
-    closeBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
-    document.addEventListener('keydown', e => { if (e.key === "Escape") overlay.style.display = 'none'; });
-  </script>
-
-  <!-- —— JSON‑LD：ImageGallery + Breadcrumb（動態生成，涵蓋已載入的圖片） —— -->
-  <script>
-    (function(){
-      const SITE = "https://hikki.ca";
-      const PAGE = SITE + "/gallery.html";
-
-      const imgs = Array.from(document.querySelectorAll('.gallery img'))
-        .filter(img => img.style.display !== 'none');
-
-      if(!imgs.length) return;
-
-      const items = imgs.map((img, i) => {
-        const url = img.src.startsWith('http') ? img.src : new URL(img.src, PAGE).href;
-        const alt = (img.getAttribute('alt') || '').trim();
-        const isPortrait = (img.naturalHeight || 1200) >= (img.naturalWidth || 800);
-        return {
-          "@type": "ImageObject",
-          "position": i+1,
-          "url": url,
-          "contentUrl": url,
-          "caption": alt || url.split('/').pop().replace(/\.\w+$/,'').replace(/[_-]+/g,' '),
-          "name": alt || "Hikki photo " + (i+1),
-          "width": isPortrait ? 800 : 1200,
-          "height": isPortrait ? 1200 : 800,
-          "inLanguage": "en"
-        };
-      });
-
-      const imageGallery = {
-        "@context": "https://schema.org",
-        "@type": "ImageGallery",
-        "@id": PAGE + "#imagegallery",
-        "name": "Hikki Gallery",
-        "url": PAGE,
-        "description": "Souls · Times · Cities — wedding, portrait, pets, street & concrete aesthetics.",
-        "image": items.map(it => it.url),
-        "hasPart": {
-          "@type": "ItemList",
-          "itemListElement": items.map((it, idx) => ({
-            "@type": "ListItem",
-            "position": idx + 1,
-            "item": it
-          }))
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Hikki photography & philosophy",
-          "url": SITE,
-          "logo": { "@type": "ImageObject", "url": SITE + "/og/logo.png" }
-        }
-      };
-
-      const breadcrumbs = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/index.html" },
-          { "@type": "ListItem", "position": 2, "name": "Gallery", "item": PAGE }
-        ]
-      };
-
-      const s1 = document.createElement('script');
-      s1.type = 'application/ld+json';
-      s1.textContent = JSON.stringify(imageGallery);
-      document.body.appendChild(s1);
-
-      const s2 = document.createElement('script');
-      s2.type = 'application/ld+json';
-      s2.textContent = JSON.stringify(breadcrumbs);
-      document.body.appendChild(s2);
-    })();
+    closeBtn.addEventListener('click', () => overlay.style.display = 'none');
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.style.display = 'none'; });
+  })();
   </script>
 </body>
 </html>
