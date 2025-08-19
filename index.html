@@ -5,10 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hikki Photography</title>
 
+  <!-- Canonical / Robots -->
+  <link rel="canonical" href="https://hikki.ca/">
+  <meta name="robots" content="index,follow">
+
+  <!-- Meta -->
+  <meta name="description" content="Hikki Photography & Philosophy — portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau.">
+  <meta name="keywords" content="hikki photography, portrait, wedding, city, vancouver, hong kong, macau, film look">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hikki Photography">
+  <meta property="og:description" content="Portraits, weddings, and cities — emotions over perfection.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hikki.ca/">
+  <meta property="og:site_name" content="Hikki Photography & Philosophy">
+  <meta property="og:image" content="https://hikki.ca/favicon.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hikki Photography">
+  <meta name="twitter:description" content="Portraits, weddings, and cities — emotions over perfection.">
+  <meta name="twitter:image" content="https://hikki.ca/favicon.png">
+
   <!-- Favicon -->
   <link rel="icon" href="/favicon.png" type="image/png" />
 
   <!-- Fonts（優化載入） -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
@@ -232,9 +256,75 @@
       *, *::before, *::after{ animation:none !important; transition:none !important; }
     }
   </style>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Hikki Photography",
+    "url":"https://hikki.ca/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://hikki.ca/?s={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Hikki Photography & Philosophy",
+    "url":"https://hikki.ca/",
+    "logo":"https://hikki.ca/favicon.png",
+    "sameAs":[
+      "https://www.instagram.com/hikki_with_her_camera"
+    ],
+    "contactPoint":[
+      {
+        "@type":"ContactPoint",
+        "contactType":"customer service",
+        "email":"info@hikki.ca",
+        "telephone":"+1-250-986-9516",
+        "areaServed":["CA","HK","MO","US"],
+        "availableLanguage":["en","zh","ja"]
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {
+        "@type":"ListItem",
+        "position":1,
+        "name":"About",
+        "item":"https://hikki.ca/"
+      },
+      {
+        "@type":"ListItem",
+        "position":2,
+        "name":"Gallery",
+        "item":"https://hikki.ca/gallery.html"
+      },
+      {
+        "@type":"ListItem",
+        "position":3,
+        "name":"Contact",
+        "item":"https://hikki.ca/contact.html"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-
   <!-- 手機版上方輪播列 -->
   <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">Of time, souls and cities.</div>
 
@@ -296,7 +386,7 @@
       not what you pretend to be,<br>
       but the quiet light that belongs only to you and your loved ones.<br><br>
       We offer professional photography that is honest, distinct, and deeply human.<br><br>
-      All job invitations are welcomed. <span class="blink-block">■</span><br>
+      Job invitations are welcomed. <span class="blink-block">■</span><br>
     </div>
     <div class="signature-block"></div>
     <div class="post-right">
@@ -424,7 +514,8 @@
     const mobileEl = document.getElementById("mobileRotator");
 
     const sentences = [
- "Of time, souls and cities.","Know thyself.","静かな光。",
+
+          "Of time, souls and cities.","Know thyself.","静かな光。",
       "10% off for rescued animals.","YYJ > YVR",
       "Get a quote today for free！",
       "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
@@ -452,12 +543,13 @@
       "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
       "sksksk","Come on and join our convoy.","I am in flames!",
       "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
       "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
       "Some people are worth melting for.","ひとりって切ないくらい自由。",
       "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
       "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
       "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+ 
     ];
 
     let lastIndex = -1;
@@ -498,8 +590,12 @@
       });
     }
 
+    // 立即跑一次，避免首屏空等
     animateHeader();
+    // 與 Gallery 保持一致：4 秒
     setInterval(animateHeader, 4000);
+
+    /* ===== 右側 Team Carousel（尊重減少動畫） ===== */
     (function(){
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const wrap = document.querySelector('.team-container');
