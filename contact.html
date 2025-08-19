@@ -3,7 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Contact | Hikki</title>
+  <meta name="description" content="Contact Hikki photography & philosophy — professional wedding, portrait, and pet photography across Vancouver, Hong Kong, and Macau. Book a session or collaboration." />
+  <link rel="canonical" href="https://hikki.ca/contact.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hikki photography & philosophy" />
+  <meta property="og:title" content="Contact | Hikki" />
+  <meta property="og:description" content="Professional wedding, portrait, and pet photography. Vancouver · Hong Kong · Macau — reach out via Instagram or email." />
+  <meta property="og:url" content="https://hikki.ca/contact.html" />
+  <meta property="og:locale" content="zh_HK" />
+  <meta property="og:image" content="https://hikki.ca/bg.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact | Hikki" />
+  <meta name="twitter:description" content="Professional wedding, portrait, and pet photography. Vancouver · Hong Kong · Macau." />
+  <meta name="twitter:image" content="https://hikki.ca/bg.jpg" />
 
   <!-- Preconnect / fonts -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -16,6 +34,64 @@
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "@id":"https://hikki.ca/#website",
+        "url":"https://hikki.ca/",
+        "name":"Hikki photography & philosophy",
+        "inLanguage":"zh-HK",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://hikki.ca/?q={search_term_string}",
+          "query-input":"required name=search_term_string"
+        }
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://hikki.ca/#org",
+        "name":"Hikki photography & philosophy",
+        "url":"https://hikki.ca/",
+        "email":"info@hikki.ca",
+        "sameAs":["https://www.instagram.com/hikki_with_her_camera"],
+        "contactPoint":[{
+          "@type":"ContactPoint",
+          "contactType":"customer support",
+          "telephone":"+1-250-986-9516",
+          "email":"Will@hikki.ca",
+          "areaServed":["CA","HK","MO"],
+          "availableLanguage":["en","zh-Hant","ja"]
+        }],
+        "logo":{
+          "@type":"ImageObject",
+          "url":"https://hikki.ca/Logo_Contact.png"
+        }
+      },
+      {
+        "@type":"WebPage",
+        "@id":"https://hikki.ca/contact.html#webpage",
+        "url":"https://hikki.ca/contact.html",
+        "name":"Contact | Hikki",
+        "isPartOf":{"@id":"https://hikki.ca/#website"},
+        "about":{"@id":"https://hikki.ca/#org"},
+        "inLanguage":"zh-HK",
+        "description":"Contact Hikki photography & philosophy — wedding, portrait, and pet photography across Vancouver, Hong Kong, and Macau."
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          { "@type":"ListItem", "position":1, "name":"Home", "item":"https://hikki.ca/" },
+          { "@type":"ListItem", "position":2, "name":"Contact", "item":"https://hikki.ca/contact.html" }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <style>
     :root{
@@ -61,7 +137,7 @@
     .header-bar a:hover{color:#f1c232}
     .header-bar a.active{color:#e74c3c}
 
-    /* 字體掛勾：英文→等寬；日文→Noto Serif JP（含子孫與拆字 span） */
+    /* 字體掛勾 */
     [lang="en"], [lang="en"] *{ font-family: var(--mono) !important; font-variant-ligatures: none; }
     [lang="ja"], [lang="ja"] *{ font-family:'Noto Serif JP','MS Mincho',serif !important; font-variant-ligatures: none; }
 
@@ -76,7 +152,7 @@
     }
     @keyframes spinY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
 
-    /* 右欄：全面左對齊 */
+    /* 右欄：左對齊 */
     .right-col{
       padding:60px 40px;display:flex;flex-direction:column;gap:32px;
       justify-content:center;align-items:flex-start;text-align:left;contain:content;
@@ -93,13 +169,13 @@
 
     .copyright p{font-size:14px;line-height:1.4;margin-top:16px}
 
-    /* Matrix：保留單字間空白與換行；避免首行縮排造成左邊「歪」。 */
+    /* Matrix */
     .matrix-scope p{ white-space: pre-wrap; }
-    .matrix-char{
-      display:inline-block;
-      white-space: pre;
-      will-change: transform, opacity;
-    }
+    .matrix-char{ display:inline-block; white-space: pre; will-change: transform, opacity; }
+
+    /* Blink —— 修正：補上 blink3 定義 */
+    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
+    @keyframes blink3 { 0%,50%,100% { opacity:1 } 25%,75% { opacity:0 } }
 
     /* Mobile */
     @media (max-width:767px){
@@ -119,9 +195,11 @@
       .contact-page{padding-top:136px!important;justify-content:center!important;align-items:flex-start!important}
     }
 
+    /* 尊重使用者偏好，但保留 blink-block 動畫 */
     @media (prefers-reduced-motion:reduce){
       .left-col{animation:none!important}
       *,*::before,*::after{animation:none!important;transition:none!important}
+      .blink-block{ animation:blink3 3s infinite !important; } /* 白名單 */
     }
   </style>
 </head>
@@ -141,7 +219,7 @@
       <div class="contact-info">
         <p lang="en">
           <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">Instagram</a><br>
-          info@hikki.ca<br>
+          Will@hikki.ca<br>
           250-986-9516
         </p>
       </div>
@@ -156,13 +234,13 @@
           no one had ever seen such a sight—<br>
           the Tatsuta River,<br>
           its waters bound in crimson threads,<br>
-          dyed by the scattering of autumn leaves ■
+          dyed by the scattering of autumn leaves. <span class="blink-block">■</span>
         </p>
       </div>
       <div class="copyright">
         <p lang="en">
           © 2025 Hikki photography &amp; philosophy.<br>
-          All rights reserved. <span lang="ja">無断転載を禁じます。</span>
+          All rights reserved. <span lang="ja">無断転載を禁じます。 <span class="blink-block">■</span></span>
         </p>
       </div>
     </div>
@@ -176,7 +254,7 @@
     const targets  = [headerEl, mobileEl].filter(Boolean);
 
     const sentences = [
-     "Of time, souls and cities.","Know thyself.","静かな光。",
+      "Of time, souls and cities.","Know thyself.","静かな光。",
       "10% off for rescued animals.","YYJ > YVR",
       "Get a quote today for free！",
       "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
@@ -195,7 +273,7 @@
       "Stay gold, Ponyboy.",
       "What’s in a name? that which we call a rose…",
       "I drink your milkshake!",
-      "The horror! The horror!",
+      "The horror! The Horror!",
       "Le temps détruit tout.",
       "翩翩不富，皆失實也。",
       "雲上於天，需；君子以飲食宴樂。",
@@ -241,18 +319,16 @@
     }
     rotate(); setInterval(rotate, 4000);
 
-    /* ===== Matrix：去除段落開頭縮排 & <br> 後縮排，避免 Instagram 行偏右 ===== */
+    /* ===== Matrix：去除段落縮排 & <br> 後縮排，避免對齊偏移 ===== */
     if (!reduce && window.gsap) {
       const scope = document.querySelector('.matrix-scope');
       if (scope){
         const ps = scope.querySelectorAll('p');
 
         const trimIndent = (p) => {
-          // 移除段落起始的純空白節點
           while (p.firstChild && p.firstChild.nodeType === 3 && /^\s+$/.test(p.firstChild.nodeValue)) {
             p.removeChild(p.firstChild);
           }
-          // 清除每個 <br> 之後緊接的縮排空白
           p.querySelectorAll('br').forEach(br => {
             const n = br.nextSibling;
             if (n && n.nodeType === 3) n.nodeValue = n.nodeValue.replace(/^[\t ]+/, '');
@@ -261,7 +337,6 @@
 
         ps.forEach(p => {
           trimIndent(p);
-
           const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, {
             acceptNode(n){ return n.textContent.replace(/\s/g,'').length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
           });
@@ -270,7 +345,6 @@
 
           nodes.forEach(node => {
             const parent = node.parentNode;
-            // 保留詞間空白與換行；移除行首縮排（保險一次）
             const text = node.textContent.replace(/\r/g,'').replace(/^[\t ]+/gm,'');
             const frag = document.createDocumentFragment();
             for (const ch of text){
