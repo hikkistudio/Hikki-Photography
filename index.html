@@ -1,25 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hikki</title>
+  <title>Hikki Photography</title>
 
-  <!-- 預連線：加速載入 CDN -->
+  <!-- Canonical / Robots -->
+  <link rel="canonical" href="https://hikki.ca/">
+  <meta name="robots" content="index,follow">
+
+  <!-- Meta -->
+  <meta name="description" content="Hikki Photography & Philosophy — portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau.">
+  <meta name="keywords" content="hikki photography, portrait, wedding, city, vancouver, hong kong, macau, film look">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hikki Photography">
+  <meta property="og:description" content="Portraits, weddings, and cities — emotions over perfection.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hikki.ca/">
+  <meta property="og:site_name" content="Hikki Photography & Philosophy">
+  <meta property="og:image" content="https://hikki.ca/favicon.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hikki Photography">
+  <meta name="twitter:description" content="Portraits, weddings, and cities — emotions over perfection.">
+  <meta name="twitter:image" content="https://hikki.ca/favicon.png">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.png" type="image/png" />
+
+  <!-- Fonts（優化載入） -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
 
-  <!-- GSAP，用於文字淡入淡出與進場動畫 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- GSAP（defer 防阻塞） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Courier New", monospace;
+    [lang="ja"] { font-family: 'Noto Serif JP', serif; }
+    [lang="en"] { font-family: 'Courier New', monospace; }
+
+    @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+
+    *{ margin:0; padding:0; box-sizing:border-box }
+
+    body{
+      font-family: Helvetica, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 200vh;              /* 供方塊放大滾動使用 */
       background: #000;
       color: #000;
     }
+
+    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
 
     /* —— Mobile Rotator（手機版上方輪播列） —— */
     .mobile-rotator{
@@ -34,283 +72,450 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       font-family: "Courier New", monospace;
     }
-    .mobile-rotator.ja { font-family: "MS Mincho", serif; }
+    .mobile-rotator.ja{ font-family:'Noto Serif JP',serif; }
+
+    .bg-video{
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-1;
+    }
+
+    .content{ position:absolute; top:80px; left:60px; z-index:1; }
+
+    h1{ position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
+
+    .grid-container{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      grid-template-rows:auto auto;
+      grid-template-areas:
+        "subtitle subtitle"
+        "left     chinese";
+      column-gap:60px; row-gap:60px;
+      margin-top:8px;
+    }
+
+    h2{ grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
+
+    .left{ grid-area:left }
+    .left h3{
+      position:relative; left:-0.1ch;
+      font-family:'Courier New',monospace;
+      font-weight:100; font-size:30px; line-height:10px;
+      white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px;
+    }
+
+    .locations{
+      margin-top:22px; list-style:none;
+      font-family:'Courier New',monospace;
+      font-size:20px; line-height:18px;
+      letter-spacing:-0.005em;
+    }
+    .locations li + li{ margin-top:4px }
+
+    .square{
+      position:fixed; bottom:0; left:0;
+      width:70px; height:70px;
+      background:#000;
+      animation:blink 3s infinite;
+      transform-origin:bottom left;
+      transform:scale(1);
+      z-index:2;
+    }
+    @keyframes blink{ 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+
+    .chinese{
+      grid-area:chinese;
+      font-family:'Noto Serif JP',serif;
+      font-size:16px; line-height:24px;
+      max-width:400px; letter-spacing:0;
+    }
+    .chinese .english{
+      display:block; margin-top:1ch;
+      font-family:'Courier New',monospace;
+      letter-spacing:-0.005em;
+    }
+
+    .overlay{
+      display:none;
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      background:#000; z-index:3;
+    }
+
+    .post{
+      position:fixed; top:80px; left:60px;
+      width:calc(100% - 120px);
+      height:calc(100vh - 80px);
+      display:grid;
+      grid-template-columns:2fr 3fr;
+      grid-template-rows:80px 1fr auto;
+      grid-template-areas:
+        "hl     right"
+        "txt    right"
+        "sig    right";
+      column-gap:60px; row-gap:24px;
+      opacity:0; z-index:4;
+      transition:opacity .3s ease-out .2s;
+    }
+    .post > *{ opacity:0; transition:opacity .8s ease-out .4s, transform .8s ease-out .4s; }
+    .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) }
+    .post .post-right { transform:translateX(100%) }
+
+    .post .highlight{ grid-area:hl; }
+    .post .text{
+      grid-area:txt;
+      font-family:'Courier New',monospace;
+      font-size:14px; line-height:14px;
+      color:#f4f2f0; overflow-y:auto;
+      align-self:start; letter-spacing:-0.02em;
+    }
+    .post .signature-block{ grid-area:sig; display:flex; flex-direction:column; justify-content:flex-end; }
+
+    .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; }
+    .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; }
+    .team{ flex:0 0 25%; display:flex; height:100%; }
+
+    .team-text{
+      flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end;
+      padding:0 20px 20px; background:rgba(0,0,0,0.5);
+    }
+    .team-info{
+      font-family:'Courier New',monospace; color:#f4f2f0;
+      font-size:16px; line-height:18px; text-align:right;
+    }
+    .team-info .name{ font-family:Helvetica, sans-serif; font-size:50px; line-height:24px; white-space:nowrap; }
+    .team .photo{ flex:2; background-size:cover; background-position:center; }
+
+    .post.enter{ opacity:1; }
+    .post.enter > .highlight,
+    .post.enter > .text,
+    .post.enter > .signature-block,
+    .post.enter > .post-right{ opacity:1; transform:translateX(0); }
 
     /* —— Header Bar —— */
-    .header-bar {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 60px;
-      background: #f4f2f0;
-      display: flex; align-items: center;
-      padding: 0 40px; box-sizing: border-box;
-      z-index: 9999;
+    .header-bar{
+      position:fixed; top:0; left:0;
+      width:100%; height:60px;
+      background:#f4f2f0; z-index:9999;
+      border-bottom:1px solid #f4f2f0;
+      display:flex; align-items:center;
+      padding:0 40px; box-sizing:border-box;
     }
-    .header-title {
-      margin-right: auto; font-size: 18px;
-      overflow: hidden; white-space: nowrap;
-      font-family: "Courier New", monospace;
-      will-change: transform, opacity;
+    .header-title{
+      margin-right:auto; font-family:'Courier New',monospace;
+      font-size:18px; color:#000; overflow:hidden; white-space:nowrap;
     }
-    .header-title.ja { font-family: "MS Mincho", serif; }
-    .header-bar a {
-      margin-left: 40px; font-size: 18px;
-      color: #000; text-decoration: none;
-      transition: color .3s ease;
-    }
-    .header-bar a:hover  { color: #f1c232; }
-    .header-bar a.active { color: #e74c3c; }
+    .header-title.en{ font-family:'Courier New', monospace; }
+    .header-title.ja{ font-family:'Noto Serif JP',serif; }
 
-    /* —— 內容避開固定 Header —— */
-    .header-spacer { height: 60px; }
+    .header-bar a{
+      font-family:'Courier New',monospace;
+      font-size:18px; color:#000; text-decoration:none; margin-left:40px;
+      transition:color .3s ease;
+    }
+    .header-bar a:hover{ color:#f1c232 }
+    .header-bar a.active{ color:#e74c3c }
 
-    /* —— Filter Bar（獨立，字體 Courier New） —— */
-    .filter-bar{
-      width: 100%;
-      background: #000;
-      border-bottom: 1px solid #000;
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 40px; box-sizing: border-box;
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-      font-family: "Courier New", monospace;
-      position: sticky; top: 60px; z-index: 5; /* 讓 Filter 跟隨在 Header 下方 */
-    }
-    .filter-label{
-      font-size: 14px; color:#f4f2f0; margin-right: 8px;
-      white-space: nowrap; user-select: none;
-      font-family: "Courier New", monospace;
-    }
-    .filter-btn{
-      appearance: none;
-      border: 1px solid #f4f2f0;
-      background: #fff; color:#222;
-      padding: 6px 12px; font-size: 14px;
-      border-radius: 999px; cursor: pointer;
-      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
-      white-space: nowrap; font-family: "Courier New", monospace;
-    }
-    .filter-btn:hover { background:#f4f2f0; border-color:#f4f2f0; }
-    .filter-btn:active{ transform: translateY(1px); }
-    .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
+    /* —— 行動版 —— */
+    @media only screen and (max-width: 767px){
+      /* 鎖定不滾動（原設計），並簡化動態區 */
+      html, body{ height:100vh !important; overflow:hidden !important; }
 
-    /* —— Gallery —— */
-    .gallery-wrapper {
-      max-width: 1200px;
-      margin: 0 auto 20px;
-      padding: 20px 10px 10px;
-      box-sizing: border-box;
-    }
-    .gallery {
-      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
-    }
-
-    .gallery img {
-      width: calc(25% - 10px);
-      min-width: 200px;
-      aspect-ratio: 2 / 3;      /* 保持既有比例呈現 */
-      height: auto;
-      object-fit: cover; object-position: center;
-      background: #111;
-      cursor: pointer;
-      transition: transform .3s ease, opacity .2s ease;
-      will-change: transform, opacity;
-
-      /* 避免 CLS、仍保留你原來的進場基線（JS 會把第一批動畫打開） */
-      content-visibility: auto;
-      contain-intrinsic-size: 400px 267px;
-      opacity: 0; transform: translateY(14px);
-    }
-    .gallery img:hover { transform: scale(1.03); }
-
-    /* —— Load More —— */
-    .load-more-wrap{
-      display:flex; justify-content:center; padding:16px 0 32px;
-    }
-    .load-more-btn{
-      appearance: none;
-      border: 1px solid #f4f2f0;
-      background: #000; color:#f4f2f0;
-      padding: 10px 18px; font-size: 14px; border-radius: 999px;
-      cursor: pointer;
-      transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
-      font-family: "Courier New", monospace;
-    }
-    .load-more-btn:hover { background:#111; }
-    .load-more-btn:active{ transform: translateY(1px); }
-    .no-results{
-      color:#f4f2f0; text-align:center; padding: 24px 0;
-      font-size:14px;
-    }
-
-    /* —— Overlay Lightbox —— */
-    .overlay {
-      position: fixed; inset: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.9);
-      display: none; justify-content: center; align-items: center; flex-direction: column;
-      z-index: 10002; /* 高於 rotator & header */
-    }
-    .overlay img { max-width: 90%; max-height: 90%; } /* 保留原始比例顯示 */
-    .close-btn {
-      position: absolute; top: 20px; left: 20px;
-      font-size: 28px; color: #f4f2f0; cursor: pointer; user-select: none;
-    }
-
-    /* —— RWD —— */
-    @media (max-width: 768px) {
-      .gallery img { width: calc(50% - 10px); }
-      .filter-bar{ padding: 10px 16px; }
-    }
-    @media (max-width: 480px) {
-      /* 顯示手機輪播列，並讓 header 下移 */
       .mobile-rotator{ display:flex; }
-      .header-bar{ top: 36px; }
-      .header-spacer{ height: 96px; } /* 36 + 60 */
-      .header-title { display: none !important; }
+      .header-bar{ top:36px; }
+      .header-title{ display:none !important; }
 
-      /* 手機：一列 4 張（保留你的設定） */
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        justify-items: stretch;
-      }
-      .gallery img {
-        width: 100%;
-        min-width: 0;
-      }
-      /* Filter 也保持置頂貼齊 Header */
-      .filter-bar{ top: 96px; position: sticky; }
-    }
+      .header-bar{ justify-content:center !important; }
+      .header-bar a{ margin:0 37px !important; }
 
-    /* —— 保留原手機導覽調整 —— */
-    @media only screen and (max-width: 767px) {
-      .header-title { display: none !important; }
-      .header-bar { justify-content: center !important; }
-      .header-bar a { margin: 0 37px !important; }
+      .content{
+        position:relative !important; top:auto !important; left:auto !important;
+        width:100% !important; height:auto !important;
+        padding:116px 20px 20px !important; /* 60(header)+36(rotator)+餘量 */
+      }
+
+      .grid-container{ display:block !important; }
+
+      /* 文字尺寸統整（修掉負值 line-height 的錯誤） */
+      .content h1{ font-size:65px !important; line-height:1 !important; margin-bottom:8px !important; }
+      .grid-container h2{ font-size:22px !important; line-height:1.2 !important; margin:0 0 20px !important; }
+      .left h3{ font-size:20px !important; line-height:1 !important; }
+      .locations{ font-size:20px !important; line-height:1 !important; margin-top:0 !important; }
+      .locations li{ font-size:10px !important; line-height:1 !important; margin-bottom:4px !important; }
+
+      .content .chinese, .content .chinese .english{
+        font-family: 'Courier New','Noto Serif JP',serif,monospace !important;
+        font-size:10px !important; line-height:1.6 !important;
+      }
+
+      /* 靜態化動態區 */
+      .square, .mobile-square, .overlay, #post{ display:none !important; }
+
+      /* 禁用動畫/過渡，避免重排卡頓 */
+      *, *::before, *::after{ animation:none !important; transition:none !important; }
     }
   </style>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Hikki Photography",
+    "url":"https://hikki.ca/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://hikki.ca/?s={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Hikki Photography & Philosophy",
+    "url":"https://hikki.ca/",
+    "logo":"https://hikki.ca/favicon.png",
+    "sameAs":[
+      "https://www.instagram.com/hikki_with_her_camera"
+    ],
+    "contactPoint":[
+      {
+        "@type":"ContactPoint",
+        "contactType":"customer service",
+        "email":"info@hikki.ca",
+        "telephone":"+1-250-986-9516",
+        "areaServed":["CA","HK","MO","US"],
+        "availableLanguage":["en","zh","ja"]
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {
+        "@type":"ListItem",
+        "position":1,
+        "name":"About",
+        "item":"https://hikki.ca/"
+      },
+      {
+        "@type":"ListItem",
+        "position":2,
+        "name":"Gallery",
+        "item":"https://hikki.ca/gallery.html"
+      },
+      {
+        "@type":"ListItem",
+        "position":3,
+        "name":"Contact",
+        "item":"https://hikki.ca/contact.html"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <!-- 手機版上方輪播列 -->
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">Of time, souls and cities.</div>
 
-  <!-- —— 手機版上方輪播列 —— -->
-  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">
-    Of time, souls and cities.
-  </div>
-
-  <!-- —— Header —— -->
+  <!-- Header -->
   <div class="header-bar">
-    <div class="header-title en" id="headerTitle">
-      Of time, souls and cities.
-    </div>
-    <a href="index.html">About</a>
-    <a href="gallery.html" class="active">Gallery</a>
+    <div class="header-title en" id="headerTitle">Of time, souls and cities.</div>
+    <a href="index.html" class="active">About</a>
+    <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </div>
 
-  <!-- 讓內容避開固定 Header -->
-  <div class="header-spacer" aria-hidden="true"></div>
+  <!-- 背景影片（預載中性＋行動友善） -->
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
 
-  <!-- —— Filter Bar（獨立） —— -->
-  <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
-    <span class="filter-label">Filter:</span>
-    <button class="filter-btn" data-filter=""        aria-pressed="true">All</button>
-    <button class="filter-btn" data-filter="Souls"   aria-pressed="false">Souls</button>
-    <button class="filter-btn" data-filter="Times"   aria-pressed="false">Times</button>
-    <button class="filter-btn" data-filter="Cities"  aria-pressed="false">Cities</button>
-    <button class="filter-btn" data-filter="Friends" aria-pressed="false">Friends</button>
-  </div>
-
-  <!-- —— Gallery Section —— -->
-  <div class="gallery-wrapper" id="gallery">
-    <div class="gallery">
-      <!-- 支援多分類：data-cat="Times, Souls" 或 "Cities Friends" 都可以 -->
-      <img src="g1_vancouver_prewedding_cityview.webp"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times, Souls">
-      <img src="g2_hongkong_art_skycraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g4_black_and_white_dog_running.webp"    alt="Photo 4"  loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g5_pet_owner_Wheatfield_family_photo.webp"  alt="Photo 5"  loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g6_Portrait_film_Vintage.webp"          alt="Photo 6"  loading="lazy" decoding="async" data-cat="Souls">
-      <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g8_macau_architecture_concrete.webp"    alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g9_oriental_confused_moment_misty.webp" alt="Photo 9"  loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g10_asia_brutalist_textures_b&w.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g11_vancouver_kitsilano_lonely_fastfood.webp" alt="Photo 11" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g12_Shelti_smile_field_vancouver.webp"  alt="Photo 12" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g13_burnaby_wedding_dance_couple.webp"  alt="Photo 13" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g14_crane_poise_modern_construction.webp" alt="Photo 14" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g15_macau_alley_market_dreams.webp"     alt="Photo 15" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g16_redline_utility_core_noise_barrier.webp" alt="Photo 16" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g17_wedding_photography_crew_victoria_BC.jpg" alt="Photo 17" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g18_courtyard_stillness_temple_bells.webp" alt="Photo 18" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g19_macau_brutalist_facade_raw_concrete.webp" alt="Photo 19" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g20_infrastructural_romance_deconstructivist_angles.webp" alt="Photo 20" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g21_light_warm_nightime.webp"           alt="Photo 21" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g22_sunset_burnaby_streets_respite.webp" alt="Photo 22" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g23_wall_offset_grid_liminal_city.webp" alt="Photo 23" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g24_Vinyl_slience_man_couple_wedding.jpg" alt="Photo 24" loading="lazy" decoding="async" data-cat="Times, Souls">
-      <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g26_shelti_mountain_northvan_hiking.webp" alt="Photo 26" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g27_dog_portrait_moment_capture_home.webp" alt="Photo 27" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g28_wedding_b&w_emotion_momment_forgotten.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g29_portrait_couple_classic_love_wedding.webp" alt="Photo 29" loading="lazy" decoding="async" data-cat="Times, Friends">
-      <img src="g30_moment_joy_caring_wedding.webp"     alt="Photo 30" loading="lazy" decoding="async" data-cat="Times, Friends">
-      <img src="g31_portrait_oldschool_traitional_emotions.webp" alt="Photo 31" loading="lazy" decoding="async" data-cat="Times, Friends">
-      <img src="g32_party_wedding_food_friendship.webp" alt="Photo 32" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g33_urban_cat_outdoor_owner.webp"       alt="Photo 33" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g34_vow_wedding_preperation_moment.webp" alt="Photo 34" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g35_toss_wedding_wine_champaign_rose.webp" alt="Photo 35" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g36_adopted_stray_dog_mixed_rescued.webp" alt="Photo 36" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g37_prefab_panels_ribbed_slab.webp"     alt="Photo 37" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g38_late_capital_vistas_concrete_jungle_dream.webp" alt="Photo 38" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g39_gilmore_monochrome_city_highrise_intimacy.webp" alt="Photo 39" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp" alt="Photo 40" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g41_b&w_wedding_grand_dressing_timeless_breath.webp" alt="Photo 41" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g42_victoria_marketsquare_photographer_model_art_lens.webp" alt="Photo 42" loading="lazy" decoding="async" data-cat="Souls">
-      <img src="g43_dog_disability_running_speed_moment.webp" alt="Photo 43" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g44_shelti_cornfield_sun_outdoor_love.webp" alt="Photo 44" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g45_blueberry_dog_korean_instragram.webp" alt="Photo 45" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g46_portrait_dog_pet_german.webp"       alt="Photo 46" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g47_neighbour_unexpected_pitbull_pet_nighttime.webp" alt="Photo 47" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g48_elegant_dog_hunt_river_white.webp"  alt="Photo 48" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g49_dog_portrait_mountain_vancouver_capilano_commercial_photoshoot.webp" alt="Photo 49" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g50_window_light_portrait_shadow_play_leading_lines_symmetry_balance.webp" alt="Photo 50" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g51_Macau_asian_concrete_jungle.webp"   alt="Photo 51" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g52_macau_bay_darkness_wings_storm.webp" alt="Photo 52" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g53_street_cat_store_memory_macau.webp" alt="Photo 53" loading="lazy" decoding="async" data-cat="Cities, Friends">
-      <img src="g54_red_architecture_mong_kok_night_liminal_.webp" alt="Photo 54" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g55_stairwell_geometry_window_building.webp" alt="Photo 55" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g56_analog_portrait_chinatown_family_warm_vibe.jpg" alt="Photo 56" loading="lazy" decoding="async" data-cat="Times">
-      <img src="g57_professional_camera_ginger_tabby_maine_coon_lens.webp" alt="Photo 57" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g58_ceramics_sculpture_glaze_earthware_stoneware.webp" alt="Photo 58" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g59_Westvan_beachside_social_photography_billboard.webp" alt="Photo 59" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g60_street_barber_glimpse_vauged_eyes_warm.webp" alt="Photo 60" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g61_japanese_girl_cat_main_coon_playing.webp" alt="Photo 61" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g62_straydog_adoption_leash_dogwalk_petphoto.webp" alt="Photo 62" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g63_mushroom_burnaby_product_photography_lighting_zoom.webp" alt="Photo 63" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g64_eastvan_streetview_silence_moment_sunlight.webp" alt="Photo 64" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g65_stray_dog_leash_foster_family_photography_pet.webp" alt="Photo 65" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g66_wheelchair_pet_owner_feeding_portrait.webp" alt="Photo 66" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g67_dog_portrait_smile_capturing_moments.webp" alt="Photo 67" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g68_dogs_playing_grooming_petphoto_evening.webp" alt="Photo 68" loading="lazy" decoding="async" data-cat="Friends">
+  <!-- 第1階段 -->
+  <div class="content">
+    <h1>EMOTIONS,</h1>
+    <div class="grid-container">
+      <h2>not imitate perfection.</h2>
+      <div class="left">
+        <h3>Hikki Photography & Philosophy</h3>
+        <ul class="locations">
+          <li>Vancouver</li>
+          <li>Hong Kong</li>
+          <li>Macau <span class="blink-block">■</span></li>
+        </ul>
+        <div class="square"></div>
+      </div>
+      <div class="chinese">
+        ><br>
+        ><br>
+        光在她睫毛下方折成一道道細影，微微顫動。她輕聲如耳語。穿透空氣的疲倦，像白襯衫上的海水乾了又濕。<br>
+        <span class="english">
+          Light breaks beneath her lashes—<br>
+          thin shadows trembling.<br>
+          She wishper,<br>
+          like salt drying<br>
+          on a white shirt,<br>
+          soon to be wet again.  <span class="blink-block">■</span><br><br><br>
+          © 2025 Hikki photography &amp; philosophy.  <span class="blink-block">■</span><br>
+        </span>
+      </div>
     </div>
+  </div>
 
-    <!-- Load More + 無結果訊息 -->
-    <div class="load-more-wrap">
-      <button id="loadMore" class="load-more-btn">Load More</button>
+  <!-- 第2階段 黑幕 -->
+  <div class="overlay"></div>
+
+  <!-- 第3階段 滑入 -->
+  <div id="post" class="post">
+    <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline preload="none"></video>
+    <div class="text">
+      We stand against the mass production of images that plagues today’s photography industry—<br>
+      the flood of magic moments, AI-generated images and kitschy filters.<br><br>
+      Photography should convey emotions, not imitate perfection.<br><br>
+      We strive capture the most beautiful side of who you are—<br>
+      not what you pretend to be,<br>
+      but the quiet light that belongs only to you and your loved ones.<br><br>
+      We offer professional photography that is honest, distinct, and deeply human.<br><br>
+      Job invitations are welcomed. <span class="blink-block">■</span><br>
     </div>
-    <div id="noResults" class="no-results" hidden>No images found.</div>
+    <div class="signature-block"></div>
+    <div class="post-right">
+      <div class="team-container">
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">Alex Hikki–Iao</span><br>
+              7+ year exp. in photography<br>
+              & graphic design<br>
+              Underiododeridodriooo<br>
+              Fav. Camera<br>
+              Voigtlander Ultramatic<br>
+              w/ Skoparex 35mm/f3.4 <span class="blink-block">■</span><br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Alex.jpg')"></div>
+        </div>
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">HANG</span><br>
+              Based. Macau,<br>
+              Expert in videography,<br>
+              launching his own brand<br>
+              crafting Macau-centric stories<br>
+              through textiles.<br><br>
+              Karina is l0v3, why<br>
+              Hates: Nikon AF <span class="blink-block">■</span><br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Hang.jpg')"></div>
+        </div>
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">Dallas</span><br>
+              Pivot from marketing manager,<br>
+              6+ years exp. in photography,<br>
+              trained to bring visions to life.<br><br>
+              Pottery is love!<br><br>
+              Fav. philosopher: Mencius <span class="blink-block">■</span><br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('Dallas.jpg')"></div>
+        </div>
+        <div class="team">
+          <div class="team-text">
+            <div class="team-info">
+              <span class="name">William</span><br>
+              our Community Manager<br>
+              Also a registered kinesiologist<br>
+              Caffeine addict-<br>
+              wheres my milk<br>
+              wheres my sugar<br><br>
+              Fav. camera: Minolta AF-E <span class="blink-block">■</span><br>
+            </div>
+          </div>
+          <div class="photo" style="background-image:url('William.jpg')"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- —— Overlay / Lightbox —— -->
-  <div class="overlay" id="overlay">
-    <span class="close-btn" id="closeBtn">×</span>
-    <img src="" alt="Expanded Photo" id="overlayImg">
-  </div>
-
-  <!-- —— Header 動態文字輪播腳本 —— -->
   <script>
+  // 等 GSAP 載入後執行
+  window.addEventListener('DOMContentLoaded', () => {
+    /* ===== Scroll 動畫：節流 + 被動監聽，避免 Reflow 抖動 ===== */
+    (function(){
+      const sq = document.querySelector('.content .square');
+      const overlay = document.querySelector('.overlay');
+      const post = document.getElementById('post');
+      const hlVideo = document.querySelector('.post .highlight');
+
+      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!sq || prefersReduce) {
+        // 簡化：不跑滾動動畫
+        overlay.style.display = 'none';
+        post.classList.remove('enter');
+        hlVideo && hlVideo.pause && hlVideo.pause();
+        return;
+      }
+
+      const getDocHeight = () =>
+        Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight
+        );
+
+      let ticking = false;
+      function onScroll(){
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const max = getDocHeight() - window.innerHeight;
+          const pct = Math.min(max > 0 ? window.scrollY / max : 0, 1);
+
+          // 關閉/恢復方塊 CSS 動畫（用行內樣式覆蓋）
+          sq.style.animation = (pct > 0) ? 'none' : 'blink 3s infinite';
+          // 放大
+          const maxScale = Math.max(window.innerWidth, window.innerHeight) / 60;
+          sq.style.transform = `scale(${1 + pct * (maxScale - 1)})`;
+
+          // 切黑幕與第三階段
+          if (pct >= 1) {
+            overlay.style.display = 'block';
+            post.classList.add('enter');
+            // 這時才真正播放右側影片（節省頻寬）
+            hlVideo && hlVideo.play && hlVideo.play().catch(()=>{});
+          } else {
+            overlay.style.display = 'none';
+            post.classList.remove('enter');
+            hlVideo && hlVideo.pause && hlVideo.pause();
+          }
+          ticking = false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive:true });
+      window.addEventListener('resize', () => onScroll(), { passive:true });
+      onScroll();
+    })();
+
+    /* ===== HeaderRotator（桌面＋手機，同步） ===== */
+    const headerEl = document.getElementById("headerTitle");
+    const mobileEl = document.getElementById("mobileRotator");
+
     const sentences = [
-      "Of time, souls and cities.","Know thyself.","静かな光。",
+
+          "Of time, souls and cities.","Know thyself.","静かな光。",
       "10% off for rescued animals.","YYJ > YVR",
       "Get a quote today for free！",
       "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
@@ -338,185 +543,70 @@
       "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
       "sksksk","Come on and join our convoy.","I am in flames!",
       "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
       "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
       "Some people are worth melting for.","ひとりって切ないくらい自由。",
       "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
       "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
       "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+ 
     ];
-    const headerEl = document.getElementById("headerTitle");
-    const mobileEl = document.getElementById("mobileRotator");
+
     let lastIndex = -1;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCJK = (text) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(text); // 含中日韓
 
-    function rnd(exclude) { let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude); return i; }
-
-    function applyText(el, text, isCJK){
+    function applyText(el, text){
       if(!el) return;
-      el.classList.toggle("ja", isCJK);
-      el.classList.toggle("en", !isCJK);
+      const useCJK = isCJK(text);
+      el.classList.toggle("ja",  useCJK);
+      el.classList.toggle("en", !useCJK);
       el.textContent = text;
     }
 
-    function animateHeader() {
+    function rnd(exclude){
+      let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude);
+      return i;
+    }
+
+    function animateHeader(){
       const next = rnd(lastIndex); lastIndex = next;
       const text = sentences[next];
-      const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
 
-      [headerEl, mobileEl].filter(Boolean).forEach(t => {
-        gsap.to(t, {
-          y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
-          onComplete() {
-            applyText(t, text, isCJK);
-            gsap.set(t, { y: 16 });
-            gsap.to(t, { y: 0, opacity: 1, duration: 0.35, ease: "power1.out" });
-          }
-        });
-      });
-    }
-    animateHeader();
-    setInterval(animateHeader, 4000);
-  </script>
-
-  <!-- —— Gallery + Filter + 動畫 + Load More（防抖動版） —— -->
-  <script>
-  (() => {
-    const galleryEl = document.querySelector('.gallery');
-    if (!galleryEl) return;
-
-    // —— 基本節點 —— 
-    const overlay    = document.getElementById('overlay');
-    const overlayImg = document.getElementById('overlayImg');
-    const closeBtn   = document.getElementById('closeBtn');
-
-    const allImgs    = Array.from(galleryEl.querySelectorAll('img'));
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const loadMoreBtn= document.getElementById('loadMore');
-    const noResults  = document.getElementById('noResults');
-
-    // —— 動畫設定 —— 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const animateIn = (els) => {
-      if (!els || !els.length) return;
-      if (reduceMotion || !window.gsap) {
-        els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      const targets = [headerEl, mobileEl].filter(Boolean);
+      if (reduceMotion){
+        targets.forEach(t => applyText(t, text));
         return;
       }
-      gsap.fromTo(els, { y:14, opacity:0 }, { y:0, opacity:1, duration:0.35, ease:'power2.out', stagger:0.04 });
-    };
-
-    // —— Lazy（安全：不再強制把 src 換透明圖；若已有 data-src 仍會讀取） —— 
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const img = entry.target;
-        if (img.dataset.src && img.src !== img.dataset.src) img.src = img.dataset.src;
-        io.unobserve(img);
-      });
-    }, { rootMargin: '200px 0px' });
-    allImgs.forEach(img => { if (img.dataset.src) io.observe(img); img.decoding = 'async'; });
-
-    // —— 分頁 / 篩選 —— 
-    const BATCH = 24;           // 一次載入更多
-    let activeFilter = '';
-    let visibleCount = BATCH;
-
-    const splitCats = s => s.split(/[,|\s]+/).filter(Boolean);
-    const parseCats = el => splitCats(el.dataset.cat || '');
-    const getFilteredList = () => activeFilter ? allImgs.filter(img => parseCats(img).includes(activeFilter)) : allImgs;
-
-    function refreshGrid(reset=false, origin='update'){
-      const list = getFilteredList();
-      if (reset) visibleCount = Math.min(BATCH, list.length);
-
-      const toShow = list.slice(0, visibleCount);
-      const showSet = new Set(toShow);
-      const newlyShown = [];
-
-      // 僅調整必要的元素，避免高度大幅變動造成回頂
-      allImgs.forEach(img => {
-        const shouldShow = showSet.has(img);
-        const hidden = (img.style.display === 'none');
-        if (shouldShow && hidden) {
-          img.style.display = '';
-          newlyShown.push(img);
-          if (img.dataset.src) io.observe(img);
-        } else if (!shouldShow && !hidden) {
-          img.style.display = 'none';
+      gsap.to(targets, {
+        y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
+        onComplete(){
+          targets.forEach(t => {
+            applyText(t, text);
+            gsap.set(t, { y: 16 });
+          });
+          gsap.to(targets, { y: 0, opacity: 1, duration: 0.35, ease: "power1.out" });
         }
       });
-
-      // 初次或切換篩選：直接對當前批次做進場；LoadMore：只對新顯示做進場
-      const targets = (reset ? toShow : newlyShown);
-      // 若無法動畫也要確保可見
-      if (!targets.length) {
-        // 沒有新目標，但初次 render 仍需讓首批可見
-        if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
-      } else {
-        requestAnimationFrame(() => animateIn(targets));
-      }
-
-      // 控制 Load More 顯示
-      loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-flex' : 'none';
-      // 無結果
-      noResults.hidden = list.length > 0;
     }
 
-    // —— 初始渲染 —— 
-    refreshGrid(true, 'init');
+    // 立即跑一次，避免首屏空等
+    animateHeader();
+    // 與 Gallery 保持一致：4 秒
+    setInterval(animateHeader, 4000);
 
-    // —— Load More：捲到新批第一張（避免回頂/抖動） —— 
-    loadMoreBtn.addEventListener('click', () => {
-      const list = getFilteredList();
-      const oldCount = Math.min(visibleCount, list.length);
-      visibleCount = Math.min(visibleCount + BATCH, list.length);
-      const firstNew = list[oldCount];
-
-      refreshGrid(false, 'more');
-
-      if (firstNew) {
-        const html = document.documentElement;
-        const prev = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto'; // 暫停平滑以免彈跳
-        firstNew.scrollIntoView({ block:'start' });
-        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60; // rotator + header + 緩衝
-        window.scrollBy({ top: -headerOffset, left: 0, behavior: 'auto' });
-        html.style.scrollBehavior = prev || '';
-      }
-    });
-
-    // —— Filter —— 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const wasActive = btn.classList.contains('active');
-        filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-
-        activeFilter = '';
-        if (!wasActive) {
-          btn.classList.add('active');
-          btn.setAttribute('aria-pressed','true');
-          activeFilter = btn.dataset.filter || '';
-        }
-
-        refreshGrid(true, 'filter');
-
-        // 滾到圖牆頂緣（不是頁面最上），避免迷路
-        const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
-        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60;
-        window.scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
-      });
-    });
-
-    // —— Lightbox —— 
-    allImgs.forEach(img => {
-      img.addEventListener('click', () => {
-        overlayImg.src = img.currentSrc || img.dataset.src || img.src;
-        overlay.style.display = 'flex';
-      });
-    });
-    closeBtn.addEventListener('click', () => overlay.style.display = 'none');
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.style.display = 'none'; });
-  })();
+    /* ===== 右側 Team Carousel（尊重減少動畫） ===== */
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const wrap = document.querySelector('.team-container');
+      if(!wrap) return;
+      let idx = 0; const total = 4; const step = 100/total;
+      setInterval(() => {
+        idx = (idx + 1) % total;
+        wrap.style.transform = `translateX(-${idx*step}%)`;
+      }, 7000);
+    })();
+  });
   </script>
 </body>
 </html>
