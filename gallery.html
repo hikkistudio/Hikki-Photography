@@ -3,90 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hikki</title>
 
-  <!-- SEO: 基本 -->
-  <meta name="description" content="Hikki gallery — wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau. Explore Souls, Times, Cities, and Friends collections." />
-  <link rel="canonical" href="https://hikki.ca/gallery.html" />
-  <meta name="robots" content="index,follow" />
-  <meta name="author" content="Hikki photography & philosophy" />
+  <title>Gallery | Hikki Photography</title>
 
-  <!-- SEO: Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Hikki photography & philosophy" />
-  <meta property="og:title" content="Gallery | Hikki" />
-  <meta property="og:description" content="Wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau. Browse Souls, Times, Cities, Friends." />
-  <meta property="og:url" content="https://hikki.ca/gallery.html" />
-  <meta property="og:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp" />
+  <!-- Canonical -->
+  <link rel="canonical" href="https://hikki.ca/gallery.html"/>
 
-  <!-- SEO: Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Gallery | Hikki" />
-  <meta name="twitter:description" content="Wedding, portrait, pet & city photography across Vancouver, Hong Kong, and Macau." />
-  <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp" />
+  <!-- 基本 SEO -->
+  <meta name="description" content="Hikki Photography gallery — weddings, portraits, pets and cities across Vancouver, Hong Kong and Macau. Honest, human, emotional photography."/>
+  <meta name="robots" content="index,follow,max-image-preview:large"/>
 
-  <!-- SEO: JSON-LD 結構化資料 -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://hikki.ca/#website",
-        "url": "https://hikki.ca/",
-        "name": "Hikki photography & philosophy",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://hikki.ca/#org" }
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://hikki.ca/#org",
-        "name": "Hikki photography & philosophy",
-        "url": "https://hikki.ca/",
-        "email": "will@hikki.ca",
-        "telephone": "+1-250-986-9516",
-        "sameAs": ["https://www.instagram.com/hikki_with_her_camera"],
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://hikki.ca/Logo_Contact.png"
-        },
-        "contactPoint": [{
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "email": "will@hikki.ca",
-          "telephone": "+1-250-986-9516",
-          "areaServed": ["CA","HK","MO"],
-          "availableLanguage": ["en","zh-Hant","ja"]
-        }]
-      },
-      {
-        "@type": "ImageGallery",
-        "@id": "https://hikki.ca/gallery.html#gallery",
-        "url": "https://hikki.ca/gallery.html",
-        "name": "Hikki Gallery",
-        "inLanguage": "en",
-        "about": { "@id": "https://hikki.ca/#org" },
-        "hasPart": [
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g1_vancouver_prewedding_cityview.webp", "name": "Photo 1", "keywords": ["Times","Souls"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g2_hongkong_art_skycraper.webp", "name": "Photo 2", "keywords": ["Cities"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g3_portrait_with_orange_tabby.webp", "name": "Photo 3", "keywords": ["Friends"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g4_black_and_white_dog_running.webp", "name": "Photo 4", "keywords": ["Friends"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g5_pet_owner_Wheatfield_family_photo.webp", "name": "Photo 5", "keywords": ["Friends"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g6_Portrait_film_Vintage.webp", "name": "Photo 6", "keywords": ["Souls"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g7_Kerrisdale_moment_poverty.webp", "name": "Photo 7", "keywords": ["Cities"] },
-          { "@type": "ImageObject", "contentUrl": "https://hikki.ca/g8_macau_architecture_concrete.webp", "name": "Photo 8", "keywords": ["Cities"] }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",    "item": "https://hikki.ca/" },
-          { "@type": "ListItem", "position": 2, "name": "Gallery", "item": "https://hikki.ca/gallery.html" }
-        ]
-      }
-    ]
-  }
-  </script>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Hikki Photography"/>
+  <meta property="og:title" content="Gallery | Hikki Photography"/>
+  <meta property="og:description" content="Weddings, portraits, pets and cities — honest, human, emotional photography."/>
+  <meta property="og:url" content="https://hikki.ca/gallery.html"/>
+  <meta property="og:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
+  <meta property="og:image:type" content="image/webp"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Gallery | Hikki Photography"/>
+  <meta name="twitter:description" content="Weddings, portraits, pets and cities — honest, human, emotional photography."/>
+  <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
 
   <!-- 預連線：加速載入 CDN -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -272,6 +212,41 @@
       .header-bar a { margin: 0 37px !important; }
     }
   </style>
+
+  <!-- JSON-LD（精簡版） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Gallery | Hikki Photography",
+    "url": "https://hikki.ca/gallery.html",
+    "description": "Weddings, portraits, pets and cities — honest, human, emotional photography across Vancouver, Hong Kong and Macau.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Hikki Photography",
+      "url": "https://hikki.ca"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hikki photography & philosophy",
+      "url": "https://hikki.ca",
+      "email": "will@hikki.ca"
+    },
+    "hasPart": {
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g1_vancouver_prewedding_cityview.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g2_hongkong_art_skycraper.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g6_Portrait_film_Vintage.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g10_asia_brutalist_textures_black_and_white.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g24_Vinyl_slience_man_couple_wedding.jpg" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g29_portrait_couple_classic_love_wedding.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g33_urban_cat_outdoor_owner.webp" },
+        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g39_gilmore_monochrome_city_highrise_intimacy.webp" }
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -315,7 +290,7 @@
       <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g8_macau_architecture_concrete.webp"    alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g9_oriental_confused_moment_misty.webp" alt="Photo 9"  loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g10_asia_brutalist_textures_b&w.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g10_asia_brutalist_textures_black_and_white.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g11_vancouver_kitsilano_lonely_fastfood.webp" alt="Photo 11" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g12_Shelti_smile_field_vancouver.webp"  alt="Photo 12" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g13_burnaby_wedding_dance_couple.webp"  alt="Photo 13" loading="lazy" decoding="async" data-cat="Times">
@@ -333,7 +308,7 @@
       <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times">
       <img src="g26_shelti_mountain_northvan_hiking.webp" alt="Photo 26" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g27_dog_portrait_moment_capture_home.webp" alt="Photo 27" loading="lazy" decoding="async" data-cat="Friends">
-      <img src="g28_wedding_b&w_emotion_momment_forgotten.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g28_wedding_black_and_white_emotion_momment_forgotten.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
       <img src="g29_portrait_couple_classic_love_wedding.webp" alt="Photo 29" loading="lazy" decoding="async" data-cat="Times, Friends">
       <img src="g30_moment_joy_caring_wedding.webp"     alt="Photo 30" loading="lazy" decoding="async" data-cat="Times, Friends">
       <img src="g31_portrait_oldschool_traitional_emotions.webp" alt="Photo 31" loading="lazy" decoding="async" data-cat="Times, Friends">
@@ -346,7 +321,7 @@
       <img src="g38_late_capital_vistas_concrete_jungle_dream.webp" alt="Photo 38" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g39_gilmore_monochrome_city_highrise_intimacy.webp" alt="Photo 39" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp" alt="Photo 40" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g41_b&w_wedding_grand_dressing_timeless_breath.webp" alt="Photo 41" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g41_black_and_white_wedding_grand_dressing_timeless_breath.webp" alt="Photo 41" loading="lazy" decoding="async" data-cat="Times">
       <img src="g42_victoria_marketsquare_photographer_model_art_lens.webp" alt="Photo 42" loading="lazy" decoding="async" data-cat="Souls">
       <img src="g43_dog_disability_running_speed_moment.webp" alt="Photo 43" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g44_shelti_cornfield_sun_outdoor_love.webp" alt="Photo 44" loading="lazy" decoding="async" data-cat="Friends">
@@ -420,7 +395,7 @@
       "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
       "sksksk","Come on and join our convoy.","I am in flames!",
       "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
       "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
       "Some people are worth melting for.","ひとりって切ないくらい自由。",
       "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
@@ -530,6 +505,7 @@
 
       // 初次或切換篩選：直接對當前批次做進場；LoadMore：只對新顯示做進場
       const targets = (reset ? toShow : newlyShown);
+      // 若無法動畫也要確保可見
       if (!targets.length) {
         if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
       } else {
@@ -580,6 +556,7 @@
 
         refreshGrid(true, 'filter');
 
+        // 滾到圖牆頂緣（不是頁面最上），避免迷路
         const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
         const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60;
         window.scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
