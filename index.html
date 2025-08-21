@@ -7,12 +7,14 @@
 
   <!-- Canonical / Robots -->
   <link rel="canonical" href="https://hikki.ca/">
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="index,follow,max-image-preview:large">
 
   <!-- Meta -->
   <meta name="description" content="hikki Photography & Philosophy — portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau.">
   <meta name="keywords" content="hikki photography, portrait, wedding, city, vancouver, hong kong, macau, film look">
   <meta name="theme-color" content="#000000">
+  <meta name="author" content="hikki Photography & Philosophy">
+  <meta name="language" content="zh-Hant">
 
   <!-- Open Graph -->
   <meta property="og:title" content="hikki Photography">
@@ -21,6 +23,10 @@
   <meta property="og:url" content="https://hikki.ca/">
   <meta property="og:site_name" content="hikki Photography & Philosophy">
   <meta property="og:image" content="https://hikki.ca/favicon.png">
+  <meta property="og:image:alt" content="hikki Photography — portraits, weddings, and city stories">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:locale" content="zh_HK">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -31,28 +37,35 @@
   <!-- Favicon -->
   <link rel="icon" href="/favicon.png" type="image/png" />
 
-  <!-- Fonts（優化載入） -->
+  <!-- Fonts（Noto Serif JP 200/400 用於日文） -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
 
   <!-- GSAP（defer 防阻塞） -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
-    [lang="ja"] { font-family: 'Noto Serif JP', serif; }
-    [lang="en"] { font-family: 'Courier New', monospace; }
+    :root{
+      --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
+      --font-mono: "Courier New", Courier, monospace;
+      --font-ja: "Noto Serif JP", serif;
+    }
+
+    /* === 語系字體掛勾 === */
+    [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
+    [lang="en"] { font-family: var(--font-mono); }
 
     @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
 
     *{ margin:0; padding:0; box-sizing:border-box }
 
     body{
-      font-family: Helvetica, sans-serif;
+      font-family: var(--font-sans);
       position: relative;
       overflow-x: hidden;
-      min-height: 200vh;              /* 供方塊放大滾動使用 */
+      min-height: 200vh;
       background: #000;
       color: #000;
     }
@@ -64,15 +77,13 @@
       position: fixed; top: 0; left: 0;
       width: 100%; height: 36px;
       background: #f4f2f0; color:#000;
-      display: none; /* 僅手機顯示 */
-      align-items: center; justify-content: center;
-      padding: 0 12px; box-sizing: border-box;
-      z-index: 10001; /* 高於 header(9999)，低於 overlay */
+      display: none; align-items: center; justify-content: center;
+      padding: 0 12px; z-index: 10001;
       font-size: 14px; line-height: 1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      font-family: "Courier New", monospace;
+      font-family: var(--font-mono);
     }
-    .mobile-rotator.ja{ font-family:'Noto Serif JP',serif; }
+    .mobile-rotator.ja{ font-family: var(--font-ja); font-weight:200; }
 
     .bg-video{
       position: fixed; top:0; left:0;
@@ -81,6 +92,9 @@
     }
 
     .content{ position:absolute; top:80px; left:60px; z-index:1; }
+
+    /* ✅ H1/H2 強制 Helvetica（不受 [lang="en"] 的等寬體影響） */
+    h1, h2 { font-family: var(--font-sans) !important; }
 
     h1{ position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
 
@@ -100,14 +114,14 @@
     .left{ grid-area:left }
     .left h3{
       position:relative; left:-0.1ch;
-      font-family:'Courier New',monospace;
+      font-family: var(--font-mono);
       font-weight:100; font-size:30px; line-height:10px;
       white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px;
     }
 
     .locations{
       margin-top:22px; list-style:none;
-      font-family:'Courier New',monospace;
+      font-family: var(--font-mono);
       font-size:20px; line-height:18px;
       letter-spacing:-0.005em;
     }
@@ -126,13 +140,13 @@
 
     .chinese{
       grid-area:chinese;
-      font-family:'Noto Serif JP',serif;
+      font-family: var(--font-ja); font-weight:200;
       font-size:16px; line-height:24px;
       max-width:400px; letter-spacing:0;
     }
     .chinese .english{
       display:block; margin-top:1ch;
-      font-family:'Courier New',monospace;
+      font-family: var(--font-mono);
       letter-spacing:-0.005em;
     }
 
@@ -165,7 +179,7 @@
     .post .highlight{ grid-area:hl; }
     .post .text{
       grid-area:txt;
-      font-family:'Courier New',monospace;
+      font-family: var(--font-mono);
       font-size:14px; line-height:14px;
       color:#f4f2f0; overflow-y:auto;
       align-self:start; letter-spacing:-0.02em;
@@ -181,10 +195,10 @@
       padding:0 20px 20px; background:rgba(0,0,0,0.5);
     }
     .team-info{
-      font-family:'Courier New',monospace; color:#f4f2f0;
+      font-family: var(--font-mono); color:#f4f2f0;
       font-size:16px; line-height:18px; text-align:right;
     }
-    .team-info .name{ font-family:Helvetica, sans-serif; font-size:50px; line-height:24px; white-space:nowrap; }
+    .team-info .name{ font-family: var(--font-sans); font-size:50px; line-height:24px; white-space:nowrap; }
     .team .photo{ flex:2; background-size:cover; background-position:center; }
 
     .post.enter{ opacity:1; }
@@ -203,14 +217,13 @@
       padding:0 40px; box-sizing:border-box;
     }
     .header-title{
-      margin-right:auto; font-family:'Courier New',monospace;
+      margin-right:auto; font-family: var(--font-mono);
       font-size:18px; color:#000; overflow:hidden; white-space:nowrap;
     }
-    .header-title.en{ font-family:'Courier New', monospace; }
-    .header-title.ja{ font-family:'Noto Serif JP',serif; }
+    .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
 
     .header-bar a{
-      font-family:'Courier New',monospace;
+      font-family: var(--font-mono);
       font-size:18px; color:#000; text-decoration:none; margin-left:40px;
       transition:color .3s ease;
     }
@@ -219,7 +232,6 @@
 
     /* —— 行動版 —— */
     @media only screen and (max-width: 767px){
-      /* 鎖定不滾動（原設計），並簡化動態區 */
       html, body{ height:100vh !important; overflow:hidden !important; }
 
       .mobile-rotator{ display:flex; }
@@ -232,12 +244,11 @@
       .content{
         position:relative !important; top:auto !important; left:auto !important;
         width:100% !important; height:auto !important;
-        padding:116px 20px 20px !important; /* 60(header)+36(rotator)+餘量 */
+        padding:116px 20px 20px !important;
       }
 
       .grid-container{ display:block !important; }
 
-      /* 文字尺寸統整（修掉負值 line-height 的錯誤） */
       .content h1{ font-size:65px !important; line-height:1 !important; margin-bottom:8px !important; }
       .grid-container h2{ font-size:22px !important; line-height:1.2 !important; margin:0 0 20px !important; }
       .left h3{ font-size:20px !important; line-height:1 !important; }
@@ -245,15 +256,15 @@
       .locations li{ font-size:10px !important; line-height:1 !important; margin-bottom:4px !important; }
 
       .content .chinese, .content .chinese .english{
-        font-family: 'Courier New','Noto Serif JP',serif,monospace !important;
+        font-family: var(--font-mono), var(--font-ja) !important;
         font-size:10px !important; line-height:1.6 !important;
       }
 
-      /* 靜態化動態區 */
       .square, .mobile-square, .overlay, #post{ display:none !important; }
 
-      /* 禁用動畫/過渡，避免重排卡頓 */
+      /* 保留 blink-block 在手機跳動 ✅ */
       *, *::before, *::after{ animation:none !important; transition:none !important; }
+      .blink-block{ animation:blink3 3s steps(1,end) infinite !important; }
     }
   </style>
 
@@ -302,24 +313,9 @@
     "@context":"https://schema.org",
     "@type":"BreadcrumbList",
     "itemListElement":[
-      {
-        "@type":"ListItem",
-        "position":1,
-        "name":"About",
-        "item":"https://hikki.ca/"
-      },
-      {
-        "@type":"ListItem",
-        "position":2,
-        "name":"Gallery",
-        "item":"https://hikki.ca/gallery.html"
-      },
-      {
-        "@type":"ListItem",
-        "position":3,
-        "name":"Contact",
-        "item":"https://hikki.ca/contact.html"
-      }
+      { "@type":"ListItem","position":1,"name":"About","item":"https://hikki.ca/"},
+      { "@type":"ListItem","position":2,"name":"Gallery","item":"https://hikki.ca/gallery.html"},
+      { "@type":"ListItem","position":3,"name":"Contact","item":"https://hikki.ca/contact.html"}
     ]
   }
   </script>
@@ -336,7 +332,7 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <!-- 背景影片（預載中性＋行動友善） -->
+  <!-- 背景影片 -->
   <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata">
     <source src="hero.mp4" type="video/mp4">
   </video>
@@ -349,23 +345,24 @@
       <div class="left">
         <h3>hikki Photography & Philosophy</h3>
         <ul class="locations">
-          <li>Vancouver</li>
-          <li>Hong Kong</li>
-          <li>Macau <span class="blink-block">■</span></li>
+          <li>Vancouver     49.263431 | -123.012508</li>
+          <li>Victoria     48.468213 | -123.330938</li>
+          <li>Hong Kong     22.445293 | 114.031586</li>
+          <li>Macau     22.19851 | 113.536389 <span class="blink-block">■</span></li>
         </ul>
         <div class="square"></div>
       </div>
-      <div class="chinese">
+      <div class="chinese" lang="ja">
         ><br>
         ><br>
         光在她睫毛下方折成一道道細影，微微顫動。她輕聲如耳語。穿透空氣的疲倦，像白襯衫上的海水乾了又濕。<br>
-        <span class="english">
+        <span class="english" lang="en">
           Light breaks beneath her lashes—<br>
           thin shadows trembling.<br>
           She wishper,<br>
           like salt drying,<br>
           on a white shirt.<br>
-          Soon to be wet again.  <span class="blink-block">■</span><br><br><br>
+          Soon to be wet again. <span class="blink-block">■</span><br><br><br>
           © 2025 hikki photography &amp; philosophy.  <span class="blink-block">■</span><br>
         </span>
       </div>
@@ -454,16 +451,18 @@
   <script>
   // 等 GSAP 載入後執行
   window.addEventListener('DOMContentLoaded', () => {
-    /* ===== Scroll 動畫：節流 + 被動監聽，避免 Reflow 抖動 ===== */
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    /* ===== Scroll 動畫：節流 + 被動監聽 ===== */
     (function(){
       const sq = document.querySelector('.content .square');
       const overlay = document.querySelector('.overlay');
       const post = document.getElementById('post');
       const hlVideo = document.querySelector('.post .highlight');
 
-      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!sq || prefersReduce) {
-        // 簡化：不跑滾動動畫
+      if (!sq || isReduced) {
         overlay.style.display = 'none';
         post.classList.remove('enter');
         hlVideo && hlVideo.pause && hlVideo.pause();
@@ -471,10 +470,7 @@
       }
 
       const getDocHeight = () =>
-        Math.max(
-          document.documentElement.scrollHeight,
-          document.body.scrollHeight
-        );
+        Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
 
       let ticking = false;
       function onScroll(){
@@ -484,17 +480,13 @@
           const max = getDocHeight() - window.innerHeight;
           const pct = Math.min(max > 0 ? window.scrollY / max : 0, 1);
 
-          // 關閉/恢復方塊 CSS 動畫（用行內樣式覆蓋）
           sq.style.animation = (pct > 0) ? 'none' : 'blink 3s infinite';
-          // 放大
           const maxScale = Math.max(window.innerWidth, window.innerHeight) / 60;
           sq.style.transform = `scale(${1 + pct * (maxScale - 1)})`;
 
-          // 切黑幕與第三階段
           if (pct >= 1) {
             overlay.style.display = 'block';
             post.classList.add('enter');
-            // 這時才真正播放右側影片（節省頻寬）
             hlVideo && hlVideo.play && hlVideo.play().catch(()=>{});
           } else {
             overlay.style.display = 'none';
@@ -505,95 +497,75 @@
         });
       }
       window.addEventListener('scroll', onScroll, { passive:true });
-      window.addEventListener('resize', () => onScroll(), { passive:true });
+      window.addEventListener('resize', onScroll, { passive:true });
       onScroll();
     })();
 
     /* ===== HeaderRotator（桌面＋手機，同步） ===== */
-    const headerEl = document.getElementById("headerTitle");
-    const mobileEl = document.getElementById("mobileRotator");
-
-    const sentences = [
-
-          "Of time, souls and cities.","Know thyself.","静かな光。",
-      "10% off for rescued animals.","YYJ > YVR",
-      "Get a quote today for free！",
-      "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
-      "father Anderson...","also try max noodle house",
-      "晚星墜落處，自成橋梁。",
-      "Elegance is about breaking the rules.",
-      "Hesitation is defeat",
-      "賺菲林錢",
-      "假作真時真亦假，無為有處有還無。",
-      "死生契闊，與子成說。 ",
-      "ネットは広大だわ。",
-      "恥の多い生涯を送ってきました。",
-      "Demain, dès l’aube…",
-      "Je pense, donc je suis.",
-      "Il faut imaginer Sisyphe heureux.",
-      "Stay gold, Ponyboy.",
-      "What’s in a name? that which we call a rose…",
-      "I drink your milkshake!",
-      "The horror! The horror!",
-      "Le temps détruit tout.",
-      "翩翩不富，皆失實也。",
-      "雲上於天，需；君子以飲食宴樂。",
-      "天下有山，遯。",
-      "元者，善之長也；亨者，嘉之會也。",
-      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
-      "sksksk","Come on and join our convoy.","I am in flames!",
-      "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-      "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
-      "Some people are worth melting for.","ひとりって切ないくらい自由。",
-      "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
-      "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-      "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
- 
-    ];
-
-    let lastIndex = -1;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isCJK = (text) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(text); // 含中日韓
-
-    function applyText(el, text){
-      if(!el) return;
-      const useCJK = isCJK(text);
-      el.classList.toggle("ja",  useCJK);
-      el.classList.toggle("en", !useCJK);
-      el.textContent = text;
-    }
-
-    function rnd(exclude){
-      let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude);
-      return i;
-    }
-
-    function animateHeader(){
-      const next = rnd(lastIndex); lastIndex = next;
-      const text = sentences[next];
-
-      const targets = [headerEl, mobileEl].filter(Boolean);
-      if (reduceMotion){
-        targets.forEach(t => applyText(t, text));
-        return;
-      }
-      gsap.to(targets, {
-        y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
-        onComplete(){
-          targets.forEach(t => {
-            applyText(t, text);
-            gsap.set(t, { y: 16 });
-          });
-          gsap.to(targets, { y: 0, opacity: 1, duration: 0.35, ease: "power1.out" });
-        }
-      });
-    }
-
-    animateHeader();
-    setInterval(animateHeader, 4000);
     (function(){
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const headerEl = $("#headerTitle");
+      const mobileEl = $("#mobileRotator");
+
+      const sentences = [
+        "Of time, souls and cities.","Know thyself.","静かな光。",
+        "10% off for rescued animals.","YYJ > YVR",
+        "Get a quote today for free！",
+        "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
+        "father Anderson...","also try max noodle house",
+        "晚星墜落處，自成橋梁。","Elegance is about breaking the rules.",
+        "Hesitation is defeat","賺菲林錢",
+        "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。 ",
+        "ネットは広大だわ。","恥の多い生涯を送ってきました。",
+        "Demain, dès l’aube…","Je pense, donc je suis.",
+        "Il faut imaginer Sisyphe heureux.","Stay gold, Ponyboy.",
+        "What’s in a name? that which we call a rose…",
+        "I drink your milkshake!","The horror! The Horror!",
+        "Le temps détruit tout.","翩翩不富，皆失實也。",
+        "雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
+        "元者，善之長也；亨者，嘉之會也。",
+        "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
+        "sksksk","Come on and join our convoy.","I am in flames!",
+        "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+        "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+        "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
+        "Some people are worth melting for.","ひとりって切ないくらい自由。",
+        "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
+        "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+        "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+      ];
+
+      const isCJK = (s) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
+      let last = -1;
+
+      function apply(el, txt){
+        if(!el) return;
+        el.classList.toggle("ja", isCJK(txt));
+        el.classList.toggle("en", !isCJK(txt));
+        el.setAttribute('lang', isCJK(txt) ? 'ja' : 'en');
+        el.textContent = txt;
+      }
+      function rnd(ex){
+        let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex);
+        return i;
+      }
+      function tick(){
+        const next = rnd(last); last = next;
+        const txt = sentences[next];
+        const targets = [headerEl, mobileEl].filter(Boolean);
+        if (isReduced || !window.gsap){ targets.forEach(t => apply(t, txt)); return; }
+        gsap.to(targets, { y:-16, opacity:0, duration:.25, ease:'power1.in',
+          onComplete(){
+            targets.forEach(t => { apply(t, txt); gsap.set(t,{y:16}); });
+            gsap.to(targets, { y:0, opacity:1, duration:.35, ease:'power1.out' });
+          }
+        });
+      }
+      tick(); setInterval(tick, 4000);
+    })();
+
+    /* ===== 右側 Team Carousel（尊重減少動畫） ===== */
+    (function(){
+      if (isReduced) return;
       const wrap = document.querySelector('.team-container');
       if(!wrap) return;
       let idx = 0; const total = 4; const step = 100/total;
@@ -601,6 +573,149 @@
         idx = (idx + 1) % total;
         wrap.style.transform = `translateX(-${idx*step}%)`;
       }, 7000);
+    })();
+
+    /* ===== GPS 座標「快速多位隨機漂移（限真實城市範圍）」===== */
+    (function(){
+      if (isReduced) return;
+
+      // 近似 bbox（城市法定/官方邊界的包絡盒；用以限制隨機值）
+      // Vancouver / Victoria 參考市府邊界資料集頁；HK 參考測繪處法定緯經度範圍；Macau 參考 EPSG WGS84 範圍
+      const BOUNDS = {
+        'Vancouver': { lat:[49.198, 49.315], lon:[-123.224, -123.022] },    // 近似覆蓋市界
+        'Victoria':  { lat:[48.401, 48.477], lon:[-123.401, -123.307] },    // 近似覆蓋市界
+        'Hong Kong': { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },    // 香港法定範圍
+        'Macau':     { lat:[22.06,  22.23  ], lon:[113.52,  113.68  ] }     // 澳門 WGS84 範圍
+      };
+
+      // 更快節奏 + 單輪多位變動
+      const TICK_MIN = 40, TICK_MAX = 120;   // 比之前更快
+      const CHANGES_MIN = 1, CHANGES_MAX = 3;
+
+      // 取整數
+      const rint = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+      // 保留小數位數
+      const toFixedLen = (num, decs) => Number(num).toFixed(decs);
+
+      // 把元素的所有 TEXT NODE 拼成一條平面字串（保留內部 span 結構）
+      function mapTextNodes(el){
+        const nodes = [];
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+          acceptNode(n){ return n.nodeValue ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
+        });
+        let index = 0;
+        while (walker.nextNode()){
+          const node = walker.currentNode;
+          const len  = node.nodeValue.length;
+          nodes.push({ node, start:index, len });
+          index += len;
+        }
+        return { nodes, totalLen:index };
+      }
+      function writeFlatToNodes(flat, map){
+        for (const seg of map.nodes){
+          seg.node.nodeValue = flat.slice(seg.start, seg.start + seg.len);
+        }
+      }
+
+      // 在一行文字中抓 "lat | lon" 的兩個數字與其在平面字串的起止位置
+      const COORD_RE = /([+-]?\d+(?:\.\d+)?)\s*\|\s*([+-]?\d+(?:\.\d+)?)/;
+      function parseCoordsPositions(flat){
+        const m = flat.match(COORD_RE);
+        if (!m || m.index == null) return null;
+        const start = m.index;
+        const latStr = m[1], lonStr = m[2];
+        // 重新逐位找出實際索引（避免空白數量不同）
+        const latStart = start + m[0].indexOf(latStr);
+        const lonStart = start + m[0].lastIndexOf(lonStr);
+        return {
+          latStr, lonStr,
+          latStart, latLen: latStr.length,
+          lonStart, lonLen: lonStr.length
+        };
+      }
+
+      function decimalsCount(s){ const i = s.indexOf('.'); return i>=0 ? (s.length - i - 1) : 0; }
+
+      class DriftRow {
+        constructor(li){
+          this.el = li;
+          this.map = mapTextNodes(li);
+          this.base = li.textContent;      // 平面版（含所有 text node）
+          this.cur  = this.base;
+          this.coordPos = parseCoordsPositions(this.base);
+          this.city = (li.textContent.split(/\s+/)[0] || '').trim();
+          // 小數位數與號誌
+          if (this.coordPos){
+            this.latDecs = decimalsCount(this.coordPos.latStr);
+            this.lonDecs = decimalsCount(this.coordPos.lonStr);
+            this.latSign = this.coordPos.latStr.trim().startsWith('-') ? -1 : 1;
+            this.lonSign = this.coordPos.lonStr.trim().startsWith('-') ? -1 : 1;
+          }
+          this.timer = 0;
+        }
+        randomInBounds(){
+          const b = BOUNDS[this.city];
+          if (!b) return null;
+          const lat = b.lat[0] + Math.random()*(b.lat[1]-b.lat[0]);
+          const lon = b.lon[0] + Math.random()*(b.lon[1]-b.lon[0]);
+          return { lat, lon };
+        }
+        step(){
+          if (!this.coordPos) return;
+          const bounds = this.randomInBounds();
+          if (!bounds) return;
+
+          // 以「同一長度字串」覆寫（保留 city 名稱與空白排版）
+          const latNew = toFixedLen(bounds.lat, this.latDecs);
+          const lonNew = toFixedLen(bounds.lon, this.lonDecs);
+
+          // 單輪只更動部分數位：隨機選若干位（1~3位），從目標值借位替換
+          const picks = rint(CHANGES_MIN, CHANGES_MAX);
+
+          const curChars = this.cur.split('');
+          const tgtLat   = latNew;
+          const tgtLon   = lonNew;
+
+          // 幫助函式：在某段內替換若干位（盡量選擇數字位）
+          const replaceSomeDigits = (start, len, targetStr) => {
+            // 找出所有數字位索引
+            const idxs = [];
+            for (let i=0;i<len;i++){
+              const ch = targetStr[i];
+              if (ch >= '0' && ch <= '9') idxs.push(i);
+            }
+            // 洗牌取前 picks 位
+            for (let i=idxs.length-1;i>0;i--){
+              const j = Math.floor(Math.random()*(i+1));
+              [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+            }
+            const take = Math.min(picks, idxs.length);
+            for (let k=0;k<take;k++){
+              const off = idxs[k];
+              curChars[start + off] = targetStr[off];
+            }
+          };
+
+          replaceSomeDigits(this.coordPos.latStart, this.coordPos.latLen, tgtLat.padStart(this.coordPos.latLen, ' '));
+          replaceSomeDigits(this.coordPos.lonStart, this.coordPos.lonLen, tgtLon.padStart(this.coordPos.lonLen, ' '));
+
+          this.cur = curChars.join('');
+          writeFlatToNodes(this.cur, this.map);
+        }
+        loop(){
+          if (document.hidden){ this.timer = setTimeout(()=>this.loop(), 400); return; }
+          this.step();
+          const next = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
+          this.timer = setTimeout(()=>this.loop(), next);
+        }
+        play(){ if (this.coordPos) this.loop(); }
+        stop(){ if (this.timer) clearTimeout(this.timer); }
+      }
+
+      const items = $$('.locations li');
+      const controllers = items.map(li => { const c = new DriftRow(li); c.play(); return c; });
+      window.addEventListener('beforeunload', () => controllers.forEach(c => c.stop()));
     })();
   });
   </script>
