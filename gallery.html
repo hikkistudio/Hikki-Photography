@@ -12,6 +12,7 @@
   <!-- 基本 SEO -->
   <meta name="description" content="Hikki Photography gallery — weddings, portraits, pets and cities across Vancouver, Hong Kong and Macau. Honest, human, emotional photography."/>
   <meta name="robots" content="index,follow,max-image-preview:large"/>
+  <meta name="author" content="Hikki Photography & Philosophy"/>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website"/>
@@ -28,36 +29,48 @@
   <meta name="twitter:description" content="Weddings, portraits, pets and cities — honest, human, emotional photography."/>
   <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
 
-  <!-- 預連線：加速載入 CDN -->
+  <!-- 預連線 -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- GSAP，用於文字淡入淡出與進場動畫 -->
+  <!-- CJK：Noto Serif JP ExtraLight 200 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet"/>
+
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
+    :root{
+      --mono: "Courier New", monospace;
+      --ja: "Noto Serif JP", serif; /* 200 ExtraLight */
+    }
+
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       padding: 0;
-      font-family: "Courier New", monospace;
+      font-family: var(--mono);
       background: #000;
       color: #000;
     }
+    /* 中/日文強制 Noto Serif JP 200 */
+    [lang^="zh"], [lang="ja"], .ja { font-family: var(--ja) !important; font-weight:200 !important; }
 
-    /* —— Mobile Rotator（手機版上方輪播列） —— */
+    /* —— Mobile Rotator —— */
     .mobile-rotator{
       position: fixed; top: 0; left: 0;
       width: 100%; height: 36px;
       background: #f4f2f0; color:#000;
-      display: none; /* 僅手機顯示 */
+      display: none;
       align-items: center; justify-content: center;
       padding: 0 12px; box-sizing: border-box;
-      z-index: 10001; /* 高於 header(9999)，低於 overlay */
+      z-index: 10001;
       font-size: 14px; line-height: 1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      font-family: "Courier New", monospace;
+      font-family: var(--mono);
     }
-    .mobile-rotator.ja { font-family: "MS Mincho", serif; }
+    .mobile-rotator.ja{ font-family: var(--ja) !important; font-weight:200 !important; }
 
     /* —— Header Bar —— */
     .header-bar {
@@ -71,10 +84,10 @@
     .header-title {
       margin-right: auto; font-size: 18px;
       overflow: hidden; white-space: nowrap;
-      font-family: "Courier New", monospace;
+      font-family: var(--mono);
       will-change: transform, opacity;
     }
-    .header-title.ja { font-family: "MS Mincho", serif; }
+    .header-title.ja{ font-family: var(--ja) !important; font-weight:200 !important; }
     .header-bar a {
       margin-left: 40px; font-size: 18px;
       color: #000; text-decoration: none;
@@ -86,7 +99,7 @@
     /* —— 內容避開固定 Header —— */
     .header-spacer { height: 60px; }
 
-    /* —— Filter Bar（獨立，字體 Courier New） —— */
+    /* —— Filter Bar —— */
     .filter-bar{
       width: 100%;
       background: #000;
@@ -94,14 +107,10 @@
       display: flex; align-items: center; gap: 10px;
       padding: 10px 40px; box-sizing: border-box;
       overflow-x: auto; -webkit-overflow-scrolling: touch;
-      font-family: "Courier New", monospace;
-      position: sticky; top: 60px; z-index: 5; /* 讓 Filter 跟隨在 Header 下方 */
+      font-family: var(--mono);
+      position: sticky; top: 60px; z-index: 5;
     }
-    .filter-label{
-      font-size: 14px; color:#f4f2f0; margin-right: 8px;
-      white-space: nowrap; user-select: none;
-      font-family: "Courier New", monospace;
-    }
+    .filter-label{ font-size: 14px; color:#f4f2f0; margin-right: 8px; white-space: nowrap; user-select: none; }
     .filter-btn{
       appearance: none;
       border: 1px solid #f4f2f0;
@@ -109,14 +118,16 @@
       padding: 6px 12px; font-size: 14px;
       border-radius: 999px; cursor: pointer;
       transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
-      white-space: nowrap; font-family: "Courier New", monospace;
+      white-space: nowrap; font-family: var(--mono);
     }
     .filter-btn:hover { background:#f4f2f0; border-color:#f4f2f0; }
     .filter-btn:active{ transform: translateY(1px); }
     .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
 
-    /* —— Gallery —— */
+    /* —— Gallery（上層） —— */
     .gallery-wrapper {
+      position: relative;
+      z-index: 2;                 /* 相片層在上 */
       max-width: 1200px;
       margin: 0 auto 20px;
       padding: 20px 10px 10px;
@@ -125,29 +136,57 @@
     .gallery {
       display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
     }
-
     .gallery img {
       width: calc(25% - 10px);
       min-width: 200px;
-      aspect-ratio: 2 / 3;      /* 保持既有比例呈現 */
+      aspect-ratio: 2 / 3;
       height: auto;
       object-fit: cover; object-position: center;
       background: #111;
       cursor: pointer;
       transition: transform .3s ease, opacity .2s ease;
       will-change: transform, opacity;
-
-      /* 避免 CLS、仍保留你原來的進場基線（JS 會把第一批動畫打開） */
       content-visibility: auto;
       contain-intrinsic-size: 400px 267px;
       opacity: 0; transform: translateY(14px);
     }
     .gallery img:hover { transform: scale(1.03); }
 
-    /* —— Load More —— */
-    .load-more-wrap{
-      display:flex; justify-content:center; padding:16px 0 32px;
+    /* —— 固定黑底：城市座標背景層 —— */
+    .coord-backdrop{
+      position: fixed; inset: 0;
+      background: #000;
+      z-index: 0;                 /* 最底層 */
+      pointer-events: none;       /* 不阻擋操作 */
     }
+    .coord-panel{
+      position: absolute;
+      left: 24px; right: 24px;
+      top: 60px; bottom: 24px;    /* 避開 header */
+      display: grid;
+      grid-auto-rows: min-content;
+      row-gap: 6px;
+      align-content: start;
+      overflow: hidden;           /* ✅ 不讓行數溢出 */
+    }
+    .coord-line{
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: -0.005em;
+      color: #f4f2f0;
+      opacity: 0.22;              /* 背景感 */
+      white-space: pre;           /* 保留空格對齊 */
+      user-select: none;
+    }
+    .coord-line .city{
+      display:inline-block;
+      width: 16ch;                /* 固定欄寬，對齊好看 */
+      margin-right: 5ch;
+    }
+
+    /* —— Load More —— */
+    .load-more-wrap{ display:flex; justify-content:center; padding:16px 0 32px; }
     .load-more-btn{
       appearance: none;
       border: 1px solid #f4f2f0;
@@ -155,14 +194,11 @@
       padding: 10px 18px; font-size: 14px; border-radius: 999px;
       cursor: pointer;
       transition: background .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
-      font-family: "Courier New", monospace;
+      font-family: var(--mono);
     }
     .load-more-btn:hover { background:#111; }
     .load-more-btn:active{ transform: translateY(1px); }
-    .no-results{
-      color:#f4f2f0; text-align:center; padding: 24px 0;
-      font-size:14px;
-    }
+    .no-results{ color:#f4f2f0; text-align:center; padding: 24px 0; font-size:14px; }
 
     /* —— Overlay Lightbox —— */
     .overlay {
@@ -170,13 +206,10 @@
       width: 100vw; height: 100vh;
       background: rgba(0,0,0,0.9);
       display: none; justify-content: center; align-items: center; flex-direction: column;
-      z-index: 10002; /* 高於 rotator & header */
+      z-index: 10002;
     }
-    .overlay img { max-width: 90%; max-height: 90%; } /* 保留原始比例顯示 */
-    .close-btn {
-      position: absolute; top: 20px; left: 20px;
-      font-size: 28px; color: #f4f2f0; cursor: pointer; user-select: none;
-    }
+    .overlay img { max-width: 90%; max-height: 90%; }
+    .close-btn { position: absolute; top: 20px; left: 20px; font-size: 28px; color: #f4f2f0; cursor: pointer; user-select: none; }
 
     /* —— RWD —— */
     @media (max-width: 768px) {
@@ -184,28 +217,17 @@
       .filter-bar{ padding: 10px 16px; }
     }
     @media (max-width: 480px) {
-      /* 顯示手機輪播列，並讓 header 下移 */
       .mobile-rotator{ display:flex; }
       .header-bar{ top: 36px; }
       .header-spacer{ height: 96px; } /* 36 + 60 */
       .header-title { display: none !important; }
-
-      /* 手機：一列 4 張（保留你的設定） */
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        justify-items: stretch;
-      }
-      .gallery img {
-        width: 100%;
-        min-width: 0;
-      }
-      /* Filter 也保持置頂貼齊 Header */
       .filter-bar{ top: 96px; position: sticky; }
+      .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; justify-items: stretch; }
+      .gallery img { width: 100%; min-width: 0; }
+      .coord-panel{ top: 96px; } /* 手機避開 rotator + header */
     }
 
-    /* —— 保留原手機導覽調整 —— */
+    /* —— 手機導覽調整 —— */
     @media only screen and (max-width: 767px) {
       .header-title { display: none !important; }
       .header-bar { justify-content: center !important; }
@@ -213,7 +235,7 @@
     }
   </style>
 
-  <!-- JSON-LD（精簡版） -->
+  <!-- JSON-LD（精簡） -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -221,45 +243,26 @@
     "name": "Gallery | Hikki Photography",
     "url": "https://hikki.ca/gallery.html",
     "description": "Weddings, portraits, pets and cities — honest, human, emotional photography across Vancouver, Hong Kong and Macau.",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Hikki Photography",
-      "url": "https://hikki.ca"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Hikki photography & philosophy",
-      "url": "https://hikki.ca",
-      "email": "will@hikki.ca"
-    },
-    "hasPart": {
-      "@type": "ItemList",
-      "itemListElement": [
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g1_vancouver_prewedding_cityview.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g2_hongkong_art_skycraper.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g6_Portrait_film_Vintage.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g10_asia_brutalist_textures_black_and_white.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g24_Vinyl_slience_man_couple_wedding.jpg" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g29_portrait_couple_classic_love_wedding.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g33_urban_cat_outdoor_owner.webp" },
-        { "@type":"ImageObject", "contentUrl":"https://hikki.ca/g39_gilmore_monochrome_city_highrise_intimacy.webp" }
-      ]
-    }
+    "isPartOf": { "@type": "WebSite", "name": "Hikki Photography", "url": "https://hikki.ca" },
+    "publisher": { "@type": "Organization", "name": "Hikki photography & philosophy", "url": "https://hikki.ca", "email": "will@hikki.ca" }
   }
   </script>
 </head>
 <body>
 
-  <!-- —— 手機版上方輪播列 —— -->
-  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">
+  <!-- 固定黑底：城市座標背景 -->
+  <div class="coord-backdrop" aria-hidden="true">
+    <div class="coord-panel" id="coordPanel"></div>
+  </div>
+
+  <!-- 手機版上方輪播列 -->
+  <div class="mobile-rotator" id="mobileRotator" aria-live="polite" lang="en">
     Of time, souls and cities.
   </div>
 
-  <!-- —— Header —— -->
+  <!-- Header -->
   <div class="header-bar">
-    <div class="header-title en" id="headerTitle">
-      Of time, souls and cities.
-    </div>
+    <div class="header-title" id="headerTitle" lang="en">Of time, souls and cities.</div>
     <a href="index.html">About</a>
     <a href="gallery.html" class="active">Gallery</a>
     <a href="contact.html">Contact</a>
@@ -268,7 +271,7 @@
   <!-- 讓內容避開固定 Header -->
   <div class="header-spacer" aria-hidden="true"></div>
 
-  <!-- —— Filter Bar（獨立） —— -->
+  <!-- Filter Bar -->
   <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
     <span class="filter-label"></span>
     <button class="filter-btn" data-filter="Souls"   aria-pressed="false">Souls</button>
@@ -277,10 +280,10 @@
     <button class="filter-btn" data-filter="Friends" aria-pressed="false">Friends</button>
   </div>
 
-  <!-- —— Gallery Section —— -->
+  <!-- Gallery Section -->
   <div class="gallery-wrapper" id="gallery">
     <div class="gallery">
-      <!-- 支援多分類：data-cat="Times, Souls" 或 "Cities Friends" 都可以 -->
+      <!-- 原圖清單保留（略） —— 你的 <img> 68 張維持不變 —— -->
       <img src="g1_vancouver_prewedding_cityview.webp"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times, Souls">
       <img src="g2_hongkong_art_skycraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
@@ -351,118 +354,82 @@
       <img src="g68_dogs_playing_grooming_petphoto_evening.webp" alt="Photo 68" loading="lazy" decoding="async" data-cat="Friends">
     </div>
 
-    <!-- Load More + 無結果訊息 -->
     <div class="load-more-wrap">
       <button id="loadMore" class="load-more-btn">Load More</button>
     </div>
     <div id="noResults" class="no-results" hidden>No images found.</div>
   </div>
 
-  <!-- —— Overlay / Lightbox —— -->
+  <!-- Lightbox -->
   <div class="overlay" id="overlay">
     <span class="close-btn" id="closeBtn">×</span>
     <img src="" alt="Expanded Photo" id="overlayImg">
   </div>
 
-  <!-- —— Header 動態文字輪播腳本 —— -->
+  <!-- Header 文字輪播（保留） -->
   <script>
     const sentences = [
       "Of time, souls and cities.","Know thyself.","静かな光。",
-      "10% off for rescued animals.","YYJ > YVR",
-      "Get a quote today for free！",
-      "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
-      "father Anderson...","also try max noodle house",
-      "晚星墜落處，自成橋梁。",
-      "Elegance is about breaking the rules.",
-      "Hesitation is defeat",
-      "賺菲林錢",
-      "假作真時真亦假，無為有處有還無。",
-      "死生契闊，與子成說。 ",
-      "ネットは広大だわ。",
-      "恥の多い生涯を送ってきました。",
-      "Demain, dès l’aube…",
-      "Je pense, donc je suis.",
-      "Il faut imaginer Sisyphe heureux.",
-      "Stay gold, Ponyboy.",
-      "What’s in a name? that which we call a rose…",
-      "I drink your milkshake!",
-      "The horror! The horror!",
-      "Le temps détruit tout.",
-      "翩翩不富，皆失實也。",
-      "雲上於天，需；君子以飲食宴樂。",
-      "天下有山，遯。",
-      "元者，善之長也；亨者，嘉之會也。",
-      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
-      "sksksk","Come on and join our convoy.","I am in flames!",
-      "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-      "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
-      "Some people are worth melting for.","ひとりって切ないくらい自由。",
-      "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
-      "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-      "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+      "10% off for rescued animals.","YYJ > YVR","Get a quote today for free！",
+      "絢爛如電 虛幻如霧","Wake the fuck up samurai-","father Anderson...","also try max noodle house",
+      "晚星墜落處，自成橋梁。","Elegance is about breaking the rules.","Hesitation is defeat","賺菲林錢",
+      "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。 ","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+      "Demain, dès l’aube…","Je pense, donc je suis.","Il faut imaginer Sisyphe heureux.","Stay gold, Ponyboy.",
+      "What’s in a name? that which we call a rose…","I drink your milkshake!","The horror! The Horror!",
+      "Le temps détruit tout.","翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
+      "元者，善之長也；亨者，嘉之會也。","男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk",
+      "Come on and join our convoy.","I am in flames!","CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。","빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
+      "Some people are worth melting for.","ひとりって切ないくらい自由。","The name of the rose is all that remains.",
+      "Οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡","Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
     ];
     const headerEl = document.getElementById("headerTitle");
     const mobileEl = document.getElementById("mobileRotator");
     let lastIndex = -1;
+    const rnd = (ex)=>{ let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex); return i; };
+    const isCJK = s => /[\u4E00-\u9FFF\u3040-\u30FF]/.test(s);
 
-    function rnd(exclude) { let i; do { i = Math.floor(Math.random() * sentences.length); } while (i === exclude); return i; }
-
-    function applyText(el, text, isCJK){
+    function applyText(el, text){
       if(!el) return;
-      el.classList.toggle("ja", isCJK);
-      el.classList.toggle("en", !isCJK);
+      el.classList.toggle("ja", isCJK(text));
+      el.classList.toggle("en", !isCJK(text));
+      el.setAttribute('lang', isCJK(text) ? 'ja' : 'en');
       el.textContent = text;
     }
-
-    function animateHeader() {
-      const next = rnd(lastIndex); lastIndex = next;
-      const text = sentences[next];
-      const isCJK = /[\u4E00-\u9FFF\u3040-\u30FF]/.test(text);
-
+    function animateHeader(){
+      const next = rnd(lastIndex); lastIndex = next; const text = sentences[next];
       [headerEl, mobileEl].filter(Boolean).forEach(t => {
-        gsap.to(t, {
-          y: -16, opacity: 0, duration: 0.25, ease: "power1.in",
-          onComplete() {
-            applyText(t, text, isCJK);
-            gsap.set(t, { y: 16 });
-            gsap.to(t, { y: 0, opacity: 1, duration: 0.35, ease: "power1.out" });
-          }
-        });
+        gsap.to(t,{ y:-16, opacity:0, duration:.25, ease:"power1.in", onComplete(){
+          applyText(t, text); gsap.set(t,{y:16});
+          gsap.to(t,{ y:0, opacity:1, duration:.35, ease:"power1.out" });
+        }});
       });
     }
-    animateHeader();
-    setInterval(animateHeader, 4000);
+    animateHeader(); setInterval(animateHeader, 4000);
   </script>
 
-  <!-- —— Gallery + Filter + 動畫 + Load More（防抖動版） —— -->
+  <!-- Gallery 功能 + 固定背景座標（自動填滿高度、不溢出） -->
   <script>
   (() => {
-    const galleryEl = document.querySelector('.gallery');
-    if (!galleryEl) return;
-
-    // —— 基本節點 —— 
+    /* ====== Gallery：進場 / Lazy / Filter / Load More / Lightbox ====== */
+    const galleryEl  = document.querySelector('.gallery');
     const overlay    = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
     const closeBtn   = document.getElementById('closeBtn');
+    if (!galleryEl) return;
 
     const allImgs    = Array.from(galleryEl.querySelectorAll('img'));
     const filterBtns = document.querySelectorAll('.filter-btn');
     const loadMoreBtn= document.getElementById('loadMore');
     const noResults  = document.getElementById('noResults');
 
-    // —— 動畫設定 —— 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const animateIn = (els) => {
       if (!els || !els.length) return;
-      if (reduceMotion || !window.gsap) {
-        els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-        return;
-      }
+      if (reduceMotion || !window.gsap) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
       gsap.fromTo(els, { y:14, opacity:0 }, { y:0, opacity:1, duration:0.35, ease:'power2.out', stagger:0.04 });
     };
 
-    // —— Lazy（安全：不再強制把 src 換透明圖；若已有 data-src 仍會讀取） —— 
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -473,8 +440,7 @@
     }, { rootMargin: '200px 0px' });
     allImgs.forEach(img => { if (img.dataset.src) io.observe(img); img.decoding = 'async'; });
 
-    // —— 分頁 / 篩選 —— 
-    const BATCH = 24;           // 一次載入更多
+    const BATCH = 24;
     let activeFilter = '';
     let visibleCount = BATCH;
 
@@ -482,7 +448,7 @@
     const parseCats = el => splitCats(el.dataset.cat || '');
     const getFilteredList = () => activeFilter ? allImgs.filter(img => parseCats(img).includes(activeFilter)) : allImgs;
 
-    function refreshGrid(reset=false, origin='update'){
+    function refreshGrid(reset=false){
       const list = getFilteredList();
       if (reset) visibleCount = Math.min(BATCH, list.length);
 
@@ -490,88 +456,191 @@
       const showSet = new Set(toShow);
       const newlyShown = [];
 
-      // 僅調整必要的元素，避免高度大幅變動造成回頂
       allImgs.forEach(img => {
         const shouldShow = showSet.has(img);
         const hidden = (img.style.display === 'none');
-        if (shouldShow && hidden) {
-          img.style.display = '';
-          newlyShown.push(img);
-          if (img.dataset.src) io.observe(img);
-        } else if (!shouldShow && !hidden) {
-          img.style.display = 'none';
-        }
+        if (shouldShow && hidden) { img.style.display = ''; newlyShown.push(img); if (img.dataset.src) io.observe(img); }
+        else if (!shouldShow && !hidden) { img.style.display = 'none'; }
       });
 
-      // 初次或切換篩選：直接對當前批次做進場；LoadMore：只對新顯示做進場
       const targets = (reset ? toShow : newlyShown);
-      // 若無法動畫也要確保可見
-      if (!targets.length) {
-        if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
-      } else {
-        requestAnimationFrame(() => animateIn(targets));
-      }
+      if (!targets.length) { if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; }); }
+      else { requestAnimationFrame(() => animateIn(targets)); }
 
-      // 控制 Load More 顯示
       loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-flex' : 'none';
-      // 無結果
       noResults.hidden = list.length > 0;
     }
+    refreshGrid(true);
 
-    // —— 初始渲染 —— 
-    refreshGrid(true, 'init');
-
-    // —— Load More：捲到新批第一張（避免回頂/抖動） —— 
     loadMoreBtn.addEventListener('click', () => {
       const list = getFilteredList();
-      const oldCount = Math.min(visibleCount, list.length);
+      const old = Math.min(visibleCount, list.length);
       visibleCount = Math.min(visibleCount + BATCH, list.length);
-      const firstNew = list[oldCount];
-
-      refreshGrid(false, 'more');
-
+      const firstNew = list[old];
+      refreshGrid(false);
       if (firstNew) {
         const html = document.documentElement;
-        const prev = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto'; // 暫停平滑以免彈跳
+        const prev = html.style.scrollBehavior; html.style.scrollBehavior = 'auto';
         firstNew.scrollIntoView({ block:'start' });
-        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60; // rotator + header + 緩衝
-        window.scrollBy({ top: -headerOffset, left: 0, behavior: 'auto' });
+        const headerOffset = (innerWidth <= 480) ? (36 + 60 + 8) : 60;
+        scrollBy({ top: -headerOffset, behavior: 'auto' });
         html.style.scrollBehavior = prev || '';
       }
     });
 
-    // —— Filter —— 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const wasActive = btn.classList.contains('active');
         filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-
         activeFilter = '';
-        if (!wasActive) {
-          btn.classList.add('active');
-          btn.setAttribute('aria-pressed','true');
-          activeFilter = btn.dataset.filter || '';
-        }
-
-        refreshGrid(true, 'filter');
-
-        // 滾到圖牆頂緣（不是頁面最上），避免迷路
-        const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + window.scrollY;
-        const headerOffset = (window.innerWidth <= 480) ? (36 + 60 + 8) : 60;
-        window.scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
+        if (!wasActive) { btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); activeFilter = btn.dataset.filter || ''; }
+        refreshGrid(true);
+        const wrapTop = document.querySelector('.gallery-wrapper').getBoundingClientRect().top + scrollY;
+        const headerOffset = (innerWidth <= 480) ? (36 + 60 + 8) : 60;
+        scrollTo({ top: wrapTop - headerOffset, behavior: 'auto' });
       });
     });
 
-    // —— Lightbox —— 
-    allImgs.forEach(img => {
-      img.addEventListener('click', () => {
-        overlayImg.src = img.currentSrc || img.dataset.src || img.src;
-        overlay.style.display = 'flex';
-      });
-    });
+    allImgs.forEach(img => { img.addEventListener('click', () => { overlayImg.src = img.currentSrc || img.dataset.src || img.src; overlay.style.display = 'flex'; }); });
     closeBtn.addEventListener('click', () => overlay.style.display = 'none');
     document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.style.display = 'none'; });
+
+    /* ====== 固定背景：城市座標（自動填滿、不溢出） ====== */
+    const panel = document.getElementById('coordPanel');
+    if (!panel) return;
+
+    // 城市清單（地理方框，約略限界）
+    const CITIES = [
+      { n:'Vancouver',   lat:[49.20,49.32],   lon:[-123.26,-122.95] },
+      { n:'Victoria',    lat:[48.38,48.59],   lon:[-123.55,-123.20] },
+      { n:'Hong Kong',   lat:[22.15,22.55],   lon:[113.80,114.35] },
+      { n:'Macau',       lat:[22.10,22.23],   lon:[113.49,113.61] },
+      { n:'Tokyo',       lat:[35.50,35.80],   lon:[139.55,139.95] },
+      { n:'Kyoto',       lat:[35.00,35.10],   lon:[135.68,135.82] },
+      { n:'Osaka',       lat:[34.55,34.75],   lon:[135.40,135.60] },
+      { n:'Seoul',       lat:[37.45,37.70],   lon:[126.80,127.10] },
+      { n:'Taipei',      lat:[25.00,25.12],   lon:[121.44,121.60] },
+      { n:'Shanghai',    lat:[31.10,31.35],   lon:[121.30,121.70] },
+      { n:'Beijing',     lat:[39.80,40.10],   lon:[116.20,116.60] },
+      { n:'Shenzhen',    lat:[22.45,22.85],   lon:[113.75,114.30] },
+      { n:'Guangzhou',   lat:[23.00,23.25],   lon:[113.15,113.50] },
+      { n:'Singapore',   lat:[1.20,1.48],     lon:[103.60,104.05] },
+      { n:'Bangkok',     lat:[13.60,13.95],   lon:[100.35,100.80] },
+      { n:'Jakarta',     lat:[-6.30,-6.05],   lon:[106.65,106.95] },
+      { n:'Kuala Lumpur',lat:[3.05,3.25],     lon:[101.60,101.80] },
+      { n:'Manila',      lat:[14.45,14.75],   lon:[120.90,121.10] },
+      { n:'Sydney',      lat:[-34.05,-33.70], lon:[150.80,151.40] },
+      { n:'Melbourne',   lat:[-38.10,-37.65], lon:[144.80,145.20] },
+      { n:'Auckland',    lat:[-36.98,-36.75], lon:[174.65,174.90] },
+      { n:'New York',    lat:[40.55,40.90],   lon:[-74.20,-73.70] },
+      { n:'Los Angeles', lat:[33.85,34.20],   lon:[-118.55,-118.10] },
+      { n:'San Francisco',lat:[37.68,37.84],  lon:[-122.55,-122.30] },
+      { n:'Seattle',     lat:[47.50,47.75],   lon:[-122.45,-122.20] },
+      { n:'Toronto',     lat:[43.60,43.85],   lon:[-79.55,-79.10] },
+      { n:'Montreal',    lat:[45.42,45.60],   lon:[-73.75,-73.45] },
+      { n:'London',      lat:[51.40,51.60],   lon:[-0.35,0.10] },
+      { n:'Paris',       lat:[48.80,48.92],   lon:[2.20,2.45] },
+      { n:'Berlin',      lat:[52.45,52.60],   lon:[13.25,13.55] },
+      { n:'Rome',        lat:[41.80,41.95],   lon:[12.40,12.60] },
+      { n:'Madrid',      lat:[40.35,40.50],   lon:[-3.85,-3.55] },
+      { n:'Lisbon',      lat:[38.65,38.78],   lon:[-9.25,-9.05] },
+      { n:'Istanbul',    lat:[40.90,41.20],   lon:[28.80,29.40] },
+      { n:'Dubai',       lat:[25.05,25.35],   lon:[55.05,55.55] },
+      { n:'Doha',        lat:[25.20,25.40],   lon:[51.40,51.60] },
+      { n:'Cairo',       lat:[29.90,30.15],   lon:[31.10,31.45] }
+    ];
+
+    // 工具
+    const rand = (a,b) => (a + Math.random()*(b-a));
+    const clamp = (v,a,b)=> Math.max(a, Math.min(b,v));
+    const fmt = (v) => (v>=0 ? v.toFixed(6) : v.toFixed(6)); // 6 位小數
+
+    const TICK_MIN = 60, TICK_MAX = 140;
+    const STEP_LAT = 0.005, STEP_LON = 0.007;
+    const timers = [];
+    let rows = [];
+
+    function clearTimers(){
+      while(timers.length){ clearTimeout(timers.pop()); }
+    }
+
+    function createRow(city){
+      const line = document.createElement('div');
+      line.className = 'coord-line';
+      line.innerHTML = `<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`;
+      const lat = rand(city.lat[0], city.lat[1]);
+      const lon = rand(city.lon[0], city.lon[1]);
+      line.querySelector('.lat').textContent = fmt(lat);
+      line.querySelector('.lon').textContent = fmt(lon);
+      panel.appendChild(line);
+      return { el: line, c: city, lat, lon };
+    }
+
+    function stepRow(row){
+      const dLat = (Math.random()*2-1) * STEP_LAT;
+      const dLon = (Math.random()*2-1) * STEP_LON;
+      row.lat = clamp(row.lat + dLat, row.c.lat[0], row.c.lat[1]);
+      row.lon = clamp(row.lon + dLon, row.c.lon[0], row.c.lon[1]);
+      row.el.querySelector('.lat').textContent = fmt(row.lat);
+      row.el.querySelector('.lon').textContent = fmt(row.lon);
+    }
+
+    function loopRow(row){
+      stepRow(row);
+      const t = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
+      const id = setTimeout(() => loopRow(row), t);
+      timers.push(id);
+    }
+
+    // 計算可容納行數（含 row-gap），保證不溢出
+    function computeMaxRows(){
+      // 測一列高度
+      const probe = document.createElement('div');
+      probe.className = 'coord-line';
+      probe.style.visibility = 'hidden';
+      probe.innerHTML = `<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`;
+      panel.appendChild(probe);
+
+      const rowH = probe.getBoundingClientRect().height || 14;
+      const styles = getComputedStyle(panel);
+      const gap = parseFloat(styles.rowGap || '0');
+      const ph = panel.getBoundingClientRect().height;
+
+      panel.removeChild(probe);
+      // N*rowH + (N-1)*gap <= ph  →  N <= (ph+gap)/(rowH+gap)
+      return Math.max(1, Math.floor((ph + gap) / (rowH + gap)));
+    }
+
+    function fillPanel(){
+      clearTimers();
+      panel.innerHTML = '';
+      rows = [];
+
+      const need = computeMaxRows();
+      // 從隨機索引開始取城市，若不夠就循環；剛好填滿高度
+      let start = Math.floor(Math.random() * CITIES.length);
+      for (let i=0; i<need; i++){
+        const city = CITIES[(start + i) % CITIES.length];
+        const r = createRow(city);
+        rows.push(r);
+      }
+      rows.forEach(loopRow);
+    }
+
+    // 初次 & 尺寸變動都重算（避免手機/桌面切換溢出）
+    fillPanel();
+    let resizeTid = 0;
+    addEventListener('resize', () => {
+      clearTimeout(resizeTid);
+      resizeTid = setTimeout(fillPanel, 150);
+    });
+    addEventListener('orientationchange', () => {
+      clearTimeout(resizeTid);
+      resizeTid = setTimeout(fillPanel, 150);
+    });
+
+    // beforeunload 清理
+    addEventListener('beforeunload', clearTimers);
   })();
   </script>
 </body>
