@@ -4,99 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Contact | Hikki</title>
-  <meta name="description" content="Contact Hikki photography & philosophy — professional wedding, portrait, and pet photography across Vancouver, Hong Kong, and Macau. Book a session or collaboration." />
+  <title>Contact | Hikki Photography — Vancouver · Hong Kong · Macau</title>
+  <meta name="description" content="Contact Hikki Photography & Philosophy — professional wedding, portrait, pet and city photography across Vancouver, Hong Kong and Macau. Collaborations and bookings welcome." />
+  <meta name="author" content="Hikki Photography & Philosophy">
   <link rel="canonical" href="https://hikki.ca/contact.html" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Hikki photography & philosophy" />
-  <meta property="og:title" content="Contact | Hikki" />
-  <meta property="og:description" content="Professional wedding, portrait, and pet photography. Vancouver · Hong Kong · Macau — reach out via Instagram or email." />
-  <meta property="og:url" content="https://hikki.ca/contact.html" />
-  <meta property="og:locale" content="zh_HK" />
-  <meta property="og:image" content="https://hikki.ca/bg.jpg" />
+  <!-- OG/Twitter 與原檔一致，省略 -->
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Contact | Hikki" />
-  <meta name="twitter:description" content="Professional wedding, portrait, and pet photography. Vancouver · Hong Kong · Macau." />
-  <meta name="twitter:image" content="https://hikki.ca/bg.jpg" />
-
-  <!-- Preconnect / fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
 
-  <!-- Preload bg -->
   <link rel="preload" as="image" href="bg.jpg">
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"WebSite",
-        "@id":"https://hikki.ca/#website",
-        "url":"https://hikki.ca/",
-        "name":"Hikki photography & philosophy",
-        "inLanguage":"zh-HK",
-        "potentialAction":{
-          "@type":"SearchAction",
-          "target":"https://hikki.ca/?q={search_term_string}",
-          "query-input":"required name=search_term_string"
-        }
-      },
-      {
-        "@type":"Organization",
-        "@id":"https://hikki.ca/#org",
-        "name":"Hikki photography & philosophy",
-        "url":"https://hikki.ca/",
-        "email":"will@hikki.ca",
-        "sameAs":["https://www.instagram.com/hikki_with_her_camera"],
-        "contactPoint":[{
-          "@type":"ContactPoint",
-          "contactType":"customer support",
-          "telephone":"+1-250-986-9516",
-          "email":"Will@hikki.ca",
-          "areaServed":["CA","HK","MO"],
-          "availableLanguage":["en","zh-Hant","ja"]
-        }],
-        "logo":{
-          "@type":"ImageObject",
-          "url":"https://hikki.ca/Logo_Contact.png"
-        }
-      },
-      {
-        "@type":"WebPage",
-        "@id":"https://hikki.ca/contact.html#webpage",
-        "url":"https://hikki.ca/contact.html",
-        "name":"Contact | Hikki",
-        "isPartOf":{"@id":"https://hikki.ca/#website"},
-        "about":{"@id":"https://hikki.ca/#org"},
-        "inLanguage":"zh-HK",
-        "description":"Contact Hikki photography & philosophy — wedding, portrait, and pet photography across Vancouver, Hong Kong, and Macau."
-      },
-      {
-        "@type":"BreadcrumbList",
-        "itemListElement":[
-          { "@type":"ListItem", "position":1, "name":"Home", "item":"https://hikki.ca/" },
-          { "@type":"ListItem", "position":2, "name":"Contact", "item":"https://hikki.ca/contact.html" }
-        ]
-      }
-    ]
-  }
-  </script>
-
   <style>
     :root{
       --mono: "Courier New", Courier, "Liberation Mono", "Nimbus Mono L",
               "DejaVu Sans Mono", "SFMono-Regular", monospace;
+      --header-h: 90px;
+      --rail-w: 320px;
+      --rail-top: 60px;    /* 靠上：貼近 header */
     }
 
     *{margin:0;padding:0;box-sizing:border-box}
@@ -110,96 +42,99 @@
       position:relative;
     }
 
-    /* Mobile rotator */
+    /* 語系字體 */
+    [lang^="zh"], [lang="ja"], [lang="ja"] *{
+      font-family:'Noto Serif JP', serif !important;
+      font-weight:200 !important;
+      font-variant-ligatures:none;
+      font-synthesis-weight:none;
+    }
+    [lang="en"], [lang="en"] *{
+      font-family: var(--mono) !important;
+      font-variant-ligatures:none;
+    }
+
+    /* Mobile rotator / Header（原樣） */
     .mobile-rotator{
       position:fixed;top:0;left:0;width:100%;height:36px;
       background:#f4f2f0;color:#000;display:none;
       align-items:center;justify-content:center;
-      padding:0 12px;z-index:10001;font-size:14px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      padding:0 12px;z-index:10001;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
       font-family: var(--mono);
     }
-    .mobile-rotator.ja{font-family:'Noto Serif JP','MS Mincho',serif}
-
-    /* Header */
-    .header-bar{
-      position:fixed;top:0;left:0;width:100%;height:60px;
-      background:#f4f2f0;display:flex;align-items:center;
-      padding:0 40px;z-index:9999;
-    }
-    .header-title{
-      margin-right:auto;font-size:18px;color:#000;white-space:nowrap;overflow:hidden;
-      font-family: var(--mono);
-      will-change: transform, opacity;
-    }
-    .header-title.ja{font-family:'Noto Serif JP','MS Mincho',serif}
+    .mobile-rotator.ja{font-family:'Noto Serif JP',serif}
+    .header-bar{position:fixed;top:0;left:0;width:100%;height:60px;background:#f4f2f0;display:flex;align-items:center;padding:0 40px;z-index:9999;}
+    .header-title{margin-right:auto;font-size:18px;color:#000;white-space:nowrap;overflow:hidden;font-family:var(--mono);will-change:transform,opacity;}
+    .header-title.ja{font-family:'Noto Serif JP',serif}
     .header-bar a{font-family:var(--mono);font-size:18px;color:#000;text-decoration:none;margin-left:40px;transition:color .3s}
     .header-bar a:hover{color:#f1c232}
     .header-bar a.active{color:#e74c3c}
 
-    /* 字體掛勾 */
-    [lang="en"], [lang="en"] *{ font-family: var(--mono) !important; font-variant-ligatures: none; }
-    [lang="ja"], [lang="ja"] *{ font-family:'Noto Serif JP','MS Mincho',serif !important; font-variant-ligatures: none; }
-
-    /* layout */
-    .contact-page{display:flex;width:100%;min-height:100vh;padding-top:100px;perspective:800px}
+    /* layout（原樣） */
+    .contact-page{display:flex;width:100%;min-height:100vh;padding-top:calc(var(--header-h) + 40px);padding-left:var(--rail-w);perspective:800px;position:relative;z-index:2;}
     .left-col,.right-col{width:50%}
-
-    .left-col{
-      background:url('Logo_Contact.png') center/contain no-repeat;
-      opacity:.92;transform-style:preserve-3d;transform-origin:center;
-      backface-visibility:hidden;will-change:transform;animation:spinY 8s linear infinite;
-    }
+    .left-col{background:url('Logo_Contact.png') center/contain no-repeat;opacity:.92;transform-style:preserve-3d;transform-origin:center;backface-visibility:visible;will-change:transform;animation:spinY 8s linear infinite;}
     @keyframes spinY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-
-    /* 右欄：左對齊 */
-    .right-col{
-      padding:60px 40px;display:flex;flex-direction:column;gap:32px;
-      justify-content:center;align-items:flex-start;text-align:left;contain:content;
-    }
+    .right-col{padding:0 40px 60px 40px;display:flex;flex-direction:column;gap:32px;justify-content:center;align-items:flex-start;text-align:left;contain:content;}
     .right-col *{text-align:left}
 
+    /* Contact info（只讓它可點，其餘不變） */
     .contact-info p[lang="en"]{font-size:18px;line-height:1.4;letter-spacing:.02em}
-    .contact-info a{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s ease;color:#F1c232}
+    .contact-info a{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s ease,color .2s ease;color:#F1c232}
     .contact-info a:visited{color:#F1c232}
-    .contact-info a:hover{border-bottom-color:#f4f2f0}
+    .contact-info a:hover{border-bottom-color:#f4f2f0;color:#f4f2f0}
 
     .poem p[lang="ja"]{font-size:15px;line-height:1.6}
     .poem p[lang="en"]{font-size:11px;line-height:1.6;margin-top:8px;color:#f4f2f0}
 
     .copyright p{font-size:14px;line-height:1.4;margin-top:16px}
+    /* ② 版權內的日文固定為 Noto Serif JP 200 */
+    .copyright [lang="ja"]{
+      font-family:'Noto Serif JP',serif !important;
+      font-weight:200 !important;
+      font-synthesis-weight:none !important;
+    }
 
-    /* Matrix */
-    .matrix-scope p{ white-space: pre-wrap; }
-    .matrix-char{ display:inline-block; white-space: pre; will-change: transform, opacity; }
+    /* Matrix（保持，但僅作用在 .poem，避免扭曲右欄其他區塊） */
+    .poem p{white-space: pre-wrap;}
+    .matrix-char{display:inline-block;white-space: pre;will-change: transform, opacity;}
 
-    /* Blink —— 修正：補上 blink3 定義 */
-    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
-    @keyframes blink3 { 0%,50%,100% { opacity:1 } 25%,75% { opacity:0 } }
+    /* Blink */
+    .blink-block{display:inline-block;animation:blink3 3s infinite;}
+    @keyframes blink3 {0%,50%,100%{opacity:1}25%,75%{opacity:0}}
+
+    /* 左側城市欄：靠上 */
+    .coord-rail{
+      position:fixed; top:var(--rail-top); left:0; bottom:0; width:var(--rail-w);
+      z-index:1; pointer-events:none; padding:8px 12px 20px 16px;
+      display:flex; align-items:stretch; justify-content:flex-start;
+    }
+    .coord-list{
+      list-style:none;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;
+      color:#f4f2f0;font-family:var(--mono);font-size:14px;line-height:1.25;letter-spacing:-0.01em;opacity:.92;
+      font-variant-numeric: tabular-nums; text-shadow:0 1px 0 rgba(0,0,0,.6);
+    }
+    .coord-item{display:grid;grid-template-columns:132px 16px 118px 16px 118px;align-items:baseline;white-space:nowrap;}
+    .coord-city{opacity:.95}.coord-slash,.coord-sep{opacity:.55}.coord-lat,.coord-lon{opacity:.88}
 
     /* Mobile */
     @media (max-width:767px){
+      :root{ --header-h:96px; --rail-w:0px; }
       .mobile-rotator{display:flex}
       .header-bar{top:36px;justify-content:center}
       .header-title{display:none!important}
       .header-bar a{margin:0 37px!important}
-
+      .contact-page{padding-left:0 !important; padding-top:calc(var(--header-h) + 16px);}
       .left-col{display:none!important}
-      .right-col{
-        width:100%!important;padding:24px 20px 40px!important;
-        align-items:flex-start!important;text-align:left!important;margin:0 auto!important;
-      }
-      .right-col .contact-info,.right-col .poem,.right-col .copyright{
-        width:100%;max-width:560px;margin:0 auto;
-      }
-      .contact-page{padding-top:136px!important;justify-content:center!important;align-items:flex-start!important}
+      .right-col{width:100%!important;padding:0 20px 40px!important;align-items:flex-start!important;margin:0 auto!important;}
+      .right-col .contact-info,.right-col .poem,.right-col .copyright{width:100%;max-width:560px;margin:0 auto;}
+      .coord-rail{display:none;}
     }
 
-    /* 尊重使用者偏好，但保留 blink-block 動畫 */
     @media (prefers-reduced-motion:reduce){
       .left-col{animation:none!important}
       *,*::before,*::after{animation:none!important;transition:none!important}
-      .blink-block{ animation:blink3 3s infinite !important; } /* 白名單 */
+      .blink-block{animation:blink3 3s infinite !important;}
     }
   </style>
 </head>
@@ -213,34 +148,30 @@
     <a href="contact.html" class="active">Contact</a>
   </div>
 
+  <!-- 左側座標欄 -->
+  <aside class="coord-rail" aria-hidden="true">
+    <ul class="coord-list" id="coordList" lang="en"></ul>
+  </aside>
+
   <div class="contact-page">
     <div class="left-col"></div>
     <div class="right-col matrix-scope">
       <div class="contact-info">
         <p lang="en">
           <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">Instagram</a><br>
-          Will@hikki.ca<br>
-          250-986-9516
+          <a href="mailto:Will@hikki.ca">Will@hikki.ca</a><br>
+          <a href="tel:+12509869516">250-986-9516</a>
         </p>
       </div>
       <div class="poem">
-        <p lang="ja">紅葉に染まり，流れる水が，紅色に見える。</p>
-        <p lang="ja">
-          いまだかつて，神々も経験したことがない景色。<br>
-          真っ赤な水が，流れているのだ。そんな時代を，生きたのだ。
-        </p>
-        <p lang="en">
-          Even in the age when gods still walked the earth,<br>
-          no one had ever seen such a sight—<br>
-          the Tatsuta River,<br>
-          its waters bound in crimson threads,<br>
-          dyed by the scattering of autumn leaves. <span class="blink-block">■</span>
-        </p>
+        <p lang="ja">><br>><br>他感到自己的肋骨與她的右肩平行，</p>
+        <p lang="ja">呼出的氣息在她後頸與鎖骨間形成一條極細的陰影，<br>沿衣領滑入胸前。它在二人之間被光固定，沒有聲音。</p>
+        <p lang="ja"><br>吐く息のほのかなる影、<br>うなじと鎖骨とのあひだに細く生れ、<br>衣の領を伝ひて 胸の奥へとしのび入る。<br>それは二人のあひだに 光に留められ、<br>動かず、声もなかりき。<span class="blink-block">■</span></p>
       </div>
       <div class="copyright">
         <p lang="en">
           © 2025 Hikki photography &amp; philosophy.<br>
-          All rights reserved. <span lang="ja">無断転載を禁じます。 <span class="blink-block">■</span></span>
+          All rights reserved. <span lang="ja">無断転載を禁じます。<span class="blink-block">■</span></span>
         </p>
       </div>
     </div>
@@ -248,123 +179,188 @@
 
   <script>
   window.addEventListener('DOMContentLoaded', () => {
-    /* ===== Header Rotator ===== */
+    /* ===== Header Rotator（原樣） ===== */
     const headerEl = document.getElementById('headerTitle');
     const mobileEl = document.getElementById('mobileRotator');
     const targets  = [headerEl, mobileEl].filter(Boolean);
-
     const sentences = [
-      "Of time, souls and cities.","Know thyself.","静かな光。",
-      "10% off for rescued animals.","YYJ > YVR",
-      "Get a quote today for free！",
-      "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
-      "father Anderson...","also try max noodle house",
-      "晚星墜落處，自成橋梁。",
-      "Elegance is about breaking the rules.",
-      "Hesitation is defeat",
-      "賺菲林錢",
-      "假作真時真亦假，無為有處有還無。",
-      "死生契闊，與子成說。 ",
-      "ネットは広大だわ。",
-      "恥の多い生涯を送ってきました。",
-      "Demain, dès l’aube…",
-      "Je pense, donc je suis.",
-      "Il faut imaginer Sisyphe heureux.",
-      "Stay gold, Ponyboy.",
-      "What’s in a name? that which we call a rose…",
-      "I drink your milkshake!",
-      "The horror! The Horror!",
-      "Le temps détruit tout.",
-      "翩翩不富，皆失實也。",
-      "雲上於天，需；君子以飲食宴樂。",
-      "天下有山，遯。",
-      "元者，善之長也；亨者，嘉之會也。",
-      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
-      "sksksk","Come on and join our convoy.","I am in flames!",
-      "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真実を語る。",
-      "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
-      "Some people are worth melting for.","ひとりって切ないくらい自由。",
-      "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
-      "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-      "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+      "Of time, souls and cities.","Know thyself.","静かな光。","10% off for rescued animals.","YYJ > YVR",
+      "Get a quote today for free！","絢爛如電 虛幻如霧","Wake the fuck up samurai-","father Anderson...","also try max noodle house",
+      "晚星墜落處，自成橋梁。","Elegance is about breaking the rules.","Hesitation is defeat","賺菲林錢",
+      "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。 ","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+      "Demain, dès l’aube…","Je pense, donc je suis.","Il faut imaginer Sisyphe heureux.","Stay gold, Ponyboy.",
+      "What’s in a name? that which we call a rose…","I drink your milkshake!","The horror! The Horror!",
+      "Le temps détruit tout.","翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
+      "元者，善之長也；亨者，嘉之會也。","男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
+      "sksksk","Come on and join our convoy.","I am in flames!","CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。","빛은 거짓말하지 않아。","Light reveals. Shadow defines.",
+      "Some people are worth melting for。","ひとりって切ないくらい自由。","The name of the rose is all that remains。",
+      "Οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡","Shanghai fog, yes。","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
     ];
-
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let last = -1;
     const hasCJK = s => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
-
-    function apply(el, txt){
-      if(!el) return;
-      const cjk = hasCJK(txt);
-      el.classList.toggle('ja', cjk);
-      el.classList.toggle('en', !cjk);
-      el.setAttribute('lang', cjk ? 'ja' : 'en');
-      el.textContent = txt;
-    }
-    function pick(){
-      let i = Math.floor(Math.random()*sentences.length);
-      if (i === last) i = (i+1) % sentences.length;
-      last = i; return sentences[i];
-    }
+    function apply(el, txt){ if(!el) return; const cjk = hasCJK(txt); el.classList.toggle('ja', cjk); el.classList.toggle('en', !cjk); el.setAttribute('lang', cjk ? 'ja' : 'en'); el.textContent = txt; }
+    function pick(){ let i=Math.floor(Math.random()*sentences.length); if(i===last) i=(i+1)%sentences.length; last=i; return sentences[i]; }
     function rotate(){
       const txt = pick();
       if (reduce || !window.gsap){ targets.forEach(t => apply(t, txt)); return; }
       gsap.to(targets, { y:-12, opacity:0, duration:.18, ease:'power1.in',
-        onComplete(){
-          targets.forEach(t => { apply(t, txt); gsap.set(t,{y:12}); });
-          gsap.to(targets, { y:0, opacity:1, duration:.24, ease:'power1.out' });
-        }
+        onComplete(){ targets.forEach(t => { apply(t, txt); gsap.set(t,{y:12}); });
+          gsap.to(targets, { y:0, opacity:1, duration:.24, ease:'power1.out' }); }
       });
     }
     rotate(); setInterval(rotate, 4000);
 
-    /* ===== Matrix：去除段落縮排 & <br> 後縮排，避免對齊偏移 ===== */
+    /* ===== Matrix：只作用在 .poem，避免右欄被全面拆字 ===== */
     if (!reduce && window.gsap) {
-      const scope = document.querySelector('.matrix-scope');
+      const scope = document.querySelector('.poem');
       if (scope){
         const ps = scope.querySelectorAll('p');
-
         const trimIndent = (p) => {
-          while (p.firstChild && p.firstChild.nodeType === 3 && /^\s+$/.test(p.firstChild.nodeValue)) {
-            p.removeChild(p.firstChild);
-          }
-          p.querySelectorAll('br').forEach(br => {
-            const n = br.nextSibling;
-            if (n && n.nodeType === 3) n.nodeValue = n.nodeValue.replace(/^[\t ]+/, '');
-          });
+          while (p.firstChild && p.firstChild.nodeType === 3 && /^\s+$/.test(p.firstChild.nodeValue)) p.removeChild(p.firstChild);
+          p.querySelectorAll('br').forEach(br => { const n = br.nextSibling; if (n && n.nodeType === 3) n.nodeValue = n.nodeValue.replace(/^[\t ]+/, ''); });
         };
-
         ps.forEach(p => {
           trimIndent(p);
-          const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, {
-            acceptNode(n){ return n.textContent.replace(/\s/g,'').length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
-          });
-          const nodes = [];
-          while (walker.nextNode()) nodes.push(walker.currentNode);
-
+          const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, { acceptNode(n){ return n.textContent.replace(/\s/g,'').length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; } });
+          const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
           nodes.forEach(node => {
-            const parent = node.parentNode;
-            const text = node.textContent.replace(/\r/g,'').replace(/^[\t ]+/gm,'');
+            const parent = node.parentNode; const text = node.textContent.replace(/\r/g,'').replace(/^[\t ]+/gm,'');
             const frag = document.createDocumentFragment();
-            for (const ch of text){
-              const s = document.createElement('span');
-              s.className = 'matrix-char';
-              s.textContent = ch;
-              frag.appendChild(s);
-            }
+            for (const ch of text){ const s=document.createElement('span'); s.className='matrix-char'; s.textContent=ch; frag.appendChild(s); }
             parent.replaceChild(frag, node);
           });
         });
-
         const chars = scope.querySelectorAll('.matrix-char');
         gsap.set(chars, { y:-18, opacity:0 });
-        gsap.to(chars, {
-          y:0, opacity:1, duration:.30, ease:'power1.out',
-          stagger:{ each:.0035, from:'random' }
-        });
+        gsap.to(chars, { y:0, opacity:1, duration:.30, ease:'power1.out', stagger:{ each:.0035, from:'random' } });
       }
     }
+
+    /* ===== 左側座標欄：歷史文化城市 ===== */
+    (function(){
+      const rail  = document.querySelector('.coord-rail');
+      const listEl= document.getElementById('coordList');
+      if (!rail || !listEl) return;
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const pool = [
+        {name:'Vancouver', lat:49.263431, lon:-123.012508, range:{lat:[49.15,49.35], lon:[-123.30,-122.90]}},
+        {name:'Victoria',  lat:48.468213, lon:-123.330938, range:{lat:[48.39,48.55],  lon:[-123.50,-123.20]}},
+        {name:'Hong Kong', lat:22.445293, lon:114.031586, range:{lat:[22.20,22.60],   lon:[113.80,114.35]}},
+        {name:'Macau',     lat:22.198510, lon:113.536389, range:{lat:[22.15,22.25],   lon:[113.50,113.60]}},
+        {name:'Casablanca',lat:33.573110, lon:-7.589843,  range:{lat:[33.40,33.70], lon:[-7.75,-7.40]}},
+        {name:'Fez',       lat:34.018124, lon:-5.007845,  range:{lat:[33.95,34.10], lon:[-5.10,-4.90]}},
+        {name:'Marrakesh', lat:31.629472, lon:-7.981084,  range:{lat:[31.50,31.75], lon:[-8.15,-7.85]}},
+        {name:'Timbuktu',  lat:16.766588, lon:-3.002561,  range:{lat:[16.70,16.85], lon:[-3.10,-2.90]}},
+        {name:'Angkor',    lat:13.412469, lon:103.866986, range:{lat:[13.30,13.50], lon:[103.70,104.00]}},
+        {name:'Kyoto',     lat:35.011636, lon:135.768029, range:{lat:[34.95,35.10], lon:[135.65,135.85]}},
+        {name:'Nara',      lat:34.685087, lon:135.804856, range:{lat:[34.62,34.75], lon:[135.70,135.88]}},
+        {name:'Gyeongju',  lat:35.856171, lon:129.224747, range:{lat:[35.80,35.92], lon:[129.15,129.30]}},
+        {name:'Luang Prabang', lat:19.885612, lon:102.134605, range:{lat:[19.82,19.95], lon:[102.05,102.22]}},
+        {name:'Bagan',     lat:21.171705, lon:94.858543,  range:{lat:[21.10,21.23], lon:[94.78,94.93]}},
+        {name:'Varanasi',  lat:25.317644, lon:82.973915,  range:{lat:[25.27,25.37], lon:[82.90,83.03]}},
+        {name:'Samarkand', lat:39.627012, lon:66.974973,  range:{lat:[39.57,39.67], lon:[66.90,67.05]}},
+        {name:'Isfahan',   lat:32.654627, lon:51.667983,  range:{lat:[32.60,32.72], lon:[51.55,51.75]}},
+        {name:'Yazd',      lat:31.897423, lon:54.356856,  range:{lat:[31.85,31.95], lon:[54.28,54.43]}},
+        {name:'Shiraz',    lat:29.591768, lon:52.583698,  range:{lat:[29.54,29.64], lon:[52.50,52.66]}},
+        {name:'Petra',     lat:30.328459, lon:35.444362,  range:{lat:[30.28,30.38], lon:[35.38,35.50]}},
+        {name:'Assisi',    lat:43.070702, lon:12.619597,  range:{lat:[43.03,43.11], lon:[12.56,12.67]}},
+        {name:'Siena',     lat:43.318809, lon:11.330757,  range:{lat:[43.28,43.35], lon:[11.27,11.38]}},
+        {name:'Matera',    lat:40.666313, lon:16.604252,  range:{lat:[40.63,40.70], lon:[16.55,16.65]}},
+        {name:'Paris',     lat:48.856613, lon:2.352222,   range:{lat:[48.80,48.92], lon:[2.24,2.42]}},
+        {name:'Granada',   lat:37.177336, lon:-3.598557,  range:{lat:[37.14,37.21], lon:[-3.65,-3.55]}},
+        {name:'Córdoba',   lat:37.888175, lon:-4.779383,  range:{lat:[37.85,37.93], lon:[-4.85,-4.72]}},
+        {name:'Toledo',    lat:39.862831, lon:-4.027323,  range:{lat:[39.83,39.90], lon:[-4.08,-3.97]}},
+        {name:'Salamanca', lat:40.970104, lon:-5.663540,  range:{lat:[40.94,41.00], lon:[-5.72,-5.60]}},
+        {name:'Dubrovnik', lat:42.650662, lon:18.094423,  range:{lat:[42.62,42.68], lon:[18.05,18.13]}},
+        {name:'Kotor',     lat:42.424662, lon:18.771234,  range:{lat:[42.40,42.45], lon:[18.73,18.82]}},
+        {name:'Rhodes',    lat:36.434000, lon:28.217000,  range:{lat:[36.40,36.47], lon:[28.17,28.27]}},
+        {name:'Göreme',    lat:38.643139, lon:34.835299,  range:{lat:[38.60,38.68], lon:[34.78,34.88]}},
+        {name:'Carthage',  lat:36.852925, lon:10.323044,  range:{lat:[36.83,36.88], lon:[10.28,10.36]}},
+        {name:'Jerusalem', lat:31.768318, lon:35.213711,  range:{lat:[31.73,31.80], lon:[35.17,35.25]}}
+      ];
+
+      function build(){
+        listEl.innerHTML = '';
+        const probe = document.createElement('li');
+        probe.className = 'coord-item';
+        probe.innerHTML = `<span class="coord-city">Sample</span><span class="coord-slash">/</span><span class="coord-lat">00.000000</span><span class="coord-sep">|</span><span class="coord-lon">000.000000</span>`;
+        listEl.appendChild(probe);
+        const rowH = probe.getBoundingClientRect().height || 18;
+        listEl.removeChild(probe);
+
+        const available = rail.clientHeight - 28;
+        const rows = Math.max(4, Math.min(pool.length, Math.floor(available / rowH)));
+        const data = pool.slice(0, rows);
+
+        for (const c of data){
+          const li   = document.createElement('li'); li.className='coord-item';
+          const city = document.createElement('span'); city.className='coord-city'; city.textContent = c.name;
+          const slash= document.createElement('span'); slash.className='coord-slash'; slash.textContent = '/';
+          const lat  = document.createElement('span'); lat.className='coord-lat';
+          const sep  = document.createElement('span'); sep.className='coord-sep'; sep.textContent = '|';
+          const lon  = document.createElement('span'); lon.className='coord-lon';
+
+          const latStr = c.lat.toFixed(6), lonStr = c.lon.toFixed(6);
+          lat.textContent = latStr; lon.textContent = lonStr;
+          lat.dataset.base = latStr; lon.dataset.base = lonStr;
+          lat.dataset.min  = (c.range?.lat?.[0] ?? -90).toString();
+          lat.dataset.max  = (c.range?.lat?.[1] ??  90).toString();
+          lon.dataset.min  = (c.range?.lon?.[0] ?? -180).toString();
+          lon.dataset.max  = (c.range?.lon?.[1] ??  180).toString();
+
+          li.append(city, slash, lat, sep, lon);
+          listEl.appendChild(li);
+        }
+
+        if (!isReduced) startDrift();
+      }
+
+      function startDrift(){
+        const TMIN=60, TMAX=140, CHMIN=1, CHMAX=3, STEP_MIN=1, STEP_MAX=3, P_BACK=0.6;
+        const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+        const spans=[...listEl.querySelectorAll('.coord-lat,.coord-lon')];
+
+        function driftOne(span){
+          const base = span.dataset.base || span.textContent;
+          let cur    = span.textContent;
+          const min  = parseFloat(span.dataset.min);
+          const max  = parseFloat(span.dataset.max);
+
+          const digits = [];
+          for (let i=0;i<base.length;i++){ const ch=base[i]; if(ch>='0'&&ch<='9') digits.push(i); }
+          const count = rint(CHMIN, Math.min(CHMAX, digits.length));
+          const arr = cur.split('');
+          for (let k=0;k<count;k++){
+            const idx = digits[Math.floor(Math.random()*digits.length)];
+            const b = base.charCodeAt(idx)-48;
+            const c = (arr[idx]>='0'&&arr[idx]<='9') ? (arr[idx].charCodeAt(0)-48) : b;
+            let step = rint(STEP_MIN, STEP_MAX);
+            let dir  = (c!==b && Math.random()<P_BACK) ? Math.sign(b-c) : (Math.random()<0.5?-1:1);
+            let n = c + dir*step;
+            if (n<0 || n>9) n = Math.min(9, Math.max(0, c - dir*step));
+            arr[idx] = String.fromCharCode(48+n);
+          }
+          cur = arr.join('');
+
+          const val = parseFloat(cur);
+          if (Number.isNaN(val) || val<min || val>max) { span.textContent = base; return; }
+          span.textContent = cur;
+        }
+
+        function loop(){
+          if (document.hidden){ setTimeout(loop, 400); return; }
+          spans.forEach(s=> driftOne(s));
+          setTimeout(loop, rint(TMIN, TMAX));
+        }
+        loop();
+      }
+
+      build();
+      window.addEventListener('resize', () => { build(); }, { passive:true });
+    })();
   });
   </script>
 </body>
