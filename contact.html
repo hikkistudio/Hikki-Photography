@@ -9,8 +9,6 @@
   <meta name="author" content="Hikki Photography & Philosophy">
   <link rel="canonical" href="https://hikki.ca/contact.html" />
 
-  <!-- OG/Twitter 與原檔一致，省略 -->
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,11 +22,11 @@
 
   <style>
     :root{
-      --mono: "Courier New", Courier, "Liberation Mono", "Nimbus Mono L",
-              "DejaVu Sans Mono", "SFMono-Regular", monospace;
+      --mono: "Courier New", monospace;
+      --ja: "Noto Serif JP", serif;
       --header-h: 90px;
       --rail-w: 320px;
-      --rail-top: 60px;    /* 靠上：貼近 header */
+      --rail-top: 60px; /* 貼 header */
     }
 
     *{margin:0;padding:0;box-sizing:border-box}
@@ -44,7 +42,7 @@
 
     /* 語系字體 */
     [lang^="zh"], [lang="ja"], [lang="ja"] *{
-      font-family:'Noto Serif JP', serif !important;
+      font-family: var(--ja) !important;
       font-weight:200 !important;
       font-variant-ligatures:none;
       font-synthesis-weight:none;
@@ -54,7 +52,7 @@
       font-variant-ligatures:none;
     }
 
-    /* Mobile rotator / Header（原樣） */
+    /* Mobile rotator / Header */
     .mobile-rotator{
       position:fixed;top:0;left:0;width:100%;height:36px;
       background:#f4f2f0;color:#000;display:none;
@@ -62,15 +60,16 @@
       padding:0 12px;z-index:10001;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
       font-family: var(--mono);
     }
-    .mobile-rotator.ja{font-family:'Noto Serif JP',serif}
+    .mobile-rotator.ja{font-family:var(--ja)!important;font-weight:200!important}
+
     .header-bar{position:fixed;top:0;left:0;width:100%;height:60px;background:#f4f2f0;display:flex;align-items:center;padding:0 40px;z-index:9999;}
     .header-title{margin-right:auto;font-size:18px;color:#000;white-space:nowrap;overflow:hidden;font-family:var(--mono);will-change:transform,opacity;}
-    .header-title.ja{font-family:'Noto Serif JP',serif}
+    .header-title.ja{font-family:var(--ja)!important;font-weight:200!important}
     .header-bar a{font-family:var(--mono);font-size:18px;color:#000;text-decoration:none;margin-left:40px;transition:color .3s}
     .header-bar a:hover{color:#f1c232}
     .header-bar a.active{color:#e74c3c}
 
-    /* layout（原樣） */
+    /* layout */
     .contact-page{display:flex;width:100%;min-height:100vh;padding-top:calc(var(--header-h) + 40px);padding-left:var(--rail-w);perspective:800px;position:relative;z-index:2;}
     .left-col,.right-col{width:50%}
     .left-col{background:url('Logo_Contact.png') center/contain no-repeat;opacity:.92;transform-style:preserve-3d;transform-origin:center;backface-visibility:visible;will-change:transform;animation:spinY 8s linear infinite;}
@@ -78,44 +77,60 @@
     .right-col{padding:0 40px 60px 40px;display:flex;flex-direction:column;gap:32px;justify-content:center;align-items:flex-start;text-align:left;contain:content;}
     .right-col *{text-align:left}
 
-    /* Contact info（只讓它可點，其餘不變） */
-    .contact-info p[lang="en"]{font-size:18px;line-height:1.4;letter-spacing:.02em}
-    .contact-info a{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s ease,color .2s ease;color:#F1c232}
-    .contact-info a:visited{color:#F1c232}
+    /* Contact info —— 與 gallery 一致的等寬風格（去斜體、微負字距） */
+    .contact-info p[lang="en"]{
+      font-family: var(--mono) !important;
+      font-weight:400 !important;
+      font-style: normal !important;
+      letter-spacing:-0.005em;
+      font-size:18px; line-height:1.4;
+    }
+    .contact-info a{
+      color:#F1c232; text-decoration:none; border-bottom:1px solid transparent;
+      transition:border-color .2s ease,color .2s ease;
+      font-style: normal !important;
+    }
     .contact-info a:hover{border-bottom-color:#f4f2f0;color:#f4f2f0}
 
-    .poem p[lang="ja"]{font-size:15px;line-height:1.6}
+    .poem p[lang="ja"]{font-size:15px;line-height:1.6;white-space:pre-wrap}
     .poem p[lang="en"]{font-size:11px;line-height:1.6;margin-top:8px;color:#f4f2f0}
 
     .copyright p{font-size:14px;line-height:1.4;margin-top:16px}
-    /* ② 版權內的日文固定為 Noto Serif JP 200 */
-    .copyright [lang="ja"]{
-      font-family:'Noto Serif JP',serif !important;
-      font-weight:200 !important;
-      font-synthesis-weight:none !important;
-    }
+    .copyright [lang="ja"]{font-family:var(--ja)!important;font-weight:200!important;font-synthesis-weight:none!important}
 
-    /* Matrix（保持，但僅作用在 .poem，避免扭曲右欄其他區塊） */
-    .poem p{white-space: pre-wrap;}
-    .matrix-char{display:inline-block;white-space: pre;will-change: transform, opacity;}
-
-    /* Blink */
     .blink-block{display:inline-block;animation:blink3 3s infinite;}
     @keyframes blink3 {0%,50%,100%{opacity:1}25%,75%{opacity:0}}
 
-    /* 左側城市欄：靠上 */
+    /* ===== 左側城市欄：與 gallery 統一樣式（顏色/速度/排版） ===== */
     .coord-rail{
-      position:fixed; top:var(--rail-top); left:0; bottom:0; width:var(--rail-w);
-      z-index:1; pointer-events:none; padding:8px 12px 20px 16px;
-      display:flex; align-items:stretch; justify-content:flex-start;
+      position:fixed; top:var(--rail-top); left:0; bottom:24px; width:var(--rail-w);
+      z-index:1; pointer-events:none; padding:0 16px 0 16px;
+      display:block; overflow:hidden;
+      /* 背景不強制黑，維持你的頁面背景；只統一文字樣式 */
     }
+    /* 用 coord-list 當作 panel，統一行距與不溢出 */
     .coord-list{
-      list-style:none;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;
-      color:#f4f2f0;font-family:var(--mono);font-size:14px;line-height:1.25;letter-spacing:-0.01em;opacity:.92;
-      font-variant-numeric: tabular-nums; text-shadow:0 1px 0 rgba(0,0,0,.6);
+      position:absolute; inset:0;
+      display:grid; grid-auto-rows:min-content; row-gap:6px;
+      align-content:start; overflow:hidden;
+      list-style:none; padding-top:0;
     }
-    .coord-item{display:grid;grid-template-columns:132px 16px 118px 16px 118px;align-items:baseline;white-space:nowrap;}
-    .coord-city{opacity:.95}.coord-slash,.coord-sep{opacity:.55}.coord-lat,.coord-lon{opacity:.88}
+    /* 單行樣式（完全複製 gallery 設計） */
+    .coord-line{
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: -0.005em;
+      color: #f4f2f0;
+      opacity: 0.22;           /* 背景感 */
+      white-space: pre;        /* 保留空格對齊 */
+      user-select: none;
+    }
+    .coord-line .city{
+      display:inline-block;
+      width: 16ch;             /* 固定欄寬 */
+      margin-right: 5ch;
+    }
 
     /* Mobile */
     @media (max-width:767px){
@@ -128,7 +143,7 @@
       .left-col{display:none!important}
       .right-col{width:100%!important;padding:0 20px 40px!important;align-items:flex-start!important;margin:0 auto!important;}
       .right-col .contact-info,.right-col .poem,.right-col .copyright{width:100%;max-width:560px;margin:0 auto;}
-      .coord-rail{display:none;}
+      .coord-rail{display:none;} /* 手機隱藏背景座標（跟 gallery 手機視感一致） */
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -148,18 +163,18 @@
     <a href="contact.html" class="active">Contact</a>
   </div>
 
-  <!-- 左側座標欄 -->
+  <!-- 左側座標欄（與 gallery 一致：每行 city + lat | lon） -->
   <aside class="coord-rail" aria-hidden="true">
-    <ul class="coord-list" id="coordList" lang="en"></ul>
+    <ul class="coord-list" id="coordList"></ul>
   </aside>
 
   <div class="contact-page">
     <div class="left-col"></div>
-    <div class="right-col matrix-scope">
-      <div class="contact-info">
+    <div class="right-col">
+      <div class="contact-info" id="contactInfo">
         <p lang="en">
-          <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">Instagram</a><br>
-          <a href="mailto:Will@hikki.ca">Will@hikki.ca</a><br>
+          <a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer">instagram</a><br>
+          <a href="mailto:Alexl@hikki.ca">alex@hikki.ca</a><br>
           <a href="tel:+12509869516">250-986-9516</a>
         </p>
       </div>
@@ -212,154 +227,146 @@
     }
     rotate(); setInterval(rotate, 4000);
 
-    /* ===== Matrix：只作用在 .poem，避免右欄被全面拆字 ===== */
-    if (!reduce && window.gsap) {
-      const scope = document.querySelector('.poem');
-      if (scope){
-        const ps = scope.querySelectorAll('p');
-        const trimIndent = (p) => {
-          while (p.firstChild && p.firstChild.nodeType === 3 && /^\s+$/.test(p.firstChild.nodeValue)) p.removeChild(p.firstChild);
-          p.querySelectorAll('br').forEach(br => { const n = br.nextSibling; if (n && n.nodeType === 3) n.nodeValue = n.nodeValue.replace(/^[\t ]+/, ''); });
-        };
-        ps.forEach(p => {
-          trimIndent(p);
-          const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, { acceptNode(n){ return n.textContent.replace(/\s/g,'').length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; } });
-          const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
-          nodes.forEach(node => {
-            const parent = node.parentNode; const text = node.textContent.replace(/\r/g,'').replace(/^[\t ]+/gm,'');
-            const frag = document.createDocumentFragment();
-            for (const ch of text){ const s=document.createElement('span'); s.className='matrix-char'; s.textContent=ch; frag.appendChild(s); }
-            parent.replaceChild(frag, node);
-          });
-        });
-        const chars = scope.querySelectorAll('.matrix-char');
-        gsap.set(chars, { y:-18, opacity:0 });
-        gsap.to(chars, { y:0, opacity:1, duration:.30, ease:'power1.out', stagger:{ each:.0035, from:'random' } });
-      }
-    }
-
-    /* ===== 左側座標欄：歷史文化城市 ===== */
+    /* ===== Code-Cracking：只作用在 .contact-info（一次性，不重播） ===== */
     (function(){
-      const rail  = document.querySelector('.coord-rail');
-      const listEl= document.getElementById('coordList');
-      if (!rail || !listEl) return;
-      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      const root = document.getElementById('contactInfo');
+      if (!root) return;
 
-      const pool = [
-        {name:'Vancouver', lat:49.263431, lon:-123.012508, range:{lat:[49.15,49.35], lon:[-123.30,-122.90]}},
-        {name:'Victoria',  lat:48.468213, lon:-123.330938, range:{lat:[48.39,48.55],  lon:[-123.50,-123.20]}},
-        {name:'Hong Kong', lat:22.445293, lon:114.031586, range:{lat:[22.20,22.60],   lon:[113.80,114.35]}},
-        {name:'Macau',     lat:22.198510, lon:113.536389, range:{lat:[22.15,22.25],   lon:[113.50,113.60]}},
-        {name:'Casablanca',lat:33.573110, lon:-7.589843,  range:{lat:[33.40,33.70], lon:[-7.75,-7.40]}},
-        {name:'Fez',       lat:34.018124, lon:-5.007845,  range:{lat:[33.95,34.10], lon:[-5.10,-4.90]}},
-        {name:'Marrakesh', lat:31.629472, lon:-7.981084,  range:{lat:[31.50,31.75], lon:[-8.15,-7.85]}},
-        {name:'Timbuktu',  lat:16.766588, lon:-3.002561,  range:{lat:[16.70,16.85], lon:[-3.10,-2.90]}},
-        {name:'Angkor',    lat:13.412469, lon:103.866986, range:{lat:[13.30,13.50], lon:[103.70,104.00]}},
-        {name:'Kyoto',     lat:35.011636, lon:135.768029, range:{lat:[34.95,35.10], lon:[135.65,135.85]}},
-        {name:'Nara',      lat:34.685087, lon:135.804856, range:{lat:[34.62,34.75], lon:[135.70,135.88]}},
-        {name:'Gyeongju',  lat:35.856171, lon:129.224747, range:{lat:[35.80,35.92], lon:[129.15,129.30]}},
-        {name:'Luang Prabang', lat:19.885612, lon:102.134605, range:{lat:[19.82,19.95], lon:[102.05,102.22]}},
-        {name:'Bagan',     lat:21.171705, lon:94.858543,  range:{lat:[21.10,21.23], lon:[94.78,94.93]}},
-        {name:'Varanasi',  lat:25.317644, lon:82.973915,  range:{lat:[25.27,25.37], lon:[82.90,83.03]}},
-        {name:'Samarkand', lat:39.627012, lon:66.974973,  range:{lat:[39.57,39.67], lon:[66.90,67.05]}},
-        {name:'Isfahan',   lat:32.654627, lon:51.667983,  range:{lat:[32.60,32.72], lon:[51.55,51.75]}},
-        {name:'Yazd',      lat:31.897423, lon:54.356856,  range:{lat:[31.85,31.95], lon:[54.28,54.43]}},
-        {name:'Shiraz',    lat:29.591768, lon:52.583698,  range:{lat:[29.54,29.64], lon:[52.50,52.66]}},
-        {name:'Petra',     lat:30.328459, lon:35.444362,  range:{lat:[30.28,30.38], lon:[35.38,35.50]}},
-        {name:'Assisi',    lat:43.070702, lon:12.619597,  range:{lat:[43.03,43.11], lon:[12.56,12.67]}},
-        {name:'Siena',     lat:43.318809, lon:11.330757,  range:{lat:[43.28,43.35], lon:[11.27,11.38]}},
-        {name:'Matera',    lat:40.666313, lon:16.604252,  range:{lat:[40.63,40.70], lon:[16.55,16.65]}},
-        {name:'Paris',     lat:48.856613, lon:2.352222,   range:{lat:[48.80,48.92], lon:[2.24,2.42]}},
-        {name:'Granada',   lat:37.177336, lon:-3.598557,  range:{lat:[37.14,37.21], lon:[-3.65,-3.55]}},
-        {name:'Córdoba',   lat:37.888175, lon:-4.779383,  range:{lat:[37.85,37.93], lon:[-4.85,-4.72]}},
-        {name:'Toledo',    lat:39.862831, lon:-4.027323,  range:{lat:[39.83,39.90], lon:[-4.08,-3.97]}},
-        {name:'Salamanca', lat:40.970104, lon:-5.663540,  range:{lat:[40.94,41.00], lon:[-5.72,-5.60]}},
-        {name:'Dubrovnik', lat:42.650662, lon:18.094423,  range:{lat:[42.62,42.68], lon:[18.05,18.13]}},
-        {name:'Kotor',     lat:42.424662, lon:18.771234,  range:{lat:[42.40,42.45], lon:[18.73,18.82]}},
-        {name:'Rhodes',    lat:36.434000, lon:28.217000,  range:{lat:[36.40,36.47], lon:[28.17,28.27]}},
-        {name:'Göreme',    lat:38.643139, lon:34.835299,  range:{lat:[38.60,38.68], lon:[34.78,34.88]}},
-        {name:'Carthage',  lat:36.852925, lon:10.323044,  range:{lat:[36.83,36.88], lon:[10.28,10.36]}},
-        {name:'Jerusalem', lat:31.768318, lon:35.213711,  range:{lat:[31.73,31.80], lon:[35.17,35.25]}}
+      const CHARSET = '0123456789.-|/'; // 與座標動畫一致的質感
+      const TMIN = 40, TMAX = 120;      // 同節奏
+      const CHMIN = 1, CHMAX = 3;
+
+      function mapTextNodes(el){
+        const nodes=[]; const w=document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+          acceptNode(n){ return n.nodeValue.trim().length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
+        });
+        let idx=0; while(w.nextNode()){ const node=w.currentNode; const len=node.nodeValue.length; nodes.push({node,start:idx,len}); idx+=len; }
+        return {nodes,totalLen:idx};
+      }
+      function writeFlat(flat,map){ for(const seg of map.nodes){ seg.node.nodeValue = flat.slice(seg.start, seg.start+seg.len); } }
+
+      const map = mapTextNodes(root); if(!map.nodes.length) return;
+      let final=''; for(const seg of map.nodes) final += seg.node.nodeValue;
+
+      const tgt = final.split('');
+      const locked = tgt.map(ch => /\s/.test(ch));
+      const cur = tgt.map((ch,i)=> locked[i] ? ch : CHARSET[(Math.random()*CHARSET.length)|0]);
+      writeFlat(cur.join(''), map);
+
+      const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+      (function loop(){
+        for (let i=0;i<cur.length;i++){
+          if (!locked[i] && !/\s/.test(tgt[i])){
+            cur[i] = CHARSET[(Math.random()*CHARSET.length)|0];
+          }
+        }
+        const cand=[]; for(let i=0;i<locked.length;i++) if(!locked[i]) cand.push(i);
+        const take=Math.min(rint(CHMIN,CHMAX), cand.length);
+        for (let k=0;k<take;k++){
+          const j=Math.floor(Math.random()*cand.length);
+          const idx=cand.splice(j,1)[0];
+          cur[idx]=tgt[idx]; locked[idx]=true;
+        }
+        writeFlat(cur.join(''), map);
+        if (locked.every(Boolean)){ writeFlat(final, map); return; }
+        setTimeout(loop, rint(TMIN, TMAX));
+      })();
+    })();
+
+    /* ===== 左側座標欄：樣式/速度/排版統一為 gallery ===== */
+    (function(){
+      const list = document.getElementById('coordList');
+      if (!list) return;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const CITIES = [
+        { n:'Vancouver',   lat:[49.20,49.32],   lon:[-123.26,-122.95] },
+        { n:'Victoria',    lat:[48.38,48.59],   lon:[-123.55,-123.20] },
+        { n:'Hong Kong',   lat:[22.15,22.55],   lon:[113.80,114.35] },
+        { n:'Macau',       lat:[22.10,22.23],   lon:[113.49,113.61] },
+        { n:'Kyoto',       lat:[35.00,35.10],   lon:[135.68,135.82] },
+        { n:'Nara',        lat:[34.62,34.75],   lon:[135.70,135.88] },
+        { n:'Gyeongju',    lat:[35.80,35.92],   lon:[129.15,129.30] },
+        { n:'Luang Prabang', lat:[19.82,19.95], lon:[102.05,102.22] },
+        { n:'Bagan',       lat:[21.10,21.23],   lon:[94.78,94.93] },
+        { n:'Isfahan',     lat:[32.60,32.72],   lon:[51.55,51.75] },
+        { n:'Samarkand',   lat:[39.57,39.67],   lon:[66.90,67.05] },
+        { n:'Shiraz',      lat:[29.54,29.64],   lon:[52.50,52.66] },
+        { n:'Paris',       lat:[48.80,48.92],   lon:[2.20,2.45] },
+        { n:'Granada',     lat:[37.14,37.21],   lon:[-3.65,-3.55] },
+        { n:'Toledo',      lat:[39.83,39.90],   lon:[-4.08,-3.97] },
+        { n:'Córdoba',     lat:[37.85,37.93],   lon:[-4.85,-4.72] },
+        { n:'Dubrovnik',   lat:[42.62,42.68],   lon:[18.05,18.13] },
+        { n:'Kotor',       lat:[42.40,42.45],   lon:[18.73,18.82] },
+        { n:'Göreme',      lat:[38.60,38.68],   lon:[34.78,34.88] },
+        { n:'Carthage',    lat:[36.83,36.88],   lon:[10.28,10.36] }
       ];
 
-      function build(){
-        listEl.innerHTML = '';
+      // util
+      const rand = (a,b)=> a + Math.random()*(b-a);
+      const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+      const fmt = (v)=> Number(v).toFixed(6);
+      const TICK_MIN = 60, TICK_MAX = 140;   // 與 gallery 一致
+      const STEP_LAT = 0.005, STEP_LON = 0.007;
+
+      let timers=[]; let rows=[];
+      function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
+
+      function computeMaxRows(){
         const probe = document.createElement('li');
-        probe.className = 'coord-item';
-        probe.innerHTML = `<span class="coord-city">Sample</span><span class="coord-slash">/</span><span class="coord-lat">00.000000</span><span class="coord-sep">|</span><span class="coord-lon">000.000000</span>`;
-        listEl.appendChild(probe);
-        const rowH = probe.getBoundingClientRect().height || 18;
-        listEl.removeChild(probe);
-
-        const available = rail.clientHeight - 28;
-        const rows = Math.max(4, Math.min(pool.length, Math.floor(available / rowH)));
-        const data = pool.slice(0, rows);
-
-        for (const c of data){
-          const li   = document.createElement('li'); li.className='coord-item';
-          const city = document.createElement('span'); city.className='coord-city'; city.textContent = c.name;
-          const slash= document.createElement('span'); slash.className='coord-slash'; slash.textContent = '/';
-          const lat  = document.createElement('span'); lat.className='coord-lat';
-          const sep  = document.createElement('span'); sep.className='coord-sep'; sep.textContent = '|';
-          const lon  = document.createElement('span'); lon.className='coord-lon';
-
-          const latStr = c.lat.toFixed(6), lonStr = c.lon.toFixed(6);
-          lat.textContent = latStr; lon.textContent = lonStr;
-          lat.dataset.base = latStr; lon.dataset.base = lonStr;
-          lat.dataset.min  = (c.range?.lat?.[0] ?? -90).toString();
-          lat.dataset.max  = (c.range?.lat?.[1] ??  90).toString();
-          lon.dataset.min  = (c.range?.lon?.[0] ?? -180).toString();
-          lon.dataset.max  = (c.range?.lon?.[1] ??  180).toString();
-
-          li.append(city, slash, lat, sep, lon);
-          listEl.appendChild(li);
-        }
-
-        if (!isReduced) startDrift();
+        probe.className='coord-line';
+        probe.style.visibility='hidden';
+        probe.innerHTML = `<span class="city">XXXXXXXXXXXX</span>00.000000 | 000.000000`;
+        list.appendChild(probe);
+        const rowH = probe.getBoundingClientRect().height || 14;
+        const styles = getComputedStyle(list);
+        const gap = parseFloat(styles.rowGap || '0');
+        const ph = list.getBoundingClientRect().height;
+        list.removeChild(probe);
+        return Math.max(1, Math.floor((ph + gap) / (rowH + gap)));
       }
 
-      function startDrift(){
-        const TMIN=60, TMAX=140, CHMIN=1, CHMAX=3, STEP_MIN=1, STEP_MAX=3, P_BACK=0.6;
-        const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
-        const spans=[...listEl.querySelectorAll('.coord-lat,.coord-lon')];
-
-        function driftOne(span){
-          const base = span.dataset.base || span.textContent;
-          let cur    = span.textContent;
-          const min  = parseFloat(span.dataset.min);
-          const max  = parseFloat(span.dataset.max);
-
-          const digits = [];
-          for (let i=0;i<base.length;i++){ const ch=base[i]; if(ch>='0'&&ch<='9') digits.push(i); }
-          const count = rint(CHMIN, Math.min(CHMAX, digits.length));
-          const arr = cur.split('');
-          for (let k=0;k<count;k++){
-            const idx = digits[Math.floor(Math.random()*digits.length)];
-            const b = base.charCodeAt(idx)-48;
-            const c = (arr[idx]>='0'&&arr[idx]<='9') ? (arr[idx].charCodeAt(0)-48) : b;
-            let step = rint(STEP_MIN, STEP_MAX);
-            let dir  = (c!==b && Math.random()<P_BACK) ? Math.sign(b-c) : (Math.random()<0.5?-1:1);
-            let n = c + dir*step;
-            if (n<0 || n>9) n = Math.min(9, Math.max(0, c - dir*step));
-            arr[idx] = String.fromCharCode(48+n);
-          }
-          cur = arr.join('');
-
-          const val = parseFloat(cur);
-          if (Number.isNaN(val) || val<min || val>max) { span.textContent = base; return; }
-          span.textContent = cur;
-        }
-
-        function loop(){
-          if (document.hidden){ setTimeout(loop, 400); return; }
-          spans.forEach(s=> driftOne(s));
-          setTimeout(loop, rint(TMIN, TMAX));
-        }
-        loop();
+      function createRow(city){
+        const li = document.createElement('li');
+        li.className = 'coord-line';
+        const lat = rand(city.lat[0], city.lat[1]);
+        const lon = rand(city.lon[0], city.lon[1]);
+        li.innerHTML = `<span class="city">${city.n}</span><span class="lat">${fmt(lat)}</span> | <span class="lon">${fmt(lon)}</span>`;
+        list.appendChild(li);
+        return { el: li, c: city, lat, lon };
       }
 
-      build();
-      window.addEventListener('resize', () => { build(); }, { passive:true });
+      function stepRow(row){
+        row.lat = clamp(row.lat + (Math.random()*2-1)*STEP_LAT, row.c.lat[0], row.c.lat[1]);
+        row.lon = clamp(row.lon + (Math.random()*2-1)*STEP_LON, row.c.lon[0], row.c.lon[1]);
+        row.el.querySelector('.lat').textContent = fmt(row.lat);
+        row.el.querySelector('.lon').textContent = fmt(row.lon);
+      }
+
+      function loopRow(row){
+        if (reduceMotion) return; // 靜止
+        stepRow(row);
+        const t = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
+        const id = setTimeout(()=>loopRow(row), t);
+        timers.push(id);
+      }
+
+      function fill(){
+        clearTimers(); list.innerHTML=''; rows=[];
+        const need = computeMaxRows();
+        let start = Math.floor(Math.random()*CITIES.length);
+        for (let i=0;i<need;i++){
+          const city = CITIES[(start+i)%CITIES.length];
+          const r = createRow(city); rows.push(r);
+        }
+        rows.forEach(loopRow);
+      }
+
+      fill();
+      let resizeTid=0;
+      addEventListener('resize', ()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fill,150); });
+      addEventListener('orientationchange', ()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fill,150); });
+      addEventListener('beforeunload', clearTimers);
     })();
   });
   </script>
