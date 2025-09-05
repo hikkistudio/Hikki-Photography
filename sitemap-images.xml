@@ -1,278 +1,421 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Gallery page with all images -->
   <url>
     <loc>https://hikki.ca/gallery.html</loc>
-    <image:image>
-      <image:loc>https://hikki.ca/g10_asia_brutalist_textures_black_and_white.webp.webp</image:loc>
-      <image:title>g10 asia brutalist textures black and white.webp</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g11_vancouver_kitsilano_lonely_fastfood.webp</image:loc>
-      <image:title>g11 vancouver kitsilano lonely fastfood</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g12_Shelti_smile_field_vancouver.webp</image:loc>
-      <image:title>g12 Shelti smile field vancouver</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g13_burnaby_wedding_dance_couple.webp</image:loc>
-      <image:title>g13 burnaby wedding dance couple</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g14_crane_poise_modern_construction.webp</image:loc>
-      <image:title>g14 crane poise modern construction</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g15_macau_alley_market_dreams.webp</image:loc>
-      <image:title>g15 macau alley market dreams</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g16_redline_utility_core_noise_barrier.webp</image:loc>
-      <image:title>g16 redline utility core noise barrier</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g17_wedding_photography_crew_victoria_BC.jpg</image:loc>
-      <image:title>g17 wedding photography crew victoria BC</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g18_courtyard_stillness_temple_bells.webp</image:loc>
-      <image:title>g18 courtyard stillness temple bells</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g19_macau_brutalist_facade_raw_concrete.webp</image:loc>
-      <image:title>g19 macau brutalist facade raw concrete</image:title>
-    </image:image>
+    <lastmod>2025-09-04T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+
     <image:image>
       <image:loc>https://hikki.ca/g1_vancouver_prewedding_cityview.webp</image:loc>
-      <image:title>g1 vancouver prewedding cityview</image:title>
+      <image:title>Vancouver pre-wedding city view — Hikki Photography</image:title>
+      <image:caption>Hikki Photography gallery — Vancouver pre-wedding cityview (hikki photo)</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g20_infrastructural_romance_deconstructivist_angles.webp</image:loc>
-      <image:title>g20 infrastructural romance deconstructivist angles</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g21_light_warm_nightime.webp</image:loc>
-      <image:title>g21 light warm nightime</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g22_sunset_burnaby_streets_respite.webp</image:loc>
-      <image:title>g22 sunset burnaby streets respite</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g23_wall_offset_grid_liminal_city.webp</image:loc>
-      <image:title>g23 wall offset grid liminal city</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g24_Vinyl_slience_man_couple_wedding.jpg</image:loc>
-      <image:title>g24 Vinyl slience man couple wedding</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g25_party_wedding_ccd_moment_souls.webp</image:loc>
-      <image:title>g25 party wedding ccd moment souls</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g26_shelti_mountain_northvan_hiking.webp</image:loc>
-      <image:title>g26 shelti mountain northvan hiking</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g27_dog_portrait_moment_capture_home.webp</image:loc>
-      <image:title>g27 dog portrait moment capture home</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g28_wedding_black_and_white_emotion_momment_forgotten.webp.webp</image:loc>
-      <image:title>g28 wedding black and white emotion momment forgotten.webp</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g29_portrait_couple_classic_love_wedding.webp</image:loc>
-      <image:title>g29 portrait couple classic love wedding</image:title>
-    </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g2_hongkong_art_skycraper.webp</image:loc>
-      <image:title>g2 hongkong art skycraper</image:title>
+      <image:title>Hong Kong art & skyscraper — Hikki Photography</image:title>
+      <image:caption>City stories by Hikki Photography (hikki photo), Hong Kong skyline</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g30_moment_joy_caring_wedding.webp</image:loc>
-      <image:title>g30 moment joy caring wedding</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g31_portrait_oldschool_traitional_emotions.webp</image:loc>
-      <image:title>g31 portrait oldschool traitional emotions</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g32_party_wedding_food_friendship.webp</image:loc>
-      <image:title>g32 party wedding food friendship</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g33_urban_cat_outdoor_owner.webp</image:loc>
-      <image:title>g33 urban cat outdoor owner</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g34_vow_wedding_preperation_moment.webp</image:loc>
-      <image:title>g34 vow wedding preperation moment</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g35_toss_wedding_wine_champaign_rose.webp</image:loc>
-      <image:title>g35 toss wedding wine champaign rose</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g36_adopted_stray_dog_mixed_rescued.webp</image:loc>
-      <image:title>g36 adopted stray dog mixed rescued</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g37_prefab_panels_ribbed_slab.webp</image:loc>
-      <image:title>g37 prefab panels ribbed slab</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g38_late_capital_vistas_concrete_jungle_dream.webp</image:loc>
-      <image:title>g38 late capital vistas concrete jungle dream</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g39_gilmore_monochrome_city_highrise_intimacy.webp</image:loc>
-      <image:title>g39 gilmore monochrome city highrise intimacy</image:title>
-    </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g3_portrait_with_orange_tabby.webp</image:loc>
-      <image:title>g3 portrait with orange tabby</image:title>
+      <image:title>Portrait with orange tabby — Hikki Photography</image:title>
+      <image:caption>Pet & portrait photography by Hikki Photography in Vancouver</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp</image:loc>
-      <image:title>g40 sound wall prefab panels west end beach vancouver</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g41_black_and_white_wedding_grand_dressing_timeless_breath.webp.webp</image:loc>
-      <image:title>g41 black and white wedding grand dressing timeless breath.webp</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g42_victoria_marketsquare_photographer_model_art_lens.webp</image:loc>
-      <image:title>g42 victoria marketsquare photographer model art lens</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g43_dog_disability_running_speed_moment.webp</image:loc>
-      <image:title>g43 dog disability running speed moment</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g44_shelti_cornfield_sun_outdoor_love.webp</image:loc>
-      <image:title>g44 shelti cornfield sun outdoor love</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g45_blueberry_dog_korean_instragram.webp</image:loc>
-      <image:title>g45 blueberry dog korean instragram</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g46_portrait_dog_pet_german.webp</image:loc>
-      <image:title>g46 portrait dog pet german</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g47_neighbour_unexpected_pitbull_pet_nighttime.webp</image:loc>
-      <image:title>g47 neighbour unexpected pitbull pet nighttime</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g48_elegant_dog_hunt_river_white.webp</image:loc>
-      <image:title>g48 elegant dog hunt river white</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g49_dog_portrait_mountain_vancouver_capilano_commercial_photoshoot.webp</image:loc>
-      <image:title>g49 dog portrait mountain vancouver capilano commercial photoshoot</image:title>
-    </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g4_black_and_white_dog_running.webp</image:loc>
-      <image:title>g4 black and white dog running</image:title>
+      <image:title>Black-and-white dog running — Hikki Photography</image:title>
+      <image:caption>Pet moments by Hikki Photography (hikki photo)</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g50_window_light_portrait_shadow_play_leading_lines_symmetry_balance.webp</image:loc>
-      <image:title>g50 window light portrait shadow play leading lines symmetry balance</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g51_Macau_asian_concrete_jungle.webp</image:loc>
-      <image:title>g51 Macau asian concrete jungle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g52_macau_bay_darkness_wings_storm.webp</image:loc>
-      <image:title>g52 macau bay darkness wings storm</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g53_street_cat_store_memory_macau.webp</image:loc>
-      <image:title>g53 street cat store memory macau</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g54_red_architecture_mong_kok_night_liminal_.webp</image:loc>
-      <image:title>g54 red architecture mong kok night liminal </image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g55_stairwell_geometry_window_building.webp</image:loc>
-      <image:title>g55 stairwell geometry window building</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g56_analog_portrait_chinatown_family_warm_vibe.jpg</image:loc>
-      <image:title>g56 analog portrait chinatown family warm vibe</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g57_professional_camera_ginger_tabby_maine_coon_lens.webp</image:loc>
-      <image:title>g57 professional camera ginger tabby maine coon lens</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g58_ceramics_sculpture_glaze_earthware_stoneware.webp</image:loc>
-      <image:title>g58 ceramics sculpture glaze earthware stoneware</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g59_Westvan_beachside_social_photography_billboard.webp</image:loc>
-      <image:title>g59 Westvan beachside social photography billboard</image:title>
-    </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g5_pet_owner_Wheatfield_family_photo.webp</image:loc>
-      <image:title>g5 pet owner Wheatfield family photo</image:title>
+      <image:title>Pet owner & wheatfield family photo — Hikki Photography</image:title>
+      <image:caption>Family & pet sessions — Hikki Photography, Greater Vancouver</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g60_street_barber_glimpse_vauged_eyes_warm.webp</image:loc>
-      <image:title>g60 street barber glimpse vauged eyes warm</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g61_japanese_girl_cat_main_coon_playing.webp</image:loc>
-      <image:title>g61 japanese girl cat main coon playing</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g62_straydog_adoption_leash_dogwalk_petphoto.webp</image:loc>
-      <image:title>g62 straydog adoption leash dogwalk petphoto</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g63_mushroom_burnaby_product_photography_lighting_zoom.webp</image:loc>
-      <image:title>g63 mushroom burnaby product photography lighting zoom</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g64_eastvan_streetview_silence_moment_sunlight.webp</image:loc>
-      <image:title>g64 eastvan streetview silence moment sunlight</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g65_stray_dog_leash_foster_family_photography_pet.webp</image:loc>
-      <image:title>g65 stray dog leash foster family photography pet</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g66_wheelchair_pet_owner_feeding_portrait.webp</image:loc>
-      <image:title>g66 wheelchair pet owner feeding portrait</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g67_dog_portrait_smile_capturing_moments.webp</image:loc>
-      <image:title>g67 dog portrait smile capturing moments</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hikki.ca/g68_dogs_playing_grooming_petphoto_evening.webp</image:loc>
-      <image:title>g68 dogs playing grooming petphoto evening</image:title>
-    </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g6_Portrait_film_Vintage.webp</image:loc>
-      <image:title>g6 Portrait film Vintage</image:title>
+      <image:title>Vintage film-look portrait — Hikki Photography</image:title>
+      <image:caption>Portraits by Hikki Photography (hikki photo)</image:caption>
     </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g7_Kerrisdale_moment_poverty.webp</image:loc>
-      <image:title>g7 Kerrisdale moment poverty</image:title>
+      <image:title>Kerrisdale street moment — Hikki Photography</image:title>
+      <image:caption>City documentary style by Hikki Photography in Vancouver</image:caption>
     </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g8_macau_architecture_concrete.webp</image:loc>
-      <image:title>g8 macau architecture concrete</image:title>
+      <image:title>Macau concrete architecture — Hikki Photography</image:title>
+      <image:caption>City textures — Hikki Photography (hikki photo), Macau</image:caption>
     </image:image>
+
     <image:image>
       <image:loc>https://hikki.ca/g9_oriental_confused_moment_misty.webp</image:loc>
-      <image:title>g9 oriental confused moment misty</image:title>
+      <image:title>Misty urban moment — Hikki Photography</image:title>
+      <image:caption>City mood by Hikki Photography, Asia</image:caption>
     </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g10_asia_brutalist_textures_black_and_white.webp</image:loc>
+      <image:title>Brutalist textures in B&amp;W — Hikki Photography</image:title>
+      <image:caption>Monochrome city textures — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g11_vancouver_kitsilano_lonely_fastfood.webp</image:loc>
+      <image:title>Kitsilano night scene — Hikki Photography</image:title>
+      <image:caption>Vancouver city stories — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g12_Shelti_smile_field_vancouver.webp</image:loc>
+      <image:title>Sheltie smiling in field — Hikki Photography</image:title>
+      <image:caption>Pet photography by Hikki Photography in Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g13_burnaby_wedding_dance_couple.webp</image:loc>
+      <image:title>Burnaby wedding dance — Hikki Photography</image:title>
+      <image:caption>Wedding moments by Hikki Photography, Greater Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g14_crane_poise_modern_construction.webp</image:loc>
+      <image:title>Modern crane &amp; lines — Hikki Photography</image:title>
+      <image:caption>Architectural mood — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g15_macau_alley_market_dreams.webp</image:loc>
+      <image:title>Macau alley market dreams — Hikki Photography</image:title>
+      <image:caption>Macau city stories — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g16_redline_utility_core_noise_barrier.webp</image:loc>
+      <image:title>Red line &amp; noise barrier — Hikki Photography</image:title>
+      <image:caption>Urban abstraction by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g17_wedding_photography_crew_victoria_BC.jpg</image:loc>
+      <image:title>Wedding crew in Victoria, BC — Hikki Photography</image:title>
+      <image:caption>Wedding documentary by Hikki Photography, Victoria BC</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g18_courtyard_stillness_temple_bells.webp</image:loc>
+      <image:title>Courtyard stillness — Hikki Photography</image:title>
+      <image:caption>Quiet moments — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g19_macau_brutalist_facade_raw_concrete.webp</image:loc>
+      <image:title>Macau brutalist facade — Hikki Photography</image:title>
+      <image:caption>Raw concrete textures by Hikki Photography, Macau</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g20_infrastructural_romance_deconstructivist_angles.webp</image:loc>
+      <image:title>Infrastructural romance — Hikki Photography</image:title>
+      <image:caption>Deconstructivist angles — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g21_light_warm_nightime.webp</image:loc>
+      <image:title>Warm night light — Hikki Photography</image:title>
+      <image:caption>City atmosphere by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g22_sunset_burnaby_streets_respite.webp</image:loc>
+      <image:title>Burnaby streets at sunset — Hikki Photography</image:title>
+      <image:caption>Greater Vancouver city scenes — Hikki Photography</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g23_wall_offset_grid_liminal_city.webp</image:loc>
+      <image:title>Offset grid wall — Hikki Photography</image:title>
+      <image:caption>Liminal city textures — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g24_Vinyl_slience_man_couple_wedding.jpg</image:loc>
+      <image:title>Vinyl silence — wedding couple — Hikki Photography</image:title>
+      <image:caption>Intimate wedding moment by Hikki Photography, Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g25_party_wedding_ccd_moment_souls.webp</image:loc>
+      <image:title>Wedding party CCD moment — Hikki Photography</image:title>
+      <image:caption>Honest, human, emotional wedding stories — Hikki Photography</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g26_shelti_mountain_northvan_hiking.webp</image:loc>
+      <image:title>Sheltie on North Van hike — Hikki Photography</image:title>
+      <image:caption>Pet adventures by Hikki Photography, North Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g27_dog_portrait_moment_capture_home.webp</image:loc>
+      <image:title>At-home dog portrait — Hikki Photography</image:title>
+      <image:caption>Pet portrait by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g28_wedding_black_and_white_emotion_momment_forgotten.webp</image:loc>
+      <image:title>B&amp;W wedding emotion — Hikki Photography</image:title>
+      <image:caption>Monochrome wedding storytelling — Hikki Photography</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g29_portrait_couple_classic_love_wedding.webp</image:loc>
+      <image:title>Classic couple portrait — Hikki Photography</image:title>
+      <image:caption>Wedding portrait by Hikki Photography, Greater Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g30_moment_joy_caring_wedding.webp</image:loc>
+      <image:title>Joy &amp; care — wedding moment — Hikki Photography</image:title>
+      <image:caption>Wedding day emotions — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g31_portrait_oldschool_traitional_emotions.webp</image:loc>
+      <image:title>Old-school portrait emotion — Hikki Photography</image:title>
+      <image:caption>Classic portrait by Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g32_party_wedding_food_friendship.webp</image:loc>
+      <image:title>Wedding party &amp; friendship — Hikki Photography</image:title>
+      <image:caption>Honest reception moments — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g33_urban_cat_outdoor_owner.webp</image:loc>
+      <image:title>Urban cat with owner — Hikki Photography</image:title>
+      <image:caption>City &amp; pets by Hikki Photography, Vancouver / Hong Kong / Macau</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g34_vow_wedding_preperation_moment.webp</image:loc>
+      <image:title>Vow &amp; wedding preparation — Hikki Photography</image:title>
+      <image:caption>Preparation moments — Hikki Photography wedding gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g35_toss_wedding_wine_champaign_rose.webp</image:loc>
+      <image:title>Champagne toss — wedding — Hikki Photography</image:title>
+      <image:caption>Celebration candid by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g36_adopted_stray_dog_mixed_rescued.webp</image:loc>
+      <image:title>Adopted stray — dog portrait — Hikki Photography</image:title>
+      <image:caption>Rescue pet portrait sessions by Hikki Photography</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g37_prefab_panels_ribbed_slab.webp</image:loc>
+      <image:title>Prefab panels — urban texture — Hikki Photography</image:title>
+      <image:caption>City abstraction by Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g38_late_capital_vistas_concrete_jungle_dream.webp</image:loc>
+      <image:title>Concrete jungle dream — Hikki Photography</image:title>
+      <image:caption>Late-capital vistas — Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g39_gilmore_monochrome_city_highrise_intimacy.webp</image:loc>
+      <image:title>Monochrome high-rise intimacy — Hikki Photography</image:title>
+      <image:caption>City intimacy — Hikki Photography, Burnaby / Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g40_sound_wall_prefab_panels_west_end_beach_vancouver.webp</image:loc>
+      <image:title>West End sound wall, Vancouver — Hikki Photography</image:title>
+      <image:caption>Vancouver textures — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g41_black_and_white_wedding_grand_dressing_timeless_breath.webp</image:loc>
+      <image:title>Timeless dressing — B&amp;W wedding — Hikki Photography</image:title>
+      <image:caption>Classic wedding elegance by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g42_victoria_marketsquare_photographer_model_art_lens.webp</image:loc>
+      <image:title>Victoria Market Square — portrait — Hikki Photography</image:title>
+      <image:caption>Portrait &amp; art lens by Hikki Photography, Victoria BC</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g43_dog_disability_running_speed_moment.webp</image:loc>
+      <image:title>Disabled dog running — Hikki Photography</image:title>
+      <image:caption>Heartfelt pet moments by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g44_shelti_cornfield_sun_outdoor_love.webp</image:loc>
+      <image:title>Sheltie in cornfield — Hikki Photography</image:title>
+      <image:caption>Outdoor pet session — Hikki Photography, Greater Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g45_blueberry_dog_korean_instragram.webp</image:loc>
+      <image:title>Blueberry dog — playful moment — Hikki Photography</image:title>
+      <image:caption>Fun pet photography by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g46_portrait_dog_pet_german.webp</image:loc>
+      <image:title>Dog portrait — Hikki Photography</image:title>
+      <image:caption>Studio-style pet portrait — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g47_neighbour_unexpected_pitbull_pet_nighttime.webp</image:loc>
+      <image:title>Nighttime pitbull encounter — Hikki Photography</image:title>
+      <image:caption>Night pet scene by Hikki Photography in the city</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g48_elegant_dog_hunt_river_white.webp</image:loc>
+      <image:title>Elegant dog by the river — Hikki Photography</image:title>
+      <image:caption>Pet portrait by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g49_dog_portrait_mountain_vancouver_capilano_commercial_photoshoot.webp</image:loc>
+      <image:title>Capilano mountain dog portrait — Hikki Photography</image:title>
+      <image:caption>Commercial-style pet photo by Hikki Photography, Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g50_window_light_portrait_shadow_play_leading_lines_symmetry_balance.webp</image:loc>
+      <image:title>Window light portrait — Hikki Photography</image:title>
+      <image:caption>Shadow play &amp; symmetry by Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g51_Macau_asian_concrete_jungle.webp</image:loc>
+      <image:title>Macau concrete jungle — Hikki Photography</image:title>
+      <image:caption>Asian city textures by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g52_macau_bay_darkness_wings_storm.webp</image:loc>
+      <image:title>Macau bay storm — Hikki Photography</image:title>
+      <image:caption>Stormy bay — Hikki Photography city gallery, Macau</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g53_street_cat_store_memory_macau.webp</image:loc>
+      <image:title>Street cat &amp; store memory — Hikki Photography</image:title>
+      <image:caption>Cat &amp; street life by Hikki Photography, Macau</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g54_red_architecture_mong_kok_night_liminal_.webp</image:loc>
+      <image:title>Mong Kok red architecture — Hikki Photography</image:title>
+      <image:caption>Night liminal architecture — Hikki Photography, Hong Kong</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g55_stairwell_geometry_window_building.webp</image:loc>
+      <image:title>Stairwell geometry — Hikki Photography</image:title>
+      <image:caption>Architectural geometry by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g56_analog_portrait_chinatown_family_warm_vibe.jpg</image:loc>
+      <image:title>Analog portrait — Chinatown family — Hikki Photography</image:title>
+      <image:caption>Warm family portrait by Hikki Photography, Vancouver Chinatown</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g57_professional_camera_ginger_tabby_maine_coon_lens.webp</image:loc>
+      <image:title>Ginger tabby &amp; pro camera — Hikki Photography</image:title>
+      <image:caption>Cat &amp; camera — Hikki Photography pet gallery (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g58_ceramics_sculpture_glaze_earthware_stoneware.webp</image:loc>
+      <image:title>Ceramics &amp; glaze — Hikki Photography</image:title>
+      <image:caption>Craft details by Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g59_Westvan_beachside_social_photography_billboard.webp</image:loc>
+      <image:title>West Van beachside — Hikki Photography</image:title>
+      <image:caption>Beachside social scene — Hikki Photography, West Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g60_street_barber_glimpse_vauged_eyes_warm.webp</image:loc>
+      <image:title>Street barber glimpse — Hikki Photography</image:title>
+      <image:caption>Human city stories by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g61_japanese_girl_cat_main_coon_playing.webp</image:loc>
+      <image:title>Girl &amp; Maine Coon playing — Hikki Photography</image:title>
+      <image:caption>Pet &amp; people — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g62_straydog_adoption_leash_dogwalk_petphoto.webp</image:loc>
+      <image:title>Stray dog adoption walk — Hikki Photography</image:title>
+      <image:caption>Rescue dog story by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g63_mushroom_burnaby_product_photography_lighting_zoom.webp</image:loc>
+      <image:title>Mushroom product photo — Burnaby — Hikki Photography</image:title>
+      <image:caption>Product &amp; detail — Hikki Photography, Burnaby BC</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g64_eastvan_streetview_silence_moment_sunlight.webp</image:loc>
+      <image:title>East Van streetview sunlight — Hikki Photography</image:title>
+      <image:caption>East Vancouver moments — Hikki Photography gallery</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g65_stray_dog_leash_foster_family_photography_pet.webp</image:loc>
+      <image:title>Foster family &amp; stray dog — Hikki Photography</image:title>
+      <image:caption>Adoption stories by Hikki Photography (hikki photo)</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g66_wheelchair_pet_owner_feeding_portrait.webp</image:loc>
+      <image:title>Wheelchair owner feeding pet — Hikki Photography</image:title>
+      <image:caption>Care &amp; companionship — Hikki Photography, Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g67_dog_portrait_smile_capturing_moments.webp</image:loc>
+      <image:title>Smiling dog portrait — Hikki Photography</image:title>
+      <image:caption>Pet portrait by Hikki Photography (hikki photo), Vancouver</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://hikki.ca/g68_dogs_playing_grooming_petphoto_evening.webp</image:loc>
+      <image:title>Dogs playing at dusk — Hikki Photography</image:title>
+      <image:caption>Evening pet photo by Hikki Photography, Greater Vancouver</image:caption>
+    </image:image>
+
   </url>
 </urlset>
