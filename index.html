@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>hikki photography</title>
+  <title>hikki Photography</title>
 
   <!-- Canonical / Robots -->
   <link rel="canonical" href="https://hikki.ca/">
@@ -17,15 +17,11 @@
   <meta name="language" content="zh-Hant">
 
   <!-- ===================== SEO Add-ons (Brand Emphasis) ===================== -->
-  <!-- 強化品牌字眼（hikki / hikki photography / hikki photo） -->
   <meta name="application-name" content="hikki | hikki photography | hikki photo">
   <meta name="apple-mobile-web-app-title" content="hikki photography">
-  <!-- Google/Bing 明確允許索引 -->
   <meta name="googlebot" content="index,follow,max-image-preview:large">
   <meta name="bingbot" content="index,follow,max-image-preview:large">
-  <!-- 另置一組 keywords 以涵蓋品牌同義詞（Google 不使用，但其他引擎仍會參考） -->
   <meta name="keywords" content="hikki, hikki photography, hikki photo, 溫哥華 攝影師, Vancouver photographer">
-  <!-- OG 相關補充 -->
   <meta property="og:see_also" content="https://www.instagram.com/hikki_with_her_camera">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="zh_TW">
@@ -52,7 +48,6 @@
 
   <!-- Favicon -->
   <link rel="icon" href="/favicon.png" type="image/png" />
-  <!--（可選）若你有 apple-touch-icon，可加：<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"> -->
 
   <!-- Fonts（Noto Serif JP 200/400 用於日文） -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -69,15 +64,10 @@
       --font-mono: "Courier New", Courier, monospace;
       --font-ja: "Noto Serif JP", serif;
     }
-
-    /* === 語系字體掛勾 === */
     [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
     [lang="en"] { font-family: var(--font-mono); }
-
     @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
-
     *{ margin:0; padding:0; box-sizing:border-box }
-
     body{
       font-family: var(--font-sans);
       position: relative;
@@ -86,10 +76,8 @@
       background: #000;
       color: #000;
     }
-
     .blink-block{ display:inline-block; animation:blink3 3s infinite; }
 
-    /* —— Mobile Rotator（手機版上方輪播列） —— */
     .mobile-rotator{
       position: fixed; top: 0; left: 0;
       width: 100%; height: 36px;
@@ -109,10 +97,7 @@
     }
 
     .content{ position:absolute; top:80px; left:60px; z-index:1; }
-
-    /* ✅ H1/H2 強制 Helvetica（不受 [lang="en"] 的等寬體影響） */
     h1, h2 { font-family: var(--font-sans) !important; }
-
     h1{ position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
 
     .grid-container{
@@ -125,7 +110,6 @@
       column-gap:60px; row-gap:60px;
       margin-top:8px;
     }
-
     h2{ grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
 
     .left{ grid-area:left }
@@ -135,7 +119,6 @@
       font-weight:100; font-size:30px; line-height:10px;
       white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px;
     }
-
     .locations{
       margin-top:22px; list-style:none;
       font-family: var(--font-mono);
@@ -143,7 +126,6 @@
       letter-spacing:-0.005em;
     }
     .locations li + li{ margin-top:4px }
-
     .square{
       position:fixed; bottom:0; left:0;
       width:70px; height:70px;
@@ -167,122 +149,68 @@
       letter-spacing:-0.005em;
     }
 
-    .overlay{
-      display:none;
-      position:fixed; top:0; left:0;
-      width:100%; height:100%;
-      background:#000; z-index:3;
-    }
+    .overlay{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:3; }
 
     .post{
       position:fixed; top:80px; left:60px;
-      width:calc(100% - 120px);
-      height:calc(100vh - 80px);
-      display:grid;
-      grid-template-columns:2fr 3fr;
-      grid-template-rows:80px 1fr auto;
-      grid-template-areas:
-        "hl     right"
-        "txt    right"
-        "sig    right";
-      column-gap:60px; row-gap:24px;
-      opacity:0; z-index:4;
-      transition:opacity .3s ease-out .2s;
+      width:calc(100% - 120px); height:calc(100vh - 80px);
+      display:grid; grid-template-columns:2fr 3fr; grid-template-rows:80px 1fr auto;
+      grid-template-areas:"hl right" "txt right" "sig right";
+      column-gap:60px; row-gap:24px; opacity:0; z-index:4; transition:opacity .3s ease-out .2s;
     }
     .post > *{ opacity:0; transition:opacity .8s ease-out .4s, transform .8s ease-out .4s; }
     .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) }
     .post .post-right { transform:translateX(100%) }
-
     .post .highlight{ grid-area:hl; }
     .post .text{
-      grid-area:txt;
-      font-family: var(--font-mono);
-      font-size:14px; line-height:14px;
-      color:#f4f2f0; overflow-y:auto;
-      align-self:start; letter-spacing:-0.02em;
+      grid-area:txt; font-family: var(--font-mono); font-size:14px; line-height:14px;
+      color:#f4f2f0; overflow-y:auto; align-self:start; letter-spacing:-0.02em;
     }
     .post .signature-block{ grid-area:sig; display:flex; flex-direction:column; justify-content:flex-end; }
-
     .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; }
     .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; }
     .team{ flex:0 0 25%; display:flex; height:100%; }
-
-    .team-text{
-      flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end;
-      padding:0 20px 20px; background:rgba(0,0,0,0.5);
-    }
-    .team-info{
-      font-family: var(--font-mono); color:#f4f2f0;
-      font-size:16px; line-height:18px; text-align:right;
-    }
+    .team-text{ flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end; padding:0 20px 20px; background:rgba(0,0,0,0.5); }
+    .team-info{ font-family: var(--font-mono); color:#f4f2f0; font-size:16px; line-height:18px; text-align:right; }
     .team-info .name{ font-family: var(--font-sans); font-size:50px; line-height:24px; white-space:nowrap; }
     .team .photo{ flex:2; background-size:cover; background-position:center; }
-
     .post.enter{ opacity:1; }
     .post.enter > .highlight,
     .post.enter > .text,
     .post.enter > .signature-block,
     .post.enter > .post-right{ opacity:1; transform:translateX(0); }
 
-    /* —— Header Bar —— */
-    .header-bar{
-      position:fixed; top:0; left:0;
-      width:100%; height:60px;
-      background:#f4f2f0; z-index:9999;
-      border-bottom:1px solid #f4f2f0;
-      display:flex; align-items:center;
-      padding:0 40px; box-sizing:border-box;
-    }
-    .header-title{
-      margin-right:auto; font-family: var(--font-mono);
-      font-size:18px; color:#000; overflow:hidden; white-space:nowrap;
-    }
-    .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
-
-    .header-bar a{
-      font-family: var(--font-mono);
-      font-size:18px; color:#000; text-decoration:none; margin-left:40px;
-      transition:color .3s ease;
-    }
-    .header-bar a:hover{ color:#f1c232 }
-    .header-bar a.active{ color:#e74c3c }
-
-    /* —— 行動版 —— */
     @media only screen and (max-width: 767px){
       html, body{ height:100vh !important; overflow:hidden !important; }
-
       .mobile-rotator{ display:flex; }
       .header-bar{ top:36px; }
-      .header-title{ display:none !important; }
-
-      .header-bar{ justify-content:center !important; }
-      .header-bar a{ margin:0 37px !important; }
-
-      .content{
-        position:relative !important; top:auto !important; left:auto !important;
-        width:100% !important; height:auto !important;
-        padding:116px 20px 20px !important;
-      }
-
-      .grid-container{ display:block !important; }
-
-      .content h1{ font-size:65px !important; line-height:1 !important; margin-bottom:8px !important; }
-      .grid-container h2{ font-size:22px !important; line-height:1.2 !important; margin:0 0 20px !important; }
-      .left h3{ font-size:20px !important; line-height:1 !important; }
-      .locations{ font-size:20px !important; line-height:1 !important; margin-top:0 !important; }
-      .locations li{ font-size:10px !important; line-height:1 !important; margin-bottom:4px !important; }
-
-      .content .chinese, .content .chinese .english{
-        font-family: var(--font-mono), var(--font-ja) !important;
-        font-size:10px !important; line-height:1.6 !important;
-      }
-
-      .square, .mobile-square, .overlay, #post{ display:none !important; }
-
-      /* 保留 blink-block 在手機跳動 ✅ */
-      *, *::before, *::after{ animation:none !important; transition:none !important; }
-      .blink-block{ animation:blink3 3s steps(1,end) infinite !important; }
+      .header-title{ display:none }
+      .header-bar{ justify-content:center }
+      .header-bar a{ margin:0 37px }
+      .content{ position:relative ; top:auto ; left:auto ; width:100% ; height:auto ; padding:116px 20px 20px }
+      .grid-container{ display:block}
+      .content h1{ font-size:65px ; line-height:1 ; margin-bottom:8px}
+      .grid-container h2{ font-size:22px ; line-height:1.2 ; margin:0 0 20px }
+      .left h3{ font-size:20px  ; line-height:1  }
+      .locations{ font-size:20px ; line-height:1 ; margin-top:0  }
+      .locations li{ font-size:10px ; line-height:1 ; margin-bottom:4px }
+      .content .chinese, .content .chinese .english{ font-family: var(--font-mono), var(--font-ja) ; font-size:10px ; line-height:1.6 }
+      .square, .mobile-square, .overlay, #post{ display:none ; }
+      *, *::before, *::after{ animation:none ; transition:none }
+      .blink-block{ animation:blink3 3s steps(1,end) infinite }
     }
+
+    /* Header Bar（保留原樣） */
+    .header-bar{
+      position:fixed; top:0; left:0; width:100%; height:60px;
+      background:#f4f2f0; z-index:9999; border-bottom:1px solid #f4f2f0;
+      display:flex; align-items:center; padding:0 40px; box-sizing:border-box;
+    }
+    .header-title{ margin-right:auto; font-family: var(--font-mono); font-size:18px; color:#000; overflow:hidden; white-space:nowrap; }
+    .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
+    .header-bar a{ font-family: var(--font-mono); font-size:18px; color:#000; text-decoration:none; margin-left:40px; transition:color .3s ease; }
+    .header-bar a:hover{ color:#f1c232 }
+    .header-bar a.active{ color:#e74c3c }
   </style>
 
   <!-- JSON-LD: WebSite -->
@@ -308,18 +236,9 @@
     "name":"hikki Photography & Philosophy",
     "url":"https://hikki.ca/",
     "logo":"https://hikki.ca/favicon.png",
-    "sameAs":[
-      "https://www.instagram.com/hikki_with_her_camera"
-    ],
+    "sameAs":[ "https://www.instagram.com/hikki_with_her_camera" ],
     "contactPoint":[
-      {
-        "@type":"ContactPoint",
-        "contactType":"customer service",
-        "email":"info@hikki.ca",
-        "telephone":"+1-250-986-9516",
-        "areaServed":["CA","HK","MO","US"],
-        "availableLanguage":["en","zh","ja"]
-      }
+      { "@type":"ContactPoint","contactType":"customer service","email":"info@hikki.ca","telephone":"+1-250-986-9516","areaServed":["CA","HK","MO","US"],"availableLanguage":["en","zh","ja"] }
     ]
   }
   </script>
@@ -337,67 +256,20 @@
   }
   </script>
 
-  <!-- ===================== JSON-LD: Brand / LocalBusiness / Person / Nav ===================== -->
+  <!-- JSON-LD: Brand / LocalBusiness / Person / Nav -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
-      {
-        "@type":"Brand",
-        "@id":"https://hikki.ca/#brand",
-        "name":"hikki Photography & Philosophy",
-        "alternateName":["hikki","hikki photography","hikki photo"],
-        "url":"https://hikki.ca/",
-        "logo":"https://hikki.ca/favicon.png",
-        "sameAs":["https://www.instagram.com/hikki_with_her_camera"]
-      },
-      {
-        "@type":"LocalBusiness",
-        "@id":"https://hikki.ca/#business",
-        "name":"Hikki Photography",
-        "alternateName":["hikki","hikki photography","hikki photo"],
-        "url":"https://hikki.ca/",
-        "image":"https://hikki.ca/favicon.png",
-        "priceRange":"$$",
-        "areaServed":"Greater Vancouver",
-        "address":{
-          "@type":"PostalAddress",
-          "addressLocality":"Vancouver",
-          "addressRegion":"BC",
-          "addressCountry":"CA"
-        },
-        "telephone":"+1-250-986-9516",
-        "brand":{"@id":"https://hikki.ca/#brand"}
-      },
-      {
-        "@type":"Person",
-        "@id":"https://hikki.ca/#founder",
-        "name":"Alex Hikki–Iao",
-        "alternateName":["Hikki","Hikki Photo"],
-        "jobTitle":"Photographer",
-        "worksFor":{"@id":"https://hikki.ca/#business"},
-        "url":"https://hikki.ca/",
-        "sameAs":["https://www.instagram.com/hikki_with_her_camera"]
-      },
-      {
-        "@type":"SiteNavigationElement",
-        "@id":"https://hikki.ca/#nav-about",
-        "name":"About","url":"https://hikki.ca/"
-      },
-      {
-        "@type":"SiteNavigationElement",
-        "@id":"https://hikki.ca/#nav-gallery",
-        "name":"Gallery","url":"https://hikki.ca/gallery.html"
-      },
-      {
-        "@type":"SiteNavigationElement",
-        "@id":"https://hikki.ca/#nav-contact",
-        "name":"Contact","url":"https://hikki.ca/contact.html"
-      }
+      { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki Photography & Philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"LocalBusiness","@id":"https://hikki.ca/#business","name":"Hikki Photography","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","image":"https://hikki.ca/favicon.png","priceRange":"$$","areaServed":"Greater Vancouver","address":{"@type":"PostalAddress","addressLocality":"Vancouver","addressRegion":"BC","addressCountry":"CA"},"telephone":"+1-250-986-9516","brand":{"@id":"https://hikki.ca/#brand"} },
+      { "@type":"Person","@id":"https://hikki.ca/#founder","name":"Alex Hikki–Iao","alternateName":["Hikki","Hikki Photo"],"jobTitle":"Photographer","worksFor":{"@id":"https://hikki.ca/#business"},"url":"https://hikki.ca/","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"About","url":"https://hikki.ca/" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"Gallery","url":"https://hikki.ca/gallery.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"Contact","url":"https://hikki.ca/contact.html" }
     ]
   }
   </script>
-  <!-- ======================================================================= -->
 </head>
 <body>
   <!-- 手機版上方輪播列 -->
@@ -429,7 +301,6 @@
           <li>Victoria&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;48.468213&nbsp;|&nbsp;-123.330938</li>
           <li>Hong&nbsp;Kong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;22.445293&nbsp;|&nbsp;&nbsp;114.031586</li>
           <li>Macau&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;22.198510&nbsp;|&nbsp;&nbsp;113.536389&nbsp;<span class="blink-block">■</span></li>
-
         </ul>
         <div class="square"></div>
       </div>
@@ -533,10 +404,10 @@
   // 等 GSAP 載入後執行
   window.addEventListener('DOMContentLoaded', () => {
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const $ = (sel, root=document) => root.querySelector(sel);
+    const $  = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    /* ===== Scroll 動畫：節流 + 被動監聽 ===== */
+    /* ===== Scroll 動畫（原樣） ===== */
     (function(){
       const sq = document.querySelector('.content .square');
       const overlay = document.querySelector('.overlay');
@@ -549,10 +420,8 @@
         hlVideo && hlVideo.pause && hlVideo.pause();
         return;
       }
-
       const getDocHeight = () =>
         Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-
       let ticking = false;
       function onScroll(){
         if (ticking) return;
@@ -560,11 +429,11 @@
         requestAnimationFrame(() => {
           const max = getDocHeight() - window.innerHeight;
           const pct = Math.min(max > 0 ? window.scrollY / max : 0, 1);
-
-          sq.style.animation = (pct > 0) ? 'none' : 'blink 3s infinite';
-          const maxScale = Math.max(window.innerWidth, window.innerHeight) / 60;
-          sq.style.transform = `scale(${1 + pct * (maxScale - 1)})`;
-
+          if (sq){
+            sq.style.animation = (pct > 0) ? 'none' : 'blink 3s infinite';
+            const maxScale = Math.max(window.innerWidth, window.innerHeight) / 60;
+            sq.style.transform = `scale(${1 + pct * (maxScale - 1)})`;
+          }
           if (pct >= 1) {
             overlay.style.display = 'block';
             post.classList.add('enter');
@@ -582,11 +451,10 @@
       onScroll();
     })();
 
-    /* ===== HeaderRotator（桌面＋手機，同步） ===== */
+    /* ===== HeaderRotator（原樣） ===== */
     (function(){
       const headerEl = $("#headerTitle");
       const mobileEl = $("#mobileRotator");
-
       const sentences = [
         "Of time, souls and cities.","Know thyself.","静かな光。",
         "10% off for rescued animals.","YYJ > YVR",
@@ -614,10 +482,8 @@
         "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
         "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
       ];
-
       const isCJK = (s) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
       let last = -1;
-
       function apply(el, txt){
         if(!el) return;
         el.classList.toggle("ja", isCJK(txt));
@@ -625,10 +491,7 @@
         el.setAttribute('lang', isCJK(txt) ? 'ja' : 'en');
         el.textContent = txt;
       }
-      function rnd(ex){
-        let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex);
-        return i;
-      }
+      function rnd(ex){ let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex); return i; }
       function tick(){
         const next = rnd(last); last = next;
         const txt = sentences[next];
@@ -644,7 +507,7 @@
       tick(); setInterval(tick, 4000);
     })();
 
-    /* ===== 右側 Team Carousel（尊重減少動畫） ===== */
+    /* ===== Team Carousel（原樣） ===== */
     (function(){
       if (isReduced) return;
       const wrap = document.querySelector('.team-container');
@@ -656,29 +519,18 @@
       }, 7000);
     })();
 
-    /* ===== GPS 座標「快速多位隨機漂移（限真實城市範圍）」===== */
     (function(){
       if (isReduced) return;
-
-      // 近似 bbox（城市法定/官方邊界的包絡盒；用以限制隨機值）
-      // Vancouver / Victoria 參考市府邊界資料集頁；HK 參考測繪處法定緯經度範圍；Macau 參考 EPSG WGS84 範圍
       const BOUNDS = {
-        'Vancouver': { lat:[49.198, 49.315], lon:[-123.224, -123.022] },    // 近似覆蓋市界
-        'Victoria':  { lat:[48.401, 48.477], lon:[-123.401, -123.307] },    // 近似覆蓋市界
-        'Hong Kong': { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },    // 香港法定範圍
-        'Macau':     { lat:[22.06,  22.23  ], lon:[113.52,  113.68  ] }     // 澳門 WGS84 範圍
+        'Vancouver': { lat:[49.198, 49.315], lon:[-123.224, -123.022] },
+        'Victoria':  { lat:[48.401, 48.477], lon:[-123.401, -123.307] },
+        'Hong Kong': { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },
+        'Macau':     { lat:[22.06,  22.23  ], lon:[113.52,  113.68  ] }
       };
-
-      // 更快節奏 + 單輪多位變動
-      const TICK_MIN = 40, TICK_MAX = 120;   // 比之前更快
+      const TICK_MIN = 40, TICK_MAX = 120;
       const CHANGES_MIN = 1, CHANGES_MAX = 3;
-
-      // 取整數
       const rint = (a,b) => a + Math.floor(Math.random()*(b-a+1));
-      // 保留小數位數
       const toFixedLen = (num, decs) => Number(num).toFixed(decs);
-
-      // 把元素的所有 TEXT NODE 拼成一條平面字串（保留內部 span 結構）
       function mapTextNodes(el){
         const nodes = [];
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
@@ -698,40 +550,28 @@
           seg.node.nodeValue = flat.slice(seg.start, seg.start + seg.len);
         }
       }
-
-      // 在一行文字中抓 "lat | lon" 的兩個數字與其在平面字串的起止位置
       const COORD_RE = /([+-]?\d+(?:\.\d+)?)\s*\|\s*([+-]?\d+(?:\.\d+)?)/;
       function parseCoordsPositions(flat){
         const m = flat.match(COORD_RE);
         if (!m || m.index == null) return null;
         const start = m.index;
         const latStr = m[1], lonStr = m[2];
-        // 重新逐位找出實際索引（避免空白數量不同）
         const latStart = start + m[0].indexOf(latStr);
         const lonStart = start + m[0].lastIndexOf(lonStr);
-        return {
-          latStr, lonStr,
-          latStart, latLen: latStr.length,
-          lonStart, lonLen: lonStr.length
-        };
+        return { latStr, lonStr, latStart, latLen: latStr.length, lonStart, lonLen: lonStr.length };
       }
-
       function decimalsCount(s){ const i = s.indexOf('.'); return i>=0 ? (s.length - i - 1) : 0; }
-
       class DriftRow {
         constructor(li){
           this.el = li;
           this.map = mapTextNodes(li);
-          this.base = li.textContent;      // 平面版（含所有 text node）
+          this.base = li.textContent;
           this.cur  = this.base;
           this.coordPos = parseCoordsPositions(this.base);
           this.city = (li.textContent.split(/\s+/)[0] || '').trim();
-          // 小數位數與號誌
           if (this.coordPos){
             this.latDecs = decimalsCount(this.coordPos.latStr);
             this.lonDecs = decimalsCount(this.coordPos.lonStr);
-            this.latSign = this.coordPos.latStr.trim().startsWith('-') ? -1 : 1;
-            this.lonSign = this.coordPos.lonStr.trim().startsWith('-') ? -1 : 1;
           }
           this.timer = 0;
         }
@@ -746,41 +586,19 @@
           if (!this.coordPos) return;
           const bounds = this.randomInBounds();
           if (!bounds) return;
-
-          // 以「同一長度字串」覆寫（保留 city 名稱與空白排版）
           const latNew = toFixedLen(bounds.lat, this.latDecs);
           const lonNew = toFixedLen(bounds.lon, this.lonDecs);
-
-          // 單輪只更動部分數位：隨機選若干位（1~3位），從目標值借位替換
           const picks = rint(CHANGES_MIN, CHANGES_MAX);
-
           const curChars = this.cur.split('');
-          const tgtLat   = latNew;
-          const tgtLon   = lonNew;
-
-          // 幫助函式：在某段內替換若干位（盡量選擇數字位）
           const replaceSomeDigits = (start, len, targetStr) => {
-            // 找出所有數字位索引
             const idxs = [];
-            for (let i=0;i<len;i++){
-              const ch = targetStr[i];
-              if (ch >= '0' && ch <= '9') idxs.push(i);
-            }
-            // 洗牌取前 picks 位
-            for (let i=idxs.length-1;i>0;i--){
-              const j = Math.floor(Math.random()*(i+1));
-              [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
-            }
+            for (let i=0;i<len;i++){ const ch = targetStr[i]; if (ch >= '0' && ch <= '9') idxs.push(i); }
+            for (let i=idxs.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [idxs[i], idxs[j]] = [idxs[j], idxs[i]]; }
             const take = Math.min(picks, idxs.length);
-            for (let k=0;k<take;k++){
-              const off = idxs[k];
-              curChars[start + off] = targetStr[off];
-            }
+            for (let k=0;k<take;k++){ const off = idxs[k]; curChars[start + off] = targetStr[off]; }
           };
-
-          replaceSomeDigits(this.coordPos.latStart, this.coordPos.latLen, tgtLat.padStart(this.coordPos.latLen, ' '));
-          replaceSomeDigits(this.coordPos.lonStart, this.coordPos.lonLen, tgtLon.padStart(this.coordPos.lonLen, ' '));
-
+          replaceSomeDigits(this.coordPos.latStart, this.coordPos.latLen, latNew.padStart(this.coordPos.latLen, ' '));
+          replaceSomeDigits(this.coordPos.lonStart, this.coordPos.lonLen, lonNew.padStart(this.coordPos.lonLen, ' '));
           this.cur = curChars.join('');
           writeFlatToNodes(this.cur, this.map);
         }
@@ -793,68 +611,110 @@
         play(){ if (this.coordPos) this.loop(); }
         stop(){ if (this.timer) clearTimeout(this.timer); }
       }
-
       const items = $$('.locations li');
       const controllers = items.map(li => { const c = new DriftRow(li); c.play(); return c; });
       window.addEventListener('beforeunload', () => controllers.forEach(c => c.stop()));
     })();
-  /* ===== Code-Cracking：與座標動畫一致（數字/符號漂移→逐步鎖位）===== */
-  (function(){
-    if (isReduced) return; // 尊重「減少動畫」
 
-    const CHARSET = '0123456789.-|/';         // 和座標風格一致
-    const TICK_MIN = 40, TICK_MAX = 120;      // 與座標相同的節奏
-    const CHMIN = 1, CHMAX = 3;               // 每輪鎖定 1~3 個位置
-    const rint = (a,b)=> a + Math.floor(Math.random()*(b-a+1));
-
-    function crackCoords(el, {delay=0}={}){
-      if (!el) return;
-
-      const final  = el.textContent;          // 不動字體/排版
-      const target = final.split('');
-      const locked = target.map(ch => /\s/.test(ch)); // 空白先鎖
-      const cur    = target.map(ch => locked[target.indexOf(ch)]
-                                ? ch
-                                : CHARSET[(Math.random()*CHARSET.length)|0]);
-
-      el.textContent = cur.join('');
-
-      function tick(){
-        // 1) 未鎖位：先全部換成隨機數字/符號
+    (function(){
+      const LATSET = "0123456789";
+      const CJKSET = "乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟"; 
+      const SCRAMBLE_FPS = 49;         
+      const LOCK_MIN = 90, LOCK_MAX = 120; 
+      const LOCKS_PER_TICK = [2,3]; 
+     
+      function makeNodeState(textNode){
+        const target = textNode.nodeValue;
+        const hasCJK = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(target);
+        const charset = hasCJK ? CJKSET : LATSET;
+        const cur    = Array.from(target);
+        const locked = cur.map(ch => /\s/.test(ch) ? true : false); // 空白一開始就鎖
         for (let i=0;i<cur.length;i++){
-          if (!locked[i] && !/\s/.test(target[i])) {
-            cur[i] = CHARSET[(Math.random()*CHARSET.length)|0];
+          if (!locked[i]) cur[i] = charset[(Math.random()*charset.length)|0];
+        }
+        return { node:textNode, target:Array.from(target), cur, locked, charset };
+      }
+      function collectTextNodes(root){
+        const out = [];
+        if (!root) return out;
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(n){
+            if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+            // 排除在 .blink-block 內的字（避免干擾方塊）
+            let p = n.parentNode;
+            while (p){
+              if (p.classList && p.classList.contains('blink-block')) return NodeFilter.FILTER_REJECT;
+              p = p.parentNode;
+            }
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        while (walker.nextNode()) out.push(walker.currentNode);
+        return out;
+      }
+      function startCrackFor(nodes){
+        if (!nodes.length) return;
+        // 建立狀態
+        const states = nodes.map(makeNodeState);
+        // 先把隨機初始值渲染上去
+        states.forEach(s => s.node.nodeValue = s.cur.join(''));
+
+        // 亂碼：每幀或依 FPS 刷新
+        let rafId = 0, last = 0, interval = 1000 / SCRAMBLE_FPS;
+        function scramble(now){
+          if (now - last >= interval){
+            for (const s of states){
+              const t = s.target, c = s.cur, L = s.locked, set = s.charset;
+              for (let i=0;i<c.length;i++){
+                if (!L[i] && !/\s/.test(t[i])) c[i] = set[(Math.random()*set.length)|0];
+              }
+              s.node.nodeValue = c.join('');
+            }
+            last = now;
+          }
+          rafId = requestAnimationFrame(scramble);
+        }
+
+        // 鎖字：用較慢節奏（平均 160ms 一次）
+        let lockTimer = 0;
+        function doLock(){
+          let allDone = true;
+          for (const s of states){
+            const cand = [];
+            for (let i=0;i<s.locked.length;i++) if (!s.locked[i]) cand.push(i);
+            if (cand.length){
+              allDone = false;
+              const take = Math.min(
+                Math.floor(Math.random()*(LOCKS_PER_TICK[1]-LOCKS_PER_TICK[0]+1)) + LOCKS_PER_TICK[0],
+                cand.length
+              );
+              for (let k=0;k<take;k++){
+                const idx = cand.splice((Math.random()*cand.length)|0,1)[0];
+                s.cur[idx] = s.target[idx];
+                s.locked[idx] = true;
+              }
+              s.node.nodeValue = s.cur.join('');
+            }
+          }
+          if (!allDone){
+            const next = Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1)) + LOCK_MIN;
+            lockTimer = setTimeout(doLock, next);
+          } else {
+            cancelAnimationFrame(rafId);
           }
         }
-        // 2) 隨機挑若干位，直接貼上目標並鎖定
-        const cand = [];
-        for (let i=0;i<locked.length;i++) if(!locked[i]) cand.push(i);
-        const take = Math.min(rint(CHMIN, CHMAX), cand.length);
-        for (let k=0;k<take;k++){
-          const j = Math.floor(Math.random()*cand.length);
-          const idx = cand.splice(j,1)[0];
-          cur[idx] = target[idx];
-          locked[idx] = true;
-        }
 
-        el.textContent = cur.join('');
+        requestAnimationFrame(scramble);
+        const firstLockDelay = Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1)) + LOCK_MIN;
+        lockTimer = setTimeout(doLock, firstLockDelay);
 
-        // 3) 結束條件：全部鎖定（不重播）
-        if (locked.every(Boolean)) {
-          el.textContent = final; // 保險收尾
-          return;
-        }
-        setTimeout(tick, rint(TICK_MIN, TICK_MAX));
+        return () => { cancelAnimationFrame(rafId); clearTimeout(lockTimer); };
       }
 
-      setTimeout(tick, delay);
-    }
-
-    // 目標元素：H1 與 H2（稍微錯開一點點）
-    crackCoords(document.querySelector('.content h1'), { delay: 0   });   // EMOTIONS,
-    crackCoords(document.querySelector('.grid-container h2'), { delay: 120 }); // not imitate perfection.
-  })();
-
+      startCrackFor( collectTextNodes(document.querySelector('.content h1')) );
+      startCrackFor( collectTextNodes(document.querySelector('.grid-container h2')) );
+      startCrackFor( collectTextNodes(document.querySelector('.chinese')) );
+    })();
   });
   </script>
 </body>
