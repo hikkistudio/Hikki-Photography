@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Contact | Hikki Photography — Vancouver · Hong Kong · Macau</title>
-  <meta name="description" content="Contact Hikki Photography & Philosophy — professional wedding, portrait, pet and city photography across Vancouver, Hong Kong and Macau. Collaborations and bookings welcome." />
-  <meta name="author" content="Hikki Photography & Philosophy">
+  <title>Contact | hikki photography — Vancouver · Hong Kong · Macau</title>
+  <meta name="description" content="Contact hikki photography & philosophy — professional wedding, portrait, pet and city photography across Vancouver, Hong Kong and Macau. Collaborations and bookings welcome." />
+  <meta name="author" content="hikki photography & philosophy">
   <link rel="canonical" href="https://hikki.ca/contact.html" />
 
   <!-- Fonts -->
@@ -48,7 +48,7 @@
       font-synthesis-weight:none;
     }
     [lang="en"], [lang="en"] *{
-      font-family: var(--mono) !important;
+      font-family: var(--mono);
       font-variant-ligatures:none;
     }
 
@@ -77,7 +77,7 @@
     .right-col{padding:0 40px 60px 40px;display:flex;flex-direction:column;gap:32px;justify-content:center;align-items:flex-start;text-align:left;contain:content;}
     .right-col *{text-align:left}
 
-    /* Contact info —— 與 gallery 一致的等寬風格（去斜體、微負字距） */
+    /* Contact info */
     .contact-info p[lang="en"]{
       font-family: var(--mono) !important;
       font-weight:400 !important;
@@ -101,34 +101,31 @@
     .blink-block{display:inline-block;animation:blink3 3s infinite;}
     @keyframes blink3 {0%,50%,100%{opacity:1}25%,75%{opacity:0}}
 
-    /* ===== 左側城市欄：與 gallery 統一樣式（顏色/速度/排版） ===== */
+    /* 左側城市欄 */
     .coord-rail{
       position:fixed; top:var(--rail-top); left:0; bottom:24px; width:var(--rail-w);
       z-index:1; pointer-events:none; padding:0 16px 0 16px;
       display:block; overflow:hidden;
-      /* 背景不強制黑，維持你的頁面背景；只統一文字樣式 */
     }
-    /* 用 coord-list 當作 panel，統一行距與不溢出 */
     .coord-list{
       position:absolute; inset:0;
       display:grid; grid-auto-rows:min-content; row-gap:6px;
       align-content:start; overflow:hidden;
       list-style:none; padding-top:0;
     }
-    /* 單行樣式（完全複製 gallery 設計） */
     .coord-line{
       font-family: var(--mono);
       font-size: 12px;
       line-height: 1.2;
       letter-spacing: -0.005em;
       color: #f4f2f0;
-      opacity: 0.22;           /* 背景感 */
-      white-space: pre;        /* 保留空格對齊 */
+      opacity: 0.22;
+      white-space: pre;
       user-select: none;
     }
     .coord-line .city{
       display:inline-block;
-      width: 16ch;             /* 固定欄寬 */
+      width: 16ch;
       margin-right: 5ch;
     }
 
@@ -143,7 +140,7 @@
       .left-col{display:none!important}
       .right-col{width:100%!important;padding:0 20px 40px!important;align-items:flex-start!important;margin:0 auto!important;}
       .right-col .contact-info,.right-col .poem,.right-col .copyright{width:100%;max-width:560px;margin:0 auto;}
-      .coord-rail{display:none;} /* 手機隱藏背景座標（跟 gallery 手機視感一致） */
+      .coord-rail{display:none;}
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -163,7 +160,7 @@
     <a href="contact.html" class="active">Contact</a>
   </div>
 
-  <!-- 左側座標欄（與 gallery 一致：每行 city + lat | lon） -->
+  <!-- 左側座標欄 -->
   <aside class="coord-rail" aria-hidden="true">
     <ul class="coord-list" id="coordList"></ul>
   </aside>
@@ -178,7 +175,7 @@
           <a href="tel:+12509869516">250-986-9516</a>
         </p>
       </div>
-      <div class="poem">
+      <div class="poem" id="poemBlock">
         <p lang="ja">><br>><br>他感到自己的肋骨與她的右肩平行，</p>
         <p lang="ja">呼出的氣息在她後頸與鎖骨間形成一條極細的陰影，<br>沿衣領滑入胸前。它在二人之間被光固定，沒有聲音。</p>
         <p lang="ja"><br>吐く息のほのかなる影、<br>うなじと鎖骨とのあひだに細く生れ、<br>衣の領を伝ひて 胸の奥へとしのび入る。<br>それは二人のあひだに 光に留められ、<br>動かず、声もなかりき。<span class="blink-block">■</span></p>
@@ -207,14 +204,14 @@
       "What’s in a name? that which we call a rose…","I drink your milkshake!","The horror! The Horror!",
       "Le temps détruit tout.","翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
       "元者，善之長也；亨者，嘉之會也。","男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
-      "sksksk","Come on and join our convoy.","I am in flames!","CBT is a lie, try Carl Jung.","Be your own reason to smile.",
-      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。","빛은 거짓말하지 않아。","Light reveals. Shadow defines.",
+      "sksksk","Come on and join our convoy.","I am in flames!","CBT is a lie, try Carl Jung.","Be your own reason to smile。",
+      "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。","빛은 거짓말하지 않아。","Light reveals. Shadow defines。",
       "Some people are worth melting for。","ひとりって切ないくらい自由。","The name of the rose is all that remains。",
       "Οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡","Shanghai fog, yes。","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
     ];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let last = -1;
-    const hasCJK = s => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
+    const hasCJK = s => /[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff]/.test(s);
     function apply(el, txt){ if(!el) return; const cjk = hasCJK(txt); el.classList.toggle('ja', cjk); el.classList.toggle('en', !cjk); el.setAttribute('lang', cjk ? 'ja' : 'en'); el.textContent = txt; }
     function pick(){ let i=Math.floor(Math.random()*sentences.length); if(i===last) i=(i+1)%sentences.length; last=i; return sentences[i]; }
     function rotate(){
@@ -226,55 +223,121 @@
       });
     }
     rotate(); setInterval(rotate, 4000);
-
-    /* ===== Code-Cracking：只作用在 .contact-info（一次性，不重播） ===== */
+    
     (function(){
-      if (reduce) return;
-      const root = document.getElementById('contactInfo');
-      if (!root) return;
+      const LATSET = "0123456789";
+      const HANSET = "乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟";
+      const JPSET  = "0123456789";
+      const SCRAMBLE_FPS = 40;            // 每秒亂碼刷新次數
+      const LOCK_MIN = 90, LOCK_MAX = 120;// 每波鎖定間隔 (ms)
+      const LOCKS_PER_TICK = [4,8];       // 每波鎖定的字元數量
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const CHARSET = '0123456789.-|/'; // 與座標動畫一致的質感
-      const TMIN = 40, TMAX = 120;      // 同節奏
-      const CHMIN = 1, CHMAX = 3;
+      // 判斷字元所屬：假名 / 漢字 / 其他
+      const isHiragana = ch => ch >= '\u3040' && ch <= '\u309F';
+      const isKatakana = ch => ch >= '\u30A0' && ch <= '\u30FF';
+      const isKana     = ch => isHiragana(ch) || isKatakana(ch);
+      const isHan      = ch => (ch >= '\u4E00' && ch <= '\u9FFF') || (ch >= '\u3400' && ch <= '\u4DBF') || (ch >= '\uF900' && ch <= '\uFAFF');
 
-      function mapTextNodes(el){
-        const nodes=[]; const w=document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
-          acceptNode(n){ return n.nodeValue.trim().length ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
+      const randFrom = s => s.charAt((Math.random() * s.length) | 0);
+      const rint = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+      const pickSet = ch => isKana(ch) ? JPSET : (isHan(ch) ? HANSET : LATSET);
+
+      function collectTextNodes(root){
+        const nodes = [];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(){ return NodeFilter.FILTER_ACCEPT; } // 保留空白，避免索引錯位
         });
-        let idx=0; while(w.nextNode()){ const node=w.currentNode; const len=node.nodeValue.length; nodes.push({node,start:idx,len}); idx+=len; }
-        return {nodes,totalLen:idx};
+        while(walker.nextNode()) nodes.push(walker.currentNode);
+        return nodes;
       }
-      function writeFlat(flat,map){ for(const seg of map.nodes){ seg.node.nodeValue = flat.slice(seg.start, seg.start+seg.len); } }
 
-      const map = mapTextNodes(root); if(!map.nodes.length) return;
-      let final=''; for(const seg of map.nodes) final += seg.node.nodeValue;
+      function makeCracker(root){
+        if (!root) return null;
+        const nodes = collectTextNodes(root);
+        if (!nodes.length) return null;
 
-      const tgt = final.split('');
-      const locked = tgt.map(ch => /\s/.test(ch));
-      const cur = tgt.map((ch,i)=> locked[i] ? ch : CHARSET[(Math.random()*CHARSET.length)|0]);
-      writeFlat(cur.join(''), map);
+        // 平面化
+        let final = ""; const spans = [];
+        for (const n of nodes){ const s = n.nodeValue; spans.push([final.length, s.length]); final += s; }
 
-      const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
-      (function loop(){
+        // 初始狀態
+        const cur = final.split("");
+        const locked = cur.map(ch => /\s/.test(ch)); // 空白先鎖
         for (let i=0;i<cur.length;i++){
-          if (!locked[i] && !/\s/.test(tgt[i])){
-            cur[i] = CHARSET[(Math.random()*CHARSET.length)|0];
+          if (!locked[i]){
+            cur[i] = randFrom(pickSet(final[i]));
           }
         }
-        const cand=[]; for(let i=0;i<locked.length;i++) if(!locked[i]) cand.push(i);
-        const take=Math.min(rint(CHMIN,CHMAX), cand.length);
-        for (let k=0;k<take;k++){
-          const j=Math.floor(Math.random()*cand.length);
-          const idx=cand.splice(j,1)[0];
-          cur[idx]=tgt[idx]; locked[idx]=true;
+        writeBack();
+
+        // 刷新亂碼
+        const tickMs = Math.max(8, Math.round(1000 / SCRAMBLE_FPS));
+        let scrambleTimer = null, lockTimer = null, stopped = false;
+
+        function scramble(){
+          for (let i=0;i<cur.length;i++){
+            if (!locked[i] && !/\s/.test(final[i])){
+              cur[i] = randFrom(pickSet(final[i]));
+            }
+          }
+          writeBack();
         }
-        writeFlat(cur.join(''), map);
-        if (locked.every(Boolean)){ writeFlat(final, map); return; }
-        setTimeout(loop, rint(TMIN, TMAX));
-      })();
+
+        function lockStep(){
+          const candidates = [];
+          for (let i=0;i<locked.length;i++) if(!locked[i]) candidates.push(i);
+          const take = Math.min(rint(LOCKS_PER_TICK[0], LOCKS_PER_TICK[1]), candidates.length);
+          for (let k=0;k<take;k++){
+            const j = Math.floor(Math.random()*candidates.length);
+            const idx = candidates.splice(j,1)[0];
+            cur[idx] = final[idx];
+            locked[idx] = true;
+          }
+          writeBack();
+
+          if (locked.every(Boolean)) { stop(); return; }
+          lockTimer = setTimeout(lockStep, rint(LOCK_MIN, LOCK_MAX));
+        }
+
+        function writeBack(){
+          for (let i=0;i<nodes.length;i++){
+            const [start, len] = spans[i];
+            nodes[i].nodeValue = cur.slice(start, start+len).join("");
+          }
+        }
+
+        function start(){
+          if (stopped) return;
+          scrambleTimer = setInterval(scramble, tickMs);
+          lockTimer = setTimeout(lockStep, rint(LOCK_MIN, LOCK_MAX));
+        }
+        function stop(){
+          if (stopped) return;
+          stopped = true;
+          if (scrambleTimer) clearInterval(scrambleTimer);
+          if (lockTimer) clearTimeout(lockTimer);
+          // 最終保險：寫入正確文字
+          for (let i=0;i<nodes.length;i++){
+            const [start, len] = spans[i];
+            nodes[i].nodeValue = final.slice(start, start+len);
+          }
+        }
+        return { start, stop };
+      }
+
+      // 同參數套用到 contact info & 詩句（含日文）
+      const crackers = [];
+      if (!reduceMotion){
+        const ci = makeCracker(document.getElementById('contactInfo'));
+        const poem = makeCracker(document.getElementById('poemBlock'));
+        if (ci) { ci.start(); crackers.push(ci); }
+        if (poem) { poem.start(); crackers.push(poem); }
+      }
+      window.addEventListener('beforeunload', () => crackers.forEach(c => c.stop()));
     })();
 
-    /* ===== 左側座標欄：樣式/速度/排版統一為 gallery ===== */
+    /* ===== 左側座標欄 ===== */
     (function(){
       const list = document.getElementById('coordList');
       if (!list) return;
@@ -302,11 +365,10 @@
         { n:'Carthage',    lat:[36.83,36.88],   lon:[10.28,10.36] }
       ];
 
-      // util
       const rand = (a,b)=> a + Math.random()*(b-a);
       const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
       const fmt = (v)=> Number(v).toFixed(6);
-      const TICK_MIN = 60, TICK_MAX = 140;   // 與 gallery 一致
+      const TICK_MIN = 60, TICK_MAX = 140;
       const STEP_LAT = 0.005, STEP_LON = 0.007;
 
       let timers=[]; let rows=[];
@@ -344,7 +406,7 @@
       }
 
       function loopRow(row){
-        if (reduceMotion) return; // 靜止
+        if (reduceMotion) return;
         stepRow(row);
         const t = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
         const id = setTimeout(()=>loopRow(row), t);
