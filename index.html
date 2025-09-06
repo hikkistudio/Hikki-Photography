@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>hikki Photography</title>
+  <title>hikki photography</title>
 
   <!-- Canonical / Robots -->
   <link rel="canonical" href="https://hikki.ca/">
@@ -188,6 +188,25 @@
 
 @media (max-width:767px){
   .header-bar{ top:36px !important; }  /* 防止被後面規則覆蓋掉 */
+
+  @media only screen and (max-width: 767px){
+  /* 讓 H1 和 H2 更貼近 */
+  .grid-container{ display:block; margin-top:2px !important; } /* 原本 8px */
+  .content h1{ font-size:65px; line-height:1; margin-bottom:2px !important; } /* 原本 8px */
+  .grid-container h2{
+    font-size:22px;
+    line-height:1.1;
+    margin:0 0 10px !important; /* 原本 20px */
+  }
+
+  /* 「hikki Photography & Philosophy」上下多留空間 */
+  .left h3{
+    font-size:20px;
+    line-height:1.1;
+    margin:14px 0 12px !important;  /* 覆蓋桌機版的 margin-top:-20px */
+  }
+  .locations{ margin-top:8px !important; } /* 清出 h3 下方空隙 */
+}
 }
   </style>
 
