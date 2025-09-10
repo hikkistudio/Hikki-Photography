@@ -423,7 +423,7 @@
       <img src="g119_Dog_training_Langley_dog_walking_pet_photographer_agility_speed_training_photographer_flash.webp" alt="Photo 119" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g120_Vancouver_DT_Girl_Crossroad_street_Luxary_asian_photography_filmic.webp" alt="Photo 120" loading="lazy" decoding="async" data-cat="Cities, Souls">
       <img src="g121_Coquitlam_cafe_Matcha_latte_Coffee_cool_girl_lighting_photographer_food_study_baby.webp" alt="Photo 121" loading="lazy" decoding="async" data-cat="Cities">
-      <img src="g122_HongKong_birl_filmic_photographer_Treron_curvirostra.webp" alt="Photo 122" loading="lazy" decoding="async" data-cat="Friends, Souls">
+      <img src="g122_HongKong_birl_filmic_photographer_Treron_curvirostra.webp" alt="Photo 122" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g123_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 123" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g124_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 124" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g125_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 125" loading="lazy" decoding="async" data-cat="Friends">
@@ -489,7 +489,7 @@
   <!-- Gallery 功能 + 固定背景座標（加速 & 降負載） -->
   <script>
   (() => {
-    /* ====== Gallery：進場 / Lazy / Filter / Load More / Lightbox ====== */
+
     const galleryEl  = document.querySelector('.gallery');
     const overlay    = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
@@ -501,7 +501,6 @@
     const loadMoreBtn= document.getElementById('loadMore');
     const noResults  = document.getElementById('noResults');
 
-    /* 1) 提前標註尺寸，避免 CLS；首列優先下載 */
     allImgs.forEach((img, i) => {
       if (!img.getAttribute('width'))  img.setAttribute('width','800');
       if (!img.getAttribute('height')) img.setAttribute('height','1200');
@@ -530,7 +529,6 @@
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const img = entry.target;
-        // 若你未使用 data-src，就交給瀏覽器原生 lazy；此處只做可視動畫
         img.style.opacity = img.style.opacity || '1';
         img.style.transform = 'none';
         io.unobserve(img);
