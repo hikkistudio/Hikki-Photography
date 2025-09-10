@@ -13,6 +13,7 @@
   <meta name="description" content="hikki photography gallery — weddings, portraits, pets and cities across Vancouver, Hong Kong and Macau. Honest, human, emotional photography."/>
   <meta name="robots" content="index,follow,max-image-preview:large"/>
   <meta name="author" content="hikki photography & philosophy"/>
+  <meta name="theme-color" content="#000000"/>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website"/>
@@ -37,8 +38,18 @@
   <!-- CJK：Noto Serif JP ExtraLight 200 -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet"/>
 
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- 預載入：首列 8 張縮圖，提升首屏 -->
+  <link rel="preload" as="image" href="g1_vancouver_prewedding_cityview.webp"/>
+  <link rel="preload" as="image" href="g2_hongkong_art_skycraper.webp"/>
+  <link rel="preload" as="image" href="g3_portrait_with_orange_tabby.webp"/>
+  <link rel="preload" as="image" href="g4_black_and_white_dog_running.webp"/>
+  <link rel="preload" as="image" href="g5_pet_owner_Wheatfield_family_photo.webp"/>
+  <link rel="preload" as="image" href="g6_Portrait_film_Vintage.webp"/>
+  <link rel="preload" as="image" href="g7_Kerrisdale_moment_poverty.webp"/>
+  <link rel="preload" as="image" href="g8_macau_architecture_concrete.webp"/>
+
+  <!-- GSAP（defer 防阻塞） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
     :root{
@@ -247,6 +258,13 @@
     "publisher": { "@type": "Organization", "name": "Hikki photography & philosophy", "url": "https://hikki.ca", "email": "will@hikki.ca" }
   }
   </script>
+
+  <!-- 無 JS 時的圖片可視化（避免首批透明/動畫未執行造成看不到） -->
+  <noscript>
+    <style>
+      .gallery img { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -283,14 +301,14 @@
   <!-- Gallery Section -->
   <div class="gallery-wrapper" id="gallery">
     <div class="gallery">
-      <!-- 原圖清單保留（略） —— 你的 <img> 68 張維持不變 —— -->
+      <!-- 你的 127 張保持；僅修正 b&w → black_and_white 與 data-cat 拼字 -->
       <img src="g1_vancouver_prewedding_cityview.webp"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times, Souls">
       <img src="g2_hongkong_art_skycraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
       <img src="g4_black_and_white_dog_running.webp"    alt="Photo 4"  loading="lazy" decoding="async" data-cat="Friends">
       <img src="g5_pet_owner_Wheatfield_family_photo.webp"    alt="Photo 5"  loading="lazy" decoding="async" data-cat="Friends">
       <img src="g6_Portrait_film_Vintage.webp"          alt="Photo 6"  loading="lazy" decoding="async" data-cat="Souls">
-      <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g7_Kerrisdale_moment_poverty.webp"      alt="Photo 7"  loading="lazy" decoding="async" data-cat="Cities, Souls">
       <img src="g8_macau_architecture_concrete.webp"    alt="Photo 8"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g9_oriental_confused_moment_misty.webp" alt="Photo 9"  loading="lazy" decoding="async" data-cat="Cities">
       <img src="g10_asia_brutalist_textures_black_and_white.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
@@ -308,7 +326,7 @@
       <img src="g22_sunset_burnaby_streets_respite.webp" alt="Photo 22" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g23_wall_offset_grid_liminal_city.webp" alt="Photo 23" loading="lazy" decoding="async" data-cat="Cities">
       <img src="g24_Vinyl_slience_man_couple_wedding.jpg" alt="Photo 24" loading="lazy" decoding="async" data-cat="Times, Souls">
-      <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times, Souls">
       <img src="g26_shelti_mountain_northvan_hiking.webp" alt="Photo 26" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g27_dog_portrait_moment_capture_home.webp" alt="Photo 27" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g28_wedding_black_and_white_emotion_momment_forgotten.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Times">
@@ -352,6 +370,65 @@
       <img src="g66_wheelchair_pet_owner_feeding_portrait.webp" alt="Photo 66" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g67_dog_portrait_smile_capturing_moments.webp" alt="Photo 67" loading="lazy" decoding="async" data-cat="Friends">
       <img src="g68_dogs_playing_grooming_petphoto_evening.webp" alt="Photo 68" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g69_macau_colonialism_modern_architecture_abstract_city.webp" alt="Photo 69" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g70_macau_colonialism_oldbuilding_city_rain_traditional.webp" alt="Photo 70" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g71_macau_colonialism_building_complex_cityview_photographer.webp" alt="Photo 71" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g72_macau_colonialism_building_brutalism_cage_grey_blue_city_photograph.webp" alt="Photo 72" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g73_macau_streetfood_colonialism_local_snacks_culture_street_photographer.webp" alt="Photo 73" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g74_macau_colonialism_building_architecture_citycentre_rain_color.webp" alt="Photo 74" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g75_macau_colonialism_signage_steel_brutalism_rain_newspaper.webp" alt="Photo 75" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g76_macau_colonialism_signage_street_view_photography.webp" alt="Photo 76" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g77_macau_colonialism_signage_stopsign_building_cityview.webp" alt="Photo 77" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g78_macau_colonialism_signage_chinese_number_mm6_maison_margiela.webp" alt="Photo 78" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g79_macau_colonialism_building_street_cinematic_scene_filmic.webp" alt="Photo 79" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g80_macau_colonialism_artistic_banner_contrast_street_photographer.webp" alt="Photo 80" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g81_hongkong_colonialism_street_liminal_lighting_city_space_tunnel_filmic.webp" alt="Photo 81" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g82_wedding_moment_filmic_floral_victoria_ceramic_moment_precious_bride.webp" alt="Photo 82" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g83_wedding_filmic_film_camera_bride_precious_moment_capture_love_floral.webp" alt="Photo 83" loading="lazy" decoding="async" data-cat="Times">
+      <img src="g84_Vancouver_crane_construction_industrial_brutalism_metal_black_and_white_city.webp" alt="Photo 84" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g85_Vancouver_burnaby_construction_metal_worker_.webp" alt="Photo 85" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g86_Vancouver_flower_love_girl_floral_city_photography.webp" alt="Photo 86" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g87_Vancouver_brentwood_missionary_preach_bible_black_white_filmic.webp" alt="Photo 87" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g88_Richmond_geometrical_shade_traffic_cityview_photographer_black_and_white.webp" alt="Photo 88" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g89_burnaby_crystal_mall_chinese_market_life_vandor_street_photographer.webp" alt="Photo 89" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g90_Vancouver_karrisdale_japanese_gacha_hobby_store_color_grading_photographer.webp" alt="Photo 90" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g91_Richomnd_night_market_girl_erring_romance_filmic_photography.webp" alt="Photo 91" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g92_Richmond_night_market_street_food_couple_smoke_filmic_photography_street_reallife.webp" alt="Photo 92" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g93_Richmond_night_market_street_food_girl_filmic_game.webp" alt="Photo 93" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g94_Richmond_night_market_street_food_matsuri_photographer_japanese_vibe.webp" alt="Photo 94" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g95_Richmond_night_market_street_food_vandor_social_photography_girl_mother.webp" alt="Photo 95" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g96_Richmond_night_market_street_food_girl_chanel_jeans_city_photographer.webp" alt="Photo 96" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g97_Richmond_night_market_street_food_girl_working_vandor_filmic_eye.webp" alt="Photo 97" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g98_Kitsilano_english_bay_Vancouver_city_girl_matcha_street_photographer_cafe.webp" alt="Photo 98" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g99_Kitsilano_english_bay_Vancouver_city_girl_matcha_street_photographer_dior_maison_margielawebp.webp" alt="Photo 99" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g100_Kitsilano_english_bay_Vancouver_city_girl_matcha_street_photographer.webp" alt="Photo 100" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g101_Vancouver_city_girl_matcha_street_food_art_gallery_photographer.webp" alt="Photo 101" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g102_Vancouver_city_richmond_airport_ourlet_girl_matcha_street_photographer.webp" alt="Photo 102" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g103_Metrotown_metropolis_girl_vancouver_city_shopping_filmic_photography.webp" alt="Photo 103" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g104_Victoria_architecture_reflextion_thrift_cityview_building_main_street_government.webp" alt="Photo 104" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g105_coquitlam_cafe_square_red_sunset_playground_girl_playing_glow.webp" alt="Photo 105" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g106_Vancouver_downtown_girl_yoga_pants_sunglasses_art_gallery_chic.webp" alt="Photo 106" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g107_coquitlam_cafe_square_red_sunset_playground_girl_playing_glow_running_white_dress_moment_photographer.webp" alt="Photo 107" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g108_richomnd_ikea_contrast_american_filmic_modernism_capitalism.webp" alt="Photo 108" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g109_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic.webp" alt="Photo 109" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g110_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl.webp" alt="Photo 110" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g111_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl_tension_love_emotion_capture.webp" alt="Photo 111" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g112_limina_space_plant_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmicl.webp" alt="Photo 112" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g113_couquitlam_center_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl.webp" alt="Photo 113" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g114_Vancouver_downtown_shopping_holt_renfrew_girl_chic_walking.webp" alt="Photo 114" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g115_Vancouver_downtown_shopping_holt_renfrew_girl_chic_driving_gas_station_capture.webp" alt="Photo 115" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g116_Vancouver_downtown_shopping_fire_hose_flower_filmic.webp" alt="Photo 116" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g117_burnaby_brentwood_walking_chic_coffee_walking_filmic_green_yellow.webp" alt="Photo 117" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g118_Dog_training_Langley_dog_walking_pet_photographer_agility_speed_training_photographer.webp" alt="Photo 118" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g119_Dog_training_Langley_dog_walking_pet_photographer_agility_speed_training_photographer_flash.webp" alt="Photo 119" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g120_Vancouver_DT_Girl_Crossroad_street_Luxary_asian_photography_filmic.webp" alt="Photo 120" loading="lazy" decoding="async" data-cat="Cities, Souls">
+      <img src="g121_Coquitlam_cafe_Matcha_latte_Coffee_cool_girl_lighting_photographer_food_study_baby.webp" alt="Photo 121" loading="lazy" decoding="async" data-cat="Cities">
+      <img src="g122_HongKong_birl_filmic_photographer_Treron_curvirostra.webp" alt="Photo 122" loading="lazy" decoding="async" data-cat="Friends, Souls">
+      <img src="g123_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 123" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g124_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 124" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g125_HongKong_birl_filmic_photographer_Bali_myna.webp" alt="Photo 125" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g126_HongKong_birl_filmic_photographer_red_lored_amazon_parrot.webp" alt="Photo 126" loading="lazy" decoding="async" data-cat="Friends">
+      <img src="g127_HongKong_birl_filmic_photographer_Silver_pheasant.webp" alt="Photo 127" loading="lazy" decoding="async" data-cat="Friends">
     </div>
 
     <div class="load-more-wrap">
@@ -405,10 +482,11 @@
         }});
       });
     }
-    animateHeader(); setInterval(animateHeader, 4000);
+    document.addEventListener('DOMContentLoaded', animateHeader);
+    setInterval(animateHeader, 4000);
   </script>
 
-  <!-- Gallery 功能 + 固定背景座標（自動填滿高度、不溢出） -->
+  <!-- Gallery 功能 + 固定背景座標（加速 & 降負載） -->
   <script>
   (() => {
     /* ====== Gallery：進場 / Lazy / Filter / Load More / Lightbox ====== */
@@ -423,26 +501,47 @@
     const loadMoreBtn= document.getElementById('loadMore');
     const noResults  = document.getElementById('noResults');
 
+    /* 1) 提前標註尺寸，避免 CLS；首列優先下載 */
+    allImgs.forEach((img, i) => {
+      if (!img.getAttribute('width'))  img.setAttribute('width','800');
+      if (!img.getAttribute('height')) img.setAttribute('height','1200');
+      if (i < 12) {                    // 估略首屏 + 次屏
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+      } else {
+        img.fetchPriority = 'low';
+      }
+      img.decoding = 'async';
+    });
+
+    /* 2) 動畫 */
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const animateIn = (els) => {
       if (!els || !els.length) return;
-      if (reduceMotion || !window.gsap) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
-      gsap.fromTo(els, { y:14, opacity:0 }, { y:0, opacity:1, duration:0.35, ease:'power2.out', stagger:0.04 });
+      if (reduceMotion || !window.gsap) {
+        els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+        return;
+      }
+      gsap.fromTo(els, { y:14, opacity:0 }, { y:0, opacity:1, duration:0.32, ease:'power2.out', stagger:0.035 });
     };
 
+    /* 3) Lazy IO：提前 600px 觸發 */
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const img = entry.target;
-        if (img.dataset.src && img.src !== img.dataset.src) img.src = img.dataset.src;
+        // 若你未使用 data-src，就交給瀏覽器原生 lazy；此處只做可視動畫
+        img.style.opacity = img.style.opacity || '1';
+        img.style.transform = 'none';
         io.unobserve(img);
       });
-    }, { rootMargin: '200px 0px' });
-    allImgs.forEach(img => { if (img.dataset.src) io.observe(img); img.decoding = 'async'; });
+    }, { rootMargin: '600px 0px' });
+    allImgs.forEach(img => io.observe(img));
 
+    /* 4) 分頁 / 篩選 */
     const BATCH = 24;
     let activeFilter = '';
-    let visibleCount = BATCH;
+    let visibleCount = Math.min(BATCH, allImgs.length);
 
     const splitCats = s => s.split(/[,|\s]+/).filter(Boolean);
     const parseCats = el => splitCats(el.dataset.cat || '');
@@ -457,15 +556,13 @@
       const newlyShown = [];
 
       allImgs.forEach(img => {
-        const shouldShow = showSet.has(img);
+        const show = showSet.has(img);
         const hidden = (img.style.display === 'none');
-        if (shouldShow && hidden) { img.style.display = ''; newlyShown.push(img); if (img.dataset.src) io.observe(img); }
-        else if (!shouldShow && !hidden) { img.style.display = 'none'; }
+        if (show && hidden) { img.style.display = ''; newlyShown.push(img); }
+        else if (!show && !hidden) { img.style.display = 'none'; }
       });
 
-      const targets = (reset ? toShow : newlyShown);
-      if (!targets.length) { if (reset) toShow.forEach(el => { el.style.opacity='1'; el.style.transform='none'; }); }
-      else { requestAnimationFrame(() => animateIn(targets)); }
+      requestAnimationFrame(() => animateIn(reset ? toShow : newlyShown));
 
       loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-flex' : 'none';
       noResults.hidden = list.length > 0;
@@ -501,15 +598,15 @@
       });
     });
 
-    allImgs.forEach(img => { img.addEventListener('click', () => { overlayImg.src = img.currentSrc || img.dataset.src || img.src; overlay.style.display = 'flex'; }); });
+    /* 5) Lightbox */
+    allImgs.forEach(img => { img.addEventListener('click', () => { overlayImg.src = img.currentSrc || img.src; overlay.style.display = 'flex'; }); });
     closeBtn.addEventListener('click', () => overlay.style.display = 'none');
     document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.style.display = 'none'; });
 
-    /* ====== 固定背景：城市座標（自動填滿、不溢出） ====== */
+    /* ====== 固定背景：城市座標（降負載版） ====== */
     const panel = document.getElementById('coordPanel');
     if (!panel) return;
 
-    // 城市清單（地理方框，約略限界）
     const CITIES = [
       { n:'Vancouver',   lat:[49.20,49.32],   lon:[-123.26,-122.95] },
       { n:'Victoria',    lat:[48.38,48.59],   lon:[-123.55,-123.20] },
@@ -550,19 +647,17 @@
       { n:'Cairo',       lat:[29.90,30.15],   lon:[31.10,31.45] }
     ];
 
-    // 工具
     const rand = (a,b) => (a + Math.random()*(b-a));
     const clamp = (v,a,b)=> Math.max(a, Math.min(b,v));
-    const fmt = (v) => (v>=0 ? v.toFixed(6) : v.toFixed(6)); // 6 位小數
+    const fmt = (v) => (v>=0 ? v.toFixed(6) : v.toFixed(6));
 
-    const TICK_MIN = 60, TICK_MAX = 140;
-    const STEP_LAT = 0.005, STEP_LON = 0.007;
+    // 降負載：更新頻率降低
+    const TICK_MIN = 220, TICK_MAX = 460;
+    const STEP_LAT = 0.003, STEP_LON = 0.004;
     const timers = [];
     let rows = [];
 
-    function clearTimers(){
-      while(timers.length){ clearTimeout(timers.pop()); }
-    }
+    function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
 
     function createRow(city){
       const line = document.createElement('div');
@@ -592,22 +687,17 @@
       timers.push(id);
     }
 
-    // 計算可容納行數（含 row-gap），保證不溢出
     function computeMaxRows(){
-      // 測一列高度
       const probe = document.createElement('div');
       probe.className = 'coord-line';
       probe.style.visibility = 'hidden';
       probe.innerHTML = `<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`;
       panel.appendChild(probe);
-
       const rowH = probe.getBoundingClientRect().height || 14;
       const styles = getComputedStyle(panel);
       const gap = parseFloat(styles.rowGap || '0');
       const ph = panel.getBoundingClientRect().height;
-
       panel.removeChild(probe);
-      // N*rowH + (N-1)*gap <= ph  →  N <= (ph+gap)/(rowH+gap)
       return Math.max(1, Math.floor((ph + gap) / (rowH + gap)));
     }
 
@@ -615,9 +705,7 @@
       clearTimers();
       panel.innerHTML = '';
       rows = [];
-
       const need = computeMaxRows();
-      // 從隨機索引開始取城市，若不夠就循環；剛好填滿高度
       let start = Math.floor(Math.random() * CITIES.length);
       for (let i=0; i<need; i++){
         const city = CITIES[(start + i) % CITIES.length];
@@ -627,19 +715,10 @@
       rows.forEach(loopRow);
     }
 
-    // 初次 & 尺寸變動都重算（避免手機/桌面切換溢出）
     fillPanel();
     let resizeTid = 0;
-    addEventListener('resize', () => {
-      clearTimeout(resizeTid);
-      resizeTid = setTimeout(fillPanel, 150);
-    });
-    addEventListener('orientationchange', () => {
-      clearTimeout(resizeTid);
-      resizeTid = setTimeout(fillPanel, 150);
-    });
-
-    // beforeunload 清理
+    addEventListener('resize', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
+    addEventListener('orientationchange', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
     addEventListener('beforeunload', clearTimers);
   })();
   </script>
