@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -211,16 +212,50 @@
     .load-more-btn:active{ transform: translateY(1px); }
     .no-results{ color:#f4f2f0; text-align:center; padding: 24px 0; font-size:14px; }
 
-    /* —— Overlay Lightbox —— */
-    .overlay {
+    /* —— Overlay Lightbox（新：點外關閉、右上角、淡入淡出） —— */
+    .overlay{
       position: fixed; inset: 0;
-      width: 100vw; height: 100vh;
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
       background: rgba(0,0,0,0.9);
-      display: none; justify-content: center; align-items: center; flex-direction: column;
       z-index: 10002;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease, visibility .25s step-end;
+      will-change: opacity;
     }
-    .overlay img { max-width: 90%; max-height: 90%; }
-    .close-btn { position: absolute; top: 20px; left: 20px; font-size: 28px; color: #f4f2f0; cursor: pointer; user-select: none; }
+    .overlay.open{
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity .25s ease, visibility 0s;
+    }
+    .overlay img{
+      max-width: min(94vw, 1400px);
+      max-height: 88vh;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
+    }
+    @keyframes zoomFadeIn { from{opacity:0; transform:scale(.985)} to{opacity:1; transform:scale(1)} }
+    .overlay.open img{ animation: zoomFadeIn .25s ease both; }
+
+    .close-btn{
+      position: absolute;
+      top: 16px;
+      right: 16px;       /* ← 右上角 */
+      width: 40px; height: 40px;
+      display:flex; align-items:center; justify-content:center;
+      font-size: 26px; line-height: 1;
+      color: #f4f2f0; cursor: pointer; user-select: none;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      transition: background .2s ease, transform .08s ease;
+    }
+    .close-btn:hover{ background: rgba(255,255,255,0.12); }
+    .close-btn:active{ transform: scale(.96); }
+    @media (max-width: 480px){
+      .close-btn{ width: 44px; height: 44px; font-size: 28px; top: 14px; right: 14px; }
+    }
 
     /* —— RWD —— */
     @media (max-width: 768px) {
@@ -259,7 +294,7 @@
   }
   </script>
 
-  <!-- 無 JS 時的圖片可視化（避免首批透明/動畫未執行造成看不到） -->
+  <!-- 無 JS 時的圖片可視化 -->
   <noscript>
     <style>
       .gallery img { opacity: 1 !important; transform: none !important; }
@@ -438,8 +473,8 @@
   </div>
 
   <!-- Lightbox -->
-  <div class="overlay" id="overlay">
-    <span class="close-btn" id="closeBtn">×</span>
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <span class="close-btn" id="closeBtn" aria-label="Close">×</span>
     <img src="" alt="Expanded Photo" id="overlayImg">
   </div>
 
@@ -486,10 +521,10 @@
     setInterval(animateHeader, 4000);
   </script>
 
-  <!-- Gallery 功能 + 固定背景座標（加速 & 降負載） -->
+  <!-- Gallery 功能 + 固定背景座標（含新版 Lightbox） -->
   <script>
   (() => {
-
+    /* ====== Gallery：進場 / Lazy / Filter / Load More ====== */
     const galleryEl  = document.querySelector('.gallery');
     const overlay    = document.getElementById('overlay');
     const overlayImg = document.getElementById('overlayImg');
@@ -501,10 +536,11 @@
     const loadMoreBtn= document.getElementById('loadMore');
     const noResults  = document.getElementById('noResults');
 
+    /* 1) 提前標註尺寸，避免 CLS；首列優先下載 */
     allImgs.forEach((img, i) => {
       if (!img.getAttribute('width'))  img.setAttribute('width','800');
       if (!img.getAttribute('height')) img.setAttribute('height','1200');
-      if (i < 12) {                    // 估略首屏 + 次屏
+      if (i < 12) {
         img.loading = 'eager';
         img.fetchPriority = 'high';
       } else {
@@ -513,7 +549,7 @@
       img.decoding = 'async';
     });
 
-    /* 2) 動畫 */
+    /* 2) 進場動畫 */
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const animateIn = (els) => {
       if (!els || !els.length) return;
@@ -596,129 +632,175 @@
       });
     });
 
-    /* 5) Lightbox */
-    allImgs.forEach(img => { img.addEventListener('click', () => { overlayImg.src = img.currentSrc || img.src; overlay.style.display = 'flex'; }); });
-    closeBtn.addEventListener('click', () => overlay.style.display = 'none');
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.style.display = 'none'; });
+    /* 5) Lightbox（點外關閉＋淡出＋行動裝置支援） */
+    (function(){
+      if (!overlay || !overlayImg || !closeBtn) return;
+      let prevOverflow = '';
+
+      function openOverlay(src){
+        overlayImg.src = src;
+        prevOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = 'hidden';
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeOverlay(){
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        const onEnd = (e)=>{
+          if (e && e.target !== overlay) return;
+          overlay.removeEventListener('transitionend', onEnd);
+          document.documentElement.style.overflow = prevOverflow || '';
+          overlayImg.src = '';
+        };
+        overlay.addEventListener('transitionend', onEnd);
+        setTimeout(onEnd, 300);
+      }
+
+      galleryEl.querySelectorAll('img').forEach(img=>{
+        img.addEventListener('click', ()=>{
+          openOverlay(img.currentSrc || img.src);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeOverlay);
+
+      // 點背景（圖片外）關閉
+      overlay.addEventListener('click', (e)=>{
+        if (e.target === overlay) closeOverlay();
+      });
+
+      // Esc 關閉
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeOverlay();
+      });
+
+      // iOS 背景阻擋
+      overlay.addEventListener('touchmove', (e)=>{
+        if (!overlay.classList.contains('open')) return;
+        if (e.target === overlay) e.preventDefault();
+      }, { passive:false });
+    })();
 
     /* ====== 固定背景：城市座標（降負載版） ====== */
     const panel = document.getElementById('coordPanel');
-    if (!panel) return;
+    if (panel){
+      const CITIES = [
+        { n:'Vancouver',   lat:[49.20,49.32],   lon:[-123.26,-122.95] },
+        { n:'Victoria',    lat:[48.38,48.59],   lon:[-123.55,-123.20] },
+        { n:'Hong Kong',   lat:[22.15,22.55],   lon:[113.80,114.35] },
+        { n:'Macau',       lat:[22.10,22.23],   lon:[113.49,113.61] },
+        { n:'Tokyo',       lat:[35.50,35.80],   lon:[139.55,139.95] },
+        { n:'Kyoto',       lat:[35.00,35.10],   lon:[135.68,135.82] },
+        { n:'Osaka',       lat:[34.55,34.75],   lon:[135.40,135.60] },
+        { n:'Seoul',       lat:[37.45,37.70],   lon:[126.80,127.10] },
+        { n:'Taipei',      lat:[25.00,25.12],   lon:[121.44,121.60] },
+        { n:'Shanghai',    lat:[31.10,31.35],   lon:[121.30,121.70] },
+        { n:'Beijing',     lat:[39.80,40.10],   lon:[116.20,116.60] },
+        { n:'Shenzhen',    lat:[22.45,22.85],   lon:[113.75,114.30] },
+        { n:'Guangzhou',   lat:[23.00,23.25],   lon:[113.15,113.50] },
+        { n:'Singapore',   lat:[1.20,1.48],     lon:[103.60,104.05] },
+        { n:'Bangkok',     lat:[13.60,13.95],   lon:[100.35,100.80] },
+        { n:'Jakarta',     lat:[-6.30,-6.05],   lon:[106.65,106.95] },
+        { n:'Kuala Lumpur',lat:[3.05,3.25],     lon:[101.60,101.80] },
+        { n:'Manila',      lat:[14.45,14.75],   lon:[120.90,121.10] },
+        { n:'Sydney',      lat:[-34.05,-33.70], lon:[150.80,151.40] },
+        { n:'Melbourne',   lat:[-38.10,-37.65], lon:[144.80,145.20] },
+        { n:'Auckland',    lat:[-36.98,-36.75], lon:[174.65,174.90] },
+        { n:'New York',    lat:[40.55,40.90],   lon:[-74.20,-73.70] },
+        { n:'Los Angeles', lat:[33.85,34.20],   lon:[-118.55,-118.10] },
+        { n:'San Francisco',lat:[37.68,37.84],  lon:[-122.55,-122.30] },
+        { n:'Seattle',     lat:[47.50,47.75],   lon:[-122.45,-122.20] },
+        { n:'Toronto',     lat:[43.60,43.85],   lon:[-79.55,-79.10] },
+        { n:'Montreal',    lat:[45.42,45.60],   lon:[-73.75,-73.45] },
+        { n:'London',      lat:[51.40,51.60],   lon:[-0.35,0.10] },
+        { n:'Paris',       lat:[48.80,48.92],   lon:[2.20,2.45] },
+        { n:'Berlin',      lat:[52.45,52.60],   lon:[13.25,13.55] },
+        { n:'Rome',        lat:[41.80,41.95],   lon:[12.40,12.60] },
+        { n:'Madrid',      lat:[40.35,40.50],   lon:[-3.85,-3.55] },
+        { n:'Lisbon',      lat:[38.65,38.78],   lon:[-9.25,-9.05] },
+        { n:'Istanbul',    lat:[40.90,41.20],   lon:[28.80,29.40] },
+        { n:'Dubai',       lat:[25.05,25.35],   lon:[55.05,55.55] },
+        { n:'Doha',        lat:[25.20,25.40],   lon:[51.40,51.60] },
+        { n:'Cairo',       lat:[29.90,30.15],   lon:[31.10,31.45] }
+      ];
 
-    const CITIES = [
-      { n:'Vancouver',   lat:[49.20,49.32],   lon:[-123.26,-122.95] },
-      { n:'Victoria',    lat:[48.38,48.59],   lon:[-123.55,-123.20] },
-      { n:'Hong Kong',   lat:[22.15,22.55],   lon:[113.80,114.35] },
-      { n:'Macau',       lat:[22.10,22.23],   lon:[113.49,113.61] },
-      { n:'Tokyo',       lat:[35.50,35.80],   lon:[139.55,139.95] },
-      { n:'Kyoto',       lat:[35.00,35.10],   lon:[135.68,135.82] },
-      { n:'Osaka',       lat:[34.55,34.75],   lon:[135.40,135.60] },
-      { n:'Seoul',       lat:[37.45,37.70],   lon:[126.80,127.10] },
-      { n:'Taipei',      lat:[25.00,25.12],   lon:[121.44,121.60] },
-      { n:'Shanghai',    lat:[31.10,31.35],   lon:[121.30,121.70] },
-      { n:'Beijing',     lat:[39.80,40.10],   lon:[116.20,116.60] },
-      { n:'Shenzhen',    lat:[22.45,22.85],   lon:[113.75,114.30] },
-      { n:'Guangzhou',   lat:[23.00,23.25],   lon:[113.15,113.50] },
-      { n:'Singapore',   lat:[1.20,1.48],     lon:[103.60,104.05] },
-      { n:'Bangkok',     lat:[13.60,13.95],   lon:[100.35,100.80] },
-      { n:'Jakarta',     lat:[-6.30,-6.05],   lon:[106.65,106.95] },
-      { n:'Kuala Lumpur',lat:[3.05,3.25],     lon:[101.60,101.80] },
-      { n:'Manila',      lat:[14.45,14.75],   lon:[120.90,121.10] },
-      { n:'Sydney',      lat:[-34.05,-33.70], lon:[150.80,151.40] },
-      { n:'Melbourne',   lat:[-38.10,-37.65], lon:[144.80,145.20] },
-      { n:'Auckland',    lat:[-36.98,-36.75], lon:[174.65,174.90] },
-      { n:'New York',    lat:[40.55,40.90],   lon:[-74.20,-73.70] },
-      { n:'Los Angeles', lat:[33.85,34.20],   lon:[-118.55,-118.10] },
-      { n:'San Francisco',lat:[37.68,37.84],  lon:[-122.55,-122.30] },
-      { n:'Seattle',     lat:[47.50,47.75],   lon:[-122.45,-122.20] },
-      { n:'Toronto',     lat:[43.60,43.85],   lon:[-79.55,-79.10] },
-      { n:'Montreal',    lat:[45.42,45.60],   lon:[-73.75,-73.45] },
-      { n:'London',      lat:[51.40,51.60],   lon:[-0.35,0.10] },
-      { n:'Paris',       lat:[48.80,48.92],   lon:[2.20,2.45] },
-      { n:'Berlin',      lat:[52.45,52.60],   lon:[13.25,13.55] },
-      { n:'Rome',        lat:[41.80,41.95],   lon:[12.40,12.60] },
-      { n:'Madrid',      lat:[40.35,40.50],   lon:[-3.85,-3.55] },
-      { n:'Lisbon',      lat:[38.65,38.78],   lon:[-9.25,-9.05] },
-      { n:'Istanbul',    lat:[40.90,41.20],   lon:[28.80,29.40] },
-      { n:'Dubai',       lat:[25.05,25.35],   lon:[55.05,55.55] },
-      { n:'Doha',        lat:[25.20,25.40],   lon:[51.40,51.60] },
-      { n:'Cairo',       lat:[29.90,30.15],   lon:[31.10,31.45] }
-    ];
+      const rand = (a,b) => (a + Math.random()*(b-a));
+      const clamp = (v,a,b)=> Math.max(a, Math.min(b,v));
+      const fmt = (v) => (v>=0 ? v.toFixed(6) : v.toFixed(6));
 
-    const rand = (a,b) => (a + Math.random()*(b-a));
-    const clamp = (v,a,b)=> Math.max(a, Math.min(b,v));
-    const fmt = (v) => (v>=0 ? v.toFixed(6) : v.toFixed(6));
+      const TICK_MIN = 220, TICK_MAX = 460;
+      const STEP_LAT = 0.003, STEP_LON = 0.004;
+      const timers = [];
+      let rows = [];
 
-    // 降負載：更新頻率降低
-    const TICK_MIN = 220, TICK_MAX = 460;
-    const STEP_LAT = 0.003, STEP_LON = 0.004;
-    const timers = [];
-    let rows = [];
+      function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
 
-    function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
-
-    function createRow(city){
-      const line = document.createElement('div');
-      line.className = 'coord-line';
-      line.innerHTML = `<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`;
-      const lat = rand(city.lat[0], city.lat[1]);
-      const lon = rand(city.lon[0], city.lon[1]);
-      line.querySelector('.lat').textContent = fmt(lat);
-      line.querySelector('.lon').textContent = fmt(lon);
-      panel.appendChild(line);
-      return { el: line, c: city, lat, lon };
-    }
-
-    function stepRow(row){
-      const dLat = (Math.random()*2-1) * STEP_LAT;
-      const dLon = (Math.random()*2-1) * STEP_LON;
-      row.lat = clamp(row.lat + dLat, row.c.lat[0], row.c.lat[1]);
-      row.lon = clamp(row.lon + dLon, row.c.lon[0], row.c.lon[1]);
-      row.el.querySelector('.lat').textContent = fmt(row.lat);
-      row.el.querySelector('.lon').textContent = fmt(row.lon);
-    }
-
-    function loopRow(row){
-      stepRow(row);
-      const t = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
-      const id = setTimeout(() => loopRow(row), t);
-      timers.push(id);
-    }
-
-    function computeMaxRows(){
-      const probe = document.createElement('div');
-      probe.className = 'coord-line';
-      probe.style.visibility = 'hidden';
-      probe.innerHTML = `<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`;
-      panel.appendChild(probe);
-      const rowH = probe.getBoundingClientRect().height || 14;
-      const styles = getComputedStyle(panel);
-      const gap = parseFloat(styles.rowGap || '0');
-      const ph = panel.getBoundingClientRect().height;
-      panel.removeChild(probe);
-      return Math.max(1, Math.floor((ph + gap) / (rowH + gap)));
-    }
-
-    function fillPanel(){
-      clearTimers();
-      panel.innerHTML = '';
-      rows = [];
-      const need = computeMaxRows();
-      let start = Math.floor(Math.random() * CITIES.length);
-      for (let i=0; i<need; i++){
-        const city = CITIES[(start + i) % CITIES.length];
-        const r = createRow(city);
-        rows.push(r);
+      function createRow(city){
+        const line = document.createElement('div');
+        line.className = 'coord-line';
+        line.innerHTML = `<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`;
+        const lat = rand(city.lat[0], city.lat[1]);
+        const lon = rand(city.lon[0], city.lon[1]);
+        line.querySelector('.lat').textContent = fmt(lat);
+        line.querySelector('.lon').textContent = fmt(lon);
+        panel.appendChild(line);
+        return { el: line, c: city, lat, lon };
       }
-      rows.forEach(loopRow);
-    }
 
-    fillPanel();
-    let resizeTid = 0;
-    addEventListener('resize', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
-    addEventListener('orientationchange', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
-    addEventListener('beforeunload', clearTimers);
+      function stepRow(row){
+        const dLat = (Math.random()*2-1) * STEP_LAT;
+        const dLon = (Math.random()*2-1) * STEP_LON;
+        row.lat = clamp(row.lat + dLat, row.c.lat[0], row.c.lat[1]);
+        row.lon = clamp(row.lon + dLon, row.c.lon[0], row.c.lon[1]);
+        row.el.querySelector('.lat').textContent = fmt(row.lat);
+        row.el.querySelector('.lon').textContent = fmt(row.lon);
+      }
+
+      function loopRow(row){
+        stepRow(row);
+        const t = TICK_MIN + Math.random()*(TICK_MAX - TICK_MIN);
+        const id = setTimeout(() => loopRow(row), t);
+        timers.push(id);
+      }
+
+      function computeMaxRows(){
+        const probe = document.createElement('div');
+        probe.className = 'coord-line';
+        probe.style.visibility = 'hidden';
+        probe.innerHTML = `<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`;
+        panel.appendChild(probe);
+        const rowH = probe.getBoundingClientRect().height || 14;
+        const styles = getComputedStyle(panel);
+        const gap = parseFloat(styles.rowGap || '0');
+        const ph = panel.getBoundingClientRect().height;
+        panel.removeChild(probe);
+        return Math.max(1, Math.floor((ph + gap) / (rowH + gap)));
+      }
+
+      function fillPanel(){
+        clearTimers();
+        panel.innerHTML = '';
+        rows = [];
+        const need = computeMaxRows();
+        let start = Math.floor(Math.random() * CITIES.length);
+        for (let i=0; i<need; i++){
+          const city = CITIES[(start + i) % CITIES.length];
+          const r = createRow(city);
+          rows.push(r);
+        }
+        rows.forEach(loopRow);
+      }
+
+      fillPanel();
+      let resizeTid = 0;
+      addEventListener('resize', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
+      addEventListener('orientationchange', () => { clearTimeout(resizeTid); resizeTid = setTimeout(fillPanel, 150); });
+      addEventListener('beforeunload', clearTimers);
+    }
   })();
   </script>
 </body>
 </html>
+```
