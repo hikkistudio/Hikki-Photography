@@ -526,7 +526,7 @@
       const lon=rand(lonR[0],lonR[1]);
       const m=document.createElement('div'); m.className='ph-mask'; m.setAttribute('aria-hidden','true');
       const txt=document.createElement('div'); txt.className='ph-txt';
-      const tail=isNarrow?'recal.':'recalibrating...';
+      const tail=isNarrow?'recallibrating':'recalibrating...';
       txt.innerHTML = `${fmt(lat)}\n${fmt(lon)}\n<span class="blink">${tail}</span>`;
       m.appendChild(txt);
       return { mask:m, label:`${fmt(lat)}\n${fmt(lon)}\n${tail}` };
