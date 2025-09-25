@@ -37,21 +37,17 @@
   <!-- CJK：Noto Serif JP ExtraLight 200 -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet"/>
 
-  <!-- 首列預載 -->
+  <!-- 首列預載（略） -->
   <link rel="preload" as="image" href="g1_vancouver_prewedding_cityview.webp"/>
-  <link rel="preload" as="image" href="g2_hongkong_art_skycraper.webp"/>
-  <link rel="preload" as="image" href="g3_portrait_with_orange_tabby.webp"/>
-  <link rel="preload" as="image" href="g4_black_and_white_dog_running.webp"/>
-  <link rel="preload" as="image" href="g5_pet_owner_Wheatfield_family_photo.webp"/>
-  <link rel="preload" as="image" href="g6_Portrait_film_Vintage.webp"/>
-  <link rel="preload" as="image" href="g7_Kerrisdale_moment_poverty.webp"/>
-  <link rel="preload" as="image" href="g8_macau_architecture_concrete.webp"/>
 
   <!-- GSAP（defer） -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
-    :root{ --mono: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace; --ja: "Noto Serif JP", serif; }
+    :root{
+      --mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
+      --ja: "Noto Serif JP", serif;
+    }
     html{ scroll-behavior:smooth; }
     body{ margin:0; padding:0; font-family:var(--mono); background:#000; color:#000; }
     [lang^="zh"],[lang="ja"],.ja{ font-family:var(--ja)!important; font-weight:200!important; }
@@ -70,8 +66,17 @@
 
     /* Filter bar */
     .filter-bar{ width:100%; background:#000; border-bottom:1px solid #000; display:flex; align-items:center; gap:10px; padding:10px 40px; box-sizing:border-box; overflow-x:auto; -webkit-overflow-scrolling:touch; position:sticky; top:60px; z-index:5; }
-    .filter-label{ font-size:14px; color:#f4f2f0; margin-right:8px; white-space:nowrap; }
-    .filter-btn{ appearance:none; border:1px solid #f4f2f0; background:#fff; color:#222; padding:6px 12px; font-size:14px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap; }
+    .filter-label{ font-size:14px; color:#f4f2f0; margin-right:8px; white-space:nowrap;
+      /* 修正①：強制使用 Courier New（含手機） */
+      font-family:var(--mono)!important;
+      font-feature-settings:"liga" 0;
+    }
+    .filter-btn{
+      appearance:none; border:1px solid #f4f2f0; background:#fff; color:#222; padding:6px 12px; font-size:14px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap;
+      /* 修正①：強制使用 Courier New（含手機） */
+      font-family:var(--mono)!important;
+      font-feature-settings:"liga" 0;
+    }
     .filter-btn:hover{ background:#f4f2f0; border-color:#f4f2f0; }
     .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
 
@@ -81,7 +86,7 @@
     .gallery img{ width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; object-fit:cover; background:#111; cursor:pointer; transition:transform .3s, opacity .2s; content-visibility:auto; contain-intrinsic-size:400px 267px; opacity:0; transform:translateY(14px); }
     .gallery img:hover{ transform:scale(1.03); }
 
-    /* 背景座標板 */
+    /* 背景座標板（原樣） */
     .coord-backdrop{ position:fixed; inset:0; background:#000; z-index:0; pointer-events:none; }
     .coord-panel{ position:absolute; left:24px; right:24px; top:60px; bottom:24px; display:grid; grid-auto-rows:min-content; row-gap:6px; align-content:start; overflow:hidden; }
     .coord-line{ font-family:var(--mono); font-size:12px; line-height:1.2; letter-spacing:-0.005em; color:#f4f2f0; opacity:.22; white-space:pre; user-select:none; }
@@ -102,29 +107,39 @@
     .close-btn:hover{ background:rgba(255,255,255,.12); }
 
     /* RWD */
-    @media (max-width:768px){ .gallery img{ width:calc(50% - 10px); } .filter-bar{ padding:10px 16px; } }
+    @media (max-width:768px){
+      .gallery img{ width:calc(50% - 10px); }
+      .filter-bar{ padding:10px 16px; }
+    }
     @media (max-width:480px){
       .mobile-rotator{ display:flex; } .header-bar{ top:36px; } .header-spacer{ height:96px; }
       .header-title{ display:none!important; }
       .filter-bar{ top:96px; position:sticky; }
-      .gallery{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; justify-items:stretch; }
+
+      /* 修正②：手機版每行 2 張 */
+      .gallery{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; justify-items:stretch; }
       .gallery img{ width:100%; min-width:0; }
+
+      /* 若使用 .ph 包裝，移除固定寬度以配合 grid 兩欄 */
+      .gallery .ph{ width:auto!important; }
+
       .coord-panel{ top:96px; }
     }
-    @media only screen and (max-width:767px){ .header-title{ display:none!important; } .header-bar{ justify-content:center!important; } .header-bar a{ margin:0 37px!important; } }
+    @media only screen and (max-width:767px){
+      .header-title{ display:none!important; } .header-bar{ justify-content:center!important; } .header-bar a{ margin:0 37px!important; }
+    }
 
     /* === Photo Holder（沿用舊風格 + 掃描線） === */
     .gallery .ph{ position:relative; width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; display:block; overflow:hidden; }
     .gallery .ph > img{ width:100%!important; height:100%!important; object-fit:cover; display:block; }
     @media (max-width:768px){ .gallery .ph{ width:calc(50% - 10px); } }
-    @media (max-width:480px){ .gallery .ph{ width:100%; min-width:0; } }
+    /* 480px 由上方 @media 覆蓋為 grid + 自動寬度 */
 
     .ph .ph-mask{
       position:absolute; inset:0; background:#000; color:#f4f2f0;
       display:flex; align-items:center; justify-content:center; font-family:var(--mono);
       user-select:none; pointer-events:none; opacity:1; transition:opacity .18s ease;
     }
-    /* 掃描線（沿用舊風格：水平掃描線緩慢上移） */
     .ph .ph-mask::before{
       content:""; position:absolute; inset:0;
       background:
@@ -133,18 +148,13 @@
       mix-blend-mode: overlay; opacity:.25;
       animation: scan 3.2s linear infinite;
     }
-    @keyframes scan{
-      0%{ transform: translateY(0); }
-      100%{ transform: translateY(-6px); }
-    }
+    @keyframes scan{ 0%{ transform:translateY(0) } 100%{ transform:translateY(-6px) } }
     .ph .ph-mask.fade{ opacity:0; }
 
-    /* 置中：兩行座標 + 慢閃 recalibrating... */
     .ph .ph-txt{ position:relative; text-align:center; white-space:pre; font-size:11px; line-height:1.25; opacity:.95; }
-    .ph .blink{ opacity:.45; animation: blink 1.8s ease-in-out infinite; }
+    .ph .blink{ opacity:.45; animation:blink 1.8s ease-in-out infinite; }
     @keyframes blink{ 0%,100%{opacity:.35} 50%{opacity:.95} }
 
-    /* 追蹤點偽元素（保留，但只在載入前可見） */
     .gallery img[data-mask]{ position:relative; display:block; }
     .gallery img[data-mask]::before{
       content:""; position:absolute; inset:0; pointer-events:none; width:6px; height:6px; border-radius:999px; background:#9df3bf;
@@ -177,7 +187,7 @@
   </div>
   <div class="header-spacer" aria-hidden="true"></div>
 
-  <!-- Filter -->
+  <!-- Filter（字體已強制 Courier New） -->
   <div class="filter-bar" role="toolbar" aria-label="Gallery Filters">
     <span class="filter-label"></span>
     <button class="filter-btn" data-filter="Souls"   aria-pressed="false">Souls</button>
@@ -399,7 +409,6 @@
       <img src="g207_richmond_public_market_canada_chinese_mall_center_foodcourt_filmic_vintage_hongkong_jade_gold_chain_local_shopkeeper.webp" alt="Photo 208" loading="lazy" decoding="async" data-cat="Cities, Souls">
     </div>
 
-
     <div class="load-more-wrap"><button id="loadMore" class="load-more-btn">Load More</button></div>
     <div id="noResults" class="no-results" hidden>No images found.</div>
   </div>
@@ -444,7 +453,7 @@
     setInterval(animateHeader, 4000);
   </script>
 
-  <!-- Gallery + 遮罩（只改文案與錯誤處理；沿用舊掃描線風格） -->
+  <!-- Gallery + 遮罩（修：手機縮寫 'recal.'） -->
   <script>
   (()=> {
     const galleryEl=document.querySelector('.gallery');
@@ -465,7 +474,7 @@
       }catch(e){}
     })();
 
-    /* 只改這裡：遮罩文案 = 兩行座標 + 'recalibrating...' 慢閃爍；無任何失敗字樣、無重試 */
+    /* 遮罩文案：兩行座標 + 'recalibrating...'；行動裝置縮寫為 'recal.' */
     const CITIES_FOR_MASK=["Vancouver","Victoria","Hong Kong","Macau","Tokyo","Kyoto","Osaka","Seoul","Taipei","Shanghai","Beijing","Shenzhen","Guangzhou","Singapore","Bangkok","Jakarta","Kuala Lumpur","Manila","Sydney","Melbourne","Auckland","New York","Los Angeles","San Francisco","Seattle","Toronto","Montreal","London","Paris","Berlin","Rome","Madrid","Lisbon","Istanbul","Dubai","Doha","Cairo"];
     const cityLatLon={
       "Vancouver":[[49.20,49.32],[-123.26,-122.95]],
@@ -508,18 +517,19 @@
     };
     const rand=(a,b)=>(a + Math.random()*(b-a));
     const fmt=v=>v.toFixed(6);
+    const isNarrow = matchMedia('(max-width:480px)').matches;
 
     function buildMask(){
       const name=CITIES_FOR_MASK[(Math.random()*CITIES_FOR_MASK.length)|0];
       const [latR,lonR]=cityLatLon[name]||[[0,0],[0,0]];
       const lat=rand(latR[0],latR[1]);
       const lon=rand(lonR[0],lonR[1]);
-
       const m=document.createElement('div'); m.className='ph-mask'; m.setAttribute('aria-hidden','true');
       const txt=document.createElement('div'); txt.className='ph-txt';
-      txt.innerHTML = `${fmt(lat)}\n${fmt(lon)}\n<span class="blink">recalibrating...</span>`;
+      const tail=isNarrow?'recal.':'recalibrating...';
+      txt.innerHTML = `${fmt(lat)}\n${fmt(lon)}\n<span class="blink">${tail}</span>`;
       m.appendChild(txt);
-      return m;
+      return { mask:m, label:`${fmt(lat)}\n${fmt(lon)}\n${tail}` };
     }
 
     // 包裝所有圖片，加上遮罩；錯誤時不顯示任何「failed/重試」字樣，遮罩常駐
@@ -527,20 +537,19 @@
       const ph=document.createElement('div'); ph.className='ph';
       img.parentNode.insertBefore(ph,img); ph.appendChild(img);
 
-      const mask=buildMask(); ph.appendChild(mask);
+      const built=buildMask(); ph.appendChild(built.mask);
 
-      // 偽元素標籤：同樣兩行座標+recalibrating...
+      // 偽元素標籤：同樣兩行座標 + tail
       img.setAttribute('data-mask','');
       img.style.setProperty('--dot-x', Math.round(Math.random()*64+18)+'%');
       img.style.setProperty('--dot-y', Math.round(Math.random()*64+18)+'%');
-      const label=mask.textContent; // 兩行 + recalibrating...
-      img.dataset.phLabel = label;
+      img.dataset.phLabel = built.label;
 
-      const cleanUp=()=>{ img.classList.add('is-loaded'); requestAnimationFrame(()=>{ mask.classList.add('fade'); mask.addEventListener('transitionend',()=>mask.remove(),{once:true}); }); };
+      const cleanUp=()=>{ img.classList.add('is-loaded'); requestAnimationFrame(()=>{ built.mask.classList.add('fade'); built.mask.addEventListener('transitionend',()=>built.mask.remove(),{once:true}); }); };
       img.decode?.().then(cleanUp).catch(()=>{});  // 等 onload
       img.addEventListener('load', cleanUp, {once:true});
 
-      // error：不改文字、不重試，讓遮罩維持當前狀態即可
+      // error：不改文字、不重試
       img.addEventListener('error', ()=>{ /* keep mask */ });
     });
 
@@ -597,7 +606,7 @@
     /* 背景座標（保留） */
     const panel=document.getElementById('coordPanel');
     if(panel){
-      const CITIES=[{n:'Vancouver',lat:[49.20,49.32],lon:[-123.26,-122.95]},{n:'Victoria',lat:[48.38,48.59],lon:[-123.55,-123.20]},{n:'Hong Kong',lat:[22.15,22.55],lon:[113.80,114.35]},{n:'Macau',lat:[22.10,22.23],lon:[113.49,113.61]},{n:'Tokyo',lat:[35.50,35.80],lon:[139.55,139.95]},{n:'Kyoto',lat:[35.00,35.10],lon:[135.68,135.82]},{n:'Osaka',lat:[34.55,34.75],lon:[135.40,135.60]},{n:'Seoul',lat:[37.45,37.70],lon:[126.80,127.10]},{n:'Taipei',lat:[25.00,25.12],lon:[121.44,121.60]},{n:'Shanghai',lat:[31.10,31.35],lon:[121.30,121.70]},{n:'Beijing',lat:[39.80,40.10],lon:[116.20,116.60]},{n:'Shenzhen',lat:[22.45,22.85],lon:[113.75,114.30]},{n:'Guangzhou',lat:[23.00,23.25],lon:[113.15,113.50]},{n:'Singapore',lat:[1.20,1.48],lon:[103.60,104.05]},{n:'Bangkok',lat:[13.60,13.95],lon:[100.35,100.80]},{n:'Jakarta',lat:[-6.30,-6.05],lon:[106.65,106.95]},{n:'Kuala Lumpur',lat:[3.05,3.25],lon:[101.60,101.80]},{n:'Manila',lat:[14.45,14.75],lon:[120.90,121.10]},{n:'Sydney',lat:[-34.05,-33.70],lon:[150.80,151.40]},{n:'Melbourne',lat:[-38.10,-37.65],lon:[144.80,145.20]},{n:'Auckland',lat:[-36.98,-36.75],lon:[174.65,174.90]},{n:'New York',lat:[40.55,40.90],lon:[-74.20,-73.70]},{n:'Los Angeles',lat:[33.85,34.20],lon:[-118.55,-118.10]},{n:'San Francisco',lat:[37.68,37.84],lon:[-122.55,-122.30]},{n:'Seattle',lat:[47.50,47.75],lon:[-122.45,-122.20]},{n:'Toronto',lat:[43.60,43.85],lon:[-79.55,-79.10]},{n:'Montreal',lat:[45.42,45.60],lon:[-73.75,-73.45]},{n:'London',lat:[51.40,51.60],lon:[-0.35,0.10]},{n:'Paris',lat:[48.80,48.92],lon:[2.20,2.45]},{n:'Berlin',lat:[52.45,52.60],lon:[13.25,13.55]},{n:'Rome',lat:[41.80,41.95],lon:[12.40,12.60]},{n:'Madrid',lat:[40.35,40.50],lon:[-3.85,-3.55]},{n:'Lisbon',lat:[38.65,38.78],lon:[-9.25,-9.05]},{n:'Istanbul',lat:[40.90,41.20],lon:[28.80,29.40]},{n:'Dubai',lat:[25.05,25.35],lon:[55.05,55.55]},{n:'Doha',lat:[25.20,25.40],lon:[51.40,51.60]},{n:'Cairo',lat:[29.90,30.15],lon:[31.10,31.45]}];
+      const CITIES=[{n:'Vancouver',lat:[49.20,49.32],lon:[-123.26,-122.95]},{n:'Victoria',lat:[48.38,48.59],lon:[-123.55,-123.20]},{n:'Hong Kong',lat:[22.15,22.55],lon:[113.80,114.35]},{n:'Macau',lat:[22.10,22.23],lon:[113.49,113.61]},{n:'Tokyo',lat:[35.50,35.80],lon:[139.55,139.95]},{n:'Kyoto',lat:[35.00,35.10],lon:[135.68,135.82]},{n:'Osaka',lat:[34.55,34.75],lon:[135.40,135.60]},{n:'Seoul',lat:[37.45,37.70],lon:[126.80,127.10]},{n:'Taipei',lat:[25.00,25.12],lon:[121.44,121.60]},{n:'Shanghai',lat:[31.10,31.35],lon:[121.30,121.70]},{n:'Beijing',lat:[39.80,40.10],lon:[116.20,116.60]},{n:'Shenzhen',lat:[22.45,22.85], lon:[113.75,114.30]},{n:'Guangzhou',lat:[23.00,23.25],lon:[113.15,113.50]},{n:'Singapore',lat:[1.20,1.48],lon:[103.60,104.05]},{n:'Bangkok',lat:[13.60,13.95],lon:[100.35,100.80]},{n:'Jakarta',lat:[-6.30,-6.05],lon:[106.65,106.95]},{n:'Kuala Lumpur',lat:[3.05,3.25],lon:[101.60,101.80]},{n:'Manila',lat:[14.45,14.75],lon:[120.90,121.10]},{n:'Sydney',lat:[-34.05,-33.70],lon:[150.80,151.40]},{n:'Melbourne',lat:[-38.10,-37.65],lon:[144.80,145.20]},{n:'Auckland',lat:[-36.98,-36.75],lon:[174.65,174.90]},{n:'New York',lat:[40.55,40.90],lon:[-74.20,-73.70]},{n:'Los Angeles',lat:[33.85,34.20],lon:[-118.55,-118.10]},{n:'San Francisco',lat:[37.68,37.84],lon:[-122.55,-122.30]},{n:'Seattle',lat:[47.50,47.75],lon:[-122.45,-122.20]},{n:'Toronto',lat:[43.60,43.85],lon:[-79.55,-79.10]},{n:'Montreal',lat:[45.42,45.60],lon:[-73.75,-73.45]},{n:'London',lat:[51.40,51.60],lon:[-0.35,0.10]},{n:'Paris',lat:[48.80,48.92],lon:[2.20,2.45]},{n:'Berlin',lat:[52.45,52.60],lon:[13.25,13.55]},{n:'Rome',lat:[41.80,41.95],lon:[12.40,12.60]},{n:'Madrid',lat:[40.35,40.50],lon:[-3.85,-3.55]},{n:'Lisbon',lat:[38.65,38.78],lon:[-9.25,-9.05]},{n:'Istanbul',lat:[40.90,41.20],lon:[28.80,29.40]},{n:'Dubai',lat:[25.05,25.35],lon:[55.05,55.55]},{n:'Doha',lat:[25.20,25.40],lon:[51.40,51.60]},{n:'Cairo',lat:[29.90,30.15],lon:[31.10,31.45]}];
       const rand=(a,b)=>(a+Math.random()*(b-a)), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), fmt=(v)=>v.toFixed(6);
       const TICK_MIN=220, TICK_MAX=460, STEP_LAT=0.003, STEP_LON=0.004; const timers=[]; let rows=[];
       function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
@@ -608,7 +617,9 @@
       function fillPanel(){ clearTimers(); panel.innerHTML=''; rows=[]; const need=computeMaxRows(); let start=Math.floor(Math.random()*CITIES.length); for(let i=0;i<need;i++){ rows.push(createRow(CITIES[(start+i)%CITIES.length])); } rows.forEach(loopRow); }
       fillPanel(); let resizeTid=0; addEventListener('resize',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('orientationchange',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('beforeunload', clearTimers);
     }
+    
   })();
+  
   </script>
 </body>
 </html>
