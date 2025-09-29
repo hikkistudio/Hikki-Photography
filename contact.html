@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,110 +7,135 @@
   <title>Contact | hikki photography</title>
 
   <!-- Canonical / Robots -->
-  <link rel="canonical" href="https://hikki.ca/contact.html">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://hikki.ca/contact.html"/>
+  <meta name="robots" content="index,follow,max-image-preview:large"/>
 
-  <!-- Meta -->
-  <meta name="description" content="Contact hikki photography & philosophy — bookings, collaborations, and press. Based in Vancouver, Hong Kong, and Macau.">
-  <meta name="keywords" content="hikki, hikki photography, hikki photo, photography, contact, booking, collaboration, press, vancouver, hong kong, macau, filmic, philosophy">
-  <meta name="theme-color" content="#000000">
-  <meta name="author" content="hikki photography & philosophy">
-  <meta name="language" content="zh-HK">
+  <!-- Base Meta -->
+  <meta name="description" content="Contact hikki photography & philosophy — bookings, collaborations, and press. Based in Vancouver, Hong Kong, and Macau."/>
+  <meta name="keywords" content="hikki, hikki photography, hikki photo, photography, contact, booking, collaboration, press, vancouver, hong kong, macau, film look, philosophy"/>
+  <meta name="theme-color" content="#000000"/>
+  <meta name="author" content="hikki photography & philosophy"/>
+  <meta name="language" content="zh-Hant"/>
+  <meta name="application-name" content="hikki photography | hikki photo"/>
+  <meta name="apple-mobile-web-app-title" content="hikki photography"/>
+  <meta name="googlebot" content="index,follow,max-image-preview:large"/>
+  <meta name="bingbot" content="index,follow,max-image-preview:large"/>
 
-  <!-- SEO Add-ons -->
-  <meta name="application-name" content="hikki | hikki photography | hikki photo">
-  <meta name="apple-mobile-web-app-title" content="hikki photography">
-  <meta name="googlebot" content="index,follow,max-image-preview:large">
-  <meta name="bingbot" content="index,follow,max-image-preview:large">
-  <meta property="og:see_also" content="https://www.instagram.com/hikki_with_her_camera">
-  <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:locale:alternate" content="zh_TW">
-  <meta property="og:locale:alternate" content="ja_JP">
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="zh-Hant" href="https://hikki.ca/contact.html"/>
+  <link rel="alternate" hreflang="zh-HK" href="https://hikki.ca/contact.html"/>
+  <link rel="alternate" hreflang="zh-TW" href="https://hikki.ca/contact.html"/>
+  <link rel="alternate" hreflang="en" href="https://hikki.ca/contact.html"/>
+  <link rel="alternate" hreflang="ja" href="https://hikki.ca/contact.html"/>
+  <link rel="alternate" hreflang="x-default" href="https://hikki.ca/contact.html"/>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Contact | hikki photography">
-  <meta property="og:description" content="Bookings, collaborations, and press.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hikki.ca/contact.html">
-  <meta property="og:site_name" content="hikki photography & philosophy">
-  <meta property="og:image" content="https://hikki.ca/favicon.png">
-  <meta property="og:image:alt" content="hikki photography — contact">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
-  <meta property="og:locale" content="zh_HK">
+  <meta property="og:title" content="Contact | hikki photography"/>
+  <meta property="og:description" content="Bookings, collaborations, and press — get in touch."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hikki.ca/contact.html"/>
+  <meta property="og:site_name" content="hikki photography & philosophy"/>
+  <meta property="og:image" content="https://hikki.ca/favicon.png"/>
+  <meta property="og:image:alt" content="hikki photography — contact"/>
+  <meta property="og:image:width" content="512"/>
+  <meta property="og:image:height" content="512"/>
+  <meta property="og:locale" content="zh_HK"/>
+  <meta property="og:see_also" content="https://www.instagram.com/hikki_with_her_camera"/>
+  <meta property="og:locale:alternate" content="en_US"/>
+  <meta property="og:locale:alternate" content="zh_TW"/>
+  <meta property="og:locale:alternate" content="ja_JP"/>
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Contact | hikki photography">
-  <meta name="twitter:description" content="Bookings, collaborations, and press.">
-  <meta name="twitter:image" content="https://hikki.ca/favicon.png">
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Contact | hikki photography"/>
+  <meta name="twitter:description" content="Bookings, collaborations, and press — get in touch."/>
+  <meta name="twitter:image" content="https://hikki.ca/favicon.png"/>
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="icon" href="/favicon.png" type="image/png"/>
 
-  <!-- Fonts -->
+  <!-- Fonts / Preconnect -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
 
-  <!-- GSAP -->
+  <!-- Preloads（提升 LCP） -->
+  <link rel="preload" as="image" href="contact_poster.jpg"/>
+  <link rel="preload" as="video" href="hero_contact.mp4" type="video/mp4"/>
+
+  <!-- GSAP（defer 防阻塞） -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
     :root{
       --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
-      --font-mono: "Courier New", Courier, monospace;
+      --font-mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
       --font-ja: "Noto Serif JP", serif;
+      --ivory: #f4f2f0;
+      --ink: #000;
     }
     [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
     [lang="en"] { font-family: var(--font-mono); }
     @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
     *{ margin:0; padding:0; box-sizing:border-box }
+
     body{
       font-family: var(--font-sans);
       position: relative;
       overflow-x: hidden;
       min-height: 100vh;
-      background: #f4f2f0;
-      color: #f4f2f0;
+      background: var(--ivory);
+      color: var(--ivory);
     }
     .blink-block{ display:inline-block; animation:blink3 3s infinite; }
 
-    /* Mobile rotator */
+    /* Mobile rotator（與 index 一致） */
     .mobile-rotator{
       position: fixed; top: 0; left: 0;
       width: 100%; height: 36px;
-      background: #f4f2f0; color:#000;
+      background: var(--ivory); color:var(--ink);
       display: none; align-items: center; justify-content: center;
       padding: 0 12px; z-index: 10001;
       font-size: 14px; line-height: 1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      font-family: var(--font-mono);
-      pointer-events:none;
+      font-family: var(--font-mono); pointer-events:none;
     }
     .mobile-rotator.ja{ font-family: var(--font-ja); font-weight:200; }
 
+    /* 背景影片 */
     .bg-video{
       position: fixed; top:0; left:0;
       width:100%; height:100%;
       object-fit:cover; z-index:-1;
     }
 
-    /* Header Bar */
+    /* Header Bar（完全沿用 index 規格） */
     .header-bar{
       position:fixed; top:0; left:0; width:100%; height:60px;
-      background:#f4f2f0; z-index:9999; border-bottom:1px solid #f4f2f0;
+      background:var(--ivory); z-index:9999; border-bottom:1px solid var(--ivory);
       display:flex; align-items:center; padding:0 40px; box-sizing:border-box;
     }
-    .header-title{ margin-right:auto; font-family: var(--font-mono); font-size:18px; color:#000; overflow:hidden; white-space:nowrap; }
+    .header-title{ margin-right:auto; font-family: var(--font-mono); font-size:18px; color:var(--ink); overflow:hidden; white-space:nowrap; }
     .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
-    .header-bar .nav-links{ display:flex; align-items:center; margin-left:auto; }
-    .header-bar a{ font-family: var(--font-mono); font-size:18px; color:#000; text-decoration:none; margin-left:40px; transition:color .3s ease; }
+
+    .nav-links{ display:flex; align-items:center; margin-left:auto; gap:40px; }
+    .header-bar a{
+      font-family: var(--font-mono);
+      font-size:18px; color:var(--ink); text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:24px; height:28px; line-height:1;
+      transition:color .3s ease, opacity .3s ease;
+    }
     .header-bar a:hover{ color:#f1c232 }
     .header-bar a.active{ color:#e74c3c }
 
-    .content{ position:absolute; top:80px; left:60px; z-index:1; }
+    /* iching：只顯示 blink 方塊作為品牌符號（依 index） */
+    .nav-links a.iching .label{ display:none; }
+    .nav-links a.iching .blink-block{ font-size:18px; }
+
+    /* 主內容（與 index / gallery 的網格系統對齊） */
+    .content{ position:absolute; top:80px; left:60px; right:60px; z-index:1; }
     h1, h2 { font-family: var(--font-sans) !important; }
     h1{ position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
 
@@ -126,12 +151,13 @@
     }
     h2{ grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
 
-    .left{ grid-area:left }
+    .left{ grid-area:left; }
     .left h3{
       position:relative; left:-0.1ch;
       font-family: var(--font-mono);
       font-weight:100; font-size:30px; line-height:10px;
       white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px;
+      color:#f4f2f0;
     }
     .contact-list{
       margin-top:22px; list-style:none;
@@ -139,9 +165,9 @@
       font-size:20px; line-height:18px;
       letter-spacing:-0.005em;
     }
-    .contact-list li + li{ margin-top:6px }
+    .contact-list li + li{ margin-top:6px; }
     .contact-list a{ color:#f4f2f0; text-decoration:none; border-bottom:1px solid transparent; }
-    .contact-list a:hover{ border-bottom-color:#f1c232 }
+    .contact-list a:hover{ border-bottom-color:#f1c232; }
 
     .right{
       grid-area:right;
@@ -155,78 +181,311 @@
       letter-spacing:-0.005em;
     }
 
-    @media only screen and (max-width: 767px){
-      html, body{ height:100vh !important; overflow:hidden !important; }
+    /* Mobile */
+    @media (max-width: 767px){
       .mobile-rotator{ display:flex; }
-      .header-bar{ top:36px !important; padding:0; }
-      .header-title{ display:none }
 
+      .header-bar{ top:36px; padding:0; }
+      .header-title{ display:none; }
       .nav-links{
         width: calc(100% - 4ch);
         margin: 0 auto;
         display: grid;
         grid-template-columns: 2.2ch 1fr 1fr 1fr;
-        align-items: center;
-        justify-items: center;
-        gap: 0;
+        align-items:center; justify-items:center; gap:0;
       }
-      .nav-links a{ margin:0; min-width:0; height:36px; line-height:36px; }
+      .header-bar a{ margin:0; min-width:0; height:36px; line-height:36px; }
       .nav-links a.iching{ justify-self:start; }
 
-      .content{ position:relative; top:auto; left:auto; width:100%; height:auto; padding:116px 20px 20px }
-      .grid-container{ display:block }
-      .content h1{ font-size:65px; line-height:1; margin-bottom:8px }
-      .grid-container h2{ font-size:22px; line-height:1.2; margin:0 0 20px }
-      .left h3{ font-size:20px; line-height:1 }
-      .contact-list{ font-size:14px; line-height:1.3; margin-top:8px }
-      .right, .right .en{ font-family: var(--font-mono), var(--font-ja); font-size:12px; line-height:1.6 }
-      *, *::before, *::after{ animation:none; transition:none }
-      .blink-block{ animation:blink3 3s steps(1,end) infinite }
+      .content{ position:relative; top:auto; left:auto; width:100%; height:auto; padding:116px 20px 20px; }
+      .grid-container{ display:block; }
+      .content h1{ font-size:65px; line-height:1; margin-bottom:8px; }
+      .grid-container h2{ font-size:22px; line-height:1.2; margin:0 0 20px; }
+      .left h3{ font-size:20px; line-height:1; margin-top:0; }
+      .contact-list{ font-size:14px; line-height:1.3; margin-top:8px; }
+      .right, .right .en{ font-family: var(--font-mono), var(--font-ja); font-size:12px; line-height:1.6; }
+      .blink-block{ animation:blink3 3s steps(1,end) infinite; }
     }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){ .bg-video{ animation:none; } }
   </style>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"hikki photography",
+    "url":"https://hikki.ca/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://hikki.ca/?s={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: Organization / Brand / ContactPoint / Nav -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki photography & philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"Organization","@id":"https://hikki.ca/#org","name":"hikki photography & philosophy","url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","brand":{"@id":"https://hikki.ca/#brand"},
+        "contactPoint":[{ "@type":"ContactPoint","contactType":"customer service","email":"alex@hikki.ca","telephone":"+1-250-986-9516","areaServed":["CA","HK","MO","US"],"availableLanguage":["en","zh","ja"] }]
+      },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-iching","name":"I Ching","url":"https://hikki.ca/iching.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"About","url":"https://hikki.ca/" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"Gallery","url":"https://hikki.ca/gallery.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"Contact","url":"https://hikki.ca/contact.html" }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      { "@type":"ListItem","position":1,"name":"About","item":"https://hikki.ca/"},
+      { "@type":"ListItem","position":2,"name":"Gallery","item":"https://hikki.ca/gallery.html"},
+      { "@type":"ListItem","position":3,"name":"Contact","item":"https://hikki.ca/contact.html"},
+      { "@type":"ListItem","position":4,"name":"I Ching","item":"https://hikki.ca/iching.html"}
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: ContactPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ContactPage",
+    "name":"Contact | hikki photography",
+    "url":"https://hikki.ca/contact.html",
+    "inLanguage":"zh-Hant",
+    "mainEntityOfPage":"https://hikki.ca/contact.html"
+  }
+  </script>
+
+  <noscript><style>.bg-video{display:none}</style></noscript>
 </head>
 <body>
-  <!-- Mobile Rotator -->
-  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">Of time, souls and cities.</div>
+  <!-- 手機版上方輪播列 -->
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">of time, souls and cities.</div>
 
-  <!-- Header -->
-  <div class="header-bar">
-    <div class="header-title en" id="headerTitle">Of time, souls and cities.</div>
-    <div class="nav-links">
-      <a href="iching.html" class="iching"><span class="blink-block">■</span></a>
+  <!-- Header（與 index 導覽一致，保留 iching ■） -->
+  <div class="header-bar" role="navigation" aria-label="primary">
+    <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
+    <nav class="nav-links" aria-label="site">
+      <a href="iching.html" class="iching" aria-label="iching / i ching">
+        <span class="blink-block" aria-hidden="true">■</span>
+        <span class="label" style="position:absolute;left:-9999px;">I Ching</span>
+      </a>
       <a href="index.html">About</a>
       <a href="gallery.html">Gallery</a>
-      <a href="contact.html" class="active">Contact</a>
-    </div>
+      <a href="contact.html" class="active" aria-current="page">Contact</a>
+    </nav>
   </div>
 
-  <!-- Background Video -->
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="contact_poster.jpg">
+  <!-- 背景影片（Contact 專用） -->
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="contact_poster.jpg" aria-hidden="true">
     <source src="hero_contact.mp4" type="video/mp4">
   </video>
 
-  <!-- Content -->
-  <div class="content">
+  <!-- 主要內容 -->
+  <main class="content" id="main">
     <h1 class="decode">CONTACT</h1>
     <div class="grid-container">
       <h2 class="decode">poets are not welcomed.</h2>
-      <div class="left">
-        <h3>hikki photography & philosophy</h3>
+
+      <!-- 左欄：聯絡方式 -->
+      <section class="left" aria-labelledby="org">
+        <h3 id="org">hikki photography & philosophy</h3>
         <ul class="contact-list" aria-label="Contact methods">
           <li><a href="mailto:alex@hikki.ca">alex@hikki.ca</a></li>
-          <li><a href="tel:+12509869516">+1(250)-986-9516</a></li>
-          <li><a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="noopener noreferrer me">@hikki_with_her_camera</a> <span class="blink-block">■</span></li>
+          <li><a href="tel:+12509869516" aria-label="Call +1 250 986 9516">+1(250)-986-9516</a></li>
+          <li><a href="https://www.instagram.com/hikki_with_her_camera" target="_blank" rel="me noopener noreferrer">@hikki_with_her_camera</a> <span class="blink-block" aria-hidden="true">■</span></li>
         </ul>
-      </div>
-      <div class="right" lang="ja">
+      </section>
+
+      <!-- 右欄：多語文案 -->
+      <section class="right" lang="ja" aria-label="Intro">
         ご依頼、コラボレーション、撮影のご相談など、どうぞお気軽にお知らせください。<br><br>
         歡迎詢問、預約及哲學討論。<br>
         <span class="en" lang="en">
-          For bookings, briefs, or just to chat— drop us a line. <span class="blink-block">■</span><br><br>
-          © 2025 hikki photography &amp; philosophy. <span class="blink-block">■</span>
+          For bookings, briefs, or just to chat— drop us a line. <span class="blink-block" aria-hidden="true">■</span><br><br>
+          © 2025 hikki photography &amp; philosophy. <span class="blink-block" aria-hidden="true">■</span>
         </span>
-      </div>
+      </section>
     </div>
-  </div>
+  </main>
+
+  <!-- Header Rotator（與 index 一致，僅文案輪播；不含任何開關功能） -->
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $  = (sel, root=document) => root.querySelector(sel);
+
+    // Reduced motion：停用影片自動播放
+    const bgv = document.querySelector('.bg-video');
+    if (isReduced && bgv) { bgv.removeAttribute('autoplay'); bgv.pause?.(); }
+
+    (function(){
+      const headerEl = $("#headerTitle");
+      const mobileEl = $("#mobileRotator");
+      const sentences = [
+        "of time, souls and cities.","know thyself.","静かな光。",
+        "10% off for rescued animals.","yyj > yvr",
+        "get a quote today for free！",
+        "絢爛如電 虛幻如霧","wake the fuck up, samurai—",
+        "father anderson...","also try max noodle house",
+        "晚星墜落處，自成橋梁。","elegance is about breaking the rules.",
+        "hesitation is defeat","賺菲林錢",
+        "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。",
+        "ネットは広大だわ。","恥の多い生涯を送ってきました。",
+        "demain, dès l’aube…","je pense, donc je suis.",
+        "il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+        "what’s in a name? that which we call a rose…",
+        "i drink your milkshake!","the horror! the horror!",
+        "le temps détruit tout。","翩翩不富，皆失實也。",
+        "雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
+        "元者，善之長也；亨者，嘉之會也。",
+        "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
+        "sksksk","come on and join our convoy.","i am in flames!",
+        "cbt is a lie, try carl jung.","be your own reason to smile.",
+        "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+        "빛은 거짓말하지 않아.","light reveals. shadow defines.",
+        "some people are worth melting for.","ひとりって切ないくらい自由。",
+        "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*",
+        "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+        "shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+      ];
+      const isCJK = (s) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
+      let last = -1;
+      function apply(el, txt){
+        if(!el) return;
+        const cjk = isCJK(txt);
+        el.classList.toggle("ja", cjk);
+        el.classList.toggle("en", !cjk);
+        el.setAttribute('lang', cjk ? 'ja' : 'en');
+        el.textContent = txt;
+      }
+      function rnd(ex){ let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex); return i; }
+      function tick(){
+        const next = rnd(last); last = next;
+        const txt = sentences[next];
+        const targets = [headerEl, mobileEl].filter(Boolean);
+        if (isReduced || !window.gsap){ targets.forEach(t => apply(t, txt)); return; }
+        gsap.to(targets, { y:-16, opacity:0, duration:.25, ease:'power1.in',
+          onComplete(){
+            targets.forEach(t => { apply(t, txt); gsap.set(t,{y:16}); });
+            gsap.to(targets, { y:0, opacity:1, duration:.35, ease:'power1.out' });
+          }
+        });
+      }
+      tick(); setInterval(tick, 4000);
+    })();
+  });
+  </script>
+
+  <!-- 解碼動畫（與 index / gallery 同步） -->
+  <script>
+  (function(){
+    const LATSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const CJKSET = "乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟";
+    const SCRAMBLE_FPS = 49;
+    const LOCK_MIN = 90, LOCK_MAX = 120;
+    const LOCKS_PER_TICK = [2,3];
+
+    function makeNodeState(textNode){
+      const target = textNode.nodeValue;
+      const hasCJK = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(target);
+      const charset = hasCJK ? CJKSET : LATSET;
+      const cur    = Array.from(target);
+      const locked = cur.map(ch => /\s/.test(ch) ? true : false);
+      for (let i=0;i<cur.length;i++){
+        if (!locked[i]) cur[i] = charset[(Math.random()*charset.length)|0];
+      }
+      return { node:textNode, target:Array.from(target), cur, locked, charset };
+    }
+    function collectTextNodes(root){
+      const out = [];
+      if (!root) return out;
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(n){
+          if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          let p = n.parentNode;
+          while (p){
+            if (p.classList && p.classList.contains('blink-block')) return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      while (walker.nextNode()) out.push(walker.currentNode);
+      return out;
+    }
+    function startCrackFor(nodes){
+      if (!nodes.length) return;
+      const states = nodes.map(makeNodeState);
+      states.forEach(s => s.node.nodeValue = s.cur.join(''));
+
+      let rafId = 0, last = 0, interval = 1000 / SCRAMBLE_FPS;
+      function scramble(now){
+        if (now - last >= interval){
+          for (const s of states){
+            const t = s.target, c = s.cur, L = s.locked, set = s.charset;
+            for (let i=0;i<c.length;i++){
+              if (!L[i] && !/\s/.test(t[i])) c[i] = set[(Math.random()*set.length)|0];
+            }
+            s.node.nodeValue = c.join('');
+          }
+          last = now;
+        }
+        rafId = requestAnimationFrame(scramble);
+      }
+
+      let lockTimer = 0;
+      function doLock(){
+        let allDone = true;
+        for (const s of states){
+          const cand = [];
+          for (let i=0;i<s.locked.length;i++) if (!s.locked[i]) cand.push(i);
+          if (cand.length){
+            allDone = false;
+            const take = Math.min(
+              Math.floor(Math.random()*(LOCKS_PER_TICK[1]-LOCKS_PER_TICK[0]+1)) + LOCKS_PER_TICK[0],
+              cand.length
+            );
+            for (let k=0;k<take;k++){
+              const idx = cand.splice((Math.random()*cand.length)|0,1)[0];
+              s.cur[idx] = s.target[idx];
+              s.locked[idx] = true;
+            }
+            s.node.nodeValue = s.cur.join('');
+          }
+        }
+        if (!allDone){
+          const next = Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1)) + LOCK_MIN;
+          lockTimer = setTimeout(doLock, next);
+        } else {
+          cancelAnimationFrame(rafId);
+        }
+      }
+
+      requestAnimationFrame(scramble);
+      const firstLockDelay = Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1)) + LOCK_MIN;
+      lockTimer = setTimeout(doLock, firstLockDelay);
+      return () => { cancelAnimationFrame(rafId); clearTimeout(lockTimer); };
+    }
+
+    // 只套用到 H1 / H2 / 右欄文案
+    startCrackFor( collectTextNodes(document.querySelector('.content h1')) );
+    startCrackFor( collectTextNodes(document.querySelector('.grid-container h2')) );
+    startCrackFor( collectTextNodes(document.querySelector('.right')) );
+  })();
+  </script>
 </body>
 </html>
