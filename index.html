@@ -7,49 +7,47 @@
 
   <!-- Canonical / Robots -->
   <link rel="canonical" href="https://hikki.ca/">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="index,follow,max-image-preview:large"/>
 
   <!-- Meta -->
-  <meta name="description" content="hikki photography & philosophy — portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau.">
-  <meta name="keywords" content="hikki photography, portrait, wedding, city, vancouver, hong kong, macau, film look">
-  <meta name="theme-color" content="#000000">
-  <meta name="author" content="hikki photography & philosophy">
-  <meta name="language" content="zh-Hant">
+  <meta name="description" content="hikki photography & philosophy — portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau."/>
+  <meta name="keywords" content="hikki, hikki photography, hikki photo, portrait, wedding, city, vancouver, hong kong, macau, film look"/>
+  <meta name="theme-color" content="#000000"/>
+  <meta name="author" content="hikki photography & philosophy"/>
+  <meta name="language" content="zh-Hant"/>
 
   <!-- ===================== SEO Add-ons (Brand Emphasis) ===================== -->
-  <meta name="application-name" content="hikki | hikki photography | hikki photo">
-  <meta name="apple-mobile-web-app-title" content="hikki photography">
-  <meta name="googlebot" content="index,follow,max-image-preview:large">
-  <meta name="bingbot" content="index,follow,max-image-preview:large">
-  <meta name="keywords" content="hikki, hikki photography, hikki photo, 溫哥華 攝影師, Vancouver photographer">
-  <meta property="og:see_also" content="https://www.instagram.com/hikki_with_her_camera">
-  <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:locale:alternate" content="zh_TW">
-  <meta property="og:locale:alternate" content="ja_JP">
-  <!-- ======================================================================= -->
+  <meta name="application-name" content="hikki photography | hikki photo"/>
+  <meta name="apple-mobile-web-app-title" content="hikki photography"/>
+  <meta name="googlebot" content="index,follow,max-image-preview:large"/>
+  <meta name="bingbot" content="index,follow,max-image-preview:large"/>
+  <meta property="og:see_also" content="https://www.instagram.com/hikki_with_her_camera"/>
+  <meta property="og:locale:alternate" content="en_US"/>
+  <meta property="og:locale:alternate" content="zh_TW"/>
+  <meta property="og:locale:alternate" content="ja_JP"/>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="hikki Photography">
-  <meta property="og:description" content="Portraits, weddings, and cities — emotions over perfection.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hikki.ca/">
-  <meta property="og:site_name" content="hikki Photography & Philosophy">
-  <meta property="og:image" content="https://hikki.ca/favicon.png">
-  <meta property="og:image:alt" content="hikki Photography — portraits, weddings, and city stories">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
-  <meta property="og:locale" content="zh_HK">
+  <meta property="og:title" content="hikki photography"/>
+  <meta property="og:description" content="portraits, weddings, and cities — emotions over perfection."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hikki.ca/"/>
+  <meta property="og:site_name" content="hikki photography & philosophy"/>
+  <meta property="og:image" content="https://hikki.ca/favicon.png"/>
+  <meta property="og:image:alt" content="hikki photography — portraits, weddings, and city stories"/>
+  <meta property="og:image:width" content="512"/>
+  <meta property="og:image:height" content="512"/>
+  <meta property="og:locale" content="zh_HK"/>
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="hikki Photography">
-  <meta name="twitter:description" content="Portraits, weddings, and cities — emotions over perfection.">
-  <meta name="twitter:image" content="https://hikki.ca/favicon.png">
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="hikki photography"/>
+  <meta name="twitter:description" content="portraits, weddings, and cities — emotions over perfection."/>
+  <meta name="twitter:image" content="https://hikki.ca/favicon.png"/>
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="icon" href="/favicon.png" type="image/png"/>
 
-  <!-- Fonts（Noto Serif JP 200/400 用於日文） -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +61,8 @@
       --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
       --font-ja: "Noto Serif JP", serif;
+      --ivory: #f4f2f0;
+      --ink: #000;
     }
     [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
     [lang="en"] { font-family: var(--font-mono); }
@@ -78,15 +78,23 @@
     }
     .blink-block{ display:inline-block; animation:blink3 3s infinite; }
 
+    /* 隱藏但保留可讀性（供 ARIA 使用） */
+    .sr-only{
+      position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    /* ===== Rotator ===== */
     .mobile-rotator{
       position: fixed; top: 0; left: 0;
       width: 100%; height: 36px;
-      background: #f4f2f0; color:#000;
+      background: var(--ivory); color:var(--ink);
       display: none; align-items: center; justify-content: center;
       padding: 0 12px; z-index: 10001;
       font-size: 14px; line-height: 1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       font-family: var(--font-mono);
+      pointer-events: none;
     }
     .mobile-rotator.ja{ font-family: var(--font-ja); font-weight:200; }
 
@@ -151,63 +159,120 @@
 
     .overlay{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:3; }
 
-.post{ position:fixed; top:80px; left:60px; width:calc(100% - 120px); height:calc(100vh - 80px); display:grid; grid-template-columns:2fr 3fr; grid-template-rows:80px 1fr auto; grid-template-areas: "hl right" "txt right" "sig right"; column-gap:60px; row-gap:24px; opacity:0; z-index:4; transition:opacity .3s ease-out .2s; } .post > *{ opacity:0; transition:opacity .8s ease-out .4s, transform .8s ease-out .4s; } .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) } .post .post-right { transform:translateX(100%) } .post .highlight{ grid-area:hl; } .post .text{ grid-area:txt; font-family: var(--font-mono); font-size:14px; line-height:14px; color:#f4f2f0; overflow-y:auto; align-self:start; letter-spacing:-0.02em; } .post .signature-block{ grid-area:sig; display:flex; flex-direction:column; justify-content:flex-end; } .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; } .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; } .team{ flex:0 0 25%; display:flex; height:100%; } .team-text{ flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end; padding:0 20px 20px; background:rgba(0,0,0,0.5); } .team-info{ font-family: var(--font-mono); color:#f4f2f0; font-size:16px; line-height:18px; text-align:right; } .team-info .name{ font-family: var(--font-sans); font-size:50px; line-height:24px; white-space:nowrap; } .team .photo{ flex:2; background-size:cover; background-position:center; } .post.enter{ opacity:1; } .post.enter > .highlight, .post.enter > .text, .post.enter > .signature-block, .post.enter > .post-right{ opacity:1; transform:translateX(0); }
-
-    @media only screen and (max-width: 767px){
-      html, body{ height:100vh !important; overflow:hidden !important; }
-      .mobile-rotator{ display:flex; }
-      .header-bar{ top:36px; }
-      .header-title{ display:none }
-      .header-bar{ justify-content:center }
-      .header-bar a{ margin:0 37px }
-      .content{ position:relative ; top:auto ; left:auto ; width:100% ; height:auto ; padding:116px 20px 20px }
-      .grid-container{ display:block}
-      .content h1{ font-size:65px ; line-height:1 ; margin-bottom:8px}
-      .grid-container h2{ font-size:22px ; line-height:1.2 ; margin:0 0 20px }
-      .left h3{ font-size:20px  ; line-height:1  }
-      .locations{ font-size:20px ; line-height:1 ; margin-top:0  }
-      .locations li{ font-size:10px ; line-height:1 ; margin-bottom:4px }
-      .content .chinese, .content .chinese .english{ font-family: var(--font-mono), var(--font-ja) ; font-size:10px ; line-height:1.6 }
-      .square, .mobile-square, .overlay, #post{ display:none ; }
-      *, *::before, *::after{ animation:none ; transition:none }
-      .blink-block{ animation:blink3 3s steps(1,end) infinite }
+    .post{
+      position:fixed; top:80px; left:60px;
+      width:calc(100% - 120px); height:calc(100vh - 80px);
+      display:grid; grid-template-columns:2fr 3fr; grid-template-rows:80px 1fr auto;
+      grid-template-areas:"hl right" "txt right" "sig right";
+      column-gap:60px; row-gap:24px; opacity:0; z-index:4;
+      transition:opacity .3s ease-out .2s;
     }
+    .post > *{ opacity:0; transition:opacity .8s ease-out .4s, transform .8s ease-out .4s; }
+    .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) }
+    .post .post-right { transform:translateX(100%) }
+    .post .highlight{ grid-area:hl; }
+    .post .text{
+      grid-area:txt; font-family: var(--font-mono); font-size:14px; line-height:14px;
+      color:var(--ivory); overflow-y:auto; align-self:start; letter-spacing:-0.02em;
+    }
+    .post .signature-block{ grid-area:sig; display:flex; flex-direction:column; justify-content:flex-end; }
+    .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; }
+    .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; }
+    .team{ flex:0 0 25%; display:flex; height:100%; }
+    .team-text{ flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end; padding:0 20px 20px; background:rgba(0,0,0,0.5); }
+    .team-info{ font-family: var(--font-mono); color:var(--ivory); font-size:16px; line-height:18px; text-align:right; }
+    .team-info .name{ font-family: var(--font-sans); font-size:50px; line-height:24px; white-space:nowrap; }
+    .team .photo{ flex:2; background-size:cover; background-position:center; }
+    .post.enter{ opacity:1; }
+    .post.enter > .highlight, .post.enter > .text, .post.enter > .signature-block, .post.enter > .post-right{ opacity:1; transform:translateX(0); }
 
-    /* Header Bar（保留原樣） */
+    /* ===== Header Bar ===== */
     .header-bar{
       position:fixed; top:0; left:0; width:100%; height:60px;
-      background:#f4f2f0; z-index:9999; border-bottom:1px solid #f4f2f0;
+      background:var(--ivory); z-index:9999; border-bottom:1px solid var(--ivory);
       display:flex; align-items:center; padding:0 40px; box-sizing:border-box;
     }
-    .header-title{ margin-right:auto; font-family: var(--font-mono); font-size:18px; color:#000; overflow:hidden; white-space:nowrap; }
+    .header-title{ margin-right:auto; font-family: var(--font-mono); font-size:18px; color:var(--ink); overflow:hidden; white-space:nowrap; }
     .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
-    .header-bar a{ font-family: var(--font-mono); font-size:18px; color:#000; text-decoration:none; margin-left:40px; transition:color .3s ease; }
+
+    /* 導覽群組：桌面靠右排列；手機置中等距 */
+    .nav-links{
+      display:flex; align-items:center;
+      margin-left:auto; gap:40px;
+    }
+    .header-bar a{
+      font-family: var(--font-mono);
+      font-size:18px; color:var(--ink); text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:24px; height:28px; line-height:1;
+      transition:color .3s ease, opacity .3s ease;
+    }
     .header-bar a:hover{ color:#f1c232 }
     .header-bar a.active{ color:#e74c3c }
-    .mobile-rotator{ pointer-events:none; }
 
-@media (max-width:767px){
-  .header-bar{ top:36px !important; }  /* 防止被後面規則覆蓋掉 */
+    /* iching 按鈕只顯示 blink 方塊；用 aria-label 提示 */
+    .nav-links a.iching .label{ display:none; }
+    .nav-links a.iching .blink-block{ font-size:18px; }
 
-  @media only screen and (max-width: 767px){
-  /* 讓 H1 和 H2 更貼近 */
-  .grid-container{ display:block; margin-top:2px !important; } /* 原本 8px */
-  .content h1{ font-size:65px; line-height:1; margin-bottom:2px !important; } /* 原本 8px */
-  .grid-container h2{
-    font-size:22px;
-    line-height:1.1;
-    margin:0 0 10px !important; /* 原本 20px */
+    @media (max-width: 767px){
+  .mobile-rotator{ display:flex; }
+
+  .header-bar{
+    top:36px;
+    padding:0;                     /* 移除左右 40px 內距，讓按鈕可鋪滿 */
   }
 
-  /* 「hikki Photography & Philosophy」上下多留空間 */
-  .left h3{
-    font-size:20px;
-    line-height:1.1;
-    margin:14px 0 12px !important;  /* 覆蓋桌機版的 margin-top:-20px */
+  .header-title{ display:none; }   /* 只顯示四個按鈕 */
+
+  .nav-links{
+    width: calc(100% - 4ch);       /* 左右各約 2ch 留白 */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2.2ch 1fr 1fr 1fr;  /* ■ 在最左，其餘三個均分右側空間 */
+    align-items: center;
+    justify-items: center;
+    gap: 0;
   }
-  .locations{ margin-top:8px !important; } /* 清出 h3 下方空隙 */
-}
-}
+
+  .header-bar a{
+    margin: 0;
+    min-width: 0;
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .nav-links a.iching{
+    justify-self: start;           /* ■ 靠左貼齊 */
+  }
+
+  /* —— 完全鎖死頁面滾動（index 手機版）—— */
+  html, body{
+    height: 100%;
+    overflow: hidden !important;   /* 阻止任何滾動條 */
+  }
+  body{
+    position: fixed;               /* iOS/Android 實機更穩 */
+    inset: 0;                      /* top / right / bottom / left = 0 */
+    width: 100%;
+  }
+
+  /* 以防某些元素超出視窗觸發捲動 */
+  .content,
+  .overlay,
+  #post{
+    overscroll-behavior: contain;
+  }
+      .content{ position:relative; top:auto; left:auto; width:100%; height:auto; padding:116px 20px 20px; }
+      .grid-container{ display:block; margin-top:2px !important; }
+      .content h1{ font-size:65px; line-height:1; margin-bottom:2px !important; }
+      .grid-container h2{ font-size:22px; line-height:1.1; margin:0 0 10px !important; }
+      .left h3{ font-size:20px; line-height:1.1; margin:14px 0 12px !important; }
+      .locations{ margin-top:8px !important; }
+      .locations li{ font-size:10px; line-height:1; margin-bottom:4px; }
+      .content .chinese, .content .chinese .english{ font-family: var(--font-mono), var(--font-ja); font-size:10px; line-height:1.6; }
+      .square, .overlay, #post{ display:none; }
+      .blink-block{ animation:blink3 3s steps(1,end) infinite }
+    }
   </style>
 
   <!-- JSON-LD: WebSite -->
@@ -225,17 +290,19 @@
   }
   </script>
 
-  <!-- JSON-LD: Organization -->
+  <!-- JSON-LD: Organization / Brand / LocalBusiness / Person / Nav -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"hikki Photography & Philosophy",
-    "url":"https://hikki.ca/",
-    "logo":"https://hikki.ca/favicon.png",
-    "sameAs":[ "https://www.instagram.com/hikki_with_her_camera" ],
-    "contactPoint":[
-      { "@type":"ContactPoint","contactType":"customer service","email":"info@hikki.ca","telephone":"+1-250-986-9516","areaServed":["CA","HK","MO","US"],"availableLanguage":["en","zh","ja"] }
+    "@graph":[
+      { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki photography & philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"Organization","@id":"https://hikki.ca/#org","name":"hikki photography & philosophy","url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","brand":{"@id":"https://hikki.ca/#brand"} },
+      { "@type":"LocalBusiness","@id":"https://hikki.ca/#business","name":"hikki photography","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","image":"https://hikki.ca/favicon.png","priceRange":"$$","areaServed":"Greater Vancouver","address":{"@type":"PostalAddress","addressLocality":"Vancouver","addressRegion":"BC","addressCountry":"CA"},"telephone":"+1-250-986-9516","brand":{"@id":"https://hikki.ca/#brand"} },
+      { "@type":"Person","@id":"https://hikki.ca/#founder","name":"Alex Hikki–Iao","alternateName":["Hikki","Hikki Photo"],"jobTitle":"Photographer","worksFor":{"@id":"https://hikki.ca/#business"},"url":"https://hikki.ca/","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-iching","name":"I Ching","url":"https://hikki.ca/iching.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"About","url":"https://hikki.ca/" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"Gallery","url":"https://hikki.ca/gallery.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"Contact","url":"https://hikki.ca/contact.html" }
     ]
   }
   </script>
@@ -248,36 +315,30 @@
     "itemListElement":[
       { "@type":"ListItem","position":1,"name":"About","item":"https://hikki.ca/"},
       { "@type":"ListItem","position":2,"name":"Gallery","item":"https://hikki.ca/gallery.html"},
-      { "@type":"ListItem","position":3,"name":"Contact","item":"https://hikki.ca/contact.html"}
-    ]
-  }
-  </script>
-
-  <!-- JSON-LD: Brand / LocalBusiness / Person / Nav -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki Photography & Philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
-      { "@type":"LocalBusiness","@id":"https://hikki.ca/#business","name":"Hikki Photography","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","image":"https://hikki.ca/favicon.png","priceRange":"$$","areaServed":"Greater Vancouver","address":{"@type":"PostalAddress","addressLocality":"Vancouver","addressRegion":"BC","addressCountry":"CA"},"telephone":"+1-250-986-9516","brand":{"@id":"https://hikki.ca/#brand"} },
-      { "@type":"Person","@id":"https://hikki.ca/#founder","name":"Alex Hikki–Iao","alternateName":["Hikki","Hikki Photo"],"jobTitle":"Photographer","worksFor":{"@id":"https://hikki.ca/#business"},"url":"https://hikki.ca/","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
-      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"About","url":"https://hikki.ca/" },
-      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"Gallery","url":"https://hikki.ca/gallery.html" },
-      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"Contact","url":"https://hikki.ca/contact.html" }
+      { "@type":"ListItem","position":3,"name":"Contact","item":"https://hikki.ca/contact.html"},
+      { "@type":"ListItem","position":4,"name":"I Ching","item":"https://hikki.ca/iching.html"}
     ]
   }
   </script>
 </head>
 <body>
-  <!-- 手機版上方輪播列 -->
-  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite">Of time, souls and cities.</div>
+  <!-- 手機版上方輪播列（僅手機顯示） -->
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite" aria-hidden="true">of time, souls and cities.</div>
 
   <!-- Header -->
-  <div class="header-bar">
-    <div class="header-title en" id="headerTitle">Of time, souls and cities.</div>
-    <a href="index.html" class="active">About</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
+  <div class="header-bar" role="navigation" aria-label="primary">
+    <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
+
+    <!-- ✅ 新增：四個按鈕（iching 置於最左，blink 方塊） -->
+    <nav class="nav-links" aria-label="site">
+      <a href="iching.html" class="iching" aria-label="iching / i ching">
+        <span class="blink-block" aria-hidden="true">■</span>
+        <span class="label sr-only">I Ching</span>
+      </a>
+      <a href="index.html" class="active">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </div>
 
   <!-- 背景影片 -->
@@ -291,15 +352,15 @@
     <div class="grid-container">
       <h2>not imitate perfection.</h2>
       <div class="left">
-        <h3>hikki Photography & Philosophy</h3>
-        <ul class="locations">
+        <h3>hikki photography & philosophy</h3>
+        <ul class="locations" aria-label="service areas and live coordinates">
           <li>><br></li>
           <li>Vancouver&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;49.263431&nbsp;|&nbsp;-123.012508</li>
           <li>Victoria&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;48.468213&nbsp;|&nbsp;-123.330938</li>
           <li>Hong&nbsp;Kong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;22.445293&nbsp;|&nbsp;&nbsp;114.031586</li>
           <li>Macau&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;22.198510&nbsp;|&nbsp;&nbsp;113.536389&nbsp;<span class="blink-block">■</span></li>
         </ul>
-        <div class="square"></div>
+        <div class="square" aria-hidden="true"></div>
       </div>
       <div class="chinese" lang="ja">
         ><br>
@@ -308,7 +369,7 @@
         <span class="english" lang="en">
           Light breaks beneath her lashes—<br>
           thin shadows trembling.<br>
-          She wishper.<br>
+          She whisper.<br>
           like salt drying<br>
           on a white shirt,<br>
           soon to be wet again. <span class="blink-block">■</span><br><br><br>
@@ -319,16 +380,16 @@
   </div>
 
   <!-- 第2階段 黑幕 -->
-  <div class="overlay"></div>
+  <div class="overlay" aria-hidden="true"></div>
 
   <!-- 第3階段 滑入 -->
-  <div id="post" class="post">
+  <div id="post" class="post" aria-hidden="true">
     <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline preload="none"></video>
     <div class="text">
       We stand against the mass production of images that plagues today’s photography industry—<br>
       the flood of magic moments, AI-generated images and kitschy filters.<br><br>
       Photography should convey emotions, not imitate perfection.<br><br>
-      We strive capture the most beautiful side of who you are—<br>
+      We strive to capture the most beautiful side of who you are—<br>
       not what you pretend to be,<br>
       but the quiet light that belongs only to you and your loved ones.<br><br>
       We offer professional photography that is honest, distinct, and deeply human.<br><br>
@@ -336,16 +397,16 @@
     </div>
     <div class="signature-block"></div>
     <div class="post-right">
-      <div class="team-container">
+      <div class="team-container" aria-roledescription="carousel">
         <div class="team">
           <div class="team-text">
             <div class="team-info">
               <span class="name">Alex Hikki–Iao</span><br>
               7+ year exp. in photography<br>
-              & graphic design<br>
+              &amp; graphic design<br>
               Underiododeridodriooo<br>
-              Fav. Camera<br>
-              Voigtlander Ultramatic<br>
+              Fav. camera:<br>
+              Voigtländer Ultramatic<br>
               w/ Skoparex 35mm/f3.4 <span class="blink-block">■</span><br>
             </div>
           </div>
@@ -355,9 +416,9 @@
           <div class="team-text">
             <div class="team-info">
               <span class="name">HANG</span><br>
-              Based. Macau,<br>
+              Based: Macau,<br>
               Expert in videography,<br>
-              launching his own brand<br>
+              launching his own brand,<br>
               crafting Macau-centric stories<br>
               through textiles.<br><br>
               Karina is l0v3, why<br>
@@ -385,9 +446,9 @@
               <span class="name">William</span><br>
               our Community Manager<br>
               Also a registered kinesiologist<br>
-              Caffeine addict-<br>
-              wheres my milk<br>
-              wheres my sugar<br><br>
+              Caffeine addict —<br>
+              where’s my milk,<br>
+              where’s my sugar<br><br>
               Fav. camera: Minolta AF-E <span class="blink-block">■</span><br>
             </div>
           </div>
@@ -404,7 +465,7 @@
     const $  = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    /* ===== Scroll 動畫（原樣） ===== */
+    /* ===== Scroll 動畫 ===== */
     (function(){
       const sq = document.querySelector('.content .square');
       const overlay = document.querySelector('.overlay');
@@ -412,8 +473,8 @@
       const hlVideo = document.querySelector('.post .highlight');
 
       if (!sq || isReduced) {
-        overlay.style.display = 'none';
-        post.classList.remove('enter');
+        overlay && (overlay.style.display = 'none');
+        post && post.classList.remove('enter');
         hlVideo && hlVideo.pause && hlVideo.pause();
         return;
       }
@@ -448,64 +509,89 @@
       onScroll();
     })();
 
-    /* ===== HeaderRotator（原樣） ===== */
+    /* ===== HeaderRotator（僅控制可視的一個） ===== */
     (function(){
       const headerEl = $("#headerTitle");
       const mobileEl = $("#mobileRotator");
+      const mq = window.matchMedia('(max-width: 767px)');
       const sentences = [
-        "Of time, souls and cities.","Know thyself.","静かな光。",
-        "10% off for rescued animals.","YYJ > YVR",
-        "Get a quote today for free！",
-        "絢爛如電 虛幻如霧","Wake the fuck up samurai-",
-        "father Anderson...","also try max noodle house",
-        "晚星墜落處，自成橋梁。","Elegance is about breaking the rules.",
-        "Hesitation is defeat","賺菲林錢",
-        "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。 ",
+        "of time, souls and cities.","know thyself.","静かな光。",
+        "10% off for rescued animals.","yyj > yvr",
+        "get a quote today for free！",
+        "絢爛如電 虛幻如霧","wake the fuck up, samurai—",
+        "father anderson...","also try max noodle house",
+        "晚星墜落處，自成橋梁。","elegance is about breaking the rules.",
+        "hesitation is defeat","賺菲林錢",
+        "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。",
         "ネットは広大だわ。","恥の多い生涯を送ってきました。",
-        "Demain, dès l’aube…","Je pense, donc je suis.",
-        "Il faut imaginer Sisyphe heureux.","Stay gold, Ponyboy.",
-        "What’s in a name? that which we call a rose…",
-        "I drink your milkshake!","The horror! The Horror!",
-        "Le temps détruit tout.","翩翩不富，皆失實也。",
+        "demain, dès l’aube…","je pense, donc je suis.",
+        "il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+        "what’s in a name? that which we call a rose…",
+        "i drink your milkshake!","the horror! the horror!",
+        "le temps détruit tout。","翩翩不富，皆失實也。",
         "雲上於天，需；君子以飲食宴樂。","天下有山，遯。",
         "元者，善之長也；亨者，嘉之會也。",
         "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や",
-        "sksksk","Come on and join our convoy.","I am in flames!",
-        "CBT is a lie, try Carl Jung.","Be your own reason to smile.",
+        "sksksk","come on and join our convoy.","i am in flames!",
+        "cbt is a lie, try carl jung.","be your own reason to smile.",
         "其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-        "빛은 거짓말하지 않아.","Light reveals. Shadow defines.",
-        "Some people are worth melting for.","ひとりって切ないくらい自由。",
-        "The name of the rose is all that remains.","Οἷ’ ἥβης ἄνθεα...*",
-        "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ　","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-        "Shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
+        "빛은 거짓말하지 않아.","light reveals. shadow defines.",
+        "some people are worth melting for.","ひとりって切ないくらい自由。",
+        "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*",
+        "φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+        "shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
       ];
       const isCJK = (s) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
-      let last = -1;
+      let last = -1, timer = 0;
+
+      function activeEl(){ return mq.matches ? mobileEl : headerEl; }
+      function inactiveEl(){ return mq.matches ? headerEl : mobileEl; }
+
       function apply(el, txt){
         if(!el) return;
-        el.classList.toggle("ja", isCJK(txt));
-        el.classList.toggle("en", !isCJK(txt));
-        el.setAttribute('lang', isCJK(txt) ? 'ja' : 'en');
+        const cjk = isCJK(txt);
+        el.classList.toggle("ja", cjk);
+        el.classList.toggle("en", !cjk);
+        el.setAttribute('lang', cjk ? 'ja' : 'en');
         el.textContent = txt;
       }
-      function rnd(ex){ let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex); return i; }
-      function tick(){
-        const next = rnd(last); last = next;
+
+      function step(){
+        const next = (function rnd(ex){ let i; do { i = Math.floor(Math.random()*sentences.length); } while(i===ex); return i; })(last);
+        last = next;
         const txt = sentences[next];
-        const targets = [headerEl, mobileEl].filter(Boolean);
-        if (isReduced || !window.gsap){ targets.forEach(t => apply(t, txt)); return; }
-        gsap.to(targets, { y:-16, opacity:0, duration:.25, ease:'power1.in',
+        const showEl = activeEl();
+        const hideEl = inactiveEl();
+        if (hideEl) hideEl.setAttribute('aria-hidden','true');
+        if (showEl) showEl.setAttribute('aria-hidden','false');
+
+        if (!window.gsap){
+          apply(showEl, txt);
+          return;
+        }
+        gsap.to(showEl, { y:-16, opacity:0, duration:.25, ease:'power1.in',
           onComplete(){
-            targets.forEach(t => { apply(t, txt); gsap.set(t,{y:16}); });
-            gsap.to(targets, { y:0, opacity:1, duration:.35, ease:'power1.out' });
+            apply(showEl, txt);
+            gsap.set(showEl,{y:16});
+            gsap.to(showEl, { y:0, opacity:1, duration:.35, ease:'power1.out' });
           }
         });
       }
-      tick(); setInterval(tick, 4000);
+
+      function start(){
+        stop();
+        step();
+        timer = window.setInterval(step, 4000);
+      }
+      function stop(){ if (timer) { clearInterval(timer); timer = 0; } }
+
+      mq.addEventListener ? mq.addEventListener('change', start) : mq.addListener(start);
+      start();
     })();
 
-    /* ===== Team Carousel（原樣） ===== */
+    /* ===== Team Carousel ===== */
     (function(){
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (isReduced) return;
       const wrap = document.querySelector('.team-container');
       if(!wrap) return;
@@ -516,18 +602,22 @@
       }, 7000);
     })();
 
+    /* ===== 座標數字輕微漂移 ===== */
     (function(){
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (isReduced) return;
+
       const BOUNDS = {
         'Vancouver': { lat:[49.198, 49.315], lon:[-123.224, -123.022] },
         'Victoria':  { lat:[48.401, 48.477], lon:[-123.401, -123.307] },
-        'Hong Kong': { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },
+        'Hong':      { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },
         'Macau':     { lat:[22.06,  22.23  ], lon:[113.52,  113.68  ] }
       };
       const TICK_MIN = 40, TICK_MAX = 120;
       const CHANGES_MIN = 1, CHANGES_MAX = 3;
       const rint = (a,b) => a + Math.floor(Math.random()*(b-a+1));
       const toFixedLen = (num, decs) => Number(num).toFixed(decs);
+
       function mapTextNodes(el){
         const nodes = [];
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
@@ -558,6 +648,7 @@
         return { latStr, lonStr, latStart, latLen: latStr.length, lonStart, lonLen: lonStr.length };
       }
       function decimalsCount(s){ const i = s.indexOf('.'); return i>=0 ? (s.length - i - 1) : 0; }
+
       class DriftRow {
         constructor(li){
           this.el = li;
@@ -573,7 +664,8 @@
           this.timer = 0;
         }
         randomInBounds(){
-          const b = BOUNDS[this.city];
+          const key = this.city;
+          const b = BOUNDS[key];
           if (!b) return null;
           const lat = b.lat[0] + Math.random()*(b.lat[1]-b.lat[0]);
           const lon = b.lon[0] + Math.random()*(b.lon[1]-b.lon[0]);
@@ -613,19 +705,20 @@
       window.addEventListener('beforeunload', () => controllers.forEach(c => c.stop()));
     })();
 
+    /* ===== 代碼破譯動畫 ===== */
     (function(){
       const LATSET = "0123456789";
-      const CJKSET = "乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟"; 
-      const SCRAMBLE_FPS = 49;         
-      const LOCK_MIN = 90, LOCK_MAX = 120; 
-      const LOCKS_PER_TICK = [2,3]; 
-     
+      const CJKSET = "乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟";
+      const SCRAMBLE_FPS = 49;
+      const LOCK_MIN = 90, LOCK_MAX = 120;
+      const LOCKS_PER_TICK = [2,3];
+
       function makeNodeState(textNode){
         const target = textNode.nodeValue;
         const hasCJK = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(target);
         const charset = hasCJK ? CJKSET : LATSET;
         const cur    = Array.from(target);
-        const locked = cur.map(ch => /\s/.test(ch) ? true : false); // 空白一開始就鎖
+        const locked = cur.map(ch => /\s/.test(ch) ? true : false);
         for (let i=0;i<cur.length;i++){
           if (!locked[i]) cur[i] = charset[(Math.random()*charset.length)|0];
         }
@@ -637,7 +730,6 @@
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
           acceptNode(n){
             if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-            // 排除在 .blink-block 內的字（避免干擾方塊）
             let p = n.parentNode;
             while (p){
               if (p.classList && p.classList.contains('blink-block')) return NodeFilter.FILTER_REJECT;
@@ -651,12 +743,9 @@
       }
       function startCrackFor(nodes){
         if (!nodes.length) return;
-        // 建立狀態
         const states = nodes.map(makeNodeState);
-        // 先把隨機初始值渲染上去
         states.forEach(s => s.node.nodeValue = s.cur.join(''));
 
-        // 亂碼：每幀或依 FPS 刷新
         let rafId = 0, last = 0, interval = 1000 / SCRAMBLE_FPS;
         function scramble(now){
           if (now - last >= interval){
@@ -672,7 +761,6 @@
           rafId = requestAnimationFrame(scramble);
         }
 
-        // 鎖字：用較慢節奏（平均 160ms 一次）
         let lockTimer = 0;
         function doLock(){
           let allDone = true;
