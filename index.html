@@ -68,7 +68,7 @@
     *{ margin:0; padding:0; box-sizing:border-box }
     html, body{
       height:100%;
-      overflow-x:hidden !important; /* 只禁左右拖拉 */
+      overflow-x:hidden !important;
       background:var(--bg);
       color:var(--ink);
       touch-action:pan-y;
@@ -79,9 +79,9 @@
     [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
     [lang="en"] { font-family: var(--font-mono); }
 
-    /* blink: opacity-only，避免 layout 抖動；手機也啟用 */
-    @keyframes blinkDot { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
-    .blink-block{ display:inline-block; animation:blinkDot 3s steps(1,end) infinite; will-change:opacity; }
+    /* ==== 統一：gallery 的柔和閃爍 ==== */
+    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
+    @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
 
     .sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
@@ -116,16 +116,16 @@
     }
     .mobile-rotator.ja{ font-family:var(--font-ja); font-weight:200; }
 
-  .bg-video{
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;             
-  background: #000;
-  pointer-events: none;    
-}
+    .bg-video{
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      background: #000;
+      pointer-events: none;
+    }
 
     /* 第一階段 */
     .content{ position:absolute; top:80px; left:60px; z-index:1; right:60px; }
@@ -149,10 +149,13 @@
       font-size:20px; line-height:18px; letter-spacing:-0.005em;
     }
     .locations li + li{ margin-top:4px }
+
+    /* 左下角大方塊：與 blink-block 同步 */
     .square{
       position:fixed; bottom:0; left:0; width:70px; height:70px; background:#000;
-      animation:blinkDot 3s steps(1,end) infinite; transform-origin:bottom left; transform:scale(1); z-index:2;
-      will-change:transform,opacity; transform:translateZ(0) scale(1);
+      animation:blink3 3s infinite;            /* ← 與 .blink-block 完全一致 */
+      transform-origin:bottom left; transform:scale(1);
+      z-index:2; will-change:transform,opacity; transform:translateZ(0) scale(1);
     }
 
     .chinese{
@@ -191,7 +194,7 @@
     .post.enter{ opacity:1; pointer-events:auto; }
     .post.enter > .highlight, .post.enter > .text, .post.enter > .signature-block, .post.enter > .post-right{ opacity:1; transform:translateX(0); }
 
-    /* —— 手機直向（你滿意的版本）：上文字（三行），下 2×2 —— */
+    /* —— 手機直向 —— */
     .team-grid{ display:none; }
     @media (max-width: 767px) and (orientation: portrait){
       .mobile-rotator{ display:flex; }
@@ -213,7 +216,6 @@
       .locations li{ font-size:10px; line-height:1; margin-bottom:4px; }
       .content .chinese, .content .chinese .english{ font-family: var(--font-mono), var(--font-ja); font-size:10px; line-height:1.6; }
       .square{ width:56px; height:56px; }
-
       .post{
         position:fixed; top:36px; left:0; right:0; bottom:0;
         width:auto; height:auto; padding:76px 20px 20px;
@@ -221,10 +223,8 @@
         grid-template-areas: "txt" "sig" "right";
         row-gap:16px; column-gap:0;
       }
-      .post .highlight{ display:none; } /* 手機不顯示 placeholder 視頻 */
-      .post .text{
-        grid-area:txt; font-size:12px; line-height:1.5; max-height:38vh; overflow:auto;
-      }
+      .post .highlight{ display:none; }
+      .post .text{ grid-area:txt; font-size:12px; line-height:1.5; max-height:38vh; overflow:auto; }
       .post .signature-block{ grid-area:sig; min-height:0; }
       .post-right{ grid-area:right; }
       .team-container{ display:none; }
@@ -365,7 +365,7 @@
         </div>
         <div class="grid-card" data-member="dallas">
           <div class="ph" style="background-image:url('Dallas.jpg')"></div>
-          <div class="info">Dallas<br>6+ yrs photo · ex-marketing manager<br><br>Fav philosopher: Mencius <span class="blink-block">■</span></div>
+          <div class="info">Dallas<br>been shooting film since 2000<br><br>Fav philosopher: Mencius <span class="blink-block">■</span></div>
         </div>
         <div class="grid-card" data-member="william">
           <div class="ph" style="background-image:url('William.jpg')"></div>
@@ -429,7 +429,12 @@
       if(!sq) return;
       const docH=()=>Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       const maxScale=()=>Math.max(window.innerWidth, window.innerHeight)/60;
-      function setSquare(p){ sq.style.animation=(p>0)?'none':'blinkDot 3s steps(1,end) infinite'; const s=1+p*(maxScale()-1); sq.style.transform=`translateZ(0) scale(${s})`; }
+      function setSquare(p){
+        /* 與 .blink-block 完全一致的動畫；滾動後關掉動畫以免干擾 */
+        sq.style.animation = (p>0) ? 'none' : 'blink3 3s infinite';
+        const s = 1 + p*(maxScale()-1);
+        sq.style.transform = `translateZ(0) scale(${s})`;
+      }
       let ticking=false, entered=false;
       function onScroll(){
         if(ticking) return; ticking=true;
@@ -457,7 +462,6 @@
       onScroll();
 
       function startCarouselIfDesktop(){
-        // 非直向手機才轉動（桌面原版要求）
         if (window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
         const wrap = $('#teamCarousel'); if(!wrap) return;
         let idx=0; const slides = $$('.team', wrap); if(!slides.length) return;
@@ -473,7 +477,7 @@
         manifesto.innerHTML =
           'We strive to capture the most beautiful side of who you are—<br>'+
           'not what you pretend to be,<br>'+
-          'but the quiet light that belongs only to you and your loved ones.<br>';
+          'but the quiet light that belongs only to you and your loved ones. <span class="blink-block">■</span><br>';
       }
     })();
 
@@ -555,7 +559,7 @@
       window.addEventListener('beforeunload', ()=>controllers.forEach(c=>c.stop()));
     })();
 
-    /* ===== Code Cracking：第1階段 + 第3階段（進場時），只跑一次 ===== */
+    /* ===== Code Cracking ===== */
     const Crack = (function(){
       const LAT="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const CJK="乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟";
@@ -635,7 +639,6 @@
         ...Crack.collect(document.getElementById('teamGrid'))
       ]);
     }
-    // 讓 square 進場邏輯可呼叫
     window.runCrackOnce = runCrackOnce;
   });
   </script>
