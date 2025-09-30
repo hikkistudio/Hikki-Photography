@@ -199,7 +199,7 @@
       <section id="panel" class="panel" aria-live="polite" aria-atomic="true">
         <h2></h2>
         <div class="section">
-          <div>
+          <div><br><br>
             乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
             大畜時也，頤養也，大過顛也，坎陷也，離麗也，咸感也，恆久也，渙離也，節止也，解緩也，蹇難也，睽外也，
             家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
@@ -220,7 +220,7 @@
       const mobileEl=document.getElementById('mobileRotator');
       const mq=window.matchMedia('(max-width: 767px) and (orientation: portrait)');
       const sentences=[
-         "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+                   "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
           "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
           "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
           "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
@@ -231,8 +231,38 @@
           "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
           "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
           "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-          "shanghai fog, yes.","悲喜千般同幻夢。","那些都是很好很好的，偏偏我不喜歡。"
-      ];
+          "shanghai fog, yes.","悲喜千般同幻夢。",
+          "欲望屬於他者。",
+          "Desire is the desire of the Other.",
+          "世界無人始，亦無人終。",
+          "The world began and ends without man.",
+          "民為貴，君為輕。",
+          "Lucky Vicky～",
+          "Beauty will save the world.",
+          "深宮似海，人人自危。",
+          "一笑傾城，再笑傾國。",
+          "Better die with fragrance.",
+          "得寵易，守寵難。",
+          "Family comes first.",
+          "活下去",
+          "Friends don’t lie.",
+          "The crown must endure.",
+          "Power is better than sex.",
+          "Love is stronger than reason.",
+          "孤獨是命運。",
+          "Poetry belongs to people.",
+          "One word of truth.",
+          "El Psy Congroo",
+          "Just keep swimming.",
+          "We’re all undercover.",
+          "War never changes.",
+          "YOU-ARE-NOT-PREPARED.",
+          "Nothing is true？",
+          "I am a real boy.",
+          "Marriage is war.",
+          "A Royale with cheese.",
+          "Don’t call me Mr. Pink."
+        ];
       const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
       const apply=(el,txt)=>{if(!el)return;const c=isCJK(txt);el.classList.toggle("ja",c);el.classList.toggle("en",!c);el.setAttribute('lang',c?'ja':'en');el.textContent=txt;};
       function active(){return mq.matches?mobileEl:headerEl}
