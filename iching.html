@@ -30,7 +30,7 @@
 
   <link rel="icon" href="/favicon.png" type="image/png"/>
 
-  <!-- Fonts / GSAP（與 index 相同） -->
+  <!-- Fonts / GSAP -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,14 +41,20 @@
     :root{
       --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
-      --font-ja: "Noto Serif JP", serif; /* CJK 200 */
-      --ivory: #f4f2f0;
-      --ink: #000;
+      --font-ja: "Noto Serif JP", serif;
+      --ivory: #f4f2f0; --ink: #000;
+
+      /* —— 可微調的注解排版變數 —— */
+      --panel-fs: 16px;          /* 字級 */
+      --panel-lh: 1.9;           /* 行高 */
+      --panel-letter: 0.001;      /* 字間距(英) */
+      --panel-para: 12px;        /* 段落間距 */
+      --panel-indent: 0;         /* 首行縮排（例如 2em） */
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:#000;color:var(--ivory);overflow-x:hidden!important}
 
-    /* ===== header / rotator（對齊 index） ===== */
+    /* ===== header / rotator（與 index 對齊） ===== */
     .blink-block{display:inline-block;animation:blink3 3s infinite}
     @keyframes blink3{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
     .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -101,42 +107,43 @@
       min-height:calc(100vh - 160px);
     }
 
-    /* 數字鍵盤：第 4 行留給開始 ■，確保與第 1 欄同一直線 */
+    /* 數字鍵盤（第4行留給開始 ■） */
     .pad{
       user-select:none;width:280px;display:grid;
       grid-template-columns:repeat(3,1fr);
-      grid-template-rows:repeat(3,auto) auto;  /* 多一行給 .start */
+      grid-template-rows:repeat(3,auto) auto;
       gap:24px 28px;margin-bottom:0;
     }
     .digit{
       font-family:var(--font-mono);font-size:72px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;
-      transform-style:preserve-3d;animation:slowY 12s linear infinite; /* 已加速 50% */
+      transform-style:preserve-3d;animation:slowY 12s linear infinite;
       transition:color .15s ease
     }
     @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
     .digit.error-flash{color:#ff5252;animation:none}
     .digit.invalid{color:#ff5252}
-
-    /* 放在 grid 內：第 4 行第 1 欄，永遠與第一個數字同直線 */
     .start{
-      grid-column:1 / 2;
-      grid-row:4 / 5;
-      align-self:start;
-      justify-self:center;
+      grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
       display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
       animation:blink3 3s steps(1,end) infinite;margin-left:2px
     }
 
-    /* 右：注解（字級統一） */
+    /* 右：注解（字級統一，提供細緻排版控制） */
     .panel{
-      font-family:var(--font-ja);font-weight:200;font-size:16px;line-height:1.9;max-height:calc(100vh - 140px);
-      overflow:auto;-webkit-overflow-scrolling:touch
+      font-family:var(--font-ja);font-weight:200;
+      font-size:var(--panel-fs); line-height:var(--panel-lh);
+      letter-spacing:var(--panel-letter); word-spacing:var(--panel-word);
+      max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
     }
-    .panel h2{font-weight:200;font-size:16px;margin-bottom:6px} /* 標題與內文同字級 */
-    .section{padding:12px 0;border-top:1px dashed rgba(255,255,255,.25)}
-    .section:first-child{border-top:none}
-    .yao-list{margin-top:6px}
-    .yao-list .hi{font-family:var(--font-mono)}
+    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); }
+    .panel h2{ font-weight:200; font-size:var(--panel-fs); margin: 0 0 6px; }
+    .section{ padding:12px 0; border-top:1px dashed rgba(255,255,255,.25) }
+    .section:first-child{ border-top:none }
+    .yao-list{ margin-top:6px }
+    .yao-list .hi{ font-family:var(--font-mono) }
+    .judgment{ margin-top:10px; padding:10px 12px; border-left:2px solid rgba(255,255,255,.35); opacity:.95 }
+    .judgment .tag{ font-family:var(--font-mono); margin-right:.5ch; opacity:.9 }
+    .tokens{ font-family:var(--font-mono); opacity:.9 }
 
     @media (max-width:767px) and (orientation:portrait){
       main{padding:116px 20px 20px}
@@ -174,7 +181,7 @@
 
   <main>
     <div class="layout">
-      <!-- 左：數字鍵盤（■ 與第一數字同直線） -->
+      <!-- 左：數字鍵盤 -->
       <div class="left">
         <div class="pad" id="pad" aria-label="number pad">
           <!-- row 1（下卦） -->
@@ -185,28 +192,29 @@
           <div class="digit" data-i="3" tabindex="0">0</div>
           <div class="digit" data-i="4" tabindex="0">0</div>
           <div class="digit" data-i="5" tabindex="0">0</div>
-          <!-- row 3（變爻） -->
+          <!-- row 3（變爻種子） -->
           <div class="digit" data-i="6" tabindex="0">0</div>
           <div class="digit" data-i="7" tabindex="0">0</div>
           <div class="digit" data-i="8" tabindex="0">0</div>
 
-          <!-- row 4：開始方塊，永遠與第一格同一直線 -->
+          <!-- row 4：開始 -->
           <span id="start" class="start" role="button" tabindex="0" aria-label="開始">■</span>
         </div>
       </div>
 
       <!-- 右：注解 -->
       <section id="panel" class="panel" aria-live="polite" aria-atomic="true">
-        <h2></h2>
         <div class="section">
-          <div><br><br>
+          <p>
+            ><br>
+            ><br>
             乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
             大畜時也，頤養也，大過顛也，坎陷也，離麗也，咸感也，恆久也，渙離也，節止也，解緩也，蹇難也，睽外也，
             家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
             豐多故也，旅不當也，巽入也，兌說也，既濟定也，未濟亂也，噬嗑食也，賁飾也，隨無故也，蠱則飭也，
             升而不已必困也，井道也，謙輕也，豫怠也，剝爛也，復反也，益長也，損短也，夬決也，姤遇也，萃聚也，
-            升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。
-          </div>
+            升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。<span class="blink-block">■</span>
+          </p>
         </div>
       </section>
     </div>
@@ -214,13 +222,12 @@
 
   <!-- ===== Script ===== -->
   <script>
-    /* ===== Header Rotator ===== */
+    /* ===== Header Rotator（略） ===== */
     (function(){
       const headerEl=document.getElementById('headerTitle');
       const mobileEl=document.getElementById('mobileRotator');
       const mq=window.matchMedia('(max-width: 767px) and (orientation: portrait)');
-      const sentences=[
-                   "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+      const sentences=[ "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
           "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
           "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
           "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
@@ -262,9 +269,12 @@
           "Marriage is war.",
           "A Royale with cheese.",
           "Don’t call me Mr. Pink."
-        ];
+      ];
       const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
-      const apply=(el,txt)=>{if(!el)return;const c=isCJK(txt);el.classList.toggle("ja",c);el.classList.toggle("en",!c);el.setAttribute('lang',c?'ja':'en');el.textContent=txt;};
+      const apply=(el,txt)=>{ if(!el)return; const c=isCJK(txt);
+        el.classList.toggle("ja",c); el.classList.toggle("en",!c);
+        el.setAttribute('lang',c?'ja':'en'); el.textContent=txt;
+      };
       function active(){return mq.matches?mobileEl:headerEl}
       function inactive(){return mq.matches?headerEl:mobileEl}
       let last=-1,timer=0;
@@ -344,7 +354,7 @@
     const TRIGRAM_NAME={"天":"乾","地":"坤","雷":"震","山":"艮","水":"坎","火":"離","風":"巽","澤":"兌"};
     const NUM_TO_TRIGRAM={1:"乾",2:"兌",3:"離",4:"震",5:"巽",6:"坎",7:"艮",0:"坤"};
 
-    /* Fuxi 三爻代碼（自下而上） */
+    /* 伏羲三畫（自下而上） */
     const TRI_BITS={
       "乾":[1,1,1],"兌":[1,1,0],"離":[1,0,1],"震":[1,0,0],
       "巽":[0,1,1],"坎":[0,1,0],"艮":[0,0,1],"坤":[0,0,0]
@@ -357,8 +367,8 @@
       if(m){ const ch=m[1]; const up=m[1] in TRIGRAM_NAME ? TRIGRAM_NAME[ch] : ch; return {up,down:up}; }
       const mm=title.match(/^([天地雷山水火風澤])([天地雷山水火風澤])/);
       if(mm){ const up=TRIGRAM_NAME[mm[1]]; const down=TRIGRAM_NAME[mm[2]]; return {up,down}; }
-      let up="",down=""; for(const k in TRIGRAM_NAME){ if(title.includes(k)&&!up) up=TRIGRAM_NAME[k]; }
-      for(const k in TRIGRAM_NAME){ if(title.lastIndexOf(k)>0) down=TRIGRAM_NAME[k]; }
+      let up="",down=""; for (const k in TRIGRAM_NAME){ if(title.includes(k)&&!up) up=TRIGRAM_NAME[k]; }
+      for (const k in TRIGRAM_NAME){ if(title.lastIndexOf(k)>0) down=TRIGRAM_NAME[k]; }
       return {up,down};
     }
     function buildIndex(){
@@ -368,6 +378,36 @@
         if(up&&down){ PAIR_MAP[`上:${up}|下:${down}`]=h; }
       });
     }
+
+    /* ===== 工具：數學與取辭 ===== */
+    const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
+    const mod6=g=>((g[0]*100+g[1]*10+g[2])%6+6)%6;
+
+    // 將第3組數字轉為「多爻變」：連續除以6取餘，0視為6；重覆爻位互相抵銷（toggle）
+    function movingLinesFromNumber(g){
+      let n=(g[0]*100 + g[1]*10 + g[2]);
+      const toggled=new Set();
+      while(n>0){
+        let r = n % 6; if(r===0) r=6;
+        const idx = r-1; // 0-based: 0..5
+        if (toggled.has(idx)) toggled.delete(idx); else toggled.add(idx);
+        n = Math.floor(n/6);
+      }
+      return Array.from(toggled).sort((a,b)=>a-b); // 升序（1..6）
+    }
+
+    function flipMany(bits, idxArr){
+      const out = bits.slice();
+      idxArr.forEach(i => out[i] = out[i] ? 0 : 1);
+      return out;
+    }
+
+    function headerWithMeta(label, hex){
+      const ek = hex?.extra?.['卦氣'] ? `｜卦氣：${escapeHTML(hex.extra['卦氣'])}` : '';
+      const es = hex?.extra?.['星宿'] ? `｜星宿：${escapeHTML(hex.extra['星宿'])}` : '';
+      return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>`;
+    }
+    function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
     /* ===== 互動 ===== */
     const pad=document.getElementById('pad');
@@ -390,6 +430,8 @@
     startBtn.addEventListener('click', onStart);
     startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(); });
 
+    function flashInvalid(el){el.classList.add('invalid','error-flash');setTimeout(()=>el.classList.remove('error-flash'),300)}
+
     function onStart(){
       const nums=digits.map(d=>parseInt(d.textContent,10)||0);
       const g1=nums.slice(0,3), g2=nums.slice(3,6), g3=nums.slice(6,9);
@@ -398,62 +440,126 @@
       [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; flashInvalid(firsts[idx]); }});
       if(bad){ alert('三組數字的首位不能為 0。請修正後再開始。'); return; }
 
-      const remLow=mod8(g1);   // 下卦
-      const remUp=mod8(g2);    // 上卦
-      const remLine=mod6(g3);  // 變爻（1..6；0 視為 6）
-
+      const remLow=mod8(g1), remUp=mod8(g2);
       const trigLow=NUM_TO_TRIGRAM[remLow];
       const trigUp =NUM_TO_TRIGRAM[remUp];
-      const lineIdx=(remLine===0?6:remLine)-1;
 
       const mainKey=`上:${trigUp}|下:${trigLow}`;
       const mainHex=PAIR_MAP[mainKey];
       if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 <b>${trigUp}</b>、下卦 <b>${trigLow}</b>。</div>`); return; }
 
-      // 依位元求變卦
-      const mainBits=TRI_BITS[trigLow].concat(TRI_BITS[trigUp]); // 下(1..3) + 上(4..6)
-      mainBits[lineIdx]=mainBits[lineIdx]?0:1;
-      const newLowName=bitsToTrig(mainBits.slice(0,3));
-      const newUpName =bitsToTrig(mainBits.slice(3,6));
-      const changedHex=PAIR_MAP[`上:${newUpName}|下:${newLowName}`];
+      // 取得「多爻變」清單（0..6）
+      const movingIdx = movingLinesFromNumber(g3);   // 0-based
+      const moveCount = movingIdx.length;
 
-      const mainYao=mainHex.yao||[];
-      const changedYao=changedHex?(changedHex.yao||[]):[];
+      // 主卦位元
+      const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]); // [1..6]
+      // 變卦：一次把多個爻翻轉
+      const changedBits = flipMany(mainBits, movingIdx);
+      const newLowName = bitsToTrig(changedBits.slice(0,3));
+      const newUpName  = bitsToTrig(changedBits.slice(3,6));
+      const changedHex = PAIR_MAP[`上:${newUpName}|下:${newLowName}`];
 
-      const html=`
+      // 文辭
+      const M_YAO = mainHex.yao || [];
+      const C_YAO = changedHex ? (changedHex.yao||[]) : [];
+
+      // ——— 依規則做「斷」 ———
+      const judge = buildJudgment({
+        moveCount, movingIdx,
+        mainHex, changedHex, M_YAO, C_YAO
+      });
+
+      // 標記哪些爻是「變」
+      const flag = i => movingIdx.includes(i) ? '<span class="hi">▶︎ </span>' : '';
+
+      const html = `
         <div class="section">
           ${headerWithMeta('本卦', mainHex)}
-          <div>${escapeHTML(mainHex.guaci||'')}</div>
+          <div>${escapeHTML(mainHex.guaci || '')}</div>
           <div class="yao-list">
-            ${mainYao.map((t,i)=>`<div>${i===lineIdx?'<span class="hi">▶︎ </span>':''}${escapeHTML(t)}</div>`).join('')}
+            ${M_YAO.map((t,i)=>`<div>${flag(i)}${escapeHTML(t)}</div>`).join('')}
           </div>
         </div>
         <div class="section">
-          ${changedHex ? headerWithMeta('變卦', changedHex) : '<h2>變卦｜（依變爻換卦：資料未配對）</h2>'}
-          <div>${changedHex ? escapeHTML(changedHex.guaci||'') : ''}</div>
+          ${changedHex ? headerWithMeta('變卦', changedHex) : '<h2>變卦｜（依多爻變換卦：資料未配對）</h2>'}
+          <div>${changedHex ? escapeHTML(changedHex.guaci || '') : ''}</div>
           <div class="yao-list">
-            ${changedHex ? changedYao.map((t,i)=>`<div>${i===lineIdx?'<span class="hi">▶︎ </span>':''}${escapeHTML(t)}</div>`).join('') : ''}
+            ${changedHex ? C_YAO.map((t,i)=>`<div>${flag(i)}${escapeHTML(t)}</div>`).join('') : ''}
+          </div>
+
+          <div class="judgment">
+            <span class="tag">斷：</span>${judge.summary}
+            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`• ${escapeHTML(s)}`).join('<br>')}</div>` : ''}
           </div>
         </div>
       `;
       renderText(html); // 觸發 code-cracking
+
+      // 歸零
+      digits.forEach(d=>{ d.textContent='0'; d.classList.remove('invalid','error-flash'); });
     }
 
-    function flashInvalid(el){el.classList.add('invalid','error-flash');setTimeout(()=>el.classList.remove('error-flash'),300)}
-    const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
-    const mod6=g=>((g[0]*100+g[1]*10+g[2])%6+6)%6;
+    function buildJudgment({moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO}){
+      const idxToName = i => ['初爻','二爻','三爻','四爻','五爻','上爻'][i] || (`第${i+1}爻`);
+      const upDown = i => i>=3 ? '（上卦）' : '（下卦）';
+      const lines = [];
+      let summary='';
 
-    /* 標題 + 卦氣/星宿同一行、同字級 */
-    function headerWithMeta(label, hex){
-      const ek = hex?.extra?.['卦氣'] ? `｜卦氣：${escapeHTML(hex.extra['卦氣'])}` : '';
-      const es = hex?.extra?.['星宿'] ? `｜星宿：${escapeHTML(hex.extra['星宿'])}` : '';
-      return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>`;
+      if (moveCount===0){
+        summary = '六爻不變，用本卦卦辭。';
+        lines.push(mainHex.guaci || '');
+      } else if (moveCount===1){
+        const i = movingIdx[0];
+        summary = `一爻變，用本卦${idxToName(i)}爻辭。`;
+        lines.push(M_YAO[i] || '');
+      } else if (moveCount===2){
+        const a = movingIdx[0], b = movingIdx[1];
+        const top = Math.max(a,b), low = Math.min(a,b);
+        summary = '兩爻變，用本卦兩變爻辭，上者為主。';
+        lines.push(`${idxToName(top)}${upDown(top)}：${(M_YAO[top]||'').trim()}`);
+        lines.push(`${idxToName(low)}${upDown(low)}：${(M_YAO[low]||'').trim()}`);
+      } else if (moveCount===3){
+        summary = '三爻變，本卦卦辭為「貞」（體），變卦卦辭為「悔」（用）。';
+        lines.push(`貞：${(mainHex.guaci||'').trim()}`);
+        if (changedHex) lines.push(`悔：${(changedHex.guaci||'').trim()}`);
+      } else if (moveCount===4){
+        summary = '四爻變，用變卦兩個「不變爻」之爻辭，下者為主。';
+        const notChanged = [0,1,2,3,4,5].filter(i => !movingIdx.includes(i));
+        const low = Math.min(...notChanged), high = Math.max(...notChanged);
+        if (changedHex){
+          lines.push(`${idxToName(low)}${upDown(low)}：${(C_YAO[low]||'').trim()}`);
+          lines.push(`${idxToName(high)}${upDown(high)}：${(C_YAO[high]||'').trim()}`);
+        }
+      } else if (moveCount===5){
+        summary = '五爻變，用變卦唯一「不變爻」之爻辭。';
+        const only = [0,1,2,3,4,5].find(i => !movingIdx.includes(i));
+        if (changedHex) lines.push(`${idxToName(only)}${upDown(only)}：${(C_YAO[only]||'').trim()}`);
+      } else if (moveCount===6){
+        // 全變：用變卦卦辭；乾坤則用「用九／用六」
+        if (changedHex){
+          const isQian = /乾/.test(changedHex.gua);
+          const isKun  = /坤/.test(changedHex.gua);
+          let used = '';
+          if ((isQian || isKun) && C_YAO.length>=7){
+            used = C_YAO[6] || changedHex.guaci || ''; // 期待 JSON 第7條為「用九／用六」
+            summary = `六爻全變，${isQian?'乾':'坤'}取「用」辭。`;
+          }else{
+            used = changedHex.guaci || '';
+            summary = '六爻全變，用變卦卦辭。';
+          }
+          lines.push(used.trim());
+        }else{
+          summary = '六爻全變（變卦缺資料）。';
+        }
+      }
+
+      return {summary, lines};
     }
-
-    function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
     /* 面板渲染 + 觸發 code-cracking */
     function renderText(inner){
+      const panel=document.getElementById('panel');
       panel.innerHTML=inner;
       if(window._crackPanel) window._crackPanel(panel);
     }
