@@ -50,6 +50,7 @@
       --panel-letter: 0.001;      /* 字間距(英) */
       --panel-para: 12px;        /* 段落間距 */
       --panel-indent: 0;         /* 首行縮排（例如 2em） */
+      --judge-accent: #e74c3c; /* 斷語左側紅線（與 header active 同色） */
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:#000;color:var(--ivory);overflow-x:hidden!important}
@@ -141,10 +142,34 @@
     .section:first-child{ border-top:none }
     .yao-list{ margin-top:6px }
     .yao-list .hi{ font-family:var(--font-mono) }
-    .judgment{ margin-top:10px; padding:10px 12px; border-left:2px solid rgba(255,255,255,.35); opacity:.95 }
-    .judgment .tag{ font-family:var(--font-mono); margin-right:.5ch; opacity:.9 }
-    .tokens{ font-family:var(--font-mono); opacity:.9 }
+    /* 右側注解：斷語區塊使用與面板一致的字形與排版變數 */
+/* 右側注解：斷語區塊 */
+.judgment{
+  margin-top:10px; padding:10px 12px;
+  border-left:2px solid var(--judge-accent); /* ← 改這行 */
+  opacity:.95;
 
+  /* 保持與面板一致的字型與排版 */
+  font-family: var(--font-ja);
+  font-weight: 200;
+  font-size: var(--panel-fs);
+  line-height: var(--panel-lh);
+  letter-spacing: var(--panel-letter);
+  word-spacing: var(--panel-word);
+}
+
+/* 可選：讓「斷：」小標也用同色，更有關聯感 */
+.judgment .tag{
+  font-family: var(--font-mono);
+  color: var(--ivory);
+  margin-right:.5ch; opacity:.95;
+}
+
+/* 保持正文字型繼承面板設定 */
+.tokens{
+  font-family: inherit; font-size: inherit; line-height: inherit;
+  letter-spacing: inherit; word-spacing: inherit; opacity:.95;
+}
     @media (max-width:767px) and (orientation:portrait){
       main{padding:116px 20px 20px}
       .layout{grid-template-columns:1fr;gap:20px}
