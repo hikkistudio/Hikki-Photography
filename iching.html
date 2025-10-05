@@ -50,7 +50,7 @@
       --panel-letter: 0.001;      /* 字間距(英) */
       --panel-para: 12px;        /* 段落間距 */
       --panel-indent: 0;         /* 首行縮排（例如 2em） */
-      --judge-accent: #e74c3c; /* 斷語左側紅線（與 header active 同色） */
+      --judge-accent: #e74c3c;    /* 斷語左側紅線（與 header active 同色） */
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:#000;color:var(--ivory);overflow-x:hidden!important}
@@ -117,7 +117,7 @@
     }
     .digit{
       font-family:var(--font-mono);font-size:72px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;
-      transform-style:preserve-3d;animation:slowY 12s linear infinite;
+      transform-style:preserve-3d;animation:slowY 5s linear infinite;
       transition:color .15s ease
     }
     @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
@@ -133,43 +133,49 @@
     .panel{
       font-family:var(--font-ja);font-weight:200;
       font-size:var(--panel-fs); line-height:var(--panel-lh);
-      letter-spacing:var(--panel-letter); word-spacing:var(--panel-word);
+      letter-spacing:var(--panel-letter);
       max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
     }
-    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); }
+    /* —— 兩端對齊：每行平均 —— */
+    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify: inter-ideograph; }
+    .panel p::after{ content:"　"; display:inline-block; width:0; }
+
     .panel h2{ font-weight:200; font-size:var(--panel-fs); margin: 0 0 6px; }
-    .section{ padding:12px 0; border-top:1px dashed rgba(255,255,255,.25) }
-    .section:first-child{ border-top:none }
+
+    /* 區塊：去掉虛線分隔 */
+    .section{ padding:12px 0; border-top:none; }
+
     .yao-list{ margin-top:6px }
     .yao-list .hi{ font-family:var(--font-mono) }
-    /* 右側注解：斷語區塊使用與面板一致的字形與排版變數 */
-/* 右側注解：斷語區塊 */
-.judgment{
-  margin-top:10px; padding:10px 12px;
-  border-left:2px solid var(--judge-accent); /* ← 改這行 */
-  opacity:.95;
 
-  /* 保持與面板一致的字型與排版 */
-  font-family: var(--font-ja);
-  font-weight: 200;
-  font-size: var(--panel-fs);
-  line-height: var(--panel-lh);
-  letter-spacing: var(--panel-letter);
-  word-spacing: var(--panel-word);
-}
+    /* 斷語 */
+    .judgment{
+      margin-top:10px; padding:10px 12px;
+      border-left:2px solid var(--judge-accent);
+      opacity:.95;
+      font-family: var(--font-ja);
+      font-weight: 200;
+      font-size: var(--panel-fs);
+      line-height: var(--panel-lh);
+      letter-spacing: var(--panel-letter);
+    }
+    .judgment .tag{
+      font-family: var(--font-mono);
+      color: var(--ivory);
+      margin-right:.5ch; opacity:.95;
+    }
+    .tokens{
+      font-family: inherit; font-size: inherit; line-height: inherit;
+      letter-spacing: inherit; opacity:.95;
+    }
 
-/* 可選：讓「斷：」小標也用同色，更有關聯感 */
-.judgment .tag{
-  font-family: var(--font-mono);
-  color: var(--ivory);
-  margin-right:.5ch; opacity:.95;
-}
+    /* 星宿等寬資訊行 */
+    .star-meta{
+      font-family: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:14px; line-height:1.6;
+      margin:6px 0 0; opacity:.95; white-space:normal;
+    }
 
-/* 保持正文字型繼承面板設定 */
-.tokens{
-  font-family: inherit; font-size: inherit; line-height: inherit;
-  letter-spacing: inherit; word-spacing: inherit; opacity:.95;
-}
     @media (max-width:767px) and (orientation:portrait){
       main{padding:116px 20px 20px}
       .layout{grid-template-columns:1fr;gap:20px}
@@ -238,7 +244,10 @@
             家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
             豐多故也，旅不當也，巽入也，兌說也，既濟定也，未濟亂也，噬嗑食也，賁飾也，隨無故也，蠱則飭也，
             升而不已必困也，井道也，謙輕也，豫怠也，剝爛也，復反也，益長也，損短也，夬決也，姤遇也，萃聚也，
-            升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。<span class="blink-block">■</span>
+            升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。<br>
+            ><br>
+            ><br>
+            心中默想三組三位數，填入左方鍵盤，由上至下分別為下，上，變卦。完成後按下方塊開始。<span class="blink-block">■</span>
           </p>
         </div>
       </section>
@@ -256,44 +265,44 @@
           "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
           "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
           "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
-          "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+          "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy。",
           "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
           "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
-          "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy.",
-          "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-          "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
-          "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-          "shanghai fog, yes.","悲喜千般同幻夢。",
+          "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy。",
+          "i am in flames!","cbt is a lie, try carl jung。","be your own reason to smile。","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+          "빛은 거짓말하지 않아。","light reveals. shadow defines。","some people are worth melting for。","ひとりって切ないくらい自由。",
+          "the name of the rose is all that remains。","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+          "shanghai fog, yes。","悲喜千般同幻夢。",
           "欲望屬於他者。",
           "Desire is the desire of the Other.",
           "世界無人始，亦無人終。",
-          "The world began and ends without man.",
+          "The world began and ends without man。",
           "民為貴，君為輕。",
           "Lucky Vicky～",
-          "Beauty will save the world.",
+          "Beauty will save the world。",
           "深宮似海，人人自危。",
           "一笑傾城，再笑傾國。",
-          "Better die with fragrance.",
+          "Better die with fragrance。",
           "得寵易，守寵難。",
-          "Family comes first.",
+          "Family comes first。",
           "活下去",
-          "Friends don’t lie.",
-          "The crown must endure.",
-          "Power is better than sex.",
-          "Love is stronger than reason.",
+          "Friends don’t lie。",
+          "The crown must endure。",
+          "Power is better than sex。",
+          "Love is stronger than reason。",
           "孤獨是命運。",
-          "Poetry belongs to people.",
-          "One word of truth.",
+          "Poetry belongs to people。",
+          "One word of truth。",
           "El Psy Congroo",
-          "Just keep swimming.",
-          "We’re all undercover.",
-          "War never changes.",
-          "YOU-ARE-NOT-PREPARED.",
+          "Just keep swimming。",
+          "We’re all undercover。",
+          "War never changes。",
+          "YOU-ARE-NOT-PREPARED。",
           "Nothing is true？",
-          "I am a real boy.",
-          "Marriage is war.",
-          "A Royale with cheese.",
-          "Don’t call me Mr. Pink."
+          "I am a real boy。",
+          "Marriage is war。",
+          "A Royale with cheese。",
+          "Don’t call me Mr. Pink。"
       ];
       const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
       const apply=(el,txt)=>{ if(!el)return; const c=isCJK(txt);
@@ -376,6 +385,22 @@
     let HEX_DB=null;
     fetch('iching-data.json').then(r=>r.json()).then(j=>{ HEX_DB=j; buildIndex(); });
 
+    /* ===== 28宿資料（J2000） ===== */
+    let STAR_MAP = null; // 由「中文名」→ {name, RA, DEC}
+    fetch('28_xiu_j2000.json')
+      .then(r=>r.json())
+      .then(list=>{
+        STAR_MAP = {};
+        list.forEach(row=>{
+          // 假設欄位：中文名 / 英譯 / RA / DEC
+          STAR_MAP[String(row["中文名"]).replace(/宿$/,'')] = {
+            name: row["英譯"] || "",
+            RA: row["RA"] || "",
+            DEC: row["DEC"] || ""
+          };
+        });
+      });
+
     const TRIGRAM_NAME={"天":"乾","地":"坤","雷":"震","山":"艮","水":"坎","火":"離","風":"巽","澤":"兌"};
     const NUM_TO_TRIGRAM={1:"乾",2:"兌",3:"離",4:"震",5:"巽",6:"坎",7:"艮",0:"坤"};
 
@@ -406,7 +431,6 @@
 
     /* ===== 工具：數學與取辭 ===== */
     const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
-    const mod6=g=>((g[0]*100+g[1]*10+g[2])%6+6)%6;
 
     // 將第3組數字轉為「多爻變」：連續除以6取餘，0視為6；重覆爻位互相抵銷（toggle）
     function movingLinesFromNumber(g){
@@ -418,7 +442,7 @@
         if (toggled.has(idx)) toggled.delete(idx); else toggled.add(idx);
         n = Math.floor(n/6);
       }
-      return Array.from(toggled).sort((a,b)=>a-b); // 升序（1..6）
+      return Array.from(toggled).sort((a,b)=>a-b); // 升序
     }
 
     function flipMany(bits, idxArr){
@@ -427,10 +451,21 @@
       return out;
     }
 
+    // 星宿資訊行：以 Courier New 顯示；尾端帶 ■
+    function starMetaLine(xingxiu){
+      if(!xingxiu || !STAR_MAP) return "";
+      const key = String(xingxiu).replace(/宿$/,'');
+      const rec = STAR_MAP[key];
+      if(!rec) return "";
+      return `<div class="star-meta">${escapeHTML(rec.name)}：RA ${escapeHTML(rec.RA)}，Dec ${escapeHTML(rec.DEC)}。 <span class="blink-block">■</span></div>`;
+    }
+
     function headerWithMeta(label, hex){
       const ek = hex?.extra?.['卦氣'] ? `｜卦氣：${escapeHTML(hex.extra['卦氣'])}` : '';
-      const es = hex?.extra?.['星宿'] ? `｜星宿：${escapeHTML(hex.extra['星宿'])}` : '';
-      return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>`;
+      const es_raw = hex?.extra?.['星宿'] || '';
+      const es = es_raw ? `｜星宿：${escapeHTML(es_raw)}` : '';
+      const starLine = es_raw ? starMetaLine(es_raw) : '';
+      return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>${starLine}`;
     }
     function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
@@ -473,13 +508,10 @@
       const mainHex=PAIR_MAP[mainKey];
       if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 <b>${trigUp}</b>、下卦 <b>${trigLow}</b>。</div>`); return; }
 
-      // 取得「多爻變」清單（0..6）
       const movingIdx = movingLinesFromNumber(g3);   // 0-based
       const moveCount = movingIdx.length;
 
-      // 主卦位元
       const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]); // [1..6]
-      // 變卦：一次把多個爻翻轉
       const changedBits = flipMany(mainBits, movingIdx);
       const newLowName = bitsToTrig(changedBits.slice(0,3));
       const newUpName  = bitsToTrig(changedBits.slice(3,6));
@@ -495,27 +527,27 @@
         mainHex, changedHex, M_YAO, C_YAO
       });
 
-      // 標記哪些爻是「變」
-      const flag = i => movingIdx.includes(i) ? '<span class="hi">▶︎ </span>' : '';
+      // 句尾標記變爻 ▶︎
+      const flagEnd = i => movingIdx.includes(i) ? '<span class="blink-block">■</span>' : '';
 
       const html = `
         <div class="section">
           ${headerWithMeta('本卦', mainHex)}
           <div>${escapeHTML(mainHex.guaci || '')}</div>
           <div class="yao-list">
-            ${M_YAO.map((t,i)=>`<div>${flag(i)}${escapeHTML(t)}</div>`).join('')}
+            ${M_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('')}
           </div>
         </div>
         <div class="section">
           ${changedHex ? headerWithMeta('變卦', changedHex) : '<h2>變卦｜（依多爻變換卦：資料未配對）</h2>'}
           <div>${changedHex ? escapeHTML(changedHex.guaci || '') : ''}</div>
           <div class="yao-list">
-            ${changedHex ? C_YAO.map((t,i)=>`<div>${flag(i)}${escapeHTML(t)}</div>`).join('') : ''}
+            ${changedHex ? C_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('') : ''}
           </div>
 
           <div class="judgment">
             <span class="tag">斷：</span>${judge.summary}
-            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`• ${escapeHTML(s)}`).join('<br>')}</div>` : ''}
+            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}<span class="blink-block">■</span></div>` : ''}
           </div>
         </div>
       `;
@@ -561,13 +593,12 @@
         const only = [0,1,2,3,4,5].find(i => !movingIdx.includes(i));
         if (changedHex) lines.push(`${idxToName(only)}${upDown(only)}：${(C_YAO[only]||'').trim()}`);
       } else if (moveCount===6){
-        // 全變：用變卦卦辭；乾坤則用「用九／用六」
         if (changedHex){
           const isQian = /乾/.test(changedHex.gua);
           const isKun  = /坤/.test(changedHex.gua);
           let used = '';
-          if ((isQian || isKun) && C_YAO.length>=7){
-            used = C_YAO[6] || changedHex.guaci || ''; // 期待 JSON 第7條為「用九／用六」
+          if ((isQian || isKun) && (changedHex.yao||[]).length>=7){
+            used = changedHex.yao[6] || changedHex.guaci || '';
             summary = `六爻全變，${isQian?'乾':'坤'}取「用」辭。`;
           }else{
             used = changedHex.guaci || '';
@@ -578,7 +609,6 @@
           summary = '六爻全變（變卦缺資料）。';
         }
       }
-
       return {summary, lines};
     }
 
