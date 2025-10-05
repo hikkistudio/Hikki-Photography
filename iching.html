@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
   <title>I Ching | hikki photography</title>
 
   <!-- Canonical / Robots -->
@@ -30,6 +30,18 @@
 
   <link rel="icon" href="/favicon.png" type="image/png"/>
 
+  <!-- 預載數字圖：加速首次顯示與切換 -->
+  <link rel="preload" as="image" href="digits/X0.png">
+  <link rel="preload" as="image" href="digits/X1.png">
+  <link rel="preload" as="image" href="digits/X2.png">
+  <link rel="preload" as="image" href="digits/X3.png">
+  <link rel="preload" as="image" href="digits/X4.png">
+  <link rel="preload" as="image" href="digits/X5.png">
+  <link rel="preload" as="image" href="digits/X6.png">
+  <link rel="preload" as="image" href="digits/X7.png">
+  <link rel="preload" as="image" href="digits/X8.png">
+  <link rel="preload" as="image" href="digits/X9.png">
+
   <!-- Fonts / GSAP -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +65,13 @@
       --judge-accent: #e74c3c;
     }
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;background:#000;color:var(--ivory);overflow-x:hidden!important}
+    html,body{
+      height:100%;
+      background:#000;color:var(--ivory);
+      overflow-x:hidden!important;
+      overscroll-behavior-x:none;           /* 禁止水平回彈 */
+      touch-action: pan-y;                  /* 僅允許垂直滾動，禁水平 */
+    }
 
     /* ===== header / rotator ===== */
     .blink-block{display:inline-block;animation:blink3 3s infinite}
@@ -117,14 +135,16 @@
     }
     .digit{
       width:80px;height:80px; /* 視覺尺寸 */
-      display:flex;align-items:center;justify-content:center;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;background:transparent;border:none;outline:none;
       transform-style:preserve-3d;
-      transition:filter .15s ease, transform .15s ease;
-      outline:none;border:none;background:transparent;
+      transition:filter .1s ease, transform .06s ease;
+      touch-action: manipulation; /* 提升點擊反應 */
     }
+    .digit:active{ transform:scale(0.98) }
     .digit-img{
       width:100%;height:100%;object-fit:contain;image-rendering:auto;
-      animation:slowY 13s linear infinite; /* 保持旋轉 */
+      animation:slowY 13s linear infinite; /* 圖片保持旋轉；改秒數可調速 */
       transform-origin:center;
       will-change:transform;
       display:block;
@@ -137,7 +157,8 @@
     .start{
       grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
       display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
-      animation:blink3 3s steps(1,end) infinite;margin-left:2px
+      animation:blink3 3s steps(1,end) infinite;margin-left:2px;
+      touch-action: manipulation;
     }
 
     /* 右：注解（排版） */
@@ -147,15 +168,10 @@
       letter-spacing:var(--panel-letter);
       max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
     }
-    /* —— 兩端對齊：每行平均 —— */
     .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify: inter-ideograph; }
     .panel p::after{ content:"　"; display:inline-block; width:0; }
-
     .panel h2{ font-weight:200; font-size:var(--panel-fs); margin: 0 0 6px; }
-
-    /* 區塊：去掉虛線分隔 */
     .section{ padding:12px 0; border-top:none; }
-
     .yao-list{ margin-top:6px }
     .yao-list .hi{ font-family:var(--font-mono) }
 
@@ -170,15 +186,8 @@
       line-height: var(--panel-lh);
       letter-spacing: var(--panel-letter);
     }
-    .judgment .tag{
-      font-family: var(--font-mono);
-      color: var(--ivory);
-      margin-right:.5ch; opacity:.95;
-    }
-    .tokens{
-      font-family: inherit; font-size: inherit; line-height: inherit;
-      letter-spacing: inherit; opacity:.95;
-    }
+    .judgment .tag{ font-family: var(--font-mono); color: var(--ivory); margin-right:.5ch; opacity:.95; }
+    .tokens{ font-family: inherit; font-size: inherit; line-height: inherit; letter-spacing: inherit; opacity:.95; }
 
     /* 星宿等寬資訊行 */
     .star-meta{
@@ -228,33 +237,33 @@
         <div class="pad" id="pad" aria-label="number pad">
           <!-- row 1（下卦） -->
           <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <!-- row 2（上卦） -->
           <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <!-- row 3（變爻種子） -->
           <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
           <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0">
-            <img class="digit-img" src="digits/X0.png" alt="0">
+            <img class="digit-img" src="digits/X0.png" alt="0" width="160" height="160" decoding="async" loading="eager" fetchpriority="high">
           </button>
 
           <!-- row 4：開始 -->
@@ -299,37 +308,14 @@
           "i am in flames!","cbt is a lie, try carl jung。","be your own reason to smile。","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
           "빛은 거짓말하지 않아。","light reveals. shadow defines。","some people are worth melting for。","ひとりって切ないくらい自由。",
           "the name of the rose is all that remains。","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-          "shanghai fog, yes。","悲喜千般同幻夢。",
-          "欲望屬於他者。",
-          "Desire is the desire of the Other.",
-          "世界無人始，亦無人終。",
-          "The world began and ends without man。",
-          "民為貴，君為輕。",
-          "Lucky Vicky～",
-          "Beauty will save the world。",
-          "深宮似海，人人自危。",
-          "一笑傾城，再笑傾國。",
-          "Better die with fragrance。",
-          "得寵易，守寵難。",
-          "Family comes first。",
-          "活下去",
-          "Friends don’t lie。",
-          "The crown must endure。",
-          "Power is better than sex。",
-          "Love is stronger than reason。",
-          "孤獨是命運。",
-          "Poetry belongs to people。",
-          "One word of truth。",
-          "El Psy Congroo",
-          "Just keep swimming。",
-          "We’re all undercover。",
-          "War never changes。",
-          "YOU-ARE-NOT-PREPARED。",
-          "Nothing is true？",
-          "I am a real boy。",
-          "Marriage is war。",
-          "A Royale with cheese。",
-          "Don’t call me Mr. Pink。"
+          "shanghai fog, yes。","悲喜千般同幻夢。","欲望屬於他者。","Desire is the desire of the Other.",
+          "世界無人始，亦無人終。","The world began and ends without man。","民為貴，君為輕。","Lucky Vicky～",
+          "Beauty will save the world。","深宮似海，人人自危。","一笑傾城，再笑傾國。","Better die with fragrance。",
+          "得寵易，守寵難。","Family comes first。","活下去","Friends don’t lie。","The crown must endure。",
+          "Power is better than sex。","Love is stronger than reason。","孤獨是命運。","Poetry belongs to people。",
+          "One word of truth。","El Psy Congroo","Just keep swimming。","We’re all undercover。",
+          "War never changes。","YOU-ARE-NOT-PREPARED。","Nothing is true？","I am a real boy。","Marriage is war。",
+          "A Royale with cheese。","Don’t call me Mr. Pink。"
       ];
       const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
       const apply=(el,txt)=>{ if(!el)return; const c=isCJK(txt);
@@ -419,7 +405,6 @@
       .then(list=>{
         STAR_MAP = {};
         list.forEach(row=>{
-          // 假設欄位：中文名 / 英譯 / RA / DEC
           STAR_MAP[String(row["中文名"]).replace(/宿$/,'')] = {
             name: row["英譯"] || "",
             RA: row["RA"] || "",
@@ -459,7 +444,7 @@
     /* ===== 工具：數學與取辭 ===== */
     const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
 
-    // 將第3組數字轉為「多爻變」：連續除以6取餘，0視為6；重覆爻位互相抵銷（toggle）
+    // 多爻變：連續除以6取餘，0視為6；重覆互相抵銷（toggle）
     function movingLinesFromNumber(g){
       let n=(g[0]*100 + g[1]*10 + g[2]);
       const toggled=new Set();
@@ -502,13 +487,30 @@
     const startBtn = document.getElementById('start');
     const panel = document.getElementById('panel');
 
-    const imgFor = n => `digits/X${(Number(n)||0)%10}.png`;
+    // 預熱所有數字圖到瀏覽器快取（加速切換）
+    const IMG_CACHE = new Map();
+    (function warmDigits(){
+      for(let i=0;i<=9;i++){
+        const url = `digits/X${i}.png`;
+        const im = new Image();
+        im.decoding = 'async';
+        im.src = url;
+        IMG_CACHE.set(i, url);
+      }
+    })();
+
+    const imgFor = n => IMG_CACHE.get((Number(n)||0)%10) || `digits/X${(Number(n)||0)%10}.png`;
 
     function setDigit(btn, val){
       const v = (Number(val)||0)%10;
       btn.dataset.val = String(v);
       const img = btn.querySelector('.digit-img');
-      if(img){ img.src = imgFor(v); img.alt = String(v); }
+      if(img){
+        // 快速切換：從快取地址設 src（同網址命中 Cache）
+        const next = imgFor(v);
+        if (img.src !== next) img.src = next;
+        img.alt = String(v);
+      }
       btn.setAttribute('aria-label', `位 ${Number(btn.dataset.i)+1}：${v}`);
       btn.classList.remove('invalid','error-flash');
     }
@@ -516,11 +518,13 @@
     // 初始化（全部 0）
     digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
 
-    pad.addEventListener('click', e=>{
+    // 更快的點擊：使用 pointerdown（避免 click 延遲）
+    pad.addEventListener('pointerdown', e=>{
       const btn = e.target.closest('.digit'); if(!btn) return;
+      e.preventDefault(); // 防止多餘點擊延遲/雙擊縮放
       const cur = Number(btn.dataset.val)||0;
       setDigit(btn, (cur+1)%10);
-    });
+    }, {passive:false});
 
     document.addEventListener('keydown', e=>{
       if(!/^[0-9]$/.test(e.key)) return;
@@ -530,7 +534,7 @@
       }
     });
 
-    startBtn.addEventListener('click', onStart);
+    startBtn.addEventListener('pointerdown', e=>{ e.preventDefault(); onStart(); }, {passive:false});
     startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(); });
 
     function flashInvalid(el){
@@ -568,7 +572,6 @@
 
       const judge = buildJudgment({ moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO });
 
-      // 句尾標記變爻（此版保留你上次的 ■；若要 ▶︎，把下行的內容改成 '▶︎'）
       const flagEnd = i => movingIdx.includes(i) ? '<span class="blink-block">■</span>' : '';
 
       const html = `
@@ -659,6 +662,20 @@
       panel.innerHTML=inner;
       if(window._crackPanel) window._crackPanel(panel);
     }
+
+    /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放 ===== */
+    (function(){
+      // iOS Safari 手勢縮放
+      window.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
+
+      // 簡單雙擊偵測，阻止放大
+      let lastTouch = 0;
+      window.addEventListener('touchend', function(e){
+        const now = Date.now();
+        if(now - lastTouch <= 300){ e.preventDefault(); }
+        lastTouch = now;
+      }, {passive:false});
+    })();
   </script>
 </body>
 </html>
