@@ -44,18 +44,18 @@
       --font-ja: "Noto Serif JP", serif;
       --ivory: #f4f2f0; --ink: #000;
 
-      /* —— 可微調的注解排版變數 —— */
-      --panel-fs: 16px;          /* 字級 */
-      --panel-lh: 1.9;           /* 行高 */
-      --panel-letter: 0.001;      /* 字間距(英) */
-      --panel-para: 12px;        /* 段落間距 */
-      --panel-indent: 0;         /* 首行縮排（例如 2em） */
-      --judge-accent: #e74c3c;    /* 斷語左側紅線（與 header active 同色） */
+      /* 注解排版變數 */
+      --panel-fs: 16px;
+      --panel-lh: 1.9;
+      --panel-letter: 0.001;
+      --panel-para: 12px;
+      --panel-indent: 0;
+      --judge-accent: #e74c3c;
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:#000;color:var(--ivory);overflow-x:hidden!important}
 
-    /* ===== header / rotator（與 index 對齊） ===== */
+    /* ===== header / rotator ===== */
     .blink-block{display:inline-block;animation:blink3 3s infinite}
     @keyframes blink3{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
     .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -108,7 +108,7 @@
       min-height:calc(100vh - 160px);
     }
 
-    /* 數字鍵盤（第4行留給開始 ■） */
+    /* 數字鍵盤：用圖片；第4行留給開始 ■ */
     .pad{
       user-select:none;width:280px;display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -116,20 +116,31 @@
       gap:24px 28px;margin-bottom:0;
     }
     .digit{
-      font-family:var(--font-mono);font-size:72px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;
-      transform-style:preserve-3d;animation:slowY 5s linear infinite;
-      transition:color .15s ease
+      width:80px;height:80px; /* 視覺尺寸 */
+      display:flex;align-items:center;justify-content:center;cursor:pointer;
+      transform-style:preserve-3d;
+      transition:filter .15s ease, transform .15s ease;
+      outline:none;border:none;background:transparent;
+    }
+    .digit-img{
+      width:100%;height:100%;object-fit:contain;image-rendering:auto;
+      animation:slowY 13s linear infinite; /* 保持旋轉 */
+      transform-origin:center;
+      will-change:transform;
+      display:block;
     }
     @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-    .digit.error-flash{color:#ff5252;animation:none}
-    .digit.invalid{color:#ff5252}
+    .digit:focus-visible{outline:2px dashed #f1c232; outline-offset:4px}
+    .digit.invalid{filter:drop-shadow(0 0 6px #ff5252)}
+    .digit.error-flash{animation:none}
+
     .start{
       grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
       display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
       animation:blink3 3s steps(1,end) infinite;margin-left:2px
     }
 
-    /* 右：注解（字級統一，提供細緻排版控制） */
+    /* 右：注解（排版） */
     .panel{
       font-family:var(--font-ja);font-weight:200;
       font-size:var(--panel-fs); line-height:var(--panel-lh);
@@ -181,7 +192,7 @@
       .layout{grid-template-columns:1fr;gap:20px}
       .left{min-height:auto}
       .pad{width:100%;gap:18px 20px}
-      .digit{font-size:18vw}
+      .digit{width:26vw;height:26vw;max-width:120px;max-height:120px}
       .start{font-size:18vw}
       .panel{max-height:none}
     }
@@ -212,21 +223,39 @@
 
   <main>
     <div class="layout">
-      <!-- 左：數字鍵盤 -->
+      <!-- 左：數字鍵盤（圖片版） -->
       <div class="left">
         <div class="pad" id="pad" aria-label="number pad">
           <!-- row 1（下卦） -->
-          <div class="digit" data-i="0" tabindex="0">0</div>
-          <div class="digit" data-i="1" tabindex="0">0</div>
-          <div class="digit" data-i="2" tabindex="0">0</div>
+          <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
           <!-- row 2（上卦） -->
-          <div class="digit" data-i="3" tabindex="0">0</div>
-          <div class="digit" data-i="4" tabindex="0">0</div>
-          <div class="digit" data-i="5" tabindex="0">0</div>
+          <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
           <!-- row 3（變爻種子） -->
-          <div class="digit" data-i="6" tabindex="0">0</div>
-          <div class="digit" data-i="7" tabindex="0">0</div>
-          <div class="digit" data-i="8" tabindex="0">0</div>
+          <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
+          <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0">
+            <img class="digit-img" src="digits/X0.png" alt="0">
+          </button>
 
           <!-- row 4：開始 -->
           <span id="start" class="start" role="button" tabindex="0" aria-label="開始">■</span>
@@ -237,12 +266,10 @@
       <section id="panel" class="panel" aria-live="polite" aria-atomic="true">
         <div class="section">
           <p>
+            默想三組三位數，填入數字。由上至下分別為下，上，變卦。完成後按下方塊開始。<br>
             ><br>
             ><br>
-          默想三組三位數，填入左方鍵盤。由上至下分別為下，上，變卦。完成後按下方塊開始。<br>
-          ><br>
-          ><br>
-          乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
+            乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
             大畜時也，頤養也，大過顛也，坎陷也，離麗也，咸感也，恆久也，渙離也，節止也，解緩也，蹇難也，睽外也，
             家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
             豐多故也，旅不當也，巽入也，兌說也，既濟定也，未濟亂也，噬嗑食也，賁飾也，隨無故也，蠱則飭也，
@@ -256,7 +283,7 @@
 
   <!-- ===== Script ===== -->
   <script>
-    /* ===== Header Rotator（略） ===== */
+    /* ===== Header Rotator ===== */
     (function(){
       const headerEl=document.getElementById('headerTitle');
       const mobileEl=document.getElementById('mobileRotator');
@@ -329,8 +356,8 @@
     /* ===== Code-cracking（面板文字） ===== */
     (function(){
       const LAT="0123456789";
-      const CJK="乾坤屯蒙需訟師比小畜履泰否同人大有謙豫隨蠱臨觀噬嗑賁剝復無妄大畜頤大過坎離咸恆遯大壯晉明夷家人睽蹇解損益夬姤萃升困井革鼎震艮漸歸妹豐旅巽兌渙節中孚小過既濟未濟";
-      const FPS=49, LOCK_MIN=45, LOCK_MAX=60, PER_TICK=[2,3];
+      const CJK="天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏閏餘成歲律召調陽雲騰致雨露結爲霜金生麗水玉出崑岡劍號巨闕珠稱夜光";
+      const FPS=60, LOCK_MIN=45, LOCK_MAX=60, PER_TICK=[2,3];
 
       function makeState(node){
         const target=node.nodeValue;
@@ -438,11 +465,11 @@
       const toggled=new Set();
       while(n>0){
         let r = n % 6; if(r===0) r=6;
-        const idx = r-1; // 0-based: 0..5
+        const idx = r-1; // 0..5
         if (toggled.has(idx)) toggled.delete(idx); else toggled.add(idx);
         n = Math.floor(n/6);
       }
-      return Array.from(toggled).sort((a,b)=>a-b); // 升序
+      return Array.from(toggled).sort((a,b)=>a-b);
     }
 
     function flipMany(bits, idxArr){
@@ -451,7 +478,7 @@
       return out;
     }
 
-    // 星宿資訊行：以 Courier New 顯示；尾端帶 ■
+    // 星宿資訊行（Courier New；尾端帶 ■）
     function starMetaLine(xingxiu){
       if(!xingxiu || !STAR_MAP) return "";
       const key = String(xingxiu).replace(/宿$/,'');
@@ -469,36 +496,55 @@
     }
     function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
-    /* ===== 互動 ===== */
-    const pad=document.getElementById('pad');
-    const digits=[...pad.querySelectorAll('.digit')];
-    const startBtn=document.getElementById('start');
-    const panel=document.getElementById('panel');
+    /* ===== 互動：圖片數字鍵盤 ===== */
+    const pad = document.getElementById('pad');
+    const digitBtns = [...pad.querySelectorAll('.digit')];
+    const startBtn = document.getElementById('start');
+    const panel = document.getElementById('panel');
+
+    const imgFor = n => `digits/X${(Number(n)||0)%10}.png`;
+
+    function setDigit(btn, val){
+      const v = (Number(val)||0)%10;
+      btn.dataset.val = String(v);
+      const img = btn.querySelector('.digit-img');
+      if(img){ img.src = imgFor(v); img.alt = String(v); }
+      btn.setAttribute('aria-label', `位 ${Number(btn.dataset.i)+1}：${v}`);
+      btn.classList.remove('invalid','error-flash');
+    }
+
+    // 初始化（全部 0）
+    digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
 
     pad.addEventListener('click', e=>{
-      const d=e.target.closest('.digit'); if(!d) return;
-      let n=(parseInt(d.textContent,10)||0); n=(n+1)%10;
-      d.textContent=String(n); d.classList.remove('invalid','error-flash');
+      const btn = e.target.closest('.digit'); if(!btn) return;
+      const cur = Number(btn.dataset.val)||0;
+      setDigit(btn, (cur+1)%10);
     });
+
     document.addEventListener('keydown', e=>{
       if(!/^[0-9]$/.test(e.key)) return;
       const f=document.activeElement;
-      if(f&&f.classList&&f.classList.contains('digit')){
-        f.textContent=String(e.key); f.classList.remove('invalid','error-flash');
+      if(f && f.classList && f.classList.contains('digit')){
+        setDigit(f, e.key);
       }
     });
+
     startBtn.addEventListener('click', onStart);
     startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(); });
 
-    function flashInvalid(el){el.classList.add('invalid','error-flash');setTimeout(()=>el.classList.remove('error-flash'),300)}
+    function flashInvalid(el){
+      el.classList.add('invalid','error-flash');
+      setTimeout(()=>el.classList.remove('error-flash'),300);
+    }
 
     function onStart(){
-      const nums=digits.map(d=>parseInt(d.textContent,10)||0);
-      const g1=nums.slice(0,3), g2=nums.slice(3,6), g3=nums.slice(6,9);
-      const firsts=[digits[0],digits[3],digits[6]];
+      const vals = digitBtns.map(d=>Number(d.dataset.val)||0);
+      const g1=vals.slice(0,3), g2=vals.slice(3,6), g3=vals.slice(6,9);
+      const firsts=[digitBtns[0],digitBtns[3],digitBtns[6]];
       let bad=false;
       [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; flashInvalid(firsts[idx]); }});
-      if(bad){ alert('三組數字的首位不能為 0。請修正後再開始。'); return; }
+      if(bad){ alert('三組數字的首位皆不能為零。請修正。'); return; }
 
       const remLow=mod8(g1), remUp=mod8(g2);
       const trigLow=NUM_TO_TRIGRAM[remLow];
@@ -517,17 +563,12 @@
       const newUpName  = bitsToTrig(changedBits.slice(3,6));
       const changedHex = PAIR_MAP[`上:${newUpName}|下:${newLowName}`];
 
-      // 文辭
       const M_YAO = mainHex.yao || [];
       const C_YAO = changedHex ? (changedHex.yao||[]) : [];
 
-      // ——— 依規則做「斷」 ———
-      const judge = buildJudgment({
-        moveCount, movingIdx,
-        mainHex, changedHex, M_YAO, C_YAO
-      });
+      const judge = buildJudgment({ moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO });
 
-      // 句尾標記變爻 ▶︎
+      // 句尾標記變爻（此版保留你上次的 ■；若要 ▶︎，把下行的內容改成 '▶︎'）
       const flagEnd = i => movingIdx.includes(i) ? '<span class="blink-block">■</span>' : '';
 
       const html = `
@@ -551,10 +592,10 @@
           </div>
         </div>
       `;
-      renderText(html); // 觸發 code-cracking
+      renderText(html);
 
       // 歸零
-      digits.forEach(d=>{ d.textContent='0'; d.classList.remove('invalid','error-flash'); });
+      digitBtns.forEach(d=> setDigit(d, 0));
     }
 
     function buildJudgment({moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO}){
