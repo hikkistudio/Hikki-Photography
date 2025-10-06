@@ -1,304 +1,325 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>gallery | hikki photography</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 鎖縮放 & 覆蓋 iOS 安全區 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
+  <title>gallery | hikki photography</title>
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://hikki.ca/gallery.html"/>
+  <!-- Canonical -->
+  <link rel="canonical" href="https://hikki.ca/gallery.html"/>
 
-    <!-- 基本 SEO -->
-    <meta name="description" content="hikki photography gallery — weddings, portraits, pets and cities across vancouver, hong kong and macau. honest, human, emotional photography."/>
-    <meta name="robots" content="index,follow,max-image-preview:large"/>
-    <meta name="author" content="hikki photography & philosophy"/>
-    <meta name="theme-color" content="#000000"/>
+  <!-- 基本 SEO -->
+  <meta name="description" content="hikki photography gallery — weddings, portraits, pets and cities across vancouver, hong kong and macau. honest, human, emotional photography."/>
+  <meta name="robots" content="index,follow,max-image-preview:large"/>
+  <meta name="author" content="hikki photography & philosophy"/>
+  <meta name="theme-color" content="#000000"/>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="hikki photography"/>
-    <meta property="og:title" content="gallery | hikki photography"/>
-    <meta property="og:description" content="weddings, portraits, pets and cities — honest, human, emotional photography."/>
-    <meta property="og:url" content="https://hikki.ca/gallery.html"/>
-    <meta property="og:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
-    <meta property="og:image:type" content="image/webp"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="hikki photography"/>
+  <meta property="og:title" content="gallery | hikki photography"/>
+  <meta property="og:description" content="weddings, portraits, pets and cities — honest, human, emotional photography."/>
+  <meta property="og:url" content="https://hikki.ca/gallery.html"/>
+  <meta property="og:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
+  <meta property="og:image:type" content="image/webp"/>
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="gallery | hikki photography"/>
-    <meta name="twitter:description" content="weddings, portraits, pets and cities — honest, human, emotional photography."/>
-    <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="gallery | hikki photography"/>
+  <meta name="twitter:description" content="weddings, portraits, pets and cities — honest, human, emotional photography."/>
+  <meta name="twitter:image" content="https://hikki.ca/g1_vancouver_prewedding_cityview.webp"/>
 
-    <!-- 預連線 -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 預連線 -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- CJK：Noto Serif JP ExtraLight 200 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet"/>
+  <!-- CJK：Noto Serif JP ExtraLight 200 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet"/>
 
-    <!-- 首列預載 -->
-    <link rel="preload" as="image" href="g1_vancouver_prewedding_cityview.webp"/>
+  <!-- 首列預載 -->
+  <link rel="preload" as="image" href="g1_vancouver_prewedding_cityview.webp"/>
 
-    <!-- GSAP（defer） -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <!-- GSAP（defer） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
-    <style>
-      :root{
-        --mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
-        --ja: "Noto Serif JP", serif;
-        --ivory:#f4f2f0;
-        --ink:#000;
-      }
-      html{ scroll-behavior:smooth; }
-      body{ margin:0; padding:0; font-family:var(--mono); background:#000; color:#000; }
-      [lang^="zh"],[lang="ja"],.ja{ font-family:var(--ja)!important; font-weight:200!important; }
-
-      /* scroll lock when lightbox is open */
-      html.scroll-lock, body.scroll-lock{ overflow:hidden; height:100%; touch-action:none; }
-
-      .sr-only{
-        position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
-        overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
-      }
-
-      /* Mobile rotator */
-      .mobile-rotator{
-        position:fixed; top:0; left:0; width:100%; height:36px;
-        background:var(--ivory); color:#000; display:none;
-        align-items:center; justify-content:center; padding:0 12px;
-        box-sizing:border-box; z-index:10001; font-size:14px; line-height:1;
-        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-        pointer-events:none;
-      }
-      .mobile-rotator.ja{ font-family:var(--ja)!important; font-weight:200!important; }
-
-      /* Header */
-      .header-bar{
-        position:fixed; top:0; left:0; width:100%; height:60px;
-        background:var(--ivory); display:flex; align-items:center;
-        padding:0 40px; box-sizing:border-box; z-index:9999;
-      }
-      .header-title{ margin-right:auto; font-size:18px; overflow:hidden; white-space:nowrap; will-change:transform,opacity; }
-      .header-title.ja{ font-family:var(--ja)!important; font-weight:200!important; }
-
-      /* nav container for the four links (desktop: keep spacing) */
-      .nav-links{ display:flex; align-items:center; margin-left:auto; gap:40px; }
-      .header-bar a{
-        font-size:18px; color:#000; text-decoration:none; transition:color .3s;
-        display:inline-flex; align-items:center; justify-content:center;
-        min-width:24px; height:28px; line-height:1;
-        text-transform:lowercase;
-      }
-      .header-bar a:hover{ color:#f1c232; }
-      .header-bar a.active{ color:#e74c3c; }
-
-      /* iching square */
-      .nav-links a.iching .label{ display:none; } /* only show the ■ visually */
-      .blink-block{ display:inline-block; animation:blink3 3s infinite; }
-      @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
-
-      .header-spacer{ height:60px; }
-
-      /* Filter bar */
-      .filter-bar{
-        width:100%; background:#000; border-bottom:1px solid #000;
-        display:flex; align-items:center; gap:10px; padding:10px 40px;
-        box-sizing:border-box; overflow-x:auto; -webkit-overflow-scrolling:touch;
-        position:sticky; top:60px; z-index:5;
-      }
-      .filter-label{ font-size:14px; color:#f4f2f0; margin-right:8px; white-space:nowrap;
-        font-family:var(--mono)!important; font-feature-settings:"liga" 0;
-      }
-      .filter-btn{
-        appearance:none; border:1px solid #f4f2f0; background:#fff; color:#222; padding:6px 12px; font-size:14px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap;
-        font-family:var(--mono)!important; font-feature-settings:"liga" 0;
-        text-transform:lowercase;
-      }
-      .filter-btn:hover{ background:#f4f2f0; border-color:#f4f2f0; }
-      .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
-
-      /* Gallery */
-      .gallery-wrapper{ position:relative; z-index:2; max-width:1200px; margin:0 auto 20px; padding:20px 10px 10px; box-sizing:border-box; }
-      .gallery{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-      .gallery img{ width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; object-fit:cover; background:#111; cursor:pointer; transition:transform .3s, opacity .2s; content-visibility:auto; contain-intrinsic-size:400px 267px; opacity:0; transform:translateY(14px); }
-      .gallery img:hover{ transform:scale(1.03); }
-
-      /* 背景座標板 */
-      .coord-backdrop{ position:fixed; inset:0; background:#000; z-index:0; pointer-events:none; }
-      .coord-panel{ position:absolute; left:24px; right:24px; top:60px; bottom:24px; display:grid; grid-auto-rows:min-content; row-gap:6px; align-content:start; overflow:hidden; }
-      .coord-line{ font-family:var(--mono); font-size:12px; line-height:1.2; letter-spacing:-0.005em; color:#f4f2f0; opacity:.22; white-space:pre; user-select:none; }
-      .coord-line .city{ display:inline-block; width:16ch; margin-right:5ch; }
-
-      .load-more-wrap{ display:flex; justify-content:center; padding:16px 0 32px; }
-      .load-more-btn{ appearance:none; border:1px solid #f4f2f0; background:#000; color:#f4f2f0; padding:10px 18px; font-size:14px; border-radius:999px; cursor:pointer; }
-      .load-more-btn:hover{ background:#111; }
-      .no-results{ color:#f4f2f0; text-align:center; padding:24px 0; font-size:14px; }
-
-      /* Lightbox */
-      .overlay{ position:fixed; inset:0; display:flex; justify-content:center; align-items:center; flex-direction:column; background:rgba(0,0,0,.9); z-index:10002; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s, visibility .25s step-end; }
-      .overlay.open{ opacity:1; visibility:visible; pointer-events:auto; transition:opacity .25s, visibility 0s; }
-      .overlay img{ max-width:min(94vw, 1400px); max-height:88vh; box-shadow:0 8px 32px rgba(0,0,0,.6); }
-      @keyframes zoomFadeIn{ from{opacity:0; transform:scale(.985)} to{opacity:1; transform:scale(1)} }
-      .overlay.open img{ animation:zoomFadeIn .25s ease both; }
-      .close-btn{ position:absolute; top:16px; right:16px; width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:26px; line-height:1; color:#f4f2f0; background:rgba(255,255,255,.06); border-radius:999px; cursor:pointer; transition:.2s; }
-      .close-btn:hover{ background:rgba(255,255,255,.12); }
-
-      /* ===== Mobile (<=767px) ===== */
-      @media (max-width:767px){
-        .mobile-rotator{ display:flex; }
-        .header-bar{ top:36px; padding:0; }
-        .header-title{ display:none!important; }
-
-        /* ■ on the far left, three links on the right; keep ~2ch gutters left & right */
-        .nav-links{
-          width: calc(100% - 4ch);
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 2.2ch 1fr 1fr 1fr;
-          align-items: center;
-          justify-items: center;
-          gap: 0;
-        }
-        .nav-links a{ margin:0; min-width:0; height:36px; line-height:36px; }
-        .nav-links a.iching{ justify-self:start; }
-
-        .header-spacer{ height:96px; }              /* 36 + 60 */
-        .filter-bar{ top:96px; position:sticky; padding:10px 16px; }
-
-        /* gallery: two columns */
-        .gallery{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; justify-items:stretch; }
-        .gallery img{ width:100%; min-width:0; }
-        .gallery .ph{ width:auto!important; }
-        .coord-panel{ top:96px; }
-        .filter-btn{ font-size:12px; padding:7px 10px; }
-      }
-
-      /* Tablet */
-      @media (min-width:768px) and (max-width:1199px){
-        .gallery img{ width:calc(33.333% - 10px); }
-      }
-
-      /* === Photo Holder（舊風格 + 掃描線） === */
-      .gallery .ph{ position:relative; width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; display:block; overflow:hidden; }
-      .gallery .ph > img{ width:100%!important; height:100%!important; object-fit:cover; display:block; }
-      @media (max-width:768px){ .gallery .ph{ width:calc(50% - 10px); } }
-
-      .ph .ph-mask{
-        position:absolute; inset:0; background:#000; color:#f4f2f0;
-        display:flex; align-items:center; justify-content:center; font-family:var(--mono);
-        user-select:none; pointer-events:none; opacity:1; transition:opacity .18s ease;
-      }
-      .ph .ph-mask::before{
-        content:""; position:absolute; inset:0;
-        background:
-          linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0) 60%),
-          repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px);
-        mix-blend-mode: overlay; opacity:.25;
-        animation: scan 3.2s linear infinite;
-      }
-      @keyframes scan{ 0%{ transform:translateY(0) } 100%{ transform:translateY(-6px) } }
-      .ph .ph-mask.fade{ opacity:0; }
-
-      .ph .ph-txt{ position:relative; text-align:center; white-space:pre; font-size:11px; line-height:1.25; opacity:.95; }
-      .ph .blink{ opacity:.45; animation:blink 1.8s ease-in-out infinite; }
-      @keyframes blink{ 0%,100%{opacity:.35} 50%{opacity:.95} }
-
-      .gallery img[data-mask]{ position:relative; display:block; }
-      .gallery img[data-mask]::before{
-        content:""; position:absolute; inset:0; pointer-events:none; width:6px; height:6px; border-radius:999px; background:#9df3bf;
-        transform: translate(calc(var(--dot-x,50%) - 50%), calc(var(--dot-y,50%) - 50%)); box-shadow:0 0 10px rgba(157,243,191,.65); opacity:.85;
-      }
-      .gallery img[data-mask]::after{
-        content: attr(data-ph-label);
-        position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-        font:11px/1.25 var(--mono); color:#b7f0cc; white-space:pre; text-align:center; pointer-events:none; opacity:1; transition:opacity .18s ease;
-      }
-      .gallery img.is-loaded[data-mask]::before,
-      .gallery img.is-loaded[data-mask]::after{ opacity:0; }
-    </style>
-
-    <noscript><style>.gallery img{opacity:1!important;transform:none!important}</style></noscript>
-
-    <!-- JSON-LD: WebSite -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebSite",
-      "name":"hikki photography",
-      "url":"https://hikki.ca/",
-      "potentialAction":{
-        "@type":"SearchAction",
-        "target":"https://hikki.ca/?s={search_term_string}",
-        "query-input":"required name=search_term_string"
-      }
+  <style>
+    :root{
+      --mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
+      --ja: "Noto Serif JP", serif;
+      --ivory:#f4f2f0;
+      --ink:#000;
     }
-    </script>
-
-    <!-- JSON-LD: Organization / Brand / LocalBusiness / Person / Nav -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@graph":[
-        { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki photography & philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
-        { "@type":"Organization","@id":"https://hikki.ca/#org","name":"hikki photography & philosophy","url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","brand":{"@id":"https://hikki.ca/#brand"} },
-        { "@type":"LocalBusiness","@id":"https://hikki.ca/#business","name":"hikki photography","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","image":"https://hikki.ca/favicon.png","priceRange":"$$","areaServed":"greater vancouver","address":{"@type":"PostalAddress","addressLocality":"vancouver","addressRegion":"bc","addressCountry":"ca"},"telephone":"+1-250-986-9516","brand":{"@id":"https://hikki.ca/#brand"} },
-        { "@type":"Person","@id":"https://hikki.ca/#founder","name":"alex hikki–iao","alternateName":["hikki","hikki photo"],"jobTitle":"photographer","worksFor":{"@id":"https://hikki.ca/#business"},"url":"https://hikki.ca/","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
-        { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-iching","name":"i ching","url":"https://hikki.ca/iching.html" },
-        { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"about","url":"https://hikki.ca/" },
-        { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"gallery","url":"https://hikki.ca/gallery.html" },
-        { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"contact","url":"https://hikki.ca/contact.html" }
-      ]
+    html{
+      scroll-behavior:smooth;
+      /* 禁左右平移 & 慣性回彈 */
+      overscroll-behavior-x:none;
+      /* 僅允許垂直手勢（避免橫向移動） */
+      touch-action: pan-y;
     }
-    </script>
-
-    <!-- JSON-LD: Breadcrumbs -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"BreadcrumbList",
-      "itemListElement":[
-        { "@type":"ListItem","position":1,"name":"about","item":"https://hikki.ca/"},
-        { "@type":"ListItem","position":2,"name":"gallery","item":"https://hikki.ca/gallery.html"},
-        { "@type":"ListItem","position":3,"name":"contact","item":"https://hikki.ca/contact.html"},
-        { "@type":"ListItem","position":4,"name":"i ching","item":"https://hikki.ca/iching.html"}
-      ]
+    body{
+      margin:0; padding:0; font-family:var(--mono); background:#000; color:#000;
+      /* 徹底關掉水平捲動 */
+      overflow-x:hidden;
+      -webkit-text-size-adjust:100%;
     }
-    </script>
-  </head>
-  <body>
-    <!-- 背景座標 -->
-    <div class="coord-backdrop" aria-hidden="true"><div class="coord-panel" id="coordPanel"></div></div>
+    [lang^="zh"],[lang="ja"],.ja{ font-family:var(--ja)!important; font-weight:200!important; }
 
-    <!-- Mobile rotator -->
-    <div class="mobile-rotator" id="mobileRotator" aria-live="polite" lang="en">of time, souls and cities.</div>
+/* 取代原本有 height:100% 的版本 */
+html.scroll-lock, body.scroll-lock{
+  touch-action: none;              /* 禁止背景觸控滑動 */
+  overscroll-behavior: contain;    /* 防止 iOS 橡皮筋 */
+}
 
-    <!-- Header -->
-    <div class="header-bar" role="navigation" aria-label="primary">
-      <div class="header-title" id="headerTitle" lang="en">of time, souls and cities.</div>
-      <nav class="nav-links" aria-label="site">
-        <a href="iching.html" class="iching" aria-label="iching / i ching">
-          <span class="blink-block" aria-hidden="true">■</span>
-          <span class="label sr-only">i ching</span>
-        </a>
-        <a href="index.html">about</a>
-        <a href="gallery.html" class="active">gallery</a>
-        <a href="contact.html">contact</a>
-      </nav>
-    </div>
-    <div class="header-spacer" aria-hidden="true"></div>
+    .sr-only{
+      position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
 
-    <!-- Filter（字體已強制 Courier New） -->
-    <div class="filter-bar" role="toolbar" aria-label="gallery filters">
-      <span class="filter-label"></span>
-      <button class="filter-btn" data-filter="Souls"   aria-pressed="false">souls</button>
-      <button class="filter-btn" data-filter="Times"   aria-pressed="false">times</button>
-      <button class="filter-btn" data-filter="Cities"  aria-pressed="false">cities</button>
-      <button class="filter-btn" data-filter="Friends" aria-pressed="false">friends</button>
-    </div>
-    <div class="gallery-wrapper" id="gallery">
-      <div class="gallery">
-        <!-- 下方清單保持原樣；修正個別檔名拼字 -->
+    /* Mobile rotator */
+    .mobile-rotator{
+      position:fixed; top:0; left:0; width:100%; height:36px;
+      background:var(--ivory); color:#000; display:none;
+      align-items:center; justify-content:center; padding:0 12px;
+      box-sizing:border-box; z-index:10001; font-size:14px; line-height:1;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      pointer-events:none;
+    }
+    .mobile-rotator.ja{ font-family:var(--ja)!important; font-weight:200!important; }
+
+    /* Header */
+    .header-bar{
+      position:fixed; top:0; left:0; width:100%; height:60px;
+      background:var(--ivory); display:flex; align-items:center;
+      padding:0 40px; box-sizing:border-box; z-index:9999;
+    }
+    .header-title{ margin-right:auto; font-size:18px; overflow:hidden; white-space:nowrap; will-change:transform,opacity; }
+    .header-title.ja{ font-family:var(--ja)!important; font-weight:200!important; }
+
+    /* nav container for the four links (desktop: keep spacing) */
+    .nav-links{ display:flex; align-items:center; margin-left:auto; gap:40px; }
+    .header-bar a{
+      font-size:18px; color:#000; text-decoration:none; transition:color .3s;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:24px; height:28px; line-height:1;
+      text-transform:lowercase;
+    }
+    .header-bar a:hover{ color:#f1c232; }
+    .header-bar a.active{ color:#e74c3c; }
+
+    /* iching square */
+    .nav-links a.iching .label{ display:none; } /* only show the ■ visually */
+    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
+    @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+
+    .header-spacer{ height:60px; }
+
+    /* Filter bar */
+    .filter-bar{
+      width:100%; background:#000; border-bottom:1px solid #000;
+      display:flex; align-items:center; gap:10px; padding:10px 40px;
+      box-sizing:border-box; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      position:sticky; top:60px; z-index:5;
+    }
+    .filter-label{ font-size:14px; color:#f4f2f0; margin-right:8px; white-space:nowrap;
+      font-family:var(--mono)!important; font-feature-settings:"liga" 0;
+    }
+    .filter-btn{
+      appearance:none; border:1px solid #f4f2f0; background:#fff; color:#222; padding:6px 12px; font-size:14px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap;
+      font-family:var(--mono)!important; font-feature-settings:"liga" 0;
+      text-transform:lowercase;
+    }
+    .filter-btn:hover{ background:#f4f2f0; border-color:#f4f2f0; }
+    .filter-btn.active{ background:#000; color:#f4f2f0; border-color:#e74c3c; }
+
+    /* Gallery */
+    .gallery-wrapper{ position:relative; z-index:2; max-width:1200px; margin:0 auto 20px; padding:20px 10px 10px; box-sizing:border-box; }
+    .gallery{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .gallery img{ width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; object-fit:cover; background:#111; cursor:pointer; transition:transform .3s, opacity .2s; content-visibility:auto; contain-intrinsic-size:400px 267px; opacity:0; transform:translateY(14px); }
+    .gallery img:hover{ transform:scale(1.03); }
+
+    /* 背景座標板 */
+    .coord-backdrop{ position:fixed; inset:0; background:#000; z-index:0; pointer-events:none; }
+    .coord-panel{ position:absolute; left:24px; right:24px; top:60px; bottom:24px; display:grid; grid-auto-rows:min-content; row-gap:6px; align-content:start; overflow:hidden; }
+    .coord-line{ font-family:var(--mono); font-size:12px; line-height:1.2; letter-spacing:-0.005em; color:#f4f2f0; opacity:.22; white-space:pre; user-select:none; }
+    .coord-line .city{ display:inline-block; width:16ch; margin-right:5ch; }
+
+    .load-more-wrap{ display:flex; justify-content:center; padding:16px 0 32px; }
+    .load-more-btn{
+      appearance:none; border:1px solid #f4f2f0; background:#000; color:#f4f2f0;
+      padding:10px 18px; font-size:14px; border-radius:999px; cursor:pointer;
+      /* 強制 Courier New */
+      font-family:var(--mono)!important; font-feature-settings:"liga" 0;
+      text-transform:lowercase;
+    }
+    .load-more-btn:hover{ background:#111; }
+    .no-results{ color:#f4f2f0; text-align:center; padding:24px 0; font-size:14px; }
+
+    /* Lightbox */
+    .overlay{ position:fixed; inset:0; display:flex; justify-content:center; align-items:center; flex-direction:column; background:rgba(0,0,0,.9); z-index:10002; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s, visibility .25s step-end; }
+    .overlay.open{ opacity:1; visibility:visible; pointer-events:auto; transition:opacity .25s, visibility 0s; }
+    .overlay img{ max-width:min(94vw, 1400px); max-height:88vh; box-shadow:0 8px 32px rgba(0,0,0,.6); }
+    @keyframes zoomFadeIn{ from{opacity:0; transform:scale(.985)} to{opacity:1; transform:scale(1)} }
+    .overlay.open img{ animation:zoomFadeIn .25s ease both; }
+    .close-btn{ position:absolute; top:16px; right:16px; width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:26px; line-height:1; color:#f4f2f0; background:rgba(255,255,255,.06); border-radius:999px; cursor:pointer; transition:.2s; }
+    .close-btn:hover{ background:rgba(255,255,255,.12); }
+
+    /* ===== Mobile (<=767px) ===== */
+    @media (max-width:767px){
+      .mobile-rotator{ display:flex; }
+      .header-bar{ top:36px; padding:0; }
+      .header-title{ display:none!important; }
+
+      /* ■ on the far left, three links on the right; keep ~2ch gutters left & right */
+      .nav-links{
+        width: calc(100% - 4ch);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2.2ch 1fr 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 0;
+      }
+      .nav-links a{ margin:0; min-width:0; height:36px; line-height:36px; }
+      .nav-links a.iching{ justify-self:start; }
+
+      .header-spacer{ height:96px; }              /* 36 + 60 */
+      .filter-bar{ top:96px; position:sticky; padding:10px 16px; }
+
+      /* gallery: two columns */
+      .gallery{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; justify-items:stretch; }
+      .gallery img{ width:100%; min-width:0; }
+      .gallery .ph{ width:auto!important; }
+      .coord-panel{ top:96px; }
+      .filter-btn{ font-size:12px; padding:7px 10px; }
+    }
+
+    /* Tablet */
+    @media (min-width:768px) and (max-width:1199px){
+      .gallery img{ width:calc(33.333% - 10px); }
+    }
+
+    /* === Photo Holder（舊風格 + 掃描線） === */
+    .gallery .ph{ position:relative; width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; display:block; overflow:hidden; }
+    .gallery .ph > img{ width:100%!important; height:100%!important; object-fit:cover; display:block; }
+    @media (max-width:768px){ .gallery .ph{ width:calc(50% - 10px); } }
+
+    .ph .ph-mask{
+      position:absolute; inset:0; background:#000; color:#f4f2f0;
+      display:flex; align-items:center; justify-content:center; font-family:var(--mono);
+      user-select:none; pointer-events:none; opacity:1; transition:opacity .18s ease;
+    }
+    .ph .ph-mask::before{
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0) 60%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px);
+      mix-blend-mode: overlay; opacity:.25;
+      animation: scan 3.2s linear infinite;
+    }
+    @keyframes scan{ 0%{ transform:translateY(0) } 100%{ transform:translateY(-6px) } }
+    .ph .ph-mask.fade{ opacity:0; }
+
+    .ph .ph-txt{ position:relative; text-align:center; white-space:pre; font-size:11px; line-height:1.25; opacity:.95; }
+    .ph .blink{ opacity:.45; animation:blink 1.8s ease-in-out infinite; }
+    @keyframes blink{ 0%,100%{opacity:.35} 50%{opacity:.95} }
+
+    .gallery img[data-mask]{ position:relative; display:block; }
+    .gallery img[data-mask]::before{
+      content:""; position:absolute; inset:0; pointer-events:none; width:6px; height:6px; border-radius:999px; background:#9df3bf;
+      transform: translate(calc(var(--dot-x,50%) - 50%), calc(var(--dot-y,50%) - 50%)); box-shadow:0 0 10px rgba(157,243,191,.65); opacity:.85;
+    }
+    .gallery img[data-mask]::after{
+      content: attr(data-ph-label);
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      font:11px/1.25 var(--mono); color:#b7f0cc; white-space:pre; text-align:center; pointer-events:none; opacity:1; transition:opacity .18s ease;
+    }
+    .gallery img.is-loaded[data-mask]::before,
+    .gallery img.is-loaded[data-mask]::after{ opacity:0; }
+  </style>
+
+  <noscript><style>.gallery img{opacity:1!important;transform:none!important}</style></noscript>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"hikki photography",
+    "url":"https://hikki.ca/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://hikki.ca/?s={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: Organization / Brand / LocalBusiness / Person / Nav -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      { "@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki photography & philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"Organization","@id":"https://hikki.ca/#org","name":"hikki photography & philosophy","url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","brand":{"@id":"https://hikki.ca/#brand"} },
+      { "@type":"LocalBusiness","@id":"https://hikki.ca/#business","name":"hikki photography","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","image":"https://hikki.ca/favicon.png","priceRange":"$$","areaServed":"greater vancouver","address":{"@type":"PostalAddress","addressLocality":"vancouver","addressRegion":"bc","addressCountry":"ca"},"telephone":"+1-250-986-9516","brand":{"@id":"https://hikki.ca/#brand"} },
+      { "@type":"Person","@id":"https://hikki.ca/#founder","name":"alex hikki–iao","alternateName":["hikki","hikki photo"],"jobTitle":"photographer","worksFor":{"@id":"https://hikki.ca/#business"},"url":"https://hikki.ca/","sameAs":["https://www.instagram.com/hikki_with_her_camera"] },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-iching","name":"i ching","url":"https://hikki.ca/iching.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-about","name":"about","url":"https://hikki.ca/" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-gallery","name":"gallery","url":"https://hikki.ca/gallery.html" },
+      { "@type":"SiteNavigationElement","@id":"https://hikki.ca/#nav-contact","name":"contact","url":"https://hikki.ca/contact.html" }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      { "@type":"ListItem","position":1,"name":"about","item":"https://hikki.ca/"},
+      { "@type":"ListItem","position":2,"name":"gallery","item":"https://hikki.ca/gallery.html"},
+      { "@type":"ListItem","position":3,"name":"contact","item":"https://hikki.ca/contact.html"},
+      { "@type":"ListItem","position":4,"name":"i ching","item":"https://hikki.ca/iching.html"}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- 背景座標 -->
+  <div class="coord-backdrop" aria-hidden="true"><div class="coord-panel" id="coordPanel"></div></div>
+
+  <!-- Mobile rotator -->
+  <div class="mobile-rotator" id="mobileRotator" aria-live="polite" lang="en">of time, souls and cities.</div>
+
+  <!-- Header -->
+  <div class="header-bar" role="navigation" aria-label="primary">
+    <div class="header-title" id="headerTitle" lang="en">of time, souls and cities.</div>
+    <nav class="nav-links" aria-label="site">
+      <a href="iching.html" class="iching" aria-label="iching / i ching">
+        <span class="blink-block" aria-hidden="true">■</span>
+        <span class="label sr-only">i ching</span>
+      </a>
+      <a href="index.html">about</a>
+      <a href="gallery.html" class="active">gallery</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+  <div class="header-spacer" aria-hidden="true"></div>
+
+  <!-- Filter（字體已強制 Courier New） -->
+  <div class="filter-bar" role="toolbar" aria-label="gallery filters">
+    <span class="filter-label"></span>
+    <button class="filter-btn" data-filter="Souls"   aria-pressed="false">souls</button>
+    <button class="filter-btn" data-filter="Times"   aria-pressed="false">times</button>
+    <button class="filter-btn" data-filter="Cities"  aria-pressed="false">cities</button>
+    <button class="filter-btn" data-filter="Friends" aria-pressed="false">friends</button>
+  </div>
+
+  <div class="gallery-wrapper" id="gallery">
+    <div class="gallery">
         <img src="g1_vancouver_prewedding_cityview.webp"  alt="Photo 1"  loading="lazy" decoding="async" data-cat="Times, Souls">
         <img src="g2_hongkong_art_skyscraper.webp"         alt="Photo 2"  loading="lazy" decoding="async" data-cat="Cities">
         <img src="g3_portrait_with_orange_tabby.webp"     alt="Photo 3"  loading="lazy" decoding="async" data-cat="Friends">
@@ -470,13 +491,13 @@
         <img src="g169_Vancouver_downtown_harbour_woodward_construction_modern_city_mist_rain_winter_crane_fraser.webp" alt="Photo 169" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g170_Vancouver_downtown_harbour_woodward_construction_modern_city_mist_rain_winter_crane_fraser_signage.webp" alt="Photo 170" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g171_polaroid_wedding_vintage_film_color_gradient_photographer_mountain_girls.jpg" alt="Photo 171" loading="lazy" decoding="async" data-cat="Cities">
-        <img src="g172_polaroid_wedding_vintage_film_color_gradient_photographer_bride_arch_fairmount.jpg" alt="Photo 172" loading="lazy" decoding="async" data-cat="Cities, Times">
-        <img src="g173_polaroid_wedding_vintage_film_color_gradient_photographer_real_life_moment.jpg" alt="Photo 173" loading="lazy" decoding="async" data-cat="Cities, Times">
-        <img src="g174_polaroid_wedding_vintage_film_color_gradient_photographer_girls_chic_drink_party.jpg" alt="Photo 174" loading="lazy" decoding="async" data-cat="Cities, Times">
-        <img src="g175_polaroid_wedding_vintage_film_color_gradient_photographer_friendship_moment_real_life.jpg" alt="Photo 175" loading="lazy" decoding="async" data-cat="Cities, Times">
+        <img src="g172_polaroid_wedding_vintage_film_color_gradient_photographer_bride_arch_fairmount.jpg" alt="Photo 172" loading="lazy" decoding="async" data-cat="Times">
+        <img src="g173_polaroid_wedding_vintage_film_color_gradient_photographer_real_life_moment.jpg" alt="Photo 173" loading="lazy" decoding="async" data-cat="Times">
+        <img src="g174_polaroid_wedding_vintage_film_color_gradient_photographer_girls_chic_drink_party.jpg" alt="Photo 174" loading="lazy" decoding="async" data-cat="Times">
+        <img src="g175_polaroid_wedding_vintage_film_color_gradient_photographer_friendship_moment_real_life.jpg" alt="Photo 175" loading="lazy" decoding="async" data-cat="Times">
         <img src="g176_whistler_Ski_snow_mountain_village_woman_bench_cross_road_filmic.jpg" alt="Photo 176" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g177_polaroid_wedding_vintage_film_color_gradient_photographer_professional_bride_shot_lighting.jpg" alt="Photo 177" loading="lazy" decoding="async" data-cat="Times">
-        <img src="g178_polaroid_wedding_vintage_film_color_gradient_photographer_bride_arch_door_fairmount_hotel_empress.jpg" alt="Photo 178" loading="lazy" decoding="async" data-cat="Cities, Times">
+        <img src="g178_polaroid_wedding_vintage_film_color_gradient_photographer_bride_arch_door_fairmount_hotel_empress.jpg" alt="Photo 178" loading="lazy" decoding="async" data-cat="Times">
         <img src="g179_polaroid_wedding_vintage_film_color_gradient_photographer_party_friends_library.jpg" alt="Photo 179" loading="lazy" decoding="async" data-cat="Times">
         <img src="g180_polaroid_wedding_vintage_film_color_gradient_photographer_bride_portrait_close_up.jpg" alt="Photo 180" loading="lazy" decoding="async" data-cat="Times, Souls">
         <img src="g181_Vancouver_plants_still_life_nature_coloring_romantic_scene_filmic_film_photographer.webp" alt="Photo 181" loading="lazy" decoding="async" data-cat="Cities">
@@ -527,295 +548,315 @@
         <img src="g226_Victoria_Canada_photograher_portrait_prewedding_city_street_china_town_eye_color_grading.webp" alt="Photo 226" loading="lazy" decoding="async" data-cat="Souls">
         <img src="g227_Victoria_Canada_photograher_portrait_prewedding_city_street_market_square_dt_red_brick.webp" alt="Photo 227" loading="lazy" decoding="async" data-cat="Souls">
         <img src="g228_hongkong_night_city_glow_canon_street_in_rain_shenzhen.webp" alt="Photo 228" loading="lazy" decoding="async" data-cat="Cities">
-
-     </div> 
-
-<div class="load-more-wrap">
-  <button id="loadMore" class="load-more-btn">load more</button>
-</div>
-<div id="noResults" class="no-results" hidden>no images found.</div>
-
-</div> <!-- 🔚 關閉 .gallery-wrapper，這行你也少了 -->
-
-    <!-- Lightbox -->
-    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
-      <span class="close-btn" id="closeBtn" aria-label="close">×</span>
-      <img src="" alt="expanded photo" id="overlayImg">
+        <img src="g229_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_.webp" alt="Photo 229" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g230_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_downtown_woman_business_flea_craft.webp" alt="Photo 230" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g231_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_breakfest_girl_working_brunch.webp" alt="Photo 231" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g232_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_energy_new_age_occultist.webp" alt="Photo 232" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g233_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_wetmarket_fashion_sunglasses.webp" alt="Photo 233" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g234_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_wetmarket_stilllife.webp" alt="Photo 234" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g235_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_wetmarket_girl_lottery_glow.webp" alt="Photo 235" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g236_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_hmart_family_grocery_whitevan.webp" alt="Photo 236" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g237_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_capilano_sea_and_sky_mountain_dam.webp" alt="Photo 237" loading="lazy" decoding="async" data-cat="Cities">
+        <img src="g238_Canada_vancouver_coquitlam_burnaby_city_view_photographer_city_yellow_cat_tabby_coon.webp" alt="Photo 238" loading="lazy" decoding="async" data-cat="Friends">
     </div>
 
-    <!-- header copy rotator -->
-    <script>
-      const sentences=[
-                  "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
-            "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
-            "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
-            "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
-            "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
-            "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
-            "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
-            "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy.",
-            "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-            "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
-            "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-            "shanghai fog, yes.","悲喜千般同幻夢。",
-            "欲望屬於他者。",
-            "Desire is the desire of the Other.",
-            "世界無人始，亦無人終。",
-            "The world began and ends without man.",
-            "民為貴，君為輕。",
-            "Lucky Vicky～",
-            "Beauty will save the world.",
-            "深宮似海，人人自危。",
-            "一笑傾城，再笑傾國。",
-            "Better die with fragrance.",
-            "得寵易，守寵難。",
-            "Family comes first.",
-            "活下去",
-            "Friends don’t lie.",
-            "The crown must endure.",
-            "Power is better than sex.",
-            "Love is stronger than reason.",
-            "孤獨是命運。",
-            "Poetry belongs to people.",
-            "One word of truth.",
-            "El Psy Congroo",
-            "Just keep swimming.",
-            "We’re all undercover.",
-            "War never changes.",
-            "YOU-ARE-NOT-PREPARED.",
-            "Nothing is true？",
-            "I am a real boy.",
-            "Marriage is war.",
-            "A Royale with cheese.",
-            "Don’t call me Mr. Pink."
-          ];
-      const headerEl=document.getElementById("headerTitle");
-      const mobileEl=document.getElementById("mobileRotator");
-      let lastIndex=-1;
-      const rnd=(ex)=>{let i;do{i=Math.floor(Math.random()*sentences.length);}while(i===ex);return i;};
-      const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF]/.test(s);
-      function applyText(el,text){
-        if(!el) return;
-        el.classList.toggle("ja",isCJK(text));
-        el.classList.toggle("en",!isCJK(text));
-        el.setAttribute('lang', isCJK(text)?'ja':'en');
-        el.textContent=text;
-      }
-      function animateHeader(){
-        const next=rnd(lastIndex); lastIndex=next; const text=sentences[next];
-        [headerEl,mobileEl].filter(Boolean).forEach(t=>{
-          gsap.to(t,{y:-16,opacity:0,duration:.25,ease:"power1.in",onComplete(){
-            applyText(t,text); gsap.set(t,{y:16}); gsap.to(t,{y:0,opacity:1,duration:.35,ease:"power1.out"});
-          }});
-        });
-      }
-      document.addEventListener('DOMContentLoaded', animateHeader);
-      setInterval(animateHeader, 4000);
-    </script>
+    <div class="load-more-wrap">
+      <button id="loadMore" class="load-more-btn">load more</button>
+    </div>
+    <div id="noResults" class="no-results" hidden>no images found.</div>
+  </div>
 
-    <!-- Gallery + 遮罩 -->
-    <script>
-    (()=> {
-      const galleryEl=document.querySelector('.gallery');
-      const overlay=document.getElementById('overlay');
-      const overlayImg=document.getElementById('overlayImg');
-      const closeBtn=document.getElementById('closeBtn');
-      if(!galleryEl) return;
+  <!-- Lightbox -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <span class="close-btn" id="closeBtn" aria-label="close">×</span>
+    <img src="" alt="expanded photo" id="overlayImg">
+  </div>
 
-      /* 每日穩定亂序 */
-      (function dailyShuffle(){
-        try{
-          const tz='America/Vancouver';
-          const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
-          const fnv1a=str=>{let h=0x811c9dc5>>>0; for(let i=0;i<str.length;i++){h^=str.charCodeAt(i); h=Math.imul(h,0x01000193);} return h>>>0;};
-          const keyOf=el=>fnv1a(`${today}|${el.getAttribute('src')||''}|${el.getAttribute('alt')||''}`);
-          const items=Array.from(galleryEl.querySelectorAll('img')).map(el=>[keyOf(el),el]).sort((a,b)=>a[0]-b[0]).map(([,el])=>el);
-          items.forEach(el=>galleryEl.appendChild(el));
-        }catch(e){}
-      })();
-      const CITIES_FOR_MASK=["Vancouver","Victoria","Hong Kong","Macau","Tokyo","Kyoto","Osaka","Seoul","Taipei","Shanghai","Beijing","Shenzhen","Guangzhou","Singapore","Bangkok","Jakarta","Kuala Lumpur","Manila","Sydney","Melbourne","Auckland","New York","Los Angeles","San Francisco","Seattle","Toronto","Montreal","London","Paris","Berlin","Rome","Madrid","Lisbon","Istanbul","Dubai","Doha","Cairo"];
-      const cityLatLon={
-        "Vancouver":[[49.20,49.32],[-123.26,-122.95]],
-        "Victoria":[[48.38,48.59],[-123.55,-123.20]],
-        "Hong Kong":[[22.15,22.55],[113.80,114.35]],
-        "Macau":[[22.10,22.23],[113.49,113.61]],
-        "Tokyo":[[35.50,35.80],[139.55,139.95]],
-        "Kyoto":[[35.00,35.10],[135.68,135.82]],
-        "Osaka":[[34.55,34.75],[135.40,135.60]],
-        "Seoul":[[37.45,37.70],[126.80,127.10]],
-        "Taipei":[[25.00,25.12],[121.44,121.60]],
-        "Shanghai":[[31.10,31.35],[121.30,121.70]],
-        "Beijing":[[39.80,40.10],[116.20,116.60]],
-        "Shenzhen":[[22.45,22.85],[113.75,114.30]],
-        "Guangzhou":[[23.00,23.25],[113.15,113.50]],
-        "Singapore":[[1.20,1.48],[103.60,104.05]],
-        "Bangkok":[[13.60,13.95],[100.35,100.80]],
-        "Jakarta":[[-6.30,-6.05],[106.65,106.95]],
-        "Kuala Lumpur":[[3.05,3.25],[101.60,101.80]],
-        "Manila":[[14.45,14.75],[120.90,121.10]],
-        "Sydney":[[-34.05,-33.70],[150.80,151.40]],
-        "Melbourne":[[-38.10,-37.65],[144.80,145.20]],
-        "Auckland":[[-36.98,-36.75],[174.65,174.90]],
-        "New York":[[40.55,40.90],[-74.20,-73.70]],
-        "Los Angeles":[[33.85,34.20],[-118.55,-118.10]],
-        "San Francisco":[[37.68,37.84],[-122.55,-122.30]],
-        "Seattle":[[47.50,47.75],[-122.45,-122.20]],
-        "Toronto":[[43.60,43.85],[-79.55,-79.10]],
-        "Montreal":[[45.42,45.60],[-73.75,-73.45]],
-        "London":[[51.40,51.60],[-0.35,0.10]],
-        "Paris":[[48.80,48.92],[2.20,2.45]],
-        "Berlin":[[52.45,52.60],[13.25,13.55]],
-        "Rome":[[41.80,41.95],[12.40,12.60]],
-        "Madrid":[[40.35,40.50],[-3.85,-3.55]],
-        "Lisbon":[[38.65,38.78],[-9.25,-9.05]],
-        "Istanbul":[[40.90,41.20],[28.80,29.40]],
-        "Dubai":[[25.05,25.35],[55.05,55.55]],
-        "Doha":[[25.20,25.40],[51.40,51.60]],
-        "Cairo":[[29.90,30.15],[31.10,31.45]]
-      };
-      const rand=(a,b)=>(a + Math.random()*(b-a));
-      const fmt=v=>v.toFixed(6);
-      const isNarrow = matchMedia('(max-width:480px)').matches;
-
-      function buildMask(){
-        const name=CITIES_FOR_MASK[(Math.random()*CITIES_FOR_MASK.length)|0];
-        const [latR,lonR]=cityLatLon[name]||[[0,0],[0,0]];
-        const lat=rand(latR[0],latR[1]);
-        const lon=rand(lonR[0],lonR[1]);
-        const m=document.createElement('div'); m.className='ph-mask'; m.setAttribute('aria-hidden','true');
-        const txt=document.createElement('div'); txt.className='ph-txt';
-        const tail=isNarrow?'recalibrating':'recalibrating...';
-        txt.innerHTML = `${fmt(lat)}\n${fmt(lon)}\n<span class="blink">${tail}</span>`;
-        m.appendChild(txt);
-        return { mask:m, label:`${fmt(lat)}\n${fmt(lon)}\n${tail}` };
-      }
-
-      // 包裝所有圖片，加上遮罩
-      Array.from(galleryEl.querySelectorAll('img')).forEach(img=>{
-        const ph=document.createElement('div'); ph.className='ph';
-        img.parentNode.insertBefore(ph,img); ph.appendChild(img);
-
-        const built=buildMask(); ph.appendChild(built.mask);
-
-        // 偽元素標籤：兩行座標 + tail
-        img.setAttribute('data-mask','');
-        img.style.setProperty('--dot-x', Math.round(Math.random()*64+18)+'%');
-        img.style.setProperty('--dot-y', Math.round(Math.random()*64+18)+'%');
-        img.dataset.phLabel = built.label;
-
-        const cleanUp=()=>{ img.classList.add('is-loaded'); requestAnimationFrame(()=>{ built.mask.classList.add('fade'); built.mask.addEventListener('transitionend',()=>built.mask.remove(),{once:true}); }); };
-        img.decode?.().then(cleanUp).catch(()=>{});
-        img.addEventListener('load', cleanUp, {once:true});
-        img.addEventListener('error', ()=>{ /* keep mask */ });
+  <!-- header copy rotator -->
+  <script>
+    const sentences=[
+      "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+      "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
+      "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
+      "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+      "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+      "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
+      "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
+      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy.",
+      "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+      "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
+      "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+      "shanghai fog, yes.","悲喜千般同幻夢。","欲望屬於他者。","Desire is the desire of the Other.",
+      "世界無人始，亦無人終。","The world began and ends without man.","民為貴，君為輕。","Lucky Vicky～",
+      "Beauty will save the world.","深宮似海，人人自危。","一笑傾城，再笑傾國。","Better die with fragrance.",
+      "得寵易，守寵難。","Family comes first.","活下去","Friends don’t lie.","The crown must endure.",
+      "Power is better than sex.","Love is stronger than reason.","孤獨是命運。","Poetry belongs to people.",
+      "One word of truth.","El Psy Congroo","Just keep swimming.","We’re all undercover.",
+      "War never changes.","YOU-ARE-NOT-PREPARED.","Nothing is true？","I am a real boy.",
+      "Marriage is war.","A Royale with cheese.","Don’t call me Mr. Pink."
+    ];
+    const headerEl=document.getElementById("headerTitle");
+    const mobileEl=document.getElementById("mobileRotator");
+    let lastIndex=-1;
+    const rnd=(ex)=>{let i;do{i=Math.floor(Math.random()*sentences.length);}while(i===ex);return i;};
+    const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF]/.test(s);
+    function applyText(el,text){
+      if(!el) return;
+      el.classList.toggle("ja",isCJK(text));
+      el.classList.toggle("en",!isCJK(text));
+      el.setAttribute('lang', isCJK(text)?'ja':'en');
+      el.textContent=text;
+    }
+    function animateHeader(){
+      const next=rnd(lastIndex); lastIndex=next; const text=sentences[next];
+      [headerEl,mobileEl].filter(Boolean).forEach(t=>{
+        gsap.to(t,{y:-16,opacity:0,duration:.25,ease:"power1.in",onComplete(){
+          applyText(t,text); gsap.set(t,{y:16}); gsap.to(t,{y:0,opacity:1,duration:.35,ease:"power1.out"});
+        }});
       });
+    }
+    document.addEventListener('DOMContentLoaded', animateHeader);
+    setInterval(animateHeader, 4000);
+  </script>
 
-      const allImgs=Array.from(galleryEl.querySelectorAll('.ph > img'));
-      const filterBtns=document.querySelectorAll('.filter-btn');
-      const loadMoreBtn=document.getElementById('loadMore');
-      const noResults=document.getElementById('noResults');
+  <!-- Gallery + 遮罩 -->
+  <script>
+  (()=> {
+    const galleryEl=document.querySelector('.gallery');
+    const overlay=document.getElementById('overlay');
+    const overlayImg=document.getElementById('overlayImg');
+    const closeBtn=document.getElementById('closeBtn');
+    if(!galleryEl) return;
 
-      // 初始化屬性
-      allImgs.forEach((img,i)=>{ if(!img.getAttribute('width')) img.setAttribute('width','800'); if(!img.getAttribute('height')) img.setAttribute('height','1200'); img.decoding='async'; if(i<12){ img.loading='eager'; img.fetchPriority='high'; } else { img.fetchPriority='low'; } });
-
-      // 進場
-      const animateIn=(els)=>{ if(!els||!els.length||!window.gsap){ els.forEach(el=>{ el.style.opacity='1'; el.style.transform='none';}); return; } gsap.fromTo(els,{y:14,opacity:0},{y:0,opacity:1,duration:.32,ease:'power2.out',stagger:.035}); };
-
-      // Lazy
-      const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(!e.isIntersecting) return; const img=e.target; img.style.opacity=img.style.opacity||'1'; img.style.transform='none'; io.unobserve(img); }); },{rootMargin:'600px 0px'}); allImgs.forEach(img=>io.observe(img));
-
-      // 分頁/篩選
-      const BATCH=24; let activeFilter=''; let visibleCount=Math.min(BATCH, allImgs.length);
-      const parseCats=el=>(el.dataset.cat||'').split(/[,|\s]+/).filter(Boolean);
-      const getFiltered=()=> activeFilter ? allImgs.filter(img=>parseCats(img).includes(activeFilter)) : allImgs;
-
-      function refresh(reset=false){
-        const list=getFiltered(); if(reset) visibleCount=Math.min(BATCH, list.length);
-        const toShow=list.slice(0, visibleCount); const showSet=new Set(toShow); const newly=[];
-        allImgs.forEach(img=>{ const show=showSet.has(img); const holder=img.parentElement; const hidden=(holder.style.display==='none');
-          if(show&&hidden){ holder.style.display=''; newly.push(holder); }
-          else if(!show&&!hidden){ holder.style.display='none'; }
-        });
-        requestAnimationFrame(()=>animateIn(reset?toShow.map(i=>i.parentElement):newly));
-        loadMoreBtn.style.display=(visibleCount<list.length)?'inline-flex':'none';
-        noResults.hidden = list.length>0;
-      }
-      refresh(true);
-
-      loadMoreBtn.addEventListener('click', ()=>{
-        const list=getFiltered(); const old=Math.min(visibleCount,list.length);
-        visibleCount=Math.min(visibleCount+BATCH, list.length);
-        const firstNew=list[old]; refresh(false);
-        if(firstNew){
-          const html=document.documentElement; const prev=html.style.scrollBehavior;
-          html.style.scrollBehavior='auto';
-          firstNew.parentElement.scrollIntoView({block:'start'});
-          const headerOffset=(innerWidth<=480)?(36+60+8):60;
-          scrollBy({top:-headerOffset,behavior:'auto'});
-          html.style.scrollBehavior=prev||'';
-        }
-      });
-
-      filterBtns.forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const was=btn.classList.contains('active');
-          filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-          activeFilter=''; if(!was){ btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); activeFilter=btn.dataset.filter||''; }
-          refresh(true);
-          const wrapTop=document.querySelector('.gallery-wrapper').getBoundingClientRect().top+scrollY;
-          const headerOffset=(innerWidth<=480)?(36+60+8):60; scrollTo({top:wrapTop-headerOffset,behavior:'auto'});
-        });
-      });
-
-      // Lightbox（加強手機鎖死滾動）
-      (function(){
-        if(!overlay||!overlayImg||!closeBtn) return;
-        let prevOverflowHtml='', prevOverflowBody='';
-        function lockScroll(){
-          prevOverflowHtml=document.documentElement.style.overflow;
-          prevOverflowBody=document.body.style.overflow;
-          document.documentElement.classList.add('scroll-lock');
-          document.body.classList.add('scroll-lock');
-        }
-        function unlockScroll(){
-          document.documentElement.classList.remove('scroll-lock');
-          document.body.classList.remove('scroll-lock');
-          document.documentElement.style.overflow=prevOverflowHtml||'';
-          document.body.style.overflow=prevOverflowBody||'';
-        }
-        function openOverlay(src){
-          overlayImg.src=src;
-          lockScroll();
-          overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false');
-        }
-        function closeOverlay(){
-          overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true');
-          const onEnd=(e)=>{ if(e && e.target!==overlay) return; overlay.removeEventListener('transitionend',onEnd); unlockScroll(); overlayImg.src=''; };
-          overlay.addEventListener('transitionend',onEnd,{once:true}); setTimeout(onEnd,300);
-        }
-        galleryEl.querySelectorAll('.ph > img').forEach(img=> img.addEventListener('click', ()=> openOverlay(img.currentSrc||img.src) ));
-        closeBtn.addEventListener('click', closeOverlay);
-        overlay.addEventListener('click', (e)=>{ if(e.target===overlay) closeOverlay(); });
-        document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && overlay.classList.contains('open')) closeOverlay(); });
-
-        // prevent background scroll on touch
-        overlay.addEventListener('touchmove', (e)=>{ if(overlay.classList.contains('open')) e.preventDefault(); }, {passive:false});
-      })();
-
-      /* 背景座標 */
-      const panel=document.getElementById('coordPanel');
-      if(panel){
-        const CITIES=[{n:'Vancouver',lat:[49.20,49.32],lon:[-123.26,-122.95]},{n:'Victoria',lat:[48.38,48.59],lon:[-123.55,-123.20]},{n:'Hong Kong',lat:[22.15,22.55],lon:[113.80,114.35]},{n:'Macau',lat:[22.10,22.23],lon:[113.49,113.61]},{n:'Tokyo',lat:[35.50,35.80],lon:[139.55,139.95]},{n:'Kyoto',lat:[35.00,35.10],lon:[135.68,135.82]},{n:'Osaka',lat:[34.55,34.75],lon:[135.40,135.60]},{n:'Seoul',lat:[37.45,37.70],lon:[126.80,127.10]},{n:'Taipei',lat:[25.00,25.12],lon:[121.44,121.60]},{n:'Shanghai',lat:[31.10,31.35],lon:[121.30,121.70]},{n:'Beijing',lat:[39.80,40.10],lon:[116.20,116.60]},{n:'Shenzhen',lat:[22.45,22.85], lon:[113.75,114.30]},{n:'Guangzhou',lat:[23.00,23.25],lon:[113.15,113.50]},{n:'Singapore',lat:[1.20,1.48],lon:[103.60,104.05]},{n:'Bangkok',lat:[13.60,13.95],lon:[100.35,100.80]},{n:'Jakarta',lat:[-6.30,-6.05],lon:[106.65,106.95]},{n:'Kuala Lumpur',lat:[3.05,3.25],lon:[101.60,101.80]},{n:'Manila',lat:[14.45,14.75],lon:[120.90,121.10]},{n:'Sydney',lat:[-34.05,-33.70],lon:[150.80,151.40]},{n:'Melbourne',lat:[-38.10,-37.65],lon:[144.80,145.20]},{n:'Auckland',lat:[-36.98,-36.75],lon:[174.65,174.90]},{n:'New York',lat:[40.55,40.90],lon:[-74.20,-73.70]},{n:'Los Angeles',lat:[33.85,34.20],lon:[-118.55,-118.10]},{n:'San Francisco',lat:[37.68,37.84],lon:[-122.55,-122.30]},{n:'Seattle',lat:[47.50,47.75],lon:[-122.45,-122.20]},{n:'Toronto',lat:[43.60,43.85],lon:[-79.55,-79.10]},{n:'Montreal',lat:[45.42,45.60],lon:[-73.75,-73.45]},{n:'London',lat:[51.40,51.60],lon:[-0.35,0.10]},{n:'Paris',lat:[48.80,48.92],lon:[2.20,2.45]},{n:'Berlin',lat:[52.45,52.60],lon:[13.25,13.55]},{n:'Rome',lat:[41.80,41.95],lon:[12.40,12.60]},{n:'Madrid',lat:[40.35,40.50],lon:[-3.85,-3.55]},{n:'Lisbon',lat:[38.65,38.78],lon:[-9.25,-9.05]},{n:'Istanbul',lat:[40.90,41.20],lon:[28.80,29.40]},{n:'Dubai',lat:[25.05,25.35],lon:[55.05,55.55]},{n:'Doha',lat:[25.20,25.40],lon:[51.40,51.60]},{n:'Cairo',lat:[29.90,30.15],lon:[31.10,31.45]}];
-        const rand=(a,b)=>(a+Math.random()*(b-a)), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), fmt=(v)=>v.toFixed(6);
-        const TICK_MIN=220, TICK_MAX=460, STEP_LAT=0.003, STEP_LON=0.004; const timers=[]; let rows=[];
-        function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
-        function createRow(city){ const line=document.createElement('div'); line.className='coord-line'; line.innerHTML=`<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`; const lat=rand(city.lat[0],city.lat[1]); const lon=rand(city.lon[0],city.lon[1]); line.querySelector('.lat').textContent=fmt(lat); line.querySelector('.lon').textContent=fmt(lon); panel.appendChild(line); return {el:line,c:city,lat,lon}; }
-        function stepRow(r){ r.lat=clamp(r.lat+(Math.random()*2-1)*STEP_LAT,r.c.lat[0],r.c.lat[1]); r.lon=clamp(r.lon+(Math.random()*2-1)*STEP_LON,r.c.lon[0],r.c.lon[1]); r.el.querySelector('.lat').textContent=fmt(r.lat); r.el.querySelector('.lon').textContent=fmt(r.lon); }
-        function loopRow(r){ stepRow(r); const t=TICK_MIN+Math.random()*(TICK_MAX-TICK_MIN); const id=setTimeout(()=>loopRow(r),t); timers.push(id); }
-        function computeMaxRows(){ const probe=document.createElement('div'); probe.className='coord-line'; probe.style.visibility='hidden'; probe.innerHTML=`<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`; panel.appendChild(probe); const rowH=probe.getBoundingClientRect().height||14; const styles=getComputedStyle(panel); const gap=parseFloat(styles.rowGap||'0'); const ph=panel.getBoundingClientRect().height; panel.removeChild(probe); return Math.max(1, Math.floor((ph+gap)/(rowH+gap))); }
-        function fillPanel(){ clearTimers(); panel.innerHTML=''; rows=[]; const need=computeMaxRows(); let start=Math.floor(Math.random()*CITIES.length); for(let i=0;i<need;i++){ rows.push(createRow(CITIES[(start+i)%CITIES.length])); } rows.forEach(loopRow); }
-        fillPanel(); let resizeTid=0; addEventListener('resize',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('orientationchange',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('beforeunload', clearTimers);
-      }
+    /* 每日穩定亂序 */
+    (function dailyShuffle(){
+      try{
+        const tz='America/Vancouver';
+        const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
+        const fnv1a=str=>{let h=0x811c9dc5>>>0; for(let i=0;i<str.length;i++){h^=str.charCodeAt(i); h=Math.imul(h,0x01000193);} return h>>>0;};
+        const keyOf=el=>fnv1a(`${today}|${el.getAttribute('src')||''}|${el.getAttribute('alt')||''}`);
+        const items=Array.from(galleryEl.querySelectorAll('img')).map(el=>[keyOf(el),el]).sort((a,b)=>a[0]-b[0]).map(([,el])=>el);
+        items.forEach(el=>galleryEl.appendChild(el));
+      }catch(e){}
     })();
-    </script>
-  </body>
-  </html>
+
+    const CITIES_FOR_MASK=["Vancouver","Victoria","Hong Kong","Macau","Tokyo","Kyoto","Osaka","Seoul","Taipei","Shanghai","Beijing","Shenzhen","Guangzhou","Singapore","Bangkok","Jakarta","Kuala Lumpur","Manila","Sydney","Melbourne","Auckland","New York","Los Angeles","San Francisco","Seattle","Toronto","Montreal","London","Paris","Berlin","Rome","Madrid","Lisbon","Istanbul","Dubai","Doha","Cairo"];
+    const cityLatLon={
+      "Vancouver":[[49.20,49.32],[-123.26,-122.95]],
+      "Victoria":[[48.38,48.59],[-123.55,-123.20]],
+      "Hong Kong":[[22.15,22.55],[113.80,114.35]],
+      "Macau":[[22.10,22.23],[113.49,113.61]],
+      "Tokyo":[[35.50,35.80],[139.55,139.95]],
+      "Kyoto":[[35.00,35.10],[135.68,135.82]],
+      "Osaka":[[34.55,34.75],[135.40,135.60]],
+      "Seoul":[[37.45,37.70],[126.80,127.10]],
+      "Taipei":[[25.00,25.12],[121.44,121.60]],
+      "Shanghai":[[31.10,31.35],[121.30,121.70]],
+      "Beijing":[[39.80,40.10],[116.20,116.60]],
+      "Shenzhen":[[22.45,22.85],[113.75,114.30]],
+      "Guangzhou":[[23.00,23.25],[113.15,113.50]],
+      "Singapore":[[1.20,1.48],[103.60,104.05]],
+      "Bangkok":[[13.60,13.95],[100.35,100.80]],
+      "Jakarta":[[-6.30,-6.05],[106.65,106.95]],
+      "Kuala Lumpur":[[3.05,3.25],[101.60,101.80]],
+      "Manila":[[14.45,14.75],[120.90,121.10]],
+      "Sydney":[[-34.05,-33.70],[150.80,151.40]],
+      "Melbourne":[[-38.10,-37.65],[144.80,145.20]],
+      "Auckland":[[-36.98,-36.75],[174.65,174.90]],
+      "New York":[[40.55,40.90],[-74.20,-73.70]],
+      "Los Angeles":[[33.85,34.20],[-118.55,-118.10]],
+      "San Francisco":[[37.68,37.84],[-122.55,-122.30]],
+      "Seattle":[[47.50,47.75],[-122.45,-122.20]],
+      "Toronto":[[43.60,43.85],[-79.55,-79.10]],
+      "Montreal":[[45.42,45.60],[-73.75,-73.45]],
+      "London":[[51.40,51.60],[-0.35,0.10]],
+      "Paris":[[48.80,48.92],[2.20,2.45]],
+      "Berlin":[[52.45,52.60],[13.25,13.55]],
+      "Rome":[[41.80,41.95],[12.40,12.60]],
+      "Madrid":[[40.35,40.50],[-3.85,-3.55]],
+      "Lisbon":[[38.65,38.78],[-9.25,-9.05]],
+      "Istanbul":[[40.90,41.20],[28.80,29.40]],
+      "Dubai":[[25.05,25.35],[55.05,55.55]],
+      "Doha":[[25.20,25.40],[51.40,51.60]],
+      "Cairo":[[29.90,30.15],[31.10,31.45]]
+    };
+    const rand=(a,b)=>(a + Math.random()*(b-a));
+    const fmt=v=>v.toFixed(6);
+    const isNarrow = matchMedia('(max-width:480px)').matches;
+
+    function buildMask(){
+      const name=CITIES_FOR_MASK[(Math.random()*CITIES_FOR_MASK.length)|0];
+      const [latR,lonR]=cityLatLon[name]||[[0,0],[0,0]];
+      const lat=rand(latR[0],latR[1]);
+      const lon=rand(lonR[0],lonR[1]);
+      const m=document.createElement('div'); m.className='ph-mask'; m.setAttribute('aria-hidden','true');
+      const txt=document.createElement('div'); txt.className='ph-txt';
+      const tail=isNarrow?'recalibrating':'recalibrating...';
+      txt.innerHTML = `${fmt(lat)}\n${fmt(lon)}\n<span class="blink">${tail}</span>`;
+      m.appendChild(txt);
+      return { mask:m, label:`${fmt(lat)}\n${fmt(lon)}\n${tail}` };
+    }
+
+    // 包裝所有圖片，加上遮罩
+    Array.from(galleryEl.querySelectorAll('img')).forEach(img=>{
+      const ph=document.createElement('div'); ph.className='ph';
+      img.parentNode.insertBefore(ph,img); ph.appendChild(img);
+
+      const built=buildMask(); ph.appendChild(built.mask);
+
+      // 偽元素標籤：兩行座標 + tail
+      img.setAttribute('data-mask','');
+      img.style.setProperty('--dot-x', Math.round(Math.random()*64+18)+'%');
+      img.style.setProperty('--dot-y', Math.round(Math.random()*64+18)+'%');
+      img.dataset.phLabel = built.label;
+
+      const cleanUp=()=>{ img.classList.add('is-loaded'); requestAnimationFrame(()=>{ built.mask.classList.add('fade'); built.mask.addEventListener('transitionend',()=>built.mask.remove(),{once:true}); }); };
+      img.decode?.().then(cleanUp).catch(()=>{});
+      img.addEventListener('load', cleanUp, {once:true});
+      img.addEventListener('error', ()=>{ /* keep mask */ });
+    });
+
+    const allImgs=Array.from(galleryEl.querySelectorAll('.ph > img'));
+    const filterBtns=document.querySelectorAll('.filter-btn');
+    const loadMoreBtn=document.getElementById('loadMore');
+    const noResults=document.getElementById('noResults');
+
+    // 初始化屬性
+    allImgs.forEach((img,i)=>{ if(!img.getAttribute('width')) img.setAttribute('width','800'); if(!img.getAttribute('height')) img.setAttribute('height','1200'); img.decoding='async'; if(i<12){ img.loading='eager'; img.fetchPriority='high'; } else { img.fetchPriority='low'; } });
+
+    // 進場
+    const animateIn=(els)=>{ if(!els||!els.length||!window.gsap){ els.forEach(el=>{ el.style.opacity='1'; el.style.transform='none';}); return; } gsap.fromTo(els,{y:14,opacity:0},{y:0,opacity:1,duration:.32,ease:'power2.out',stagger:.035}); };
+
+    // Lazy
+    const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(!e.isIntersecting) return; const img=e.target; img.style.opacity=img.style.opacity||'1'; img.style.transform='none'; io.unobserve(img); }); },{rootMargin:'600px 0px'}); allImgs.forEach(img=>io.observe(img));
+
+    // 分頁/篩選
+    const BATCH=24; let activeFilter=''; let visibleCount=Math.min(BATCH, allImgs.length);
+    const parseCats=el=>(el.dataset.cat||'').split(/[,|\s]+/).filter(Boolean);
+    const getFiltered=()=> activeFilter ? allImgs.filter(img=>parseCats(img).includes(activeFilter)) : allImgs;
+
+    function refresh(reset=false){
+      const list=getFiltered(); if(reset) visibleCount=Math.min(BATCH, list.length);
+      const toShow=list.slice(0, visibleCount); const showSet=new Set(toShow); const newly=[];
+      allImgs.forEach(img=>{ const show=showSet.has(img); const holder=img.parentElement; const hidden=(holder.style.display==='none');
+        if(show&&hidden){ holder.style.display=''; newly.push(holder); }
+        else if(!show&&!hidden){ holder.style.display='none'; }
+      });
+      requestAnimationFrame(()=>animateIn(reset?toShow.map(i=>i.parentElement):newly));
+      loadMoreBtn.style.display=(visibleCount<list.length)?'inline-flex':'none';
+      noResults.hidden = list.length>0;
+    }
+    refresh(true);
+
+    loadMoreBtn.addEventListener('click', ()=>{
+      const list=getFiltered(); const old=Math.min(visibleCount,list.length);
+      visibleCount=Math.min(visibleCount+BATCH, list.length);
+      const firstNew=list[old]; refresh(false);
+      if(firstNew){
+        const html=document.documentElement; const prev=html.style.scrollBehavior;
+        html.style.scrollBehavior='auto';
+        firstNew.parentElement.scrollIntoView({block:'start'});
+        const headerOffset=(innerWidth<=480)?(36+60+8):60;
+        scrollBy({top:-headerOffset,behavior:'auto'});
+        html.style.scrollBehavior=prev||'';
+      }
+    });
+
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const was=btn.classList.contains('active');
+        filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+        activeFilter=''; if(!was){ btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); activeFilter=btn.dataset.filter||''; }
+        refresh(true);
+        const wrapTop=document.querySelector('.gallery-wrapper').getBoundingClientRect().top+scrollY;
+        const headerOffset=(innerWidth<=480)?(36+60+8):60; scrollTo({top:wrapTop-headerOffset,behavior:'auto'});
+      });
+    });
+ (function(){
+    if(!overlay||!overlayImg||!closeBtn) return;
+    let savedScrollY = 0;
+function lockScroll(){
+  // 隱藏滾動條
+  const sbw = window.innerWidth - document.documentElement.clientWidth; // scrollbar width
+  if (sbw > 0) document.body.style.paddingRight = sbw + 'px'; // 避免 layout shift
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+
+  // 鎖橫向、避免 iOS 背景滾動
+  document.documentElement.classList.add('scroll-lock');
+  document.body.classList.add('scroll-lock');
+}
+
+function unlockScroll(){
+  // 還原
+  document.body.style.paddingRight = '';
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+  document.documentElement.classList.remove('scroll-lock');
+  document.body.classList.remove('scroll-lock');
+
+}
+
+
+    function openOverlay(src){
+      overlayImg.src = src;
+      lockScroll();
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden','false');
+    }
+
+    function closeOverlay(){
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden','true');
+      const onEnd=(e)=>{
+        if(e && e.target!==overlay) return;
+        overlay.removeEventListener('transitionend',onEnd);
+        unlockScroll();
+        overlayImg.src='';
+      };
+      overlay.addEventListener('transitionend',onEnd,{once:true});
+      setTimeout(onEnd,300);
+    }
+
+    galleryEl.querySelectorAll('.ph > img').forEach(img=>{
+      img.addEventListener('click', ()=> openOverlay(img.currentSrc||img.src));
+    });
+    closeBtn.addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', (e)=>{ if(e.target===overlay) closeOverlay(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && overlay.classList.contains('open')) closeOverlay(); });
+
+    // prevent background scroll on touch
+    overlay.addEventListener('touchmove', (e)=>{ if(overlay.classList.contains('open')) e.preventDefault(); }, {passive:false});
+  })();
+
+    /* 背景座標 */
+    const panel=document.getElementById('coordPanel');
+    if(panel){
+      const CITIES=[{n:'Vancouver',lat:[49.20,49.32],lon:[-123.26,-122.95]},{n:'Victoria',lat:[48.38,48.59],lon:[-123.55,-123.20]},{n:'Hong Kong',lat:[22.15,22.55],lon:[113.80,114.35]},{n:'Macau',lat:[22.10,22.23],lon:[113.49,113.61]},{n:'Tokyo',lat:[35.50,35.80],lon:[139.55,139.95]},{n:'Kyoto',lat:[35.00,35.10],lon:[135.68,135.82]},{n:'Osaka',lat:[34.55,34.75],lon:[135.40,135.60]},{n:'Seoul',lat:[37.45,37.70],lon:[126.80,127.10]},{n:'Taipei',lat:[25.00,25.12],lon:[121.44,121.60]},{n:'Shanghai', lat:[31.10,31.35], lon:[121.30,121.70]},
+,{n:'Beijing',lat:[39.80,40.10],lon:[116.20,116.60]},{n:'Shenzhen',lat:[22.45,22.85], lon:[113.75,114.30]},{n:'Guangzhou',lat:[23.00,23.25],lon:[113.15,113.50]},{n:'Singapore',lat:[1.20,1.48],lon:[103.60,104.05]},{n:'Bangkok',lat:[13.60,13.95],lon:[100.35,100.80]},{n:'Jakarta',lat:[-6.30,-6.05],lon:[106.65,106.95]},{n:'Kuala Lumpur',lat:[3.05,3.25],lon:[101.60,101.80]},{n:'Manila',lat:[14.45,14.75],lon:[120.90,121.10]},{n:'Sydney',lat:[-34.05,-33.70],lon:[150.80,151.40]},{n:'Melbourne',lat:[-38.10,-37.65],lon:[144.80,145.20]},{n:'Auckland',lat:[-36.98,-36.75],lon:[174.65,174.90]},{n:'New York',lat:[40.55,40.90],lon:[-74.20,-73.70]},{n:'Los Angeles',lat:[33.85,34.20],lon:[-118.55,-118.10]},{n:'San Francisco',lat:[37.68,37.84],lon:[-122.55,-122.30]},{n:'Seattle',lat:[47.50,47.75],lon:[-122.45,-122.20]},{n:'Toronto',lat:[43.60,43.85],lon:[-79.55,-79.10]},{n:'Montreal',lat:[45.42,45.60],lon:[-73.75,-73.45]},{n:'London',lat:[51.40,51.60],lon:[-0.35,0.10]},{n:'Paris',lat:[48.80,48.92],lon:[2.20,2.45]},{n:'Berlin',lat:[52.45,52.60],lon:[13.25,13.55]},{n:'Rome',lat:[41.80,41.95],lon:[12.40,12.60]},{n:'Madrid',lat:[40.35,40.50],lon:[-3.85,-3.55]},{n:'Lisbon',lat:[38.65,38.78],lon:[-9.25,-9.05]},{n:'Istanbul',lat:[40.90,41.20],lon:[28.80,29.40]},{n:'Dubai',lat:[25.05,25.35],lon:[55.05,55.55]},{n:'Doha',lat:[25.20,25.40],lon:[51.40,51.60]},{n:'Cairo',lat:[29.90,30.15],lon:[31.10,31.45]}];
+      const rand=(a,b)=>(a+Math.random()*(b-a)), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), fmt=(v)=>v.toFixed(6);
+      const TICK_MIN=220, TICK_MAX=460, STEP_LAT=0.003, STEP_LON=0.004; const timers=[]; let rows=[];
+      function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
+      function createRow(city){ const line=document.createElement('div'); line.className='coord-line'; line.innerHTML=`<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`; const lat=rand(city.lat[0],city.lat[1]); const lon=rand(city.lon[0],city.lon[1]); line.querySelector('.lat').textContent=fmt(lat); line.querySelector('.lon').textContent=fmt(lon); panel.appendChild(line); return {el:line,c:city,lat,lon}; }
+      function stepRow(r){ r.lat=clamp(r.lat+(Math.random()*2-1)*STEP_LAT,r.c.lat[0],r.c.lat[1]); r.lon=clamp(r.lon+(Math.random()*2-1)*STEP_LON,r.c.lon[0],r.c.lon[1]); r.el.querySelector('.lat').textContent=fmt(r.lat); r.el.querySelector('.lon').textContent=fmt(r.lon); }
+      function loopRow(r){ stepRow(r); const t=TICK_MIN+Math.random()*(TICK_MAX-TICK_MIN); const id=setTimeout(()=>loopRow(r),t); timers.push(id); }
+      function computeMaxRows(){ const probe=document.createElement('div'); probe.className='coord-line'; probe.style.visibility='hidden'; probe.innerHTML=`<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`; panel.appendChild(probe); const rowH=probe.getBoundingClientRect().height||14; const styles=getComputedStyle(panel); const gap=parseFloat(styles.rowGap||'0'); const ph=panel.getBoundingClientRect().height; panel.removeChild(probe); return Math.max(1, Math.floor((ph+gap)/(rowH+gap))); }
+      function fillPanel(){ clearTimers(); panel.innerHTML=''; rows=[]; const need=computeMaxRows(); let start=Math.floor(Math.random()*CITIES.length); for(let i=0;i<need;i++){ rows.push(createRow(CITIES[(start+i)%CITIES.length])); } rows.forEach(loopRow); }
+      fillPanel(); let resizeTid=0; addEventListener('resize',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('orientationchange',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('beforeunload', clearTimers);
+    }
+  })();
+  </script>
+
+  <script>
+    ['gesturestart','gesturechange','gestureend'].forEach(evt=>{
+      window.addEventListener(evt, e=>{ e.preventDefault(); }, {passive:false});
+    });
+    let lastTouchEnd=0;
+    document.addEventListener('touchend', e=>{
+      const now=Date.now();
+      if(now-lastTouchEnd<=300){ e.preventDefault(); }
+      lastTouchEnd=now;
+    }, {passive:false});
+  </script>
+</body>
+</html>
