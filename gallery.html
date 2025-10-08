@@ -332,7 +332,7 @@ html.scroll-lock, body.scroll-lock{
         <img src="g10_asia_brutalist_textures_black_and_white.webp" alt="Photo 10" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g11_vancouver_kitsilano_lonely_fastfood.webp" alt="Photo 11" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g12_Shelti_smile_field_vancouver.webp"  alt="Photo 12" loading="lazy" decoding="async" data-cat="Friends">
-        <img src="g13_young_girl_matcha_latte_ski_village_whistler_vancouver_snow_season.webp"  alt="Photo 13" loading="lazy" decoding="async" data-cat="Souls, Cities">
+        <img src="g13_young_girl_matcha_latte_ski_village_whistler_vancouver_snow_season.webp"  alt="Photo 13" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g14_crane_poise_modern_construction.webp" alt="Photo 14" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g15_macau_alley_market_dreams.webp"     alt="Photo 15" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g16_redline_utility_core_noise_barrier.webp" alt="Photo 16" loading="lazy" decoding="async" data-cat="Cities">
@@ -347,7 +347,7 @@ html.scroll-lock, body.scroll-lock{
         <img src="g25_party_wedding_ccd_moment_souls.webp" alt="Photo 25" loading="lazy" decoding="async" data-cat="Times, Souls">
         <img src="g26_shelti_mountain_northvan_hiking.webp" alt="Photo 26" loading="lazy" decoding="async" data-cat="Friends">
         <img src="Xg27_dog_portrait_moment_capture_home.webp" alt="Photo 27" loading="lazy" decoding="async" data-cat="Friends">
-        <img src="g28_Vancouver_whistler_ski_village_glow_city_photographer_hill.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Souls, Cities">
+        <img src="g28_Vancouver_whistler_ski_village_glow_city_photographer_hill.webp" alt="Photo 28" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g29_portrait_couple_classic_love_wedding.webp" alt="Photo 29" loading="lazy" decoding="async" data-cat="Times, Friends">
         <img src="g30_moment_joy_caring_wedding.webp"     alt="Photo 30" loading="lazy" decoding="async" data-cat="Times, Friends">
         <img src="g31_portrait_oldschool_traditional_emotions.webp" alt="Photo 31" loading="lazy" decoding="async" data-cat="Times, Friends">
@@ -430,7 +430,7 @@ html.scroll-lock, body.scroll-lock{
         <img src="g108_richomnd_ikea_contrast_american_filmic_modernism_capitalism.webp" alt="Photo 108" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g109_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic.webp" alt="Photo 109" loading="lazy" decoding="async" data-cat="Cities, Souls">
         <img src="Xg110_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl.webp" alt="Photo 110" loading="lazy" decoding="async" data-cat="Cities">
-        <img src="g111_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl_tension_love_emotion_capture.webp" alt="Photo 111" loading="lazy" decoding="async" data-cat="Cities, Souls">
+        <img src="g111_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl_tension_love_emotion_capture.webp" alt="Photo 111" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g112_liminal_space_plant_Burnaby_metrotown_metropolis_mall_shopping_customer_scene_moment_streetphotographer_filmic.webp" alt="Photo 112" loading="lazy" decoding="async" data-cat="Cities">
         <img src="g113_couquitlam_center_mall_shopping_customer_scene_moment_streetphotographer_filmic_boy_girl.webp" alt="Photo 113" loading="lazy" decoding="async" data-cat="Cities">
         <img src="Xg114_Vancouver_downtown_shopping_holt_renfrew_girl_chic_walking.webp" alt="Photo 114" loading="lazy" decoding="async" data-cat="Cities">
@@ -561,9 +561,9 @@ html.scroll-lock, body.scroll-lock{
     </div>
 
     <div class="load-more-wrap">
-      <button id="loadMore" class="load-more-btn">load more</button>
+      <button id="loadMore" class="load-more-btn">>Continue extraction</button>
     </div>
-    <div id="noResults" class="no-results" hidden>no images found.</div>
+    <div id="noResults" class="no-results" hidden>>no images found.</div>
   </div>
 
   <!-- Lightbox -->
@@ -710,10 +710,34 @@ html.scroll-lock, body.scroll-lock{
       img.style.setProperty('--dot-y', Math.round(Math.random()*64+18)+'%');
       img.dataset.phLabel = built.label;
 
-      const cleanUp=()=>{ img.classList.add('is-loaded'); requestAnimationFrame(()=>{ built.mask.classList.add('fade'); built.mask.addEventListener('transitionend',()=>built.mask.remove(),{once:true}); }); };
-      img.decode?.().then(cleanUp).catch(()=>{});
-      img.addEventListener('load', cleanUp, {once:true});
-      img.addEventListener('error', ()=>{ /* keep mask */ });
+      const cleanUp = () => {
+  // 已載：加 class 俾偽元素消失
+  img.classList.add('is-loaded');
+  // 用 rAF 確保下一幀先加淡出 class
+  requestAnimationFrame(() => {
+    built.mask.classList.add('fade');
+    // 既等 transitionend，亦設後備 timeout
+    const remove = () => built.mask?.remove();
+    built.mask.addEventListener('transitionend', remove, { once: true });
+    setTimeout(remove, 400); // 後備，避免因 display:none 或中途卸載而收唔到事件
+  });
+};
+
+// 先試 decode（快取圖會極快 resolve；部分瀏覽器會 reject）
+img.decode?.().then(cleanUp).catch(() => {
+  // 如果已經載完（包括快取）就即刻收皮
+  if (img.complete && img.naturalWidth > 0) cleanUp();
+  // 否則等 load 事件
+});
+
+// 注意：即使上面 decode 會處理，大多數情況仍保留 load 後備
+img.addEventListener('load', cleanUp, { once: true });
+img.addEventListener('error', () => {
+  // 保留 mask；如你想重試，可喺呢度加 retry 策略
+});
+
+// 🔴 新增：註冊完事件之後，**立即**處理已經快取完成嘅情況
+if (img.complete && img.naturalWidth > 0) cleanUp();
     });
 
     const allImgs=Array.from(galleryEl.querySelectorAll('.ph > img'));
