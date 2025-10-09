@@ -237,6 +237,29 @@ html.scroll-lock, body.scroll-lock{
     }
     .gallery img.is-loaded[data-mask]::before,
     .gallery img.is-loaded[data-mask]::after{ opacity:0; }
+    /* 更穩的水平裁切（比 hidden 更能避免橡皮筋造成的位移） */
+html, body{
+  overflow-x: clip;          /* 新增 */
+  touch-action: pan-y;       /* body 也加上，配合 html 的設定 */
+}
+
+/* ===== Mobile (<=767px) ===== */
+@media (max-width:767px){
+  /* 已有：.gallery { display:grid; ... } */
+
+  /* 關鍵：把 .ph 的最小寬度清零，否則會逼爆 1fr 欄寬 */
+  .gallery .ph{
+    width: auto !important;   /* 你原本已加，保留 */
+    min-width: 0 !important;  /* ★ 新增，覆蓋 desktop 的 min-width:200px */
+  }
+
+  /* 這行你已經設了，保留確保圖片自己唔再撐寬 */
+  .gallery img{
+    width: 100%;
+    min-width: 0;             /* 已有 */
+  }
+}
+
   </style>
 
   <noscript><style>.gallery img{opacity:1!important;transform:none!important}</style></noscript>
