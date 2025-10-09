@@ -568,7 +568,7 @@
 
           <div class="judgment">
             <span class="tag">斷：</span>${judge.summary}
-            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}<span class="blink-block">■</span></div>` : ''}
+            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}` : ''}
           </div>
         </div>
       `;
