@@ -579,7 +579,7 @@
           </div>
 
           <div class="judgment">
-            <span class="tag">斷:</span>${judge.summary}
+            <span class="tag">斷：</span>${judge.summary}
             ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}` : ''}
           </div>
         </div>
@@ -611,8 +611,8 @@
         lines.push(`${idxToName(low)}${upDown(low)}：${(M_YAO[low]||'').trim()}`);
       } else if (moveCount===3){
         summary = '三爻變，本卦卦辭為「貞」（體），變卦卦辭為「悔」（用）。';
-        lines.push(`貞:${(mainHex.guaci||'').trim()}`);
-        if (changedHex) lines.push(`悔:${(changedHex.guaci||'').trim()}`);
+        lines.push(`貞：${(mainHex.guaci||'').trim()}`);
+        if (changedHex) lines.push(`悔：${(changedHex.guaci||'').trim()}`);
       } else if (moveCount===4){
         summary = '四爻變，用變卦兩個「不變爻」之爻辭，下者為主。';
         const notChanged = [0,1,2,3,4,5].filter(i => !movingIdx.includes(i));
