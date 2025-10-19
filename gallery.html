@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- 鎖縮放 & 覆蓋 iOS 安全區 -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
   <title>gallery | hikki photography</title>
 
@@ -138,12 +137,6 @@ html.scroll-lock, body.scroll-lock{
     .gallery{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
     .gallery img{ width:calc(25% - 10px); min-width:200px; aspect-ratio:2/3; object-fit:cover; background:#111; cursor:pointer; transition:transform .3s, opacity .2s; content-visibility:auto; contain-intrinsic-size:400px 267px; opacity:0; transform:translateY(14px); }
     .gallery img:hover{ transform:scale(1.03); }
-
-    /* 背景座標板 */
-    .coord-backdrop{ position:fixed; inset:0; background:#000; z-index:0; pointer-events:none; }
-    .coord-panel{ position:absolute; left:24px; right:24px; top:60px; bottom:24px; display:grid; grid-auto-rows:min-content; row-gap:6px; align-content:start; overflow:hidden; }
-    .coord-line{ font-family:var(--mono); font-size:12px; line-height:1.2; letter-spacing:-0.005em; color:#f4f2f0; opacity:.22; white-space:pre; user-select:none; }
-    .coord-line .city{ display:inline-block; width:16ch; margin-right:5ch; }
 
     .load-more-wrap{ display:flex; justify-content:center; padding:16px 0 32px; }
     .load-more-btn{
@@ -310,11 +303,7 @@ html, body{
   }
   </script>
 </head>
-<body>
-  <!-- 背景座標 -->
-  <div class="coord-backdrop" aria-hidden="true"><div class="coord-panel" id="coordPanel"></div></div>
-
-  <!-- Mobile rotator -->
+<body>  
   <div class="mobile-rotator" id="mobileRotator" aria-live="polite" lang="en">of time, souls and cities.</div>
 
   <!-- Header -->
@@ -898,21 +887,6 @@ function unlockScroll(){
     overlay.addEventListener('touchmove', (e)=>{ if(overlay.classList.contains('open')) e.preventDefault(); }, {passive:false});
   })();
 
-    /* 背景座標 */
-    const panel=document.getElementById('coordPanel');
-    if(panel){
-      const CITIES=[{n:'Vancouver',lat:[49.20,49.32],lon:[-123.26,-122.95]},{n:'Victoria',lat:[48.38,48.59],lon:[-123.55,-123.20]},{n:'Hong Kong',lat:[22.15,22.55],lon:[113.80,114.35]},{n:'Macau',lat:[22.10,22.23],lon:[113.49,113.61]},{n:'Tokyo',lat:[35.50,35.80],lon:[139.55,139.95]},{n:'Kyoto',lat:[35.00,35.10],lon:[135.68,135.82]},{n:'Osaka',lat:[34.55,34.75],lon:[135.40,135.60]},{n:'Seoul',lat:[37.45,37.70],lon:[126.80,127.10]},{n:'Taipei',lat:[25.00,25.12],lon:[121.44,121.60]},{n:'Shanghai', lat:[31.10,31.35], lon:[121.30,121.70]},
-,{n:'Beijing',lat:[39.80,40.10],lon:[116.20,116.60]},{n:'Shenzhen',lat:[22.45,22.85], lon:[113.75,114.30]},{n:'Guangzhou',lat:[23.00,23.25],lon:[113.15,113.50]},{n:'Singapore',lat:[1.20,1.48],lon:[103.60,104.05]},{n:'Bangkok',lat:[13.60,13.95],lon:[100.35,100.80]},{n:'Jakarta',lat:[-6.30,-6.05],lon:[106.65,106.95]},{n:'Kuala Lumpur',lat:[3.05,3.25],lon:[101.60,101.80]},{n:'Manila',lat:[14.45,14.75],lon:[120.90,121.10]},{n:'Sydney',lat:[-34.05,-33.70],lon:[150.80,151.40]},{n:'Melbourne',lat:[-38.10,-37.65],lon:[144.80,145.20]},{n:'Auckland',lat:[-36.98,-36.75],lon:[174.65,174.90]},{n:'New York',lat:[40.55,40.90],lon:[-74.20,-73.70]},{n:'Los Angeles',lat:[33.85,34.20],lon:[-118.55,-118.10]},{n:'San Francisco',lat:[37.68,37.84],lon:[-122.55,-122.30]},{n:'Seattle',lat:[47.50,47.75],lon:[-122.45,-122.20]},{n:'Toronto',lat:[43.60,43.85],lon:[-79.55,-79.10]},{n:'Montreal',lat:[45.42,45.60],lon:[-73.75,-73.45]},{n:'London',lat:[51.40,51.60],lon:[-0.35,0.10]},{n:'Paris',lat:[48.80,48.92],lon:[2.20,2.45]},{n:'Berlin',lat:[52.45,52.60],lon:[13.25,13.55]},{n:'Rome',lat:[41.80,41.95],lon:[12.40,12.60]},{n:'Madrid',lat:[40.35,40.50],lon:[-3.85,-3.55]},{n:'Lisbon',lat:[38.65,38.78],lon:[-9.25,-9.05]},{n:'Istanbul',lat:[40.90,41.20],lon:[28.80,29.40]},{n:'Dubai',lat:[25.05,25.35],lon:[55.05,55.55]},{n:'Doha',lat:[25.20,25.40],lon:[51.40,51.60]},{n:'Cairo',lat:[29.90,30.15],lon:[31.10,31.45]}];
-      const rand=(a,b)=>(a+Math.random()*(b-a)), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), fmt=(v)=>v.toFixed(6);
-      const TICK_MIN=220, TICK_MAX=460, STEP_LAT=0.003, STEP_LON=0.004; const timers=[]; let rows=[];
-      function clearTimers(){ while(timers.length){ clearTimeout(timers.pop()); } }
-      function createRow(city){ const line=document.createElement('div'); line.className='coord-line'; line.innerHTML=`<span class="city">${city.n}</span><span class="lat"></span> | <span class="lon"></span>`; const lat=rand(city.lat[0],city.lat[1]); const lon=rand(city.lon[0],city.lon[1]); line.querySelector('.lat').textContent=fmt(lat); line.querySelector('.lon').textContent=fmt(lon); panel.appendChild(line); return {el:line,c:city,lat,lon}; }
-      function stepRow(r){ r.lat=clamp(r.lat+(Math.random()*2-1)*STEP_LAT,r.c.lat[0],r.c.lat[1]); r.lon=clamp(r.lon+(Math.random()*2-1)*STEP_LON,r.c.lon[0],r.c.lon[1]); r.el.querySelector('.lat').textContent=fmt(r.lat); r.el.querySelector('.lon').textContent=fmt(r.lon); }
-      function loopRow(r){ stepRow(r); const t=TICK_MIN+Math.random()*(TICK_MAX-TICK_MIN); const id=setTimeout(()=>loopRow(r),t); timers.push(id); }
-      function computeMaxRows(){ const probe=document.createElement('div'); probe.className='coord-line'; probe.style.visibility='hidden'; probe.innerHTML=`<span class="city">XXXXXXXXXXXX</span><span>00.000000</span> | <span>000.000000</span>`; panel.appendChild(probe); const rowH=probe.getBoundingClientRect().height||14; const styles=getComputedStyle(panel); const gap=parseFloat(styles.rowGap||'0'); const ph=panel.getBoundingClientRect().height; panel.removeChild(probe); return Math.max(1, Math.floor((ph+gap)/(rowH+gap))); }
-      function fillPanel(){ clearTimers(); panel.innerHTML=''; rows=[]; const need=computeMaxRows(); let start=Math.floor(Math.random()*CITIES.length); for(let i=0;i<need;i++){ rows.push(createRow(CITIES[(start+i)%CITIES.length])); } rows.forEach(loopRow); }
-      fillPanel(); let resizeTid=0; addEventListener('resize',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('orientationchange',()=>{ clearTimeout(resizeTid); resizeTid=setTimeout(fillPanel,150); }); addEventListener('beforeunload', clearTimers);
-    }
   })();
   </script>
 
