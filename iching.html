@@ -183,8 +183,6 @@
     .judgment .tag{ font-family: var(--font-mono); color: var(--ivory); margin-right:.5ch; opacity:.95; }
     .tokens{ font-family: inherit; font-size: inherit; line-height: inherit; letter-spacing: inherit; opacity:.95; }
 
-  
-    
     .star-meta{
       font-family: var(--font-mono);
       font-size:14px; line-height:1.6;
@@ -498,7 +496,8 @@
     // 更快的點擊：使用 pointerdown（避免 click 延遲）
     pad.addEventListener('pointerdown', e=>{
       const btn = e.target.closest('.digit'); if(!btn) return;
-      e.preventDefault(); // 防止多餘點擊延遲/雙擊縮放
+      e.preventDefault(); 
+      e.stopPropagation(); /* 關鍵：避免 bubbling 命中 start 或被 ghost click 利用 */
       const cur = Number(btn.dataset.val)||0;
       setDigit(btn, (cur+1)%10);
     }, {passive:false});
@@ -511,21 +510,34 @@
       }
     });
 
-    startBtn.addEventListener('pointerdown', e=>{ e.preventDefault(); onStart(); }, {passive:false});
-    startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(); });
+    /* start：pointerdown 改為傳遞事件；先阻止冒泡，避免與 pad 衝突 */
+    startBtn.addEventListener('pointerdown', e=>{ 
+      e.preventDefault(); 
+      e.stopPropagation(); 
+      onStart(e); 
+    }, {passive:false});
+    startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(e); });
 
     function flashInvalid(el){
       el.classList.add('invalid','error-flash');
       setTimeout(()=>el.classList.remove('error-flash'),300);
     }
 
-    function onStart(){
+    function onStart(ev){
       const vals = digitBtns.map(d=>Number(d.dataset.val)||0);
       const g1=vals.slice(0,3), g2=vals.slice(3,6), g3=vals.slice(6,9);
       const firsts=[digitBtns[0],digitBtns[3],digitBtns[6]];
       let bad=false;
       [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; flashInvalid(firsts[idx]); }});
-      if(bad){ alert('三組數字的首位皆不能為零。請修正。'); return; }
+      if(bad){
+        /* 修正點：避免同步 alert 破壞 pointer 序列與焦點殘留，導致 ghost click */
+        try{ (ev && ev.currentTarget && ev.currentTarget.blur) && ev.currentTarget.blur(); }catch(_){}
+        const swallow = e => e.stopPropagation();
+        document.addEventListener('click', swallow, {capture:true, once:true});
+        document.addEventListener('pointerup', swallow, {capture:true, once:true});
+        setTimeout(()=> alert('三組數字的首位皆不能為零。請修正。'), 0);
+        return;
+      }
 
       const remLow=mod8(g1), remUp=mod8(g2);
       const trigLow=NUM_TO_TRIGRAM[remLow];
@@ -567,7 +579,7 @@
           </div>
 
           <div class="judgment">
-            <span class="tag">斷：</span>${judge.summary}
+            <span class="tag">斷:</span>${judge.summary}
             ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}` : ''}
           </div>
         </div>
@@ -599,8 +611,8 @@
         lines.push(`${idxToName(low)}${upDown(low)}：${(M_YAO[low]||'').trim()}`);
       } else if (moveCount===3){
         summary = '三爻變，本卦卦辭為「貞」（體），變卦卦辭為「悔」（用）。';
-        lines.push(`貞：${(mainHex.guaci||'').trim()}`);
-        if (changedHex) lines.push(`悔：${(changedHex.guaci||'').trim()}`);
+        lines.push(`貞:${(mainHex.guaci||'').trim()}`);
+        if (changedHex) lines.push(`悔:${(changedHex.guaci||'').trim()}`);
       } else if (moveCount===4){
         summary = '四爻變，用變卦兩個「不變爻」之爻辭，下者為主。';
         const notChanged = [0,1,2,3,4,5].filter(i => !movingIdx.includes(i));
@@ -640,14 +652,15 @@
       if(window._crackPanel) window._crackPanel(panel);
     }
 
-    /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放 ===== */
+    /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放（縮小副作用） ===== */
     (function(){
       // iOS Safari 手勢縮放
       window.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
 
-      // 簡單雙擊偵測，阻止放大
+      // 簡單雙擊偵測：避開 pad / start，減少對點擊序列的干擾
       let lastTouch = 0;
       window.addEventListener('touchend', function(e){
+        if (e.target.closest('#pad') || e.target.closest('#start')) return;
         const now = Date.now();
         if(now - lastTouch <= 300){ e.preventDefault(); }
         lastTouch = now;
