@@ -45,7 +45,7 @@
       --font-ja: "Noto Serif JP", serif;
       --ivory: #f4f2f0; --ink: #000;
 
-      /* 注解排版變數 */
+      /* 注解排版變數（統一字級/行高/字距） */
       --panel-fs: 16px;
       --panel-lh: 1.9;
       --panel-letter: 0.001;
@@ -58,8 +58,10 @@
       height:100%;
       background:#000;color:var(--ivory);
       overflow-x:hidden!important;
-      overscroll-behavior-x:none;           /* 禁止水平回彈 */
-      touch-action: pan-y;                  /* 僅允許垂直滾動，禁水平 */
+      overscroll-behavior-x:none;
+      touch-action: pan-y;
+      -webkit-text-size-adjust:100%;
+      text-size-adjust:100%;
     }
 
     /* ===== header / rotator ===== */
@@ -109,39 +111,19 @@
     main{position:relative;z-index:1;padding:100px 60px 40px}
     .layout{display:grid;grid-template-columns:360px 1fr;gap:40px;align-items:stretch}
 
-    /* 左：垂直置中容器 */
-    .left{
-      display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
-      min-height:calc(100vh - 160px);
-    }
+    .left{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:calc(100vh - 160px)}
 
-    /* 數字鍵盤（Courier New 純文字） */
-    .pad{
-      user-select:none;width:280px;display:grid;
-      grid-template-columns:repeat(3,1fr);
-      grid-template-rows:repeat(3,auto) auto;
-      gap:24px 28px;margin-bottom:0;
-    }
+    /* 數字鍵盤 */
+    .pad{user-select:none;width:280px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,auto) auto;gap:24px 28px;margin-bottom:0}
     .digit{
-      width:80px;height:80px;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;background:transparent;border:none;outline:none;
-      transform-style:preserve-3d;
-      transition:filter .1s ease, transform .06s ease;
-      touch-action: manipulation;
-      perspective:800px;
+      width:80px;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:none;outline:none;
+      transform-style:preserve-3d;transition:filter .1s ease, transform .06s ease;touch-action:manipulation;perspective:800px
     }
-    .digit:active{ transform:scale(0.98) }
+    .digit:active{transform:scale(0.98)}
     .digit-num{
-      font-family: var(--font-mono);
-      font-size: 64px;
-      line-height: 1;
-      color: var(--ivory);
-      will-change: transform;
-      display: inline-block;
-      transform-origin: center;
-      animation: slowY 13s linear infinite;
-      text-shadow: 0 0 0.02em rgba(255,255,255,.6), 0 0 0.06em rgba(255,255,255,.25);
+      font-family:var(--font-mono);font-size:64px;line-height:1;color:var(--ivory);
+      will-change:transform;display:inline-block;transform-origin:center;animation:slowY 13s linear infinite;
+      text-shadow:0 0 0.02em rgba(255,255,255,.6), 0 0 0.06em rgba(255,255,255,.25)
     }
     @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
     .digit:focus-visible{outline:2px dashed #f1c232; outline-offset:4px}
@@ -151,43 +133,53 @@
     .start{
       grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
       display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
-      animation:blink3 3s steps(1,end) infinite;margin-left:2px;
-      touch-action: manipulation;
+      animation:blink3 3s steps(1,end) infinite;margin-left:2px;touch-action:manipulation
     }
 
-    /* 右：注解（排版） */
+    /* ===== 右：注解（統一字級/字重/字距；非星座座標全 200） ===== */
     .panel{
-      font-family:var(--font-ja);font-weight:200;
-      font-size:var(--panel-fs); line-height:var(--panel-lh);
-      letter-spacing:var(--panel-letter);
       max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
     }
-    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify: inter-ideograph; }
+    /* 面板內的所有元素（星座座標除外）統一為 Noto Serif JP ExtraLight 200 */
+    .panel, .panel *{
+      font-family:var(--font-ja);
+      font-weight:200;
+      font-size:var(--panel-fs);
+      line-height:var(--panel-lh);
+      letter-spacing:var(--panel-letter);
+      font-kerning:normal;
+      font-variant-east-asian: proportional-width;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    /* 星座座標行保留等寬與獨立字級 */
+    .panel .star-meta, .panel .star-meta *{
+      font-family:var(--font-mono)!important;
+      font-weight:400!important;
+      font-size:14px!important;
+      line-height:1.6!important;
+      letter-spacing:0!important;
+    }
+
+    /* 常規段落與標題 */
+    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify:inter-ideograph; }
     .panel p::after{ content:"　"; display:inline-block; width:0; }
-    .panel h2{ font-weight:200; font-size:var(--panel-fs); margin: 0 0 6px; }
+    .panel h2{ margin:0 0 6px; font-weight:200; }
+
     .section{ padding:12px 0; border-top:none; }
     .yao-list{ margin-top:6px }
-    .yao-list .hi{ font-family:var(--font-mono) }
+    /* 取消舊的 .yao-list .hi 等寬字，保持一致 */
+    /* .yao-list .hi { font-family:var(--font-mono) }  ← 已移除 */
 
     /* 斷語 */
     .judgment{
-      margin-top:10px; padding:10px 12px;
-      border-left:2px solid var(--judge-accent);
-      opacity:.95;
-      font-family: var(--font-ja);
-      font-weight: 200;
-      font-size: var(--panel-fs);
-      line-height: var(--panel-lh);
-      letter-spacing: var(--panel-letter);
+      margin-top:10px; padding:10px 12px; border-left:2px solid var(--judge-accent); opacity:.95;
     }
-    .judgment .tag{ font-family: var(--font-mono); color: var(--ivory); margin-right:.5ch; opacity:.95; }
-    .tokens{ font-family: inherit; font-size: inherit; line-height: inherit; letter-spacing: inherit; opacity:.95; }
+    /* 標籤與正文同樣 200，避免大小/粗細跳動 */
+    .judgment .tag{ font-weight:200; }
 
-    .star-meta{
-      font-family: var(--font-mono);
-      font-size:14px; line-height:1.6;
-      margin:10px 0 6px; opacity:.95; white-space:normal;
-    }
+    /* 面板內的粗體也維持 200，避免看起來放大 */
+    .panel b, .panel strong{ font-weight:200; }
 
     @media (max-width:767px) and (orientation:portrait){
       main{padding:116px 20px 20px}
@@ -225,40 +217,21 @@
 
   <main>
     <div class="layout">
-      <!-- 左：數字鍵盤（Courier New 純文字） -->
+      <!-- 左：數字鍵盤 -->
       <div class="left">
         <div class="pad" id="pad" aria-label="number pad">
           <!-- row 1（下卦） -->
-          <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
+          <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
           <!-- row 2（上卦） -->
-          <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
+          <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
           <!-- row 3（變爻種子） -->
-          <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-          <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0">
-            <span class="digit-num" aria-hidden="true">0</span>
-          </button>
-
+          <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+          <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
           <!-- row 4：開始 -->
           <span id="start" class="start" role="button" tabindex="0" aria-label="開始">■</span>
         </div>
@@ -456,7 +429,7 @@
       return out;
     }
 
-    // 星宿資訊行（Courier New；尾端帶 ■）
+    // 星宿資訊行（固定全形冒號、逗號）
     function starMetaLine(xingxiu){
       if(!xingxiu || !STAR_MAP) return "";
       const key = String(xingxiu).replace(/宿$/,'');
@@ -474,13 +447,12 @@
     }
     function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&quot;',"'":'&#39;'}[m]))}
 
-    /* ===== 互動：數字鍵盤（純文字） ===== */
+    /* ===== 互動：數字鍵盤 ===== */
     const pad = document.getElementById('pad');
     const digitBtns = [...pad.querySelectorAll('.digit')];
     const startBtn = document.getElementById('start');
     const panel = document.getElementById('panel');
 
-    // 統一更新數字與 ARIA
     function setDigit(btn, val){
       const v = (Number(val)||0)%10;
       btn.dataset.val = String(v);
@@ -490,14 +462,11 @@
       btn.classList.remove('invalid','error-flash');
     }
 
-    // 初始化（全部 0）
     digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
 
-    // 更快的點擊：使用 pointerdown（避免 click 延遲）
     pad.addEventListener('pointerdown', e=>{
       const btn = e.target.closest('.digit'); if(!btn) return;
-      e.preventDefault(); 
-      e.stopPropagation(); /* 關鍵：避免 bubbling 命中 start 或被 ghost click 利用 */
+      e.preventDefault(); e.stopPropagation();
       const cur = Number(btn.dataset.val)||0;
       setDigit(btn, (cur+1)%10);
     }, {passive:false});
@@ -510,11 +479,8 @@
       }
     });
 
-    /* start：pointerdown 改為傳遞事件；先阻止冒泡，避免與 pad 衝突 */
     startBtn.addEventListener('pointerdown', e=>{ 
-      e.preventDefault(); 
-      e.stopPropagation(); 
-      onStart(e); 
+      e.preventDefault(); e.stopPropagation(); onStart(e); 
     }, {passive:false});
     startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(e); });
 
@@ -530,7 +496,6 @@
       let bad=false;
       [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; flashInvalid(firsts[idx]); }});
       if(bad){
-        /* 修正點：避免同步 alert 破壞 pointer 序列與焦點殘留，導致 ghost click */
         try{ (ev && ev.currentTarget && ev.currentTarget.blur) && ev.currentTarget.blur(); }catch(_){}
         const swallow = e => e.stopPropagation();
         document.addEventListener('click', swallow, {capture:true, once:true});
@@ -545,12 +510,12 @@
 
       const mainKey=`上:${trigUp}|下:${trigLow}`;
       const mainHex=PAIR_MAP[mainKey];
-      if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 <b>${trigUp}</b>、下卦 <b>${trigLow}</b>。</div>`); return; }
+      if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 ${escapeHTML(trigUp)}、下卦 ${escapeHTML(trigLow)}。</div>`); return; }
 
-      const movingIdx = movingLinesFromNumber(g3);   // 0-based
+      const movingIdx = movingLinesFromNumber(g3);
       const moveCount = movingIdx.length;
 
-      const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]); // [1..6]
+      const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]);
       const changedBits = flipMany(mainBits, movingIdx);
       const newLowName = bitsToTrig(changedBits.slice(0,3));
       const newUpName  = bitsToTrig(changedBits.slice(3,6));
@@ -586,7 +551,6 @@
       `;
       renderText(html);
 
-      // 歸零
       digitBtns.forEach(d=> setDigit(d, 0));
     }
 
@@ -645,7 +609,6 @@
       return {summary, lines};
     }
 
-    /* 面板渲染 + 觸發 code-cracking */
     function renderText(inner){
       const panel=document.getElementById('panel');
       panel.innerHTML=inner;
@@ -654,10 +617,7 @@
 
     /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放（縮小副作用） ===== */
     (function(){
-      // iOS Safari 手勢縮放
       window.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
-
-      // 簡單雙擊偵測：避開 pad / start，減少對點擊序列的干擾
       let lastTouch = 0;
       window.addEventListener('touchend', function(e){
         if (e.target.closest('#pad') || e.target.closest('#start')) return;
