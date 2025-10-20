@@ -175,9 +175,13 @@
       display:grid; grid-template-columns:2fr 3fr; grid-template-rows:80px 1fr auto;
       grid-template-areas:"hl right" "txt right" "sig right";
       column-gap:60px; row-gap:24px; opacity:0; z-index:4;
-      transition:opacity .3s ease-out .2s; pointer-events:none;
+      /* 進場更快 */
+      transition:opacity .18s ease-out .08s; pointer-events:none;
     }
-    .post > *{ opacity:0; transition:opacity .8s ease-out .4s, transform .8s ease-out .4s; }
+    .post > *{
+      opacity:0;
+      transition:opacity .48s ease-out .1s, transform .48s ease-out .1s;
+    }
     .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) }
     .post .post-right { transform:translateX(100%) }
     .post .highlight{ grid-area:hl; }
@@ -189,9 +193,24 @@
     .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; }
     .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; }
     .team{ flex:0 0 25%; display:flex; height:100%; }
-    .team-text{ font-family: var(--font-ja);flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end; padding:0 20px 20px; background:rgba(0,0,0,0.5); }
-    .team-info{ font-family: var(--font-ja); color:var(--ivory); font-size:16px; line-height:18px; text-align:right; }
-    .team-info .name{ font-family: var(--font-ja); font-size:50px; line-height:24px; white-space:nowrap; }
+
+    /* —— 修正：desktop team slide 文字一律用 Courier New —— */
+    .team-text{
+      font-family: var(--font-mono);
+      flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end;
+      padding:0 20px 20px; background:rgba(0,0,0,0.5);
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    .team-info{
+      font-family: var(--font-mono);
+      color:var(--ivory); font-size:16px; line-height:18px; text-align:right;
+      letter-spacing:-0.005em;
+    }
+    .team-info .name{
+      font-family: var(--font-mono);
+      font-size:50px; line-height:24px; white-space:nowrap;
+      letter-spacing:-0.01em;
+    }
     .team .photo{ flex:2; background-size:cover; background-position:center; }
 
     .post.enter{ opacity:1; pointer-events:auto; }
@@ -441,32 +460,39 @@
       start();
     })();
 
-    /* ===== Scroll：square 放大到最大 → 進入第三階段 ===== */
+    /* ===== Scroll：square 放大到最大 → 進入第三階段（加快） ===== */
     (function(){
       const sq = $('#square'), overlay = $('#overlay'), post = $('#post');
       const hlVideo = $('.post .highlight');
       if(!sq) return;
+
+      const ENTER_T = 0.6; // 只需滾到 60% 就進場
       const docH=()=>Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       const maxScale=()=>Math.max(window.innerWidth, window.innerHeight)/60;
-      function setSquare(p){
-        sq.style.animation = (p>0) ? 'none' : 'blink3 3s infinite';
-        const s = 1 + p*(maxScale()-1);
+
+      function setSquare(progress){
+        // progress 已經是 0..1 的可視化比例
+        sq.style.animation = (progress>0) ? 'none' : 'blink3 3s infinite';
+        const s = 1 + progress*(maxScale()-1);
         sq.style.transform = `translateZ(0) scale(${s})`;
       }
+
       let ticking=false, entered=false;
       function onScroll(){
         if(ticking) return; ticking=true;
         requestAnimationFrame(()=>{
           const max=docH()-window.innerHeight;
-          const pct=Math.min(max>0?window.scrollY/max:0,1);
-          setSquare(pct);
-          if(pct>=1 && !entered){
+          const rawPct=Math.min(max>0?window.scrollY/max:0,1);
+          const visPct=Math.min(rawPct/ENTER_T, 1); // 視覺同步提早滿格
+          setSquare(visPct);
+
+          if(rawPct>=ENTER_T && !entered){
             overlay.style.display='block';
             post.classList.add('enter'); post.setAttribute('aria-hidden','false');
             hlVideo && hlVideo.play && hlVideo.play().catch(()=>{});
             runCrackOnce(); startCarouselIfDesktop(); showMobileManifestSnippet();
             entered=true;
-          }else if(pct<1 && entered){
+          }else if(rawPct<ENTER_T && entered){
             overlay.style.display='none';
             post.classList.remove('enter'); post.setAttribute('aria-hidden','true');
             hlVideo && hlVideo.pause && hlVideo.pause();
