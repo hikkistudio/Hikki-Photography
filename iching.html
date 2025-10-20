@@ -130,6 +130,19 @@
     .digit.invalid{filter:drop-shadow(0 0 6px #ff5252)}
     .digit.error-flash{animation:none}
 
+    /* 首次之後：首三位轉紅用 */
+    .digit.invalid-leading .digit-num{
+      color:#ff4d4f;
+      text-shadow:0 0 8px rgba(255,77,79,.65), 0 0 14px rgba(255,77,79,.35);
+    }
+
+    /* 全鍵盤快閃（三次），不含白方格（start 不是 .digit） */
+    @keyframes padFlash {
+      0%,100% { filter:none; transform:none; }
+      50%     { filter:drop-shadow(0 0 10px rgba(255,77,79,.9)); transform:scale(1.04); }
+    }
+    .pad.flash .digit{ animation:padFlash .18s linear 3; }
+
     .start{
       grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
       display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
@@ -168,17 +181,12 @@
 
     .section{ padding:12px 0; border-top:none; }
     .yao-list{ margin-top:6px }
-    /* 取消舊的 .yao-list .hi 等寬字，保持一致 */
-    /* .yao-list .hi { font-family:var(--font-mono) }  ← 已移除 */
 
     /* 斷語 */
     .judgment{
       margin-top:10px; padding:10px 12px; border-left:2px solid var(--judge-accent); opacity:.95;
     }
-    /* 標籤與正文同樣 200，避免大小/粗細跳動 */
     .judgment .tag{ font-weight:200; }
-
-    /* 面板內的粗體也維持 200，避免看起來放大 */
     .panel b, .panel strong{ font-weight:200; }
 
     @media (max-width:767px) and (orientation:portrait){
@@ -459,7 +467,7 @@
       const span = btn.querySelector('.digit-num');
       if(span) span.textContent = String(v);
       btn.setAttribute('aria-label', `位 ${Number(btn.dataset.i)+1}：${v}`);
-      btn.classList.remove('invalid','error-flash');
+      btn.classList.remove('invalid','error-flash','invalid-leading');
     }
 
     digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
@@ -489,21 +497,55 @@
       setTimeout(()=>el.classList.remove('error-flash'),300);
     }
 
+    /* === 新增：只在本次造訪第一次違規時警告彈窗 === */
+    let zeroWarnedOnce = false;
+
+    function markLeadingRed(){
+      // 首三位（每組第一位）：0,3,6
+      [0,3,6].forEach(i=>{
+        const b = digitBtns[i];
+        if (b) b.classList.add('invalid-leading');
+      });
+    }
+    function clearLeadingRed(){
+      [0,3,6].forEach(i=>{
+        const b = digitBtns[i];
+        if (b) b.classList.remove('invalid-leading');
+      });
+    }
+    function flashPad(){
+      pad.classList.add('flash');
+      setTimeout(()=> pad.classList.remove('flash'), 600); // .18s * 3 ≈ .54s，保險 600ms
+    }
+
     function onStart(ev){
       const vals = digitBtns.map(d=>Number(d.dataset.val)||0);
       const g1=vals.slice(0,3), g2=vals.slice(3,6), g3=vals.slice(6,9);
       const firsts=[digitBtns[0],digitBtns[3],digitBtns[6]];
       let bad=false;
-      [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; flashInvalid(firsts[idx]); }});
+      [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; /* 視覺小提示 */ flashInvalid(firsts[idx]); }});
+
       if(bad){
+        // 阻止任何面板內容變動
         try{ (ev && ev.currentTarget && ev.currentTarget.blur) && ev.currentTarget.blur(); }catch(_){}
         const swallow = e => e.stopPropagation();
         document.addEventListener('click', swallow, {capture:true, once:true});
         document.addEventListener('pointerup', swallow, {capture:true, once:true});
-        setTimeout(()=> alert('三組數字的首位皆不能為零。請修正。'), 0);
+
+        if(!zeroWarnedOnce){
+          zeroWarnedOnce = true;
+          setTimeout(()=> alert('三組數字的首位皆不能為零。請修正。'), 0);
+        }else{
+          // 之後的違規：首三位轉紅 + 全鍵盤快閃三次（不含 start）
+          markLeadingRed();
+          flashPad();
+          // 短暫後恢復
+          setTimeout(clearLeadingRed, 800);
+        }
         return;
       }
 
+      // ====== 合法：繼續原本流程 ======
       const remLow=mod8(g1), remUp=mod8(g2);
       const trigLow=NUM_TO_TRIGRAM[remLow];
       const trigUp =NUM_TO_TRIGRAM[remUp];
