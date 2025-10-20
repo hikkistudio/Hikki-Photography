@@ -1,673 +1,673 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
-  <title>I Ching | hikki photography</title>
+  <!DOCTYPE html>
+  <html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
+    <title>I Ching | hikki photography</title>
 
-  <!-- Canonical / Robots -->
-  <link rel="canonical" href="https://hikki.ca/iching.html">
-  <meta name="robots" content="index,follow,max-image-preview:large"/>
+    <!-- Canonical / Robots -->
+    <link rel="canonical" href="https://hikki.ca/iching.html">
+    <meta name="robots" content="index,follow,max-image-preview:large"/>
 
-  <!-- Meta -->
-  <meta name="description" content="易經占卜｜皇極經世"/>
-  <meta property="og:title" content="I Ching | hikki photography"/>
-  <meta property="og:description" content="易經占卜｜皇極經世"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://hikki.ca/iching.html"/>
-  <meta property="og:site_name" content="hikki photography & philosophy"/>
-  <meta property="og:image" content="https://hikki.ca/favicon.png"/>
-  <meta property="og:image:alt" content="I Ching — 易經占卜"/>
-  <meta property="og:image:width" content="512"/>
-  <meta property="og:image:height" content="512"/>
-  <meta property="og:locale" content="zh_HK"/>
+    <!-- Meta -->
+    <meta name="description" content="易經占卜｜皇極經世"/>
+    <meta property="og:title" content="I Ching | hikki photography"/>
+    <meta property="og:description" content="易經占卜｜皇極經世"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://hikki.ca/iching.html"/>
+    <meta property="og:site_name" content="hikki photography & philosophy"/>
+    <meta property="og:image" content="https://hikki.ca/favicon.png"/>
+    <meta property="og:image:alt" content="I Ching — 易經占卜"/>
+    <meta property="og:image:width" content="512"/>
+    <meta property="og:image:height" content="512"/>
+    <meta property="og:locale" content="zh_HK"/>
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="I Ching | hikki photography"/>
-  <meta name="twitter:description" content="易經占卜｜皇極經世"/>
-  <meta name="twitter:image" content="https://hikki.ca/favicon.png"/>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="I Ching | hikki photography"/>
+    <meta name="twitter:description" content="易經占卜｜皇極經世"/>
+    <meta name="twitter:image" content="https://hikki.ca/favicon.png"/>
 
-  <link rel="icon" href="/favicon.png" type="image/png"/>
+    <link rel="icon" href="/favicon.png" type="image/png"/>
 
-  <!-- Fonts / GSAP -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Noto Serif JP for panel -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <!-- Fonts / GSAP -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Noto Serif JP for panel -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
-  <style>
-    :root{
-      --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
-      --font-mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
-      --font-ja: "Noto Serif JP", serif;
-      --ivory: #f4f2f0; --ink: #000;
+    <style>
+      :root{
+        --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
+        --font-mono: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
+        --font-ja: "Noto Serif JP", serif;
+        --ivory: #f4f2f0; --ink: #000;
 
-      /* 注解排版變數（統一字級/行高/字距） */
-      --panel-fs: 16px;
-      --panel-lh: 1.9;
-      --panel-letter: 0.001;
-      --panel-para: 12px;
-      --panel-indent: 0;
-      --judge-accent: #e74c3c;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{
-      height:100%;
-      background:#000;color:var(--ivory);
-      overflow-x:hidden!important;
-      overscroll-behavior-x:none;
-      touch-action: pan-y;
-      -webkit-text-size-adjust:100%;
-      text-size-adjust:100%;
-    }
-
-    /* ===== header / rotator ===== */
-    .blink-block{display:inline-block;animation:blink3 3s infinite}
-    @keyframes blink3{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
-    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-    .mobile-rotator{
-      position:fixed;top:0;left:0;width:100%;height:36px;background:var(--ivory);color:var(--ink);
-      display:none;align-items:center;justify-content:center;padding:0 12px;z-index:10001;font-size:14px;line-height:1;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-mono);
-      will-change:transform,opacity;transform:translateZ(0)
-    }
-    .mobile-rotator.ja{font-family:var(--font-ja);font-weight:200}
-
-    .header-bar{
-      position:fixed;top:0;left:0;width:100%;height:60px;background:var(--ivory);z-index:9999;border-bottom:1px solid var(--ivory);
-      display:flex;align-items:center;padding:0 40px;will-change:transform,opacity;transform:translateZ(0)
-    }
-    .header-title{margin-right:auto;font-family:var(--font-mono);font-size:18px;color:var(--ink);white-space:nowrap;overflow:hidden}
-    .header-title.ja{font-family:var(--font-ja);font-weight:200}
-    .nav-links{display:flex;align-items:center;margin-left:auto;gap:40px}
-    .header-bar a{
-      font-family:var(--font-mono);font-size:18px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
-      min-width:24px;height:28px;line-height:1;transition:color .25s ease
-    }
-    .header-bar a:hover{color:#f1c232}
-    .header-bar a.active{color:#e74c3c}
-    .nav-links a.iching .label{display:none}
-    .nav-links a.iching .blink-block{font-size:18px}
-
-    @media (max-width:767px) and (orientation:portrait){
-      .mobile-rotator{display:flex}
-      .header-bar{top:36px;padding:0}
-      .nav-links{
-        width:calc(100% - 4ch);margin:0 auto;display:grid;grid-template-columns:2.2ch 1fr 1fr 1fr;align-items:center;justify-items:center;gap:0
+        /* 注解排版變數（統一字級/行高/字距） */
+        --panel-fs: 16px;
+        --panel-lh: 1.9;
+        --panel-letter: 0.001;
+        --panel-para: 12px;
+        --panel-indent: 0;
+        --judge-accent: #e74c3c;
       }
-      .header-bar a{margin:0;min-width:0;height:36px;line-height:36px}
-      .nav-links a.iching{justify-self:start}
-      .header-title{display:none}
-    }
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{
+        height:100%;
+        background:#000;color:var(--ivory);
+        overflow-x:hidden!important;
+        overscroll-behavior-x:none;
+        touch-action: pan-y;
+        -webkit-text-size-adjust:100%;
+        text-size-adjust:100%;
+      }
 
-    /* 背景影片 */
-    .bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:#000;pointer-events:none;filter:saturate(.9) brightness(.5)}
+      /* ===== header / rotator ===== */
+      .blink-block{display:inline-block;animation:blink3 3s infinite}
+      @keyframes blink3{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
+      .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    /* ===== 版面 ===== */
-    main{position:relative;z-index:1;padding:100px 60px 40px}
-    .layout{display:grid;grid-template-columns:360px 1fr;gap:40px;align-items:stretch}
+      .mobile-rotator{
+        position:fixed;top:0;left:0;width:100%;height:36px;background:var(--ivory);color:var(--ink);
+        display:none;align-items:center;justify-content:center;padding:0 12px;z-index:10001;font-size:14px;line-height:1;
+        white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-mono);
+        will-change:transform,opacity;transform:translateZ(0)
+      }
+      .mobile-rotator.ja{font-family:var(--font-ja);font-weight:200}
 
-    .left{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:calc(100vh - 160px)}
+      .header-bar{
+        position:fixed;top:0;left:0;width:100%;height:60px;background:var(--ivory);z-index:9999;border-bottom:1px solid var(--ivory);
+        display:flex;align-items:center;padding:0 40px;will-change:transform,opacity;transform:translateZ(0)
+      }
+      .header-title{margin-right:auto;font-family:var(--font-mono);font-size:18px;color:var(--ink);white-space:nowrap;overflow:hidden}
+      .header-title.ja{font-family:var(--font-ja);font-weight:200}
+      .nav-links{display:flex;align-items:center;margin-left:auto;gap:40px}
+      .header-bar a{
+        font-family:var(--font-mono);font-size:18px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+        min-width:24px;height:28px;line-height:1;transition:color .25s ease
+      }
+      .header-bar a:hover{color:#f1c232}
+      .header-bar a.active{color:#e74c3c}
+      .nav-links a.iching .label{display:none}
+      .nav-links a.iching .blink-block{font-size:18px}
 
-    /* 數字鍵盤 */
-    .pad{user-select:none;width:280px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,auto) auto;gap:24px 28px;margin-bottom:0}
-    .digit{
-      width:80px;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:none;outline:none;
-      transform-style:preserve-3d;transition:filter .1s ease, transform .06s ease;touch-action:manipulation;perspective:800px
-    }
-    .digit:active{transform:scale(0.98)}
-    .digit-num{
-      font-family:var(--font-mono);font-size:64px;line-height:1;color:var(--ivory);
-      will-change:transform;display:inline-block;transform-origin:center;animation:slowY 13s linear infinite;
-      text-shadow:0 0 0.02em rgba(255,255,255,.6), 0 0 0.06em rgba(255,255,255,.25)
-    }
-    @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-    .digit:focus-visible{outline:2px dashed #f1c232; outline-offset:4px}
-    .digit.invalid{filter:drop-shadow(0 0 6px #ff5252)}
-    .digit.error-flash{animation:none}
+      @media (max-width:767px) and (orientation:portrait){
+        .mobile-rotator{display:flex}
+        .header-bar{top:36px;padding:0}
+        .nav-links{
+          width:calc(100% - 4ch);margin:0 auto;display:grid;grid-template-columns:2.2ch 1fr 1fr 1fr;align-items:center;justify-items:center;gap:0
+        }
+        .header-bar a{margin:0;min-width:0;height:36px;line-height:36px}
+        .nav-links a.iching{justify-self:start}
+        .header-title{display:none}
+      }
 
-    /* 首次之後：首三位轉紅用 */
-    .digit.invalid-leading .digit-num{
-      color:#ff4d4f;
-      text-shadow:0 0 8px rgba(255,77,79,.65), 0 0 14px rgba(255,77,79,.35);
-    }
+      /* 背景影片 */
+      .bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:#000;pointer-events:none;filter:saturate(.9) brightness(.5)}
 
-    /* 全鍵盤快閃（三次），不含白方格（start 不是 .digit） */
-    @keyframes padFlash {
-      0%,100% { filter:none; transform:none; }
-      50%     { filter:drop-shadow(0 0 10px rgba(255,77,79,.9)); transform:scale(1.04); }
-    }
-    .pad.flash .digit{ animation:padFlash .18s linear 3; }
+      /* ===== 版面 ===== */
+      main{position:relative;z-index:1;padding:100px 60px 40px}
+      .layout{display:grid;grid-template-columns:360px 1fr;gap:40px;align-items:stretch}
 
-    .start{
-      grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
-      display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
-      animation:blink3 3s steps(1,end) infinite;margin-left:2px;touch-action:manipulation
-    }
+      .left{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:calc(100vh - 160px)}
 
-    /* ===== 右：注解（統一字級/字重/字距；非星座座標全 200） ===== */
-    .panel{
-      max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
-    }
-    /* 面板內的所有元素（星座座標除外）統一為 Noto Serif JP ExtraLight 200 */
-    .panel, .panel *{
-      font-family:var(--font-ja);
-      font-weight:200;
-      font-size:var(--panel-fs);
-      line-height:var(--panel-lh);
-      letter-spacing:var(--panel-letter);
-      font-kerning:normal;
-      font-variant-east-asian: proportional-width;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    /* 星座座標行保留等寬與獨立字級 */
-    .panel .star-meta, .panel .star-meta *{
-      font-family:var(--font-mono)!important;
-      font-weight:400!important;
-      font-size:14px!important;
-      line-height:1.6!important;
-      letter-spacing:0!important;
-    }
+      /* 數字鍵盤 */
+      .pad{user-select:none;width:280px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,auto) auto;gap:24px 28px;margin-bottom:0}
+      .digit{
+        width:80px;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:none;outline:none;
+        transform-style:preserve-3d;transition:filter .1s ease, transform .06s ease;touch-action:manipulation;perspective:800px
+      }
+      .digit:active{transform:scale(0.98)}
+      .digit-num{
+        font-family:var(--font-mono);font-size:64px;line-height:1;color:var(--ivory);
+        will-change:transform;display:inline-block;transform-origin:center;animation:slowY 13s linear infinite;
+        text-shadow:0 0 0.02em rgba(255,255,255,.6), 0 0 0.06em rgba(255,255,255,.25)
+      }
+      @keyframes slowY{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+      .digit:focus-visible{outline:2px dashed #f1c232; outline-offset:4px}
+      .digit.invalid{filter:drop-shadow(0 0 6px #ff5252)}
+      .digit.error-flash{animation:none}
 
-    /* 常規段落與標題 */
-    .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify:inter-ideograph; }
-    .panel p::after{ content:"　"; display:inline-block; width:0; }
-    .panel h2{ margin:0 0 6px; font-weight:200; }
+      /* 首次之後：首三位轉紅用 */
+      .digit.invalid-leading .digit-num{
+        color:#ff4d4f;
+        text-shadow:0 0 8px rgba(255,77,79,.65), 0 0 14px rgba(255,77,79,.35);
+      }
 
-    .section{ padding:12px 0; border-top:none; }
-    .yao-list{ margin-top:6px }
+      /* 全鍵盤快閃（三次），不含白方格（start 不是 .digit） */
+      @keyframes padFlash {
+        0%,100% { filter:none; transform:none; }
+        50%     { filter:drop-shadow(0 0 10px rgba(255,77,79,.9)); transform:scale(1.04); }
+      }
+      .pad.flash .digit{ animation:padFlash .18s linear 3; }
 
-    /* 斷語 */
-    .judgment{
-      margin-top:10px; padding:10px 12px; border-left:2px solid var(--judge-accent); opacity:.95;
-    }
-    .judgment .tag{ font-weight:200; }
-    .panel b, .panel strong{ font-weight:200; }
+      .start{
+        grid-column:1 / 2; grid-row:4 / 5; align-self:start; justify-self:center;
+        display:inline-block;font-family:var(--font-mono);font-size:56px;line-height:1;cursor:pointer;
+        animation:blink3 3s steps(1,end) infinite;margin-left:2px;touch-action:manipulation
+      }
 
-    @media (max-width:767px) and (orientation:portrait){
-      main{padding:116px 20px 20px}
-      .layout{grid-template-columns:1fr;gap:20px}
-      .left{min-height:auto}
-      .pad{width:100%;gap:18px 20px}
-      .digit{width:26vw;height:26vw;max-width:120px;max-height:120px}
-      .start{font-size:18vw}
-      .panel{max-height:none}
-    }
-  </style>
-</head>
-<body>
-  <!-- Mobile rotator -->
-  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite" aria-hidden="true">of time, souls and cities.</div>
+      /* ===== 右：注解（統一字級/字重/字距；非星座座標全 200） ===== */
+      .panel{
+        max-height:calc(100vh - 140px); overflow:auto; -webkit-overflow-scrolling:touch;
+      }
+      /* 面板內的所有元素（星座座標除外）統一為 Noto Serif JP ExtraLight 200 */
+      .panel, .panel *{
+        font-family:var(--font-ja);
+        font-weight:200;
+        font-size:var(--panel-fs);
+        line-height:var(--panel-lh);
+        letter-spacing:var(--panel-letter);
+        font-kerning:normal;
+        font-variant-east-asian: proportional-width;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+      }
+      /* 星座座標行保留等寬與獨立字級 */
+      .panel .star-meta, .panel .star-meta *{
+        font-family:var(--font-mono)!important;
+        font-weight:400!important;
+        font-size:14px!important;
+        line-height:1.6!important;
+        letter-spacing:0!important;
+      }
 
-  <!-- Header -->
-  <div class="header-bar" role="navigation" aria-label="primary">
-    <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
-    <nav class="nav-links" aria-label="site">
-      <a href="iching.html" class="iching active" aria-label="iching / i ching">
-        <span class="blink-block" aria-hidden="true">■</span>
-        <span class="label sr-only">I Ching</span>
-      </a>
-      <a href="index.html">about</a>
-      <a href="gallery.html">gallery</a>
-      <a href="contact.html">contact</a>
-    </nav>
-  </div>
+      /* 常規段落與標題 */
+      .panel p{ margin: var(--panel-para) 0; text-indent: var(--panel-indent); text-align:justify; text-justify:inter-ideograph; }
+      .panel p::after{ content:"　"; display:inline-block; width:0; }
+      .panel h2{ margin:0 0 6px; font-weight:200; }
 
-  <!-- 背景影片 -->
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata">
-    <source src="ichingbg.mp4" type="video/mp4">
-  </video>
+      .section{ padding:12px 0; border-top:none; }
+      .yao-list{ margin-top:6px }
 
-  <main>
-    <div class="layout">
-      <!-- 左：數字鍵盤 -->
-      <div class="left">
-        <div class="pad" id="pad" aria-label="number pad">
-          <!-- row 1（下卦） -->
-          <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <!-- row 2（上卦） -->
-          <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <!-- row 3（變爻種子） -->
-          <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
-          <!-- row 4：開始 -->
-          <span id="start" class="start" role="button" tabindex="0" aria-label="開始">■</span>
-        </div>
-      </div>
+      /* 斷語 */
+      .judgment{
+        margin-top:10px; padding:10px 12px; border-left:2px solid var(--judge-accent); opacity:.95;
+      }
+      .judgment .tag{ font-weight:200; }
+      .panel b, .panel strong{ font-weight:200; }
 
-      <!-- 右：注解 -->
-      <section id="panel" class="panel" aria-live="polite" aria-atomic="true">
-        <div class="section">
-          <p>
-            默想三組三位數，填入數字。由上至下分別為下，上，變卦。完成後按下方塊開始。<br>
-            ><br>
-            ><br>
-            乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
-            大畜時也，頤養也，大過顛也，坎陷也，離麗也，咸感也，恆久也，渙離也，節止也，解緩也，蹇難也，睽外也，
-            家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
-            豐多故也，旅不當也，巽入也，兌說也，既濟定也，未濟亂也，噬嗑食也，賁飾也，隨無故也，蠱則飭也，
-            升而不已必困也，井道也，謙輕也，豫怠也，剝爛也，復反也，益長也，損短也，夬決也，姤遇也，萃聚也，
-            升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。<span class="blink-block">■</span>
-          </p>
-        </div>
-      </section>
+      @media (max-width:767px) and (orientation:portrait){
+        main{padding:116px 20px 20px}
+        .layout{grid-template-columns:1fr;gap:20px}
+        .left{min-height:auto}
+        .pad{width:100%;gap:18px 20px}
+        .digit{width:26vw;height:26vw;max-width:120px;max-height:120px}
+        .start{font-size:18vw}
+        .panel{max-height:none}
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile rotator -->
+    <div class="mobile-rotator en" id="mobileRotator" aria-live="polite" aria-hidden="true">of time, souls and cities.</div>
+
+    <!-- Header -->
+    <div class="header-bar" role="navigation" aria-label="primary">
+      <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
+      <nav class="nav-links" aria-label="site">
+        <a href="iching.html" class="iching active" aria-label="iching / i ching">
+          <span class="blink-block" aria-hidden="true">■</span>
+          <span class="label sr-only">I Ching</span>
+        </a>
+        <a href="index.html">about</a>
+        <a href="gallery.html">gallery</a>
+        <a href="contact.html">contact</a>
+      </nav>
     </div>
-  </main>
 
-  <!-- ===== Script ===== -->
-  <script>
-    /* ===== Header Rotator ===== */
-    (function(){
-      const headerEl=document.getElementById('headerTitle');
-      const mobileEl=document.getElementById('mobileRotator');
-      const mq=window.matchMedia('(max-width: 767px) and (orientation: portrait)');
-      const sentences=[ "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
-          "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
-          "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
-          "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
-          "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy。",
-          "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
-          "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
-          "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy。",
-          "i am in flames!","cbt is a lie, try carl jung。","be your own reason to smile。","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
-          "빛은 거짓말하지 않아。","light reveals. shadow defines。","some people are worth melting for。","ひとりって切ないくらい自由。",
-          "the name of the rose is all that remains。","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
-          "shanghai fog, yes。","悲喜千般同幻夢。","欲望屬於他者。","Desire is the desire of the Other.",
-          "世界無人始，亦無人終。","The world began and ends without man。","民為貴，君為輕。","Lucky Vicky～",
-          "Beauty will save the world。","深宮似海，人人自危。","一笑傾城，再笑傾國。","Better die with fragrance。",
-          "得寵易，守寵難。","Family comes first。","活下去","Friends don’t lie。","The crown must endure。",
-          "Power is better than sex。","Love is stronger than reason。","孤獨是命運。","Poetry belongs to people。",
-          "One word of truth。","El Psy Congroo","Just keep swimming。","We’re all undercover。",
-          "War never changes。","YOU-ARE-NOT-PREPARED。","Nothing is true？","I am a real boy。","Marriage is war。",
-          "A Royale with cheese。","Don’t call me Mr. Pink。"
-      ];
-      const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
-      const apply=(el,txt)=>{ if(!el)return; const c=isCJK(txt);
-        el.classList.toggle("ja",c); el.classList.toggle("en",!c);
-        el.setAttribute('lang',c?'ja':'en'); el.textContent=txt;
+    <!-- 背景影片 -->
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata">
+      <source src="ichingbg.mp4" type="video/mp4">
+    </video>
+
+    <main>
+      <div class="layout">
+        <!-- 左：數字鍵盤 -->
+        <div class="left">
+          <div class="pad" id="pad" aria-label="number pad">
+            <!-- row 1（下卦） -->
+            <button class="digit" data-i="0" data-val="0" aria-label="位 1：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="1" data-val="0" aria-label="位 2：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="2" data-val="0" aria-label="位 3：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <!-- row 2（上卦） -->
+            <button class="digit" data-i="3" data-val="0" aria-label="位 4：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="4" data-val="0" aria-label="位 5：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="5" data-val="0" aria-label="位 6：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <!-- row 3（變爻種子） -->
+            <button class="digit" data-i="6" data-val="0" aria-label="位 7：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="7" data-val="0" aria-label="位 8：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <button class="digit" data-i="8" data-val="0" aria-label="位 9：0" tabindex="0"><span class="digit-num" aria-hidden="true">0</span></button>
+            <!-- row 4：開始 -->
+            <span id="start" class="start" role="button" tabindex="0" aria-label="開始">■</span>
+          </div>
+        </div>
+
+        <!-- 右：注解 -->
+        <section id="panel" class="panel" aria-live="polite" aria-atomic="true">
+          <div class="section">
+            <p>
+              默想問題，填入三組三位數。由上至下分別為下，上，變卦。完成後按下方塊開始。<br>
+              ><br>
+              ><br>
+              乾剛坤柔，比樂師憂，臨觀之義或與或求，屯見而不失其居，蒙雜而著，震起也，艮止也，損益盛衰之始也，
+              大畜時也，頤養也，大過顛也，坎陷也，離麗也，咸感也，恆久也，渙離也，節止也，解緩也，蹇難也，睽外也，
+              家人內也，否泰反其類也，大壯則止，遯則退也，大有眾也，同人親也，革去故也，鼎取新也，小過過也，中孚信也，
+              豐多故也，旅不當也，巽入也，兌說也，既濟定也，未濟亂也，噬嗑食也，賁飾也，隨無故也，蠱則飭也，
+              升而不已必困也，井道也，謙輕也，豫怠也，剝爛也，復反也，益長也，損短也，夬決也，姤遇也，萃聚也，
+              升而上也，困於下也，井居中也，明夷誅也，晉說也，小畜寡也，履不處也，需不進也，訟不親也。<span class="blink-block">■</span>
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ===== Script ===== -->
+    <script>
+      /* ===== Header Rotator ===== */
+      (function(){
+        const headerEl=document.getElementById('headerTitle');
+        const mobileEl=document.getElementById('mobileRotator');
+        const mq=window.matchMedia('(max-width: 767px) and (orientation: portrait)');
+        const sentences=[ "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+            "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
+            "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
+            "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+            "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy。",
+            "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
+            "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
+            "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy。",
+            "i am in flames!","cbt is a lie, try carl jung。","be your own reason to smile。","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+            "빛은 거짓말하지 않아。","light reveals. shadow defines。","some people are worth melting for。","ひとりって切ないくらい自由。",
+            "the name of the rose is all that remains。","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+            "shanghai fog, yes。","悲喜千般同幻夢。","欲望屬於他者。","Desire is the desire of the Other.",
+            "世界無人始，亦無人終。","The world began and ends without man。","民為貴，君為輕。","Lucky Vicky～",
+            "Beauty will save the world。","深宮似海，人人自危。","一笑傾城，再笑傾國。","Better die with fragrance。",
+            "得寵易，守寵難。","Family comes first。","活下去","Friends don’t lie。","The crown must endure。",
+            "Power is better than sex。","Love is stronger than reason。","孤獨是命運。","Poetry belongs to people。",
+            "One word of truth。","El Psy Congroo","Just keep swimming。","We’re all undercover。",
+            "War never changes。","YOU-ARE-NOT-PREPARED。","Nothing is true？","I am a real boy。","Marriage is war。",
+            "A Royale with cheese。","Don’t call me Mr. Pink。"
+        ];
+        const isCJK=s=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
+        const apply=(el,txt)=>{ if(!el)return; const c=isCJK(txt);
+          el.classList.toggle("ja",c); el.classList.toggle("en",!c);
+          el.setAttribute('lang',c?'ja':'en'); el.textContent=txt;
+        };
+        function active(){return mq.matches?mobileEl:headerEl}
+        function inactive(){return mq.matches?headerEl:mobileEl}
+        let last=-1,timer=0;
+        function step(){
+          let i;do{i=Math.floor(Math.random()*sentences.length);}while(i===last);last=i;
+          const txt=sentences[i];const show=active(),hide=inactive();
+          if(hide)hide.setAttribute('aria-hidden','true');if(show)show.setAttribute('aria-hidden','false');
+          if(!window.gsap){apply(show,txt);return;}
+          gsap.to(show,{y:-16,opacity:0,duration:.2,ease:'power1.in',onComplete(){
+            apply(show,txt);gsap.set(show,{y:16});gsap.to(show,{y:0,opacity:1,duration:.28,ease:'power1.out'});
+          }});
+        }
+        function start(){clearInterval(timer);step();timer=setInterval(step,4000);}
+        mq.addEventListener?mq.addEventListener('change',start):mq.addListener(start);
+        start();
+      })();
+
+      /* ===== Code-cracking（面板文字） ===== */
+      (function(){
+        const LAT="0123456789";
+        const CJK="天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏閏餘成歲律召調陽雲騰致雨露結爲霜金生麗水玉出崑岡劍號巨闕珠稱夜光";
+        const FPS=60, LOCK_MIN=45, LOCK_MAX=60, PER_TICK=[2,3];
+
+        function makeState(node){
+          const target=node.nodeValue;
+          const hasCJK=/[\u4E00-\u9FFF]/.test(target);
+          const set=hasCJK?CJK:LAT;
+          const cur=[...target], locked=cur.map(ch=>/\s/.test(ch));
+          for(let i=0;i<cur.length;i++){ if(!locked[i]) cur[i]=set[(Math.random()*set.length)|0]; }
+          return {node,target:[...target],cur,locked,set};
+        }
+        function collect(root){
+          const out=[], w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){return n.nodeValue&&n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
+          while(w.nextNode()) out.push(w.currentNode);
+          return out;
+        }
+        function crack(root){
+          const states=collect(root).map(makeState);
+          states.forEach(s=>s.node.nodeValue=s.cur.join(''));
+          let raf=0,last=0,itv=1000/FPS;
+          function loop(now){
+            if(now-last>=itv){
+              for(const s of states){
+                const t=s.target,c=s.cur,L=s.locked,set=s.set;
+                for(let i=0;i<c.length;i++){ if(!L[i] && !/\s/.test(t[i])) c[i]=set[(Math.random()*set.length)|0]; }
+                s.node.nodeValue=c.join('');
+              }
+              last=now;
+            }
+            raf=requestAnimationFrame(loop);
+          }
+          function lock(){
+            let done=true;
+            for(const s of states){
+              const cand=[]; for(let i=0;i<s.locked.length;i++){ if(!s.locked[i]) cand.push(i); }
+              if(cand.length){
+                done=false;
+                const take=Math.min(Math.floor(Math.random()*(PER_TICK[1]-PER_TICK[0]+1))+PER_TICK[0],cand.length);
+                for(let k=0;k<take;k++){ const idx=cand.splice((Math.random()*cand.length)|0,1)[0]; s.cur[idx]=s.target[idx]; s.locked[idx]=true; }
+                s.node.nodeValue=s.cur.join('');
+              }
+            }
+            if(!done) setTimeout(lock, Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1))+LOCK_MIN);
+            else cancelAnimationFrame(raf);
+          }
+          requestAnimationFrame(loop);
+          setTimeout(lock, Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1))+LOCK_MIN);
+        }
+        window._crackPanel = el => crack(el);
+        window.addEventListener('load', ()=>{ const p=document.getElementById('panel'); if(p) crack(p); });
+      })();
+
+      /* ===== 64卦資料 ===== */
+      let HEX_DB=null;
+      fetch('iching-data.json').then(r=>r.json()).then(j=>{ HEX_DB=j; buildIndex(); });
+
+      /* ===== 28宿資料（J2000） ===== */
+      let STAR_MAP = null; // 由「中文名」→ {name, RA, DEC}
+      fetch('28_xiu_j2000.json')
+        .then(r=>r.json())
+        .then(list=>{
+          STAR_MAP = {};
+          list.forEach(row=>{
+            STAR_MAP[String(row["中文名"]).replace(/宿$/,'')] = {
+              name: row["英譯"] || "",
+              RA: row["RA"] || "",
+              DEC: row["DEC"] || ""
+            };
+          });
+        });
+
+      const TRIGRAM_NAME={"天":"乾","地":"坤","雷":"震","山":"艮","水":"坎","火":"離","風":"巽","澤":"兌"};
+      const NUM_TO_TRIGRAM={1:"乾",2:"兌",3:"離",4:"震",5:"巽",6:"坎",7:"艮",0:"坤"};
+
+      /* 伏羲三畫（自下而上） */
+      const TRI_BITS={
+        "乾":[1,1,1],"兌":[1,1,0],"離":[1,0,1],"震":[1,0,0],
+        "巽":[0,1,1],"坎":[0,1,0],"艮":[0,0,1],"坤":[0,0,0]
       };
-      function active(){return mq.matches?mobileEl:headerEl}
-      function inactive(){return mq.matches?headerEl:mobileEl}
-      let last=-1,timer=0;
-      function step(){
-        let i;do{i=Math.floor(Math.random()*sentences.length);}while(i===last);last=i;
-        const txt=sentences[i];const show=active(),hide=inactive();
-        if(hide)hide.setAttribute('aria-hidden','true');if(show)show.setAttribute('aria-hidden','false');
-        if(!window.gsap){apply(show,txt);return;}
-        gsap.to(show,{y:-16,opacity:0,duration:.2,ease:'power1.in',onComplete(){
-          apply(show,txt);gsap.set(show,{y:16});gsap.to(show,{y:0,opacity:1,duration:.28,ease:'power1.out'});
-        }});
-      }
-      function start(){clearInterval(timer);step();timer=setInterval(step,4000);}
-      mq.addEventListener?mq.addEventListener('change',start):mq.addListener(start);
-      start();
-    })();
+      function bitsToTrig([a,b,c]){ for(const k in TRI_BITS){ const v=TRI_BITS[k]; if(v[0]===a&&v[1]===b&&v[2]===c) return k; } return null; }
 
-    /* ===== Code-cracking（面板文字） ===== */
-    (function(){
-      const LAT="0123456789";
-      const CJK="天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏閏餘成歲律召調陽雲騰致雨露結爲霜金生麗水玉出崑岡劍號巨闕珠稱夜光";
-      const FPS=60, LOCK_MIN=45, LOCK_MAX=60, PER_TICK=[2,3];
-
-      function makeState(node){
-        const target=node.nodeValue;
-        const hasCJK=/[\u4E00-\u9FFF]/.test(target);
-        const set=hasCJK?CJK:LAT;
-        const cur=[...target], locked=cur.map(ch=>/\s/.test(ch));
-        for(let i=0;i<cur.length;i++){ if(!locked[i]) cur[i]=set[(Math.random()*set.length)|0]; }
-        return {node,target:[...target],cur,locked,set};
+      let PAIR_MAP={};
+      function parseUpperLower(title){
+        const m=title.match(/([乾坤震艮坎離巽兌天地雷山水火風澤])([乾坤震艮坎離巽兌天地雷山水火風澤])?[為]/);
+        if(m){ const ch=m[1]; const up=m[1] in TRIGRAM_NAME ? TRIGRAM_NAME[ch] : ch; return {up,down:up}; }
+        const mm=title.match(/^([天地雷山水火風澤])([天地雷山水火風澤])/);
+        if(mm){ const up=TRIGRAM_NAME[mm[1]]; const down=TRIGRAM_NAME[mm[2]]; return {up,down}; }
+        let up="",down=""; for (const k in TRIGRAM_NAME){ if(title.includes(k)&&!up) up=TRIGRAM_NAME[k]; }
+        for (const k in TRIGRAM_NAME){ if(title.lastIndexOf(k)>0) down=TRIGRAM_NAME[k]; }
+        return {up,down};
       }
-      function collect(root){
-        const out=[], w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){return n.nodeValue&&n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
-        while(w.nextNode()) out.push(w.currentNode);
+      function buildIndex(){
+        if(!HEX_DB) return;
+        HEX_DB.hexagrams.forEach(h=>{
+          const {up,down}=parseUpperLower(h.gua);
+          if(up&&down){ PAIR_MAP[`上:${up}|下:${down}`]=h; }
+        });
+      }
+
+      /* ===== 工具：數學與取辭 ===== */
+      const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
+
+      // 多爻變：連續除以6取餘，0視為6；重覆互相抵銷（toggle）
+      function movingLinesFromNumber(g){
+        let n=(g[0]*100 + g[1]*10 + g[2]);
+        const toggled=new Set();
+        while(n>0){
+          let r = n % 6; if(r===0) r=6;
+          const idx = r-1; // 0..5
+          if (toggled.has(idx)) toggled.delete(idx); else toggled.add(idx);
+          n = Math.floor(n/6);
+        }
+        return Array.from(toggled).sort((a,b)=>a-b);
+      }
+
+      function flipMany(bits, idxArr){
+        const out = bits.slice();
+        idxArr.forEach(i => out[i] = out[i] ? 0 : 1);
         return out;
       }
-      function crack(root){
-        const states=collect(root).map(makeState);
-        states.forEach(s=>s.node.nodeValue=s.cur.join(''));
-        let raf=0,last=0,itv=1000/FPS;
-        function loop(now){
-          if(now-last>=itv){
-            for(const s of states){
-              const t=s.target,c=s.cur,L=s.locked,set=s.set;
-              for(let i=0;i<c.length;i++){ if(!L[i] && !/\s/.test(t[i])) c[i]=set[(Math.random()*set.length)|0]; }
-              s.node.nodeValue=c.join('');
-            }
-            last=now;
-          }
-          raf=requestAnimationFrame(loop);
-        }
-        function lock(){
-          let done=true;
-          for(const s of states){
-            const cand=[]; for(let i=0;i<s.locked.length;i++){ if(!s.locked[i]) cand.push(i); }
-            if(cand.length){
-              done=false;
-              const take=Math.min(Math.floor(Math.random()*(PER_TICK[1]-PER_TICK[0]+1))+PER_TICK[0],cand.length);
-              for(let k=0;k<take;k++){ const idx=cand.splice((Math.random()*cand.length)|0,1)[0]; s.cur[idx]=s.target[idx]; s.locked[idx]=true; }
-              s.node.nodeValue=s.cur.join('');
-            }
-          }
-          if(!done) setTimeout(lock, Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1))+LOCK_MIN);
-          else cancelAnimationFrame(raf);
-        }
-        requestAnimationFrame(loop);
-        setTimeout(lock, Math.floor(Math.random()*(LOCK_MAX-LOCK_MIN+1))+LOCK_MIN);
-      }
-      window._crackPanel = el => crack(el);
-      window.addEventListener('load', ()=>{ const p=document.getElementById('panel'); if(p) crack(p); });
-    })();
 
-    /* ===== 64卦資料 ===== */
-    let HEX_DB=null;
-    fetch('iching-data.json').then(r=>r.json()).then(j=>{ HEX_DB=j; buildIndex(); });
-
-    /* ===== 28宿資料（J2000） ===== */
-    let STAR_MAP = null; // 由「中文名」→ {name, RA, DEC}
-    fetch('28_xiu_j2000.json')
-      .then(r=>r.json())
-      .then(list=>{
-        STAR_MAP = {};
-        list.forEach(row=>{
-          STAR_MAP[String(row["中文名"]).replace(/宿$/,'')] = {
-            name: row["英譯"] || "",
-            RA: row["RA"] || "",
-            DEC: row["DEC"] || ""
-          };
-        });
-      });
-
-    const TRIGRAM_NAME={"天":"乾","地":"坤","雷":"震","山":"艮","水":"坎","火":"離","風":"巽","澤":"兌"};
-    const NUM_TO_TRIGRAM={1:"乾",2:"兌",3:"離",4:"震",5:"巽",6:"坎",7:"艮",0:"坤"};
-
-    /* 伏羲三畫（自下而上） */
-    const TRI_BITS={
-      "乾":[1,1,1],"兌":[1,1,0],"離":[1,0,1],"震":[1,0,0],
-      "巽":[0,1,1],"坎":[0,1,0],"艮":[0,0,1],"坤":[0,0,0]
-    };
-    function bitsToTrig([a,b,c]){ for(const k in TRI_BITS){ const v=TRI_BITS[k]; if(v[0]===a&&v[1]===b&&v[2]===c) return k; } return null; }
-
-    let PAIR_MAP={};
-    function parseUpperLower(title){
-      const m=title.match(/([乾坤震艮坎離巽兌天地雷山水火風澤])([乾坤震艮坎離巽兌天地雷山水火風澤])?[為]/);
-      if(m){ const ch=m[1]; const up=m[1] in TRIGRAM_NAME ? TRIGRAM_NAME[ch] : ch; return {up,down:up}; }
-      const mm=title.match(/^([天地雷山水火風澤])([天地雷山水火風澤])/);
-      if(mm){ const up=TRIGRAM_NAME[mm[1]]; const down=TRIGRAM_NAME[mm[2]]; return {up,down}; }
-      let up="",down=""; for (const k in TRIGRAM_NAME){ if(title.includes(k)&&!up) up=TRIGRAM_NAME[k]; }
-      for (const k in TRIGRAM_NAME){ if(title.lastIndexOf(k)>0) down=TRIGRAM_NAME[k]; }
-      return {up,down};
-    }
-    function buildIndex(){
-      if(!HEX_DB) return;
-      HEX_DB.hexagrams.forEach(h=>{
-        const {up,down}=parseUpperLower(h.gua);
-        if(up&&down){ PAIR_MAP[`上:${up}|下:${down}`]=h; }
-      });
-    }
-
-    /* ===== 工具：數學與取辭 ===== */
-    const mod8=g=>((g[0]*100+g[1]*10+g[2])%8+8)%8;
-
-    // 多爻變：連續除以6取餘，0視為6；重覆互相抵銷（toggle）
-    function movingLinesFromNumber(g){
-      let n=(g[0]*100 + g[1]*10 + g[2]);
-      const toggled=new Set();
-      while(n>0){
-        let r = n % 6; if(r===0) r=6;
-        const idx = r-1; // 0..5
-        if (toggled.has(idx)) toggled.delete(idx); else toggled.add(idx);
-        n = Math.floor(n/6);
-      }
-      return Array.from(toggled).sort((a,b)=>a-b);
-    }
-
-    function flipMany(bits, idxArr){
-      const out = bits.slice();
-      idxArr.forEach(i => out[i] = out[i] ? 0 : 1);
-      return out;
-    }
-
-    // 星宿資訊行（固定全形冒號、逗號）
-    function starMetaLine(xingxiu){
-      if(!xingxiu || !STAR_MAP) return "";
-      const key = String(xingxiu).replace(/宿$/,'');
-      const rec = STAR_MAP[key];
-      if(!rec) return "";
-      return `<div class="star-meta">${escapeHTML(rec.name)}：RA ${escapeHTML(rec.RA)}，Dec ${escapeHTML(rec.DEC)}。 <span class="blink-block">■</span></div>`;
-    }
-
-    function headerWithMeta(label, hex){
-      const ek = hex?.extra?.['卦氣'] ? `｜卦氣：${escapeHTML(hex.extra['卦氣'])}` : '';
-      const es_raw = hex?.extra?.['星宿'] || '';
-      const es = es_raw ? `｜星宿：${escapeHTML(es_raw)}` : '';
-      const starLine = es_raw ? starMetaLine(es_raw) : '';
-      return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>${starLine}`;
-    }
-    function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&quot;',"'":'&#39;'}[m]))}
-
-    /* ===== 互動：數字鍵盤 ===== */
-    const pad = document.getElementById('pad');
-    const digitBtns = [...pad.querySelectorAll('.digit')];
-    const startBtn = document.getElementById('start');
-    const panel = document.getElementById('panel');
-
-    function setDigit(btn, val){
-      const v = (Number(val)||0)%10;
-      btn.dataset.val = String(v);
-      const span = btn.querySelector('.digit-num');
-      if(span) span.textContent = String(v);
-      btn.setAttribute('aria-label', `位 ${Number(btn.dataset.i)+1}：${v}`);
-      btn.classList.remove('invalid','error-flash','invalid-leading');
-    }
-
-    digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
-
-    pad.addEventListener('pointerdown', e=>{
-      const btn = e.target.closest('.digit'); if(!btn) return;
-      e.preventDefault(); e.stopPropagation();
-      const cur = Number(btn.dataset.val)||0;
-      setDigit(btn, (cur+1)%10);
-    }, {passive:false});
-
-    document.addEventListener('keydown', e=>{
-      if(!/^[0-9]$/.test(e.key)) return;
-      const f=document.activeElement;
-      if(f && f.classList && f.classList.contains('digit')){
-        setDigit(f, e.key);
-      }
-    });
-
-    startBtn.addEventListener('pointerdown', e=>{ 
-      e.preventDefault(); e.stopPropagation(); onStart(e); 
-    }, {passive:false});
-    startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(e); });
-
-    function flashInvalid(el){
-      el.classList.add('invalid','error-flash');
-      setTimeout(()=>el.classList.remove('error-flash'),300);
-    }
-
-    /* === 新增：只在本次造訪第一次違規時警告彈窗 === */
-    let zeroWarnedOnce = false;
-
-    function markLeadingRed(){
-      // 首三位（每組第一位）：0,3,6
-      [0,3,6].forEach(i=>{
-        const b = digitBtns[i];
-        if (b) b.classList.add('invalid-leading');
-      });
-    }
-    function clearLeadingRed(){
-      [0,3,6].forEach(i=>{
-        const b = digitBtns[i];
-        if (b) b.classList.remove('invalid-leading');
-      });
-    }
-    function flashPad(){
-      pad.classList.add('flash');
-      setTimeout(()=> pad.classList.remove('flash'), 600); // .18s * 3 ≈ .54s，保險 600ms
-    }
-
-    function onStart(ev){
-      const vals = digitBtns.map(d=>Number(d.dataset.val)||0);
-      const g1=vals.slice(0,3), g2=vals.slice(3,6), g3=vals.slice(6,9);
-      const firsts=[digitBtns[0],digitBtns[3],digitBtns[6]];
-      let bad=false;
-      [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; /* 視覺小提示 */ flashInvalid(firsts[idx]); }});
-
-      if(bad){
-        // 阻止任何面板內容變動
-        try{ (ev && ev.currentTarget && ev.currentTarget.blur) && ev.currentTarget.blur(); }catch(_){}
-        const swallow = e => e.stopPropagation();
-        document.addEventListener('click', swallow, {capture:true, once:true});
-        document.addEventListener('pointerup', swallow, {capture:true, once:true});
-
-        if(!zeroWarnedOnce){
-          zeroWarnedOnce = true;
-          setTimeout(()=> alert('三組數字的首位皆不能為零。請修正。'), 0);
-        }else{
-          // 之後的違規：首三位轉紅 + 全鍵盤快閃三次（不含 start）
-          markLeadingRed();
-          flashPad();
-          // 短暫後恢復
-          setTimeout(clearLeadingRed, 800);
-        }
-        return;
+      // 星宿資訊行（固定全形冒號、逗號）
+      function starMetaLine(xingxiu){
+        if(!xingxiu || !STAR_MAP) return "";
+        const key = String(xingxiu).replace(/宿$/,'');
+        const rec = STAR_MAP[key];
+        if(!rec) return "";
+        return `<div class="star-meta">${escapeHTML(rec.name)}：RA ${escapeHTML(rec.RA)}，Dec ${escapeHTML(rec.DEC)}。 <span class="blink-block">■</span></div>`;
       }
 
-      // ====== 合法：繼續原本流程 ======
-      const remLow=mod8(g1), remUp=mod8(g2);
-      const trigLow=NUM_TO_TRIGRAM[remLow];
-      const trigUp =NUM_TO_TRIGRAM[remUp];
-
-      const mainKey=`上:${trigUp}|下:${trigLow}`;
-      const mainHex=PAIR_MAP[mainKey];
-      if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 ${escapeHTML(trigUp)}、下卦 ${escapeHTML(trigLow)}。</div>`); return; }
-
-      const movingIdx = movingLinesFromNumber(g3);
-      const moveCount = movingIdx.length;
-
-      const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]);
-      const changedBits = flipMany(mainBits, movingIdx);
-      const newLowName = bitsToTrig(changedBits.slice(0,3));
-      const newUpName  = bitsToTrig(changedBits.slice(3,6));
-      const changedHex = PAIR_MAP[`上:${newUpName}|下:${newLowName}`];
-
-      const M_YAO = mainHex.yao || [];
-      const C_YAO = changedHex ? (changedHex.yao||[]) : [];
-
-      const judge = buildJudgment({ moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO });
-
-      const flagEnd = i => movingIdx.includes(i) ? '<span class="blink-block">■</span>' : '';
-
-      const html = `
-        <div class="section">
-          ${headerWithMeta('本卦', mainHex)}
-          <div>${escapeHTML(mainHex.guaci || '')}</div>
-          <div class="yao-list">
-            ${M_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('')}
-          </div>
-        </div>
-        <div class="section">
-          ${changedHex ? headerWithMeta('變卦', changedHex) : '<h2>變卦｜（依多爻變換卦：資料未配對）</h2>'}
-          <div>${changedHex ? escapeHTML(changedHex.guaci || '') : ''}</div>
-          <div class="yao-list">
-          ${changedHex ? C_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('') : '' }
-          </div>
-
-          <div class="judgment">
-            <span class="tag">斷：</span>${judge.summary}
-            ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}` : ''}
-          </div>
-        </div>
-      `;
-      renderText(html);
-
-      digitBtns.forEach(d=> setDigit(d, 0));
-    }
-
-    function buildJudgment({moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO}){
-      const idxToName = i => ['初爻','二爻','三爻','四爻','五爻','上爻'][i] || (`第${i+1}爻`);
-      const upDown = i => i>=3 ? '（上卦）' : '（下卦）';
-      const lines = [];
-      let summary='';
-
-      if (moveCount===0){
-        summary = '六爻不變，用本卦卦辭。';
-        lines.push(mainHex.guaci || '');
-      } else if (moveCount===1){
-        const i = movingIdx[0];
-        summary = `一爻變，用本卦${idxToName(i)}爻辭。`;
-        lines.push(M_YAO[i] || '');
-      } else if (moveCount===2){
-        const a = movingIdx[0], b = movingIdx[1];
-        const top = Math.max(a,b), low = Math.min(a,b);
-        summary = '兩爻變，用本卦兩變爻辭，上者為主。';
-        lines.push(`${idxToName(top)}${upDown(top)}：${(M_YAO[top]||'').trim()}`);
-        lines.push(`${idxToName(low)}${upDown(low)}：${(M_YAO[low]||'').trim()}`);
-      } else if (moveCount===3){
-        summary = '三爻變，本卦卦辭為「貞」（體），變卦卦辭為「悔」（用）。';
-        lines.push(`貞：${(mainHex.guaci||'').trim()}`);
-        if (changedHex) lines.push(`悔：${(changedHex.guaci||'').trim()}`);
-      } else if (moveCount===4){
-        summary = '四爻變，用變卦兩個「不變爻」之爻辭，下者為主。';
-        const notChanged = [0,1,2,3,4,5].filter(i => !movingIdx.includes(i));
-        const low = Math.min(...notChanged), high = Math.max(...notChanged);
-        if (changedHex){
-          lines.push(`${idxToName(low)}${upDown(low)}：${(C_YAO[low]||'').trim()}`);
-          lines.push(`${idxToName(high)}${upDown(high)}：${(C_YAO[high]||'').trim()}`);
-        }
-      } else if (moveCount===5){
-        summary = '五爻變，用變卦唯一「不變爻」之爻辭。';
-        const only = [0,1,2,3,4,5].find(i => !movingIdx.includes(i));
-        if (changedHex) lines.push(`${idxToName(only)}${upDown(only)}：${(C_YAO[only]||'').trim()}`);
-      } else if (moveCount===6){
-        if (changedHex){
-          const isQian = /乾/.test(changedHex.gua);
-          const isKun  = /坤/.test(changedHex.gua);
-          let used = '';
-          if ((isQian || isKun) && (changedHex.yao||[]).length>=7){
-            used = changedHex.yao[6] || changedHex.guaci || '';
-            summary = `六爻全變，${isQian?'乾':'坤'}取「用」辭。`;
-          }else{
-            used = changedHex.guaci || '';
-            summary = '六爻全變，用變卦卦辭。';
-          }
-          lines.push(used.trim());
-        }else{
-          summary = '六爻全變（變卦缺資料）。';
-        }
+      function headerWithMeta(label, hex){
+        const ek = hex?.extra?.['卦氣'] ? `｜卦氣：${escapeHTML(hex.extra['卦氣'])}` : '';
+        const es_raw = hex?.extra?.['星宿'] || '';
+        const es = es_raw ? `｜星宿：${escapeHTML(es_raw)}` : '';
+        const starLine = es_raw ? starMetaLine(es_raw) : '';
+        return `<h2>${label}｜${escapeHTML(hex.gua)}${ek}${es}</h2>${starLine}`;
       }
-      return {summary, lines};
-    }
+      function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&quot;',"'":'&#39;'}[m]))}
 
-    function renderText(inner){
-      const panel=document.getElementById('panel');
-      panel.innerHTML=inner;
-      if(window._crackPanel) window._crackPanel(panel);
-    }
+      /* ===== 互動：數字鍵盤 ===== */
+      const pad = document.getElementById('pad');
+      const digitBtns = [...pad.querySelectorAll('.digit')];
+      const startBtn = document.getElementById('start');
+      const panel = document.getElementById('panel');
 
-    /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放（縮小副作用） ===== */
-    (function(){
-      window.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
-      let lastTouch = 0;
-      window.addEventListener('touchend', function(e){
-        if (e.target.closest('#pad') || e.target.closest('#start')) return;
-        const now = Date.now();
-        if(now - lastTouch <= 300){ e.preventDefault(); }
-        lastTouch = now;
+      function setDigit(btn, val){
+        const v = (Number(val)||0)%10;
+        btn.dataset.val = String(v);
+        const span = btn.querySelector('.digit-num');
+        if(span) span.textContent = String(v);
+        btn.setAttribute('aria-label', `位 ${Number(btn.dataset.i)+1}：${v}`);
+        btn.classList.remove('invalid','error-flash','invalid-leading');
+      }
+
+      digitBtns.forEach(b=> setDigit(b, b.dataset.val || 0));
+
+      pad.addEventListener('pointerdown', e=>{
+        const btn = e.target.closest('.digit'); if(!btn) return;
+        e.preventDefault(); e.stopPropagation();
+        const cur = Number(btn.dataset.val)||0;
+        setDigit(btn, (cur+1)%10);
       }, {passive:false});
-    })();
-  </script>
-</body>
-</html>
+
+      document.addEventListener('keydown', e=>{
+        if(!/^[0-9]$/.test(e.key)) return;
+        const f=document.activeElement;
+        if(f && f.classList && f.classList.contains('digit')){
+          setDigit(f, e.key);
+        }
+      });
+
+      startBtn.addEventListener('pointerdown', e=>{ 
+        e.preventDefault(); e.stopPropagation(); onStart(e); 
+      }, {passive:false});
+      startBtn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') onStart(e); });
+
+      function flashInvalid(el){
+        el.classList.add('invalid','error-flash');
+        setTimeout(()=>el.classList.remove('error-flash'),300);
+      }
+
+      /* === 新增：只在本次造訪第一次違規時警告彈窗 === */
+      let zeroWarnedOnce = false;
+
+      function markLeadingRed(){
+        // 首三位（每組第一位）：0,3,6
+        [0,3,6].forEach(i=>{
+          const b = digitBtns[i];
+          if (b) b.classList.add('invalid-leading');
+        });
+      }
+      function clearLeadingRed(){
+        [0,3,6].forEach(i=>{
+          const b = digitBtns[i];
+          if (b) b.classList.remove('invalid-leading');
+        });
+      }
+      function flashPad(){
+        pad.classList.add('flash');
+        setTimeout(()=> pad.classList.remove('flash'), 600); // .18s * 3 ≈ .54s，保險 600ms
+      }
+
+      function onStart(ev){
+        const vals = digitBtns.map(d=>Number(d.dataset.val)||0);
+        const g1=vals.slice(0,3), g2=vals.slice(3,6), g3=vals.slice(6,9);
+        const firsts=[digitBtns[0],digitBtns[3],digitBtns[6]];
+        let bad=false;
+        [g1,g2,g3].forEach((g,idx)=>{ if(g[0]===0){ bad=true; /* 視覺小提示 */ flashInvalid(firsts[idx]); }});
+
+        if(bad){
+          // 阻止任何面板內容變動
+          try{ (ev && ev.currentTarget && ev.currentTarget.blur) && ev.currentTarget.blur(); }catch(_){}
+          const swallow = e => e.stopPropagation();
+          document.addEventListener('click', swallow, {capture:true, once:true});
+          document.addEventListener('pointerup', swallow, {capture:true, once:true});
+
+          if(!zeroWarnedOnce){
+            zeroWarnedOnce = true;
+            setTimeout(()=> alert('三組數字的首位皆不能為零。請修正。'), 0);
+          }else{
+            // 之後的違規：首三位轉紅 + 全鍵盤快閃三次（不含 start）
+            markLeadingRed();
+            flashPad();
+            // 短暫後恢復
+            setTimeout(clearLeadingRed, 800);
+          }
+          return;
+        }
+
+        // ====== 合法：繼續原本流程 ======
+        const remLow=mod8(g1), remUp=mod8(g2);
+        const trigLow=NUM_TO_TRIGRAM[remLow];
+        const trigUp =NUM_TO_TRIGRAM[remUp];
+
+        const mainKey=`上:${trigUp}|下:${trigLow}`;
+        const mainHex=PAIR_MAP[mainKey];
+        if(!mainHex){ renderText(`<div class="section">未能匹配卦：上卦 ${escapeHTML(trigUp)}、下卦 ${escapeHTML(trigLow)}。</div>`); return; }
+
+        const movingIdx = movingLinesFromNumber(g3);
+        const moveCount = movingIdx.length;
+
+        const mainBits = TRI_BITS[trigLow].concat(TRI_BITS[trigUp]);
+        const changedBits = flipMany(mainBits, movingIdx);
+        const newLowName = bitsToTrig(changedBits.slice(0,3));
+        const newUpName  = bitsToTrig(changedBits.slice(3,6));
+        const changedHex = PAIR_MAP[`上:${newUpName}|下:${newLowName}`];
+
+        const M_YAO = mainHex.yao || [];
+        const C_YAO = changedHex ? (changedHex.yao||[]) : [];
+
+        const judge = buildJudgment({ moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO });
+
+        const flagEnd = i => movingIdx.includes(i) ? '<span class="blink-block">■</span>' : '';
+
+        const html = `
+          <div class="section">
+            ${headerWithMeta('本卦', mainHex)}
+            <div>${escapeHTML(mainHex.guaci || '')}</div>
+            <div class="yao-list">
+              ${M_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('')}
+            </div>
+          </div>
+          <div class="section">
+            ${changedHex ? headerWithMeta('變卦', changedHex) : '<h2>變卦｜（依多爻變換卦：資料未配對）</h2>'}
+            <div>${changedHex ? escapeHTML(changedHex.guaci || '') : ''}</div>
+            <div class="yao-list">
+            ${changedHex ? C_YAO.map((t,i)=>`<div>${escapeHTML(t)}${flagEnd(i)}</div>`).join('') : '' }
+            </div>
+
+            <div class="judgment">
+              <span class="tag">斷：</span>${judge.summary}
+              ${judge.lines.length ? `<div class="tokens">${judge.lines.map(s=>`${escapeHTML(s)}`).join('<br>')}` : ''}
+            </div>
+          </div>
+        `;
+        renderText(html);
+
+        digitBtns.forEach(d=> setDigit(d, 0));
+      }
+
+      function buildJudgment({moveCount, movingIdx, mainHex, changedHex, M_YAO, C_YAO}){
+        const idxToName = i => ['初爻','二爻','三爻','四爻','五爻','上爻'][i] || (`第${i+1}爻`);
+        const upDown = i => i>=3 ? '（上卦）' : '（下卦）';
+        const lines = [];
+        let summary='';
+
+        if (moveCount===0){
+          summary = '六爻不變，用本卦卦辭。';
+          lines.push(mainHex.guaci || '');
+        } else if (moveCount===1){
+          const i = movingIdx[0];
+          summary = `一爻變，用本卦${idxToName(i)}爻辭。`;
+          lines.push(M_YAO[i] || '');
+        } else if (moveCount===2){
+          const a = movingIdx[0], b = movingIdx[1];
+          const top = Math.max(a,b), low = Math.min(a,b);
+          summary = '兩爻變，用本卦兩變爻辭，上者為主。';
+          lines.push(`${idxToName(top)}${upDown(top)}：${(M_YAO[top]||'').trim()}`);
+          lines.push(`${idxToName(low)}${upDown(low)}：${(M_YAO[low]||'').trim()}`);
+        } else if (moveCount===3){
+          summary = '三爻變，本卦卦辭為「貞」（體），變卦卦辭為「悔」（用）。';
+          lines.push(`貞：${(mainHex.guaci||'').trim()}`);
+          if (changedHex) lines.push(`悔：${(changedHex.guaci||'').trim()}`);
+        } else if (moveCount===4){
+          summary = '四爻變，用變卦兩個「不變爻」之爻辭，下者為主。';
+          const notChanged = [0,1,2,3,4,5].filter(i => !movingIdx.includes(i));
+          const low = Math.min(...notChanged), high = Math.max(...notChanged);
+          if (changedHex){
+            lines.push(`${idxToName(low)}${upDown(low)}：${(C_YAO[low]||'').trim()}`);
+            lines.push(`${idxToName(high)}${upDown(high)}：${(C_YAO[high]||'').trim()}`);
+          }
+        } else if (moveCount===5){
+          summary = '五爻變，用變卦唯一「不變爻」之爻辭。';
+          const only = [0,1,2,3,4,5].find(i => !movingIdx.includes(i));
+          if (changedHex) lines.push(`${idxToName(only)}${upDown(only)}：${(C_YAO[only]||'').trim()}`);
+        } else if (moveCount===6){
+          if (changedHex){
+            const isQian = /乾/.test(changedHex.gua);
+            const isKun  = /坤/.test(changedHex.gua);
+            let used = '';
+            if ((isQian || isKun) && (changedHex.yao||[]).length>=7){
+              used = changedHex.yao[6] || changedHex.guaci || '';
+              summary = `六爻全變，${isQian?'乾':'坤'}取「用」辭。`;
+            }else{
+              used = changedHex.guaci || '';
+              summary = '六爻全變，用變卦卦辭。';
+            }
+            lines.push(used.trim());
+          }else{
+            summary = '六爻全變（變卦缺資料）。';
+          }
+        }
+        return {summary, lines};
+      }
+
+      function renderText(inner){
+        const panel=document.getElementById('panel');
+        panel.innerHTML=inner;
+        if(window._crackPanel) window._crackPanel(panel);
+      }
+
+      /* ===== 行動裝置：關閉手勢縮放 & 雙擊縮放（縮小副作用） ===== */
+      (function(){
+        window.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
+        let lastTouch = 0;
+        window.addEventListener('touchend', function(e){
+          if (e.target.closest('#pad') || e.target.closest('#start')) return;
+          const now = Date.now();
+          if(now - lastTouch <= 300){ e.preventDefault(); }
+          lastTouch = now;
+        }, {passive:false});
+      })();
+    </script>
+  </body>
+  </html>
