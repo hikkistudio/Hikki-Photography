@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+©<!DOCTYPE html>
 <html lang="zh-HK">
 <head>
   <meta charset="UTF-8" />
@@ -128,7 +128,8 @@
     
     .speaker-area { grid-column: 1 / 2; grid-row: 1 / 2; display: flex; align-items: center; padding-bottom: 4px; }
     .speaker { 
-      font-family: var(--font-ja); font-size: 18px; letter-spacing: 0.1em; color: var(--textGreen); 
+      font-family: var(--font-mono); /* 強制使用 Courier New */
+      font-size: 18px; letter-spacing: 0.1em; color: var(--textGreen); 
       text-shadow: 0 0 10px rgba(0,204,85,0.4); font-weight: 600; line-height: 1.2;
     }
 
@@ -143,7 +144,8 @@
 
     .dialogue-content-area { grid-column: 1 / 2; grid-row: 2 / 3; display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
     .dialogue-text {
-      font-family: var(--font-ja); font-size: 15px; line-height: 1.6; 
+      font-family: var(--font-mono); /* 強制使用 Courier New */
+      font-size: 15px; line-height: 1.6; 
       color: var(--textGreen); white-space: pre-wrap; cursor: pointer; min-height: 24px;
     }
 
@@ -165,7 +167,11 @@
       height: 20px; display: flex; align-items: center; justify-content: space-between;
       padding: 0 12px; font-size: 10px; letter-spacing: 0.15em;
     }
-    .press-space-label { color: var(--mutedGreen); animation: blink3 3s infinite; }
+    .press-space-label { 
+      color: var(--mutedGreen); 
+      animation: blink3 3s infinite; 
+      transition: opacity 0.2s ease; /* 淡入淡出效果 */
+    }
     .coord-value { color: var(--textGreen); text-align: right; }
 
     .runner-strip {
@@ -269,7 +275,7 @@
       </div>
 
       <div class="coord-strip">
-        <span class="press-space-label">>Press spacebar to start</span>
+        <span class="press-space-label" id="pressSpaceLabel">▶ PRESS SPACEBAR TO START</span>
         <span class="coord-value" id="coordStrip">Macau Peninsula --.-----°N ---.-----°E</span>
       </div>
 
@@ -334,7 +340,7 @@ echo "      dBP     dBP dBP dBP dBP dBP dBP dBBBBBBb dBBBb dBBBBb
 echo "     echo        d8P.dBP d8P.dBP           dBP              
 echo "    dBBBBBP dBP dBBBBP  dBBBBP  dBP dBPdBPdBP   dBP    dBP  
 echo "   dBP dBP dBP dBP BB  dBP BB  dBP dBPdBPdBP   dBP    dBP   
-echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP   
+echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP  ©
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 `;
   document.getElementById('asciiLogoSmall').textContent = ASCII_LOGO;
@@ -445,6 +451,7 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
   (function runnerGame(){
     const c=document.getElementById('runner'), ctx=c.getContext('2d');
     const elCoord=document.getElementById('coordStrip'), elScore=document.getElementById('scoreBox'), elOver=document.getElementById('runnerOverlay');
+    const elPress = document.getElementById('pressSpaceLabel'); // Get Press Space label
     function resize(){ const r=c.parentElement.getBoundingClientRect(); c.width=r.width; c.height=r.height; }
     window.addEventListener('resize',resize); resize();
 
@@ -487,8 +494,10 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
     function setAuto(on){
       auto=on; 
       elOver.classList.toggle('show', on); 
+      // Toggle "Press Spacebar" visibility
+      if(elPress) elPress.style.opacity = on ? '1' : '0';
       playerVis=!on;
-      if(on) { passed=0; elScore.textContent="00-78-F2// 0x0000000"; }
+      if(on) { passed=0; elScore.textContent="SCORE 0x0000000"; }
     }
 
     function jumpAction(e){
@@ -573,7 +582,16 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
       });
 
       ctx.beginPath(); ctx.moveTo(0,MAX_H); ctx.lineTo(c.width,MAX_H); ctx.stroke();
-      if(playerVis) { ctx.fillStyle='#00cc55'; ctx.fillText('$', player.x, MAX_H-player.y-2); }
+      if(playerVis) { 
+        // Enhanced Player ($) Visibility
+        ctx.save();
+        ctx.shadowColor = '#00ff66'; // Bright green glow
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = '#00ff66';
+        ctx.font = 'bold 20px "Courier New", monospace'; // Larger, Bold
+        ctx.fillText('$', player.x, MAX_H-player.y-2);
+        ctx.restore();
+      }
 
       requestAnimationFrame(loop);
     }
