@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <title>Macau17</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="format-detection" content="telephone=no" />
+  <!-- Desktop-only baseline -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +16,17 @@
 
   <style>
     :root {
-      --bg: #000;
-      --accent: #00aa44;
-      --textGreen: #00cc55;
-      --mutedGreen: #0d6b3a;
+      --bg: #050005; /* 深紫黑背景 */
+      
+      /* 洋紅色系定義 */
+      --main-magenta: #ff00e8;
+      --dim-magenta: #7a006f;
+      --dark-magenta: #2e002a;
+      
+      --accent: var(--main-magenta);
+      --textMain: var(--main-magenta);
+      --textDim: var(--dim-magenta);
+      
       --dialogue: #f4f2f0;
       --font-mono: "Courier New", Courier, monospace;
       --font-ja: "Noto Serif JP", serif;
@@ -32,13 +39,12 @@
     html, body {
       width: 100%; height: 100%; background: var(--bg);
       overflow: hidden !important;
-      overscroll-behavior: none; touch-action: none;
-      -webkit-text-size-adjust: 100%;
+      overscroll-behavior: none;
     }
 
     body {
       display: flex; align-items: center; justify-content: center;
-      color: var(--textGreen); font-family: var(--font-mono); font-weight: 200;
+      color: var(--textMain); font-family: var(--font-mono); font-weight: 200;
       padding-top: 60px;
     }
 
@@ -69,17 +75,18 @@
     .crt-scanlines {
       position: fixed; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
       pointer-events: none; z-index: 9998; will-change: transform;
-      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.2) 2px, rgba(0, 0, 0, 0.2) 4px);
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(40, 0, 40, 0.2) 2px, rgba(40, 0, 40, 0.2) 4px);
       animation: scanlineJitter 0.15s infinite;
+      mix-blend-mode: overlay;
     }
     @keyframes scanlineJitter { 0% { transform: translateY(0px); } 50% { transform: translateY(1px); } 100% { transform: translateY(0px); } }
 
-    /* ===== Game Shell ===== */
+    /* ===== Game Shell (回歸矩形邊框) ===== */
     .game-shell {
       width: min(920px, calc(100vw - 20px));
       background: #000;
       border: 2px solid var(--accent);
-      box-shadow: 0 0 0 2px #001a0b inset, 0 0 0 1px #000 inset, 0 0 24px rgba(0,170,68,0.12);
+      box-shadow: 0 0 0 1px #000 inset, 0 0 24px rgba(255, 0, 232, 0.15);
       display: flex; flex-direction: column; position: relative; overflow: hidden;
       filter: brightness(1.1) contrast(1.05);
     }
@@ -97,144 +104,186 @@
     
     .bg-panel { 
       flex: 2; padding: 10px; 
-      /* border-right 已移除，實現無縫連接 */
       position: relative; background: var(--bg); 
     }
+    
     .bg-monitor {
-      position: absolute; inset: 10px; border: 2px solid var(--accent);
-      box-shadow: 0 0 0 2px #001a0b inset, 0 0 0 1px #000 inset;
+      position: absolute; inset: 10px; border: 1px solid var(--accent);
+      box-shadow: inset 0 0 10px rgba(255,0,232,0.1);
       background: #000; display: flex; align-items: center; justify-content: center;
     }
     .bg-monitor canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
 
+    /* ====== 右側 5 框：1:1:1:1:2 ====== */
     .side-panel {
-      flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 8px;
-      font-size: 12px; min-width: 250px; background: linear-gradient(to bottom, rgba(0,170,68,0.05), rgba(0,0,0,0));
+      flex: 1;
+      padding: 10px;
+      min-width: 250px;
+      background: linear-gradient(to bottom, rgba(40,0,40,0.2), rgba(0,0,0,0));
+      display: grid;
+      grid-template-rows: 1fr 1fr 1fr 1fr 2fr; /* 1:1:1:1:2 */
+      gap: 8px;
+      min-height: 0;
     }
+
+    .side-box,
+    .logo-box {
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 2px #000 inset;
+      min-height: 0; /* 重要：避免內容撐爆比例 */
+      overflow: hidden;
+    }
+
     .side-box {
-      border: 2px solid var(--accent); background: linear-gradient(to bottom, #040604, #000);
-      padding: 8px 10px; box-shadow: 0 0 0 2px #001a0b inset; min-height: 44px; color: var(--textGreen);
+  border: 2px solid var(--accent);
+  background: linear-gradient(to bottom, #1a0017, #000);
+  padding: 8px 10px;
+  box-shadow: 0 0 0 2px #000 inset;
+  min-height: 0;
+
+  display: grid;
+  grid-template-columns: 82px 1fr;  /* 左窄右寬：值有更多位 */
+  align-items: center;
+  column-gap: 10px;
+}
+
+/* title 不再「在上面」 */
+.side-box-title {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--textDim);
+  text-transform: uppercase;
+  margin: 0;               /* 原本 margin-bottom 要清走 */
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* value 置於右欄，避免上下被裁；同時允許縮短顯示 */
+.side-box > div:last-child {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-self: start;
+}
+.side-box > div:last-child { justify-self: end; text-align: right; }
+    .logo-box { 
+      background: #000; 
+      padding: 4px; 
+      position: relative;
     }
-    .side-box-title { font-size: 10px; letter-spacing: 0.14em; color: var(--mutedGreen); margin-bottom: 4px; }
-    .logo-box { flex: 1; border: 2px solid var(--accent); background: #000; display: flex; align-items: center; padding: 6px; overflow: hidden; }
-    .ascii-logo-small { font-size: 7px; line-height: 1.0; color: var(--textGreen); opacity: 0.95; font-family: var(--font-mono); }
+    .ascii-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    .ascii-logo-small { 
+      font-size: 7px;
+      line-height: 1.0;
+      color: var(--textMain);
+      opacity: 0.95;
+      font-family: var(--font-mono);
+      white-space: pre;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
     .flicker { animation: neonFlicker 1.9s infinite; }
     @keyframes neonFlicker {
-      0%, 100% { opacity: 0.95; } 2% { opacity: 0.55; } 3% { opacity: 0.95; } 55% { opacity: 0.95; } 56% { opacity: 0.78; } 57% { opacity: 0.95; } 88% { opacity: 0.70; } 89% { opacity: 0.95; }
+      0%, 100% { opacity: 0.95; text-shadow: 0 0 4px var(--main-magenta); } 
+      50% { opacity: 0.8; text-shadow: 0 0 2px var(--main-magenta); }
+      51% { opacity: 0.4; } 52% { opacity: 0.9; }
     }
 
     /* 下半部 */
     .dialogue-wrap { display: flex; flex-direction: column; }
+    
     .dialogue-panel {
-      height: 160px; background: linear-gradient(to bottom, #070a08, #050607); 
+      height: 160px; 
+      background: linear-gradient(to bottom, #1a0017, #050005); 
       padding: 12px 16px; position: relative;
+      border-bottom: 2px solid var(--accent);
       display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; column-gap: 10px;
     }
     
     .speaker-area { grid-column: 1 / 2; grid-row: 1 / 2; display: flex; align-items: center; padding-bottom: 4px; }
     .speaker { 
       font-family: var(--font-mono); 
-      font-size: 18px; letter-spacing: 0.1em; color: var(--textGreen); 
-      text-shadow: 0 0 10px rgba(0,204,85,0.4); font-weight: 600; line-height: 1.2;
+      font-size: 18px; letter-spacing: 0.1em; color: var(--textMain); 
+      text-shadow: 0 0 8px rgba(255, 0, 232, 0.6); font-weight: 600; line-height: 1.2;
     }
 
     .time-container {
       grid-column: 2 / 3; grid-row: 1 / 3; display: flex; flex-direction: column; align-items: flex-end; width: 80px;
     }
-    .time-label { font-size: 11px; letter-spacing: 0.05em; margin-bottom: 2px; color: var(--mutedGreen); }
+    .time-label { font-size: 11px; letter-spacing: 0.05em; margin-bottom: 2px; color: var(--textDim); }
     .coffee-ascii {
-      font-family: var(--font-mono); font-size: 10px; line-height: 10px; color: var(--textGreen); 
-      white-space: pre; text-align: right; text-shadow: 1px 1px 0 #003311; margin-top: 8px;
+      font-family: var(--font-mono); font-size: 10px; line-height: 10px; color: var(--textMain); 
+      white-space: pre; text-align: right; text-shadow: 1px 1px 0 #1a0017; margin-top: 8px;
     }
 
     .dialogue-content-area { grid-column: 1 / 2; grid-row: 2 / 3; display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
     .dialogue-text {
       font-family: var(--font-mono);
       font-size: 15px; line-height: 1.6; 
-      color: var(--textGreen); white-space: pre-wrap; cursor: pointer; min-height: 24px;
+      color: var(--textMain); white-space: pre-wrap; cursor: pointer; min-height: 24px;
     }
 
     .choices { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; align-items: flex-start; }
     .choice-btn {
-      border: none; background: transparent; color: var(--textGreen); 
+      border: none; background: transparent; color: var(--textMain); 
       padding: 2px 0; cursor: pointer; font-family: var(--font-mono); font-size: 14px; text-align: left;
     }
-    .choice-btn:hover { text-decoration: underline; text-shadow: 0 0 5px var(--textGreen); }
+    .choice-btn:hover { text-decoration: underline; text-shadow: 0 0 5px var(--textMain); }
 
     .next-indicator {
       position: absolute; bottom: 12px; right: 16px;
-      width: 12px; height: 12px; background: var(--textGreen);
+      width: 12px; height: 12px; background: var(--textMain);
       animation: blink3 3s infinite; cursor: pointer;
+      box-shadow: 0 0 5px var(--textMain);
     }
 
     .coord-strip {
-      border-top: 1px solid var(--accent); background: #000;
-      height: 20px; display: flex; align-items: center; justify-content: space-between;
+      height: 24px; display: flex; align-items: center; justify-content: space-between;
       padding: 0 12px; font-size: 10px; letter-spacing: 0.15em;
+      border-bottom: 2px solid var(--accent);
+      background: #000;
     }
     .press-space-label { 
-      color: var(--mutedGreen); 
+      color: var(--textDim); 
       animation: blink3 3s infinite; 
-      /* 使用 invisible class 強制隱藏，不需要 transition opacity */
+      transition: opacity 0.2s ease;
     }
-    /* 強制隱藏工具 Class */
-    .invisible {
-      opacity: 0 !important;
-      animation: none !important;
-    }
-
-    .coord-value { color: var(--textGreen); text-align: right; }
+    .invisible { opacity: 0 !important; animation: none !important; }
+    .coord-value { color: var(--textMain); text-align: right; }
 
     .runner-strip {
-      height: 54px; background: #000; border-top: 1px solid var(--accent);
+      height: 54px; background: #000; 
       position: relative; overflow: hidden;
     }
     .runner-strip canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
 
     .score {
       position: absolute; top: 4px; right: 8px;
-      font-size: 9px; letter-spacing: 0.1em; color: var(--textGreen); pointer-events: none;
+      font-size: 9px; letter-spacing: 0.1em; color: var(--textMain); pointer-events: none;
     }
     .runner-overlay {
       position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
       pointer-events: none; font-size: 10px; letter-spacing: 0.2em;
-      color: var(--textGreen); opacity: 0; transition: opacity 0.2s ease;
+      color: var(--textMain); opacity: 0; transition: opacity 0.2s ease;
+      text-shadow: 0 0 5px var(--main-magenta);
     }
     .runner-overlay.show { opacity: 0.9; animation: blink3 3s infinite; }
-
-    /* ===== 手機版 ===== */
-    @media (max-width: 768px) {
-      body { padding-top: 40px; }
-      
-      .header-bar { height: 40px; padding: 0 12px; justify-content: space-between; }
-      .header-title { display: none; }
-      .nav-links { width: 100%; display: flex; justify-content: space-between; gap: 0; font-size: 14px; margin: 0; }
-      .nav-links a { font-size: 14px; }
-
-      .crt-scanlines { top: 40px; height: calc(100vh - 40px); }
-
-      .game-shell {
-        width: 100vw; height: calc(100vh - 40px);
-        border: none; border-top: 1px solid var(--accent); box-shadow: none;
-      }
-
-      .main-area { 
-        height: auto; flex: 1; 
-        flex-direction: column; border-bottom: 1px solid var(--accent);
-      }
-      .side-panel { display: none; }
-
-      .bg-panel { width: 100%; flex: 1; border-right: none; padding: 0; }
-      .bg-monitor { inset: 0; border: none; }
-
-      .dialogue-wrap { flex: 0 0 auto; }
-      .dialogue-panel { height: 140px; }
-      
-      .speaker { font-size: 16px; }
-      .dialogue-text { font-size: 14px; }
-      .time-container { width: 50px; }
-      .coffee-ascii { font-size: 8px; line-height: 8px; }
-    }
   </style>
 </head>
 
@@ -263,7 +312,9 @@
         <div class="side-box"><div class="side-box-title">Occupation</div><div id="ui-occupation"></div></div>
         <div class="side-box"><div class="side-box-title">Age</div><div id="ui-age">17</div></div>
         <div class="side-box"><div class="side-box-title">Star</div><div id="ui-star">κ Virginis</div></div>
-        <div class="logo-box"><pre class="ascii-logo-small flicker" id="asciiLogoSmall"></pre></div>
+        <div class="logo-box">
+          <div class="ascii-carousel-wrapper" id="asciiWrapper"></div>
+        </div>
       </div>
     </div>
 
@@ -341,16 +392,178 @@
     start();
   })();
 
-  /* Restore Original ASCII */
-  const ASCII_LOGO = String.raw`
+  /* ASCII Carousel Logic (SMOOTH) */
+  (function asciiCarousel(){
+    const LOGOS = [
+      String.raw`
+80-91-11
 echo "      dBP     dBP dBP dBP dBP dBP dBP dBBBBBBb dBBBb dBBBBb 
 echo "     echo        d8P.dBP d8P.dBP           dBP              
 echo "    dBBBBBP dBP dBBBBP  dBBBBP  dBP dBPdBPdBP   dBP    dBP  
 echo "   dBP dBP dBP dBP BB  dBP BB  dBP dBPdBPdBP   dBP    dBP   
 echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP   
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-`;
-  document.getElementById('asciiLogoSmall').textContent = ASCII_LOGO;
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`,
+      String.raw`
+╭─[ STATUS:ONLINE ]─[ CRC:9F3A ]─[ UPTIME:00:17:42 ]───────────╮
+│                                                              │ 
+│ CPU 12%  ▓▓░░░░░░░░  MEM 4096TB ▓▓▓▓▓▓▓▓░░  TMP 42°C         │ 
+│                                                              │          
+│ NET ▸ Sta_Hypo  ENCRYPT:✓  ROUTE:SHADOW  DPI:✓               │
+│ LOC 22.19N 113.55E  SECTOR:A-07  LRC:ON  HDA:ON              │
+│ WTHR ACID RAIN / HEAVY  ALERT: CHEM_FOG  FILTER:ON           │ 
+│                                                              │
+╰─[ AUDIT:IMMUTABLE ]───────────────────────────────────────-──╯                     
+`,
+      String.raw`
+echo "         ▛▀▖   ▗    ▌                ▐  
+echo "         ▌ ▌▙▀▖▄ ▛▀▖▌▗▘ ▞▀▘▛▚▀▖▝▀▖▙▀▖▜▀ 
+echo "         ▌ ▌▌  ▐ ▌ ▌▛▚  ▝▀▖▌▐ ▌▞▀▌▌  ▐ ▖
+echo "         ▀▀ ▘  ▀▘▘ ▘▘ ▘ ▀▀ ▘▝ ▘▝▀▘▘   ▀ 
+echo "              ▛▀▖   ▗             ▗▀▖        
+echo "                 ▌ ▌▙▀▖▄▌ ▌▞▀▖ ▞▀▘▝▀▖▐  ▞▀▀▖  ▖     
+echo "              ▌ ▌▌  ▐▐▐ ▛▀  ▝▀▖▞▀▌▜▀ ▛▀      
+echo "              ▀▀ ▘  ▀▘▘ ▝▀▘ ▀▀ ▝▀▘▐  ▝▀▘                                                  
+`,
+      String.raw`
+  │【速報】
+  │
+  │ マカオ半島、酸性雨が警戒水準に到達。
+  │
+  │ マカオ気象監視局は本日21時すぎ、
+  │ 半島一帯で降下している酸性雨が「重度」に分類されたと発表した。
+  │
+  │ 主要道路では視程低下により軽微な衝突が相次ぎ、
+  │ 港湾地区の一部で排水ポンプの過負荷が確認されている。     
+`,
+      String.raw`
+
+▗▖ ▗▖▗▖   ▗▖  ▗▖    ▗▄▄▄▖▗▄▄▄▖▗▖ ▗▄▄▄▖▗▄▄▄▖▗▄▄▖   TM
+▐▌ ▐▌▐▌    ▝▚▞▘     ▐▌     █  ▐▌   █  ▐▌   ▐▌ ▐▌  
+▐▛▀▜▌▐▌     ▐▌      ▐▛▀▀▘  █  ▐▌   █  ▐▛▀▀▘▐▛▀▚▖
+▐▌ ▐▌▐▙▄▄▖▗▞▘▝▚▖    ▐▌   ▗▄█▄▖▐▙▄▄▖█  ▐▙▄▄▖▐▌ ▐▌
+                                                
+Breathe the city. Not the chemicals.
+Upgrade your mask cartridge in 30 seconds.
+Compatible: Macau-Net_V2 / Urban Grid A-07
+                                                                                                                                                       
+`,
+      String.raw`
+
+    _/\/\____/\/\__/\/\/\/\____/\/\/\/\____/\/\____/\/\__/\/\/\/\
+   _/\/\____/\/\____/\/\____/\/\____/\/\__/\/\__/\/\______/\/\___ 
+  _/\/\/\/\/\/\____/\/\____/\/\____/\/\__/\/\/\/\________/\/\___  
+  _/\/\____/\/\____/\/\____/\/\____/\/\__/\/\__/\/\______/\/\___   
+ /\/\____/\/\__/\/\/\/\____/\/\/\/\____/\/\____/\/\__/\/\/\/\_    
+______________________________________________________________                                                                                                                                                                                                                                                                                                                                    
+`,
+      String.raw`
+echo "    888 88e  888'Y88 Y88b Y88 888'Y88 888 88e  888'Y88 
+echo "    888 888D 888 ,'Y  Y88b Y8 888 ,'Y 888 888D 888 ,'Y 
+echo "    888 88"  888C8   b Y88b Y 888C8   888 88"  888C8   
+echo "    888 b,   888 ",d 8b Y88b  888 "   888 b,   888 ",d 
+echo "    888 88b, 888,d88 88b Y88b 888     888 88b, 888,d88 
+
+01:80:FF:94
+`,
+      String.raw`
+日日日日日          _              _              _         日日日日日日
+日日日日日         /\ \           /\ \          /\ \        日日日日日日
+日日日日日        /  \ \         /  \ \        /  \ \       日日日日日日
+日日日日日       / /\ \_\       / /\ \ \      / /\ \ \      日日日日日日
+日日日日日      / / /\/_/      / / /\ \ \    / / /\ \ \     日日日日日日
+日日日日日     / / / ______   / / /  \ \_\  / / /  \ \_\    日日日日日日
+日日日日日    / / / /\_____\ / / / _ / / / / / /    \/_/    日日日日日日
+日日日日日   / / /  \/____ // / / /\ \/ / / / /             日日日日日日
+日日日日日  / / /_____/ / // / /__\ \ \/ / / /________      日日日日日日
+日日日日日  / / /______\/ // / /____\ \ \/ / /_________\    日日日日日日
+日日日日日  \/___________/ \/________\_\/\/____________/ TM 日日日日日日
+                                                                 
+`,
+      String.raw`
+    ▓▓░░░░░░░░          _.-;;-.___-._                ▓▓░░░░░░░░ 
+▓▓░░░░░░░░            '-..-'|   ||   |            ▓▓░░░░░░░░
+  ▓▓░░░░░░░░          '-..-'|_.-;;-._|         ▓▓░░░░░░░░
+  ▓▓░░░░░░░░          '-..-'|   ||   |         ▓▓░░░░░░░░
+      ▓▓░░░░░░        '-..-'|_.-''-._|             ▓▓░░░░░░░░
+`,
+      String.raw`
+╭──────────────────────────────────────────────────────────────-─╮
+
+
+
+                        國家運動員太平山觀光             
+                        大批平民一早到場等候            
+            
+
+╰────────────────────────────────────────────────────────────────╯                    
+`,
+      String.raw`
+_____/\\\\\\\\\\\\__/\\\\\\\\\\\\\\\__/\\\\\_____/\\\___  TM   
+ ___/\\\//////////__\/\\\///////////__\/\\\\\\___\/\\\______      
+  __/\\\_____________\/\\\_____________\/\\\/\\\__\/\\\___ 
+   _\/\\\____/\\\\\\\_\/\\\\\\\\\\\_____\/\\\//\\\_\/\\\_     
+    _\/\\\___\/////\\\_\/\\\///////______\/\\\\//\\\\/\\\_    
+     _\/\\\_______\/\\\_\/\\\_____________\/\\\_\//\\\/\\\____  
+      _\/\\\_______\/\\\_\/\\\_____________\/\\\__\//\\\\\\_  
+       _\//\\\\\\\\\\\\/__\/\\\\\\\\\\\\\\\_\/\\\___\//\\\\\_ 
+        __\////////////____\///////////////__\///_____\/////__
+`
+    ];
+
+    const wrapper = document.getElementById('asciiWrapper');
+    let currentIdx = 0;
+    let currentEl = null;
+    let busy = false;
+
+    function createPre(content){
+      const p = document.createElement('pre');
+      p.className = 'ascii-logo-small flicker';
+      p.textContent = content;
+      return p;
+    }
+
+    function mountInitial(){
+      currentEl = createPre(LOGOS[0]);
+      wrapper.appendChild(currentEl);
+      if(window.gsap){
+        gsap.set(currentEl, { yPercent: -50, xPercent: 0, autoAlpha: 1, force3D: true });
+      }
+    }
+
+    function slideTo(nextIdx){
+      if(busy) return;
+      busy = true;
+
+      const nextEl = createPre(LOGOS[nextIdx]);
+      wrapper.appendChild(nextEl);
+
+      if(!window.gsap){
+        if(currentEl && currentEl.parentNode) currentEl.parentNode.removeChild(currentEl);
+        currentEl = nextEl;
+        currentIdx = nextIdx;
+        busy = false;
+        return;
+      }
+
+      gsap.set(nextEl, { yPercent: -50, xPercent: -110, autoAlpha: 0, force3D: true });
+      gsap.set(currentEl, { yPercent: -50, xPercent: 0, autoAlpha: 1, force3D: true });
+
+      gsap.timeline({
+        defaults: { duration: 0.75, ease: "power2.inOut" },
+        onComplete: () => {
+          if(currentEl && currentEl.parentNode) currentEl.parentNode.removeChild(currentEl);
+          currentEl = nextEl;
+          currentIdx = nextIdx;
+          busy = false;
+        }
+      })
+      .to(currentEl, { xPercent: 110, autoAlpha: 0 }, 0)
+      .to(nextEl,   { xPercent: 0,   autoAlpha: 1 }, 0);
+    }
+
+    mountInitial();
+    setInterval(()=> slideTo((currentIdx + 1) % LOGOS.length), 7000);
+  })();
 
   (function coffeeAnim(){
     const el = document.getElementById('coffeeAnim');
@@ -377,7 +590,7 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
   }
   updateClock(); setInterval(updateClock, 10000);
 
-  /* Portrait: PIX=64, Slower Shake */
+  /* Portrait: PIX=64, Slower Shake, Magenta Tint */
   (function pixelPortrait(){
     const canvas = document.getElementById('pixelPortrait');
     const ctx = canvas.getContext('2d');
@@ -388,19 +601,24 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
     window.addEventListener('resize', fit);
     const img = new Image(); img.src = 'guest-portrait.png';
     img.onload = ()=>start(img);
-    img.onerror = ()=>{ fit(); ctx.fillStyle="#112211"; ctx.fillRect(0,0,canvas.width,canvas.height); };
+    img.onerror = ()=>{ fit(); ctx.fillStyle="#1a0017"; ctx.fillRect(0,0,canvas.width,canvas.height); };
     function start(img){
       let t=0; const off=document.createElement('canvas'); const octx=off.getContext('2d');
       function draw(){
         t++; fit();
         const cw=canvas.width, ch=canvas.height;
-        const PIX=64; // High clarity
+        const PIX=64; 
         off.width=PIX; off.height=Math.round(PIX*(ch/cw));
         const sc=Math.max(cw/img.width, ch/img.height);
         octx.drawImage(img, (img.width-cw/sc)/2, (img.height-ch/sc)/2, cw/sc, ch/sc, 0, 0, off.width, off.height);
         ctx.imageSmoothingEnabled=false;
-        // Slow shake: t/60, 0.5px
         ctx.drawImage(off, 0,0,off.width,off.height, Math.sin(t/60)*0.5, Math.cos(t/50)*0.5, cw, ch);
+        
+        ctx.globalCompositeOperation = 'overlay';
+        ctx.fillStyle='rgba(255, 0, 232, 0.15)'; 
+        ctx.fillRect(0,0,cw,ch);
+        ctx.globalCompositeOperation = 'source-over';
+
         ctx.globalAlpha=0.15; ctx.fillStyle='#000'; for(let y=0;y<ch;y+=2)ctx.fillRect(0,y,cw,1); ctx.globalAlpha=1;
         requestAnimationFrame(draw);
       }
@@ -454,7 +672,7 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
   elBtn.onclick=next; document.body.onkeydown=(e)=>{if(e.key==='Enter')next()};
   show(0);
 
-  /* Runner Engine with Dallas Reminder */
+  /* Runner Engine with Dallas Reminder & Colors */
   (function runnerGame(){
     const c=document.getElementById('runner'), ctx=c.getContext('2d');
     const elCoord=document.getElementById('coordStrip'), elScore=document.getElementById('scoreBox'), elOver=document.getElementById('runnerOverlay');
@@ -494,7 +712,6 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
     function setAuto(on){
       auto=on; 
       elOver.classList.toggle('show', on); 
-      // 使用 classList.toggle('invisible') 來控制顯示/隱藏，避免動畫覆蓋 opacity
       if(elPress) {
         if (!on) elPress.classList.add('invisible'); 
         else elPress.classList.remove('invisible');
@@ -511,12 +728,11 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
       if(e.preventDefault) e.preventDefault();
     }
     document.addEventListener('keydown', jumpAction);
-    c.addEventListener('touchstart', jumpAction, {passive:false});
 
     setInterval(()=>{
       const lat = (22.1 + Math.random()*0.1).toFixed(6);
       const lon = (113.5 + Math.random()*0.1).toFixed(6);
-      document.querySelector('#coordStrip').textContent = `Macau Peninsula ${lat}°N ${lon}°E`;
+      elCoord.textContent = `Macau Peninsula ${lat}°N ${lon}°E`;
     }, 800);
 
     function createBuilding(x){
@@ -575,31 +791,36 @@ echo "  dBP dBP dBP dBP dBP dBP dBP dBP dBPdBPdBP   dBP    dBP
 
       ctx.fillStyle='#000'; ctx.fillRect(0,0,c.width,c.height);
       
-      ctx.strokeStyle='#00cc55'; ctx.beginPath(); 
+      // Rain (Magenta)
+      ctx.strokeStyle='#ff00e8'; ctx.beginPath(); 
       rain.forEach(r=>{ctx.moveTo(r.x,r.y);ctx.lineTo(r.x-2,r.y+5)}); 
       ctx.stroke();
       
       obst.forEach(o=>{
-        if(o.type===0) {
-          ctx.fillStyle='#001a0b'; ctx.fillRect(o.x, MAX_H-o.h, o.w, o.h);
-          ctx.strokeStyle='#00aa44'; ctx.strokeRect(o.x, MAX_H-o.h, o.w, o.h);
-          ctx.fillStyle='#00cc55';
+        if(o.type===0) { // Building
+          ctx.fillStyle='#2e002a'; // Dark Magenta Body
+          ctx.fillRect(o.x, MAX_H-o.h, o.w, o.h);
+          ctx.strokeStyle='#ff00e8'; // Neon Outline
+          ctx.strokeRect(o.x, MAX_H-o.h, o.w, o.h);
+          ctx.fillStyle='#ff00e8'; // Windows
           const ww=o.w/o.cols, wh=o.h/o.rows;
           o.wins.forEach(w=>{ ctx.fillRect(o.x+w.c*ww+2, MAX_H-o.h+w.r*wh+2, ww-3, wh-3); });
-        } else {
+        } else { // Lamp
           const lx = o.x, ly = MAX_H - o.h;
-          ctx.fillStyle='#00cc55'; ctx.fillRect(lx, ly, o.w, o.h); ctx.fillRect(lx-2, ly, o.w+4, 2);
-          ctx.fillStyle='rgba(0,204,85,0.6)'; ctx.fillRect(lx-1, ly+2, o.w+2, 3);
+          ctx.fillStyle='#ff00e8'; ctx.fillRect(lx, ly, o.w, o.h); ctx.fillRect(lx-2, ly, o.w+4, 2);
+          ctx.fillStyle='rgba(255, 0, 232, 0.6)'; ctx.fillRect(lx-1, ly+2, o.w+2, 3);
         }
       });
 
+      // Ground Line
+      ctx.strokeStyle='#ff00e8';
       ctx.beginPath(); ctx.moveTo(0,MAX_H); ctx.lineTo(c.width,MAX_H); ctx.stroke();
       
       if(playerVis) { 
         ctx.save();
-        ctx.shadowColor = '#00ff66'; 
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = '#00ff66';
+        ctx.shadowColor = '#ff00e8'; 
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = '#ff00e8';
         ctx.font = 'bold 20px "Courier New", monospace'; 
         ctx.fillText('$', player.x, MAX_H-player.y-2);
         ctx.restore();
