@@ -1,4 +1,802 @@
-    String.raw`
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <title>Macau17</title>
+
+  <!-- no zoom / no scroll -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- keep your JP serif + sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;600;900&family=Noto+Sans+JP:wght@200&display=swap" rel="stylesheet"/>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <style>
+    :root{
+      /* ===== your game theme ===== */
+      --bg: #050005;
+      --main-magenta: #ff00e8;
+      --dim-magenta: #7a006f;
+      --dark-magenta: #2e002a;
+
+      --accent: var(--main-magenta);
+      --textMain: var(--main-magenta);
+      --textDim: var(--dim-magenta);
+
+      --font-mono: "Courier New", Courier, monospace;
+      --font-ja: "Noto Serif JP", serif;
+
+      /* ===== header vars (from contact) ===== */
+      --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
+      --ivory:#f4f2f0;
+      --ink:#000;
+
+      /* computed offsets for layout only (NOT part of header code) */
+      --header-offset: 60px; /* desktop header height */
+      --coord-h: 24px;
+      --runner-h: 54px;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    html, body{
+      width:100%;
+      height:100%;
+      background: var(--bg);
+      overflow: hidden !important;
+      overscroll-behavior: none;
+      touch-action: none; /* no drag/pinch scroll */
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: var(--textMain);
+      font-family: var(--font-mono);
+      font-weight:200;
+      padding-top: var(--header-offset);
+    }
+
+    /* =======================
+       HEADERBAR (100% from contact.html)
+       ======================= */
+    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
+    @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+    .sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    .header-bar{
+      position:fixed; top:0; left:0; width:100%; height:60px;
+      background:var(--ivory); z-index:9999; border-bottom:1px solid var(--ivory);
+      display:flex; align-items:center; padding:0 40px;
+      will-change:transform,opacity; transform:translateZ(0);
+    }
+    .header-title{ margin-right:auto; font-family:var(--font-mono); font-size:18px; color:var(--ink); white-space:nowrap; overflow:hidden; }
+    .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
+    .nav-links{ display:flex; align-items:center; margin-left:auto; gap:40px; }
+    .header-bar a{
+      font-family: var(--font-mono); font-size:18px; color:var(--ink); text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:24px; height:28px; line-height:1; transition:color .25s ease;
+      touch-action: manipulation;
+    }
+    .header-bar a:hover{ color:#f1c232 }
+    .header-bar a.active{ color:#e74c3c }
+    .nav-links a.iching .label{ display:none; }
+    .nav-links a.iching .blink-block{ font-size:18px; }
+
+    .mobile-rotator{
+      position:fixed; top:0; left:0; width:100%; height:36px;
+      background:var(--ivory); color:var(--ink);
+      display:none; align-items:center; justify-content:center;
+      padding:0 12px; z-index:10001; font-size:14px; line-height:1;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--font-mono);
+      will-change:transform,opacity; transform:translateZ(0);
+    }
+    .mobile-rotator.ja{ font-family:var(--font-ja); font-weight:200; }
+
+    @media (max-width: 767px) and (orientation: portrait){
+      .mobile-rotator{ display:flex; }
+      .header-bar{ top:36px; padding:0; }
+      .header-title{ display:none; }
+      .nav-links{
+        width: calc(100% - 4ch); margin:0 auto; display:grid;
+        grid-template-columns: 2.2ch 1fr 1fr 1fr; align-items:center; justify-items:center; gap:0;
+      }
+      .header-bar a{ margin:0; min-width:0; height:36px; line-height:36px; }
+      .nav-links a.iching{ justify-self:start; }
+
+      /* layout offset only */
+      :root{ --header-offset: 96px; --runner-h: clamp(56px, 9.5vh, 86px); }
+    }
+
+    /* ===== CRT Scanline ===== */
+    .crt-scanlines{
+      position:fixed;
+      top: var(--header-offset);
+      left:0;
+      width:100%;
+      height: calc(100vh - var(--header-offset));
+      pointer-events:none;
+      z-index: 9998;
+      will-change: transform;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 2px,
+        rgba(40,0,40,0.2) 2px, rgba(40,0,40,0.2) 4px
+      );
+      animation: scanlineJitter 0.15s infinite;
+      mix-blend-mode: overlay;
+    }
+    @keyframes scanlineJitter { 0%{transform:translateY(0)} 50%{transform:translateY(1px)} 100%{transform:translateY(0)} }
+
+    /* ===== Game Shell ===== */
+    .game-shell{
+      width: min(920px, calc(100vw - 20px));
+      background:#000;
+      border:2px solid var(--accent);
+      box-shadow: 0 0 0 1px #000 inset, 0 0 24px rgba(255,0,232,0.15);
+      position: relative;
+      overflow:hidden;
+      filter: brightness(1.1) contrast(1.05);
+      display:flex;
+      flex-direction: column;
+    }
+
+    .screen-flash{
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:0;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.25) 0, rgba(255,255,255,0.25) 2px, rgba(0,0,0,0.0) 4px);
+      mix-blend-mode: screen;
+      z-index:100;
+    }
+    .screen-flash.active{ animation: flashScan 0.16s ease-out; }
+    @keyframes flashScan { 0%{opacity:0} 12%{opacity:0.55} 100%{opacity:0} }
+
+    /* Desktop: top area */
+    .main-area{
+      height: 300px;
+      display:flex;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .bg-panel{
+      flex:2;
+      padding:10px;
+      position:relative;
+      background: var(--bg);
+    }
+
+    .bg-monitor{
+      position:absolute;
+      inset:10px;
+      border:2px solid var(--accent);
+      box-shadow: inset 0 0 10px rgba(255,0,232,0.1);
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .bg-monitor canvas{ width:100%; height:100%; display:block; image-rendering: pixelated; }
+
+    .side-panel{
+      flex:1;
+      padding:10px;
+      min-width:250px;
+      background: linear-gradient(to bottom, rgba(40,0,40,0.2), rgba(0,0,0,0));
+      display:grid;
+      grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+      gap:8px;
+      min-height:0;
+    }
+
+    .side-box, .logo-box{
+      border:2px solid var(--accent);
+      box-shadow: 0 0 0 2px #000 inset;
+      min-height:0;
+      overflow:hidden;
+    }
+
+    .side-box{
+      background: linear-gradient(to bottom, #1a0017, #000);
+      padding: 8px 10px;
+      display:grid;
+      grid-template-columns: 82px 1fr;
+      align-items:center;
+      column-gap: 10px;
+    }
+    .side-box-title{
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--textDim);
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .side-box > div:last-child{
+      min-width:0;
+      font-size: 13px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      justify-self: end;
+      text-align: right;
+    }
+
+    .logo-box{
+      background:#000;
+      padding:4px;
+      position:relative;
+    }
+    .ascii-carousel-wrapper{
+      position:relative;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      will-change: transform;
+    }
+
+    /* scaled by JS */
+    .ascii-logo-small{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: 50% 50%;
+      white-space: pre;
+      font-family: var(--font-mono);
+      color: var(--textMain);
+      opacity: 0.95;
+      pointer-events:none;
+      margin:0;
+      will-change: transform, opacity;
+      line-height: 1.0;
+      font-size: 9px;
+    }
+    .flicker { animation: neonFlicker 1.9s infinite; }
+    @keyframes neonFlicker{
+      0%,100%{ opacity:0.95; text-shadow:0 0 4px var(--main-magenta); }
+      50%{ opacity:0.8; text-shadow:0 0 2px var(--main-magenta); }
+      51%{ opacity:0.4; } 52%{ opacity:0.9; }
+    }
+
+    /* Dialogue/Text */
+    .dialogue-wrap{ display:flex; flex-direction: column; }
+
+    .dialogue-panel{
+      height: 160px;
+      background: linear-gradient(to bottom, #1a0017, #050005);
+      padding: 12px 16px;
+      position: relative;
+      border-bottom: 2px solid var(--accent);
+      display:grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr;
+      column-gap: 10px;
+    }
+    .speaker-area{ grid-column: 1/2; grid-row:1/2; display:flex; align-items:center; padding-bottom: 4px; }
+    .speaker{
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 8px rgba(255,0,232,0.6);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .time-container{
+      grid-column: 2/3; grid-row: 1/3;
+      display:flex; flex-direction:column; align-items:flex-end;
+      width: 80px;
+    }
+    .time-label{ font-size: 11px; letter-spacing:0.05em; margin-bottom:2px; color: var(--textDim); }
+    .coffee-ascii{ font-size: 10px; line-height: 10px; white-space: pre; text-align:right; margin-top: 8px; text-shadow: 1px 1px 0 #1a0017; }
+
+    .dialogue-content-area{ grid-column: 1/2; grid-row:2/3; display:flex; flex-direction:column; gap: 6px; padding-top: 4px; }
+    .dialogue-text{
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      cursor: pointer;
+      min-height: 24px;
+      touch-action: manipulation;
+    }
+    .choices{ display:flex; flex-direction:column; gap:4px; margin-top:4px; align-items:flex-start; }
+    .choice-btn{
+      border:none;
+      background: transparent;
+      color: var(--textMain);
+      cursor:pointer;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      text-align:left;
+      padding: 4px 0;
+      touch-action: manipulation;
+    }
+    .choice-btn:hover{ text-decoration: underline; text-shadow: 0 0 5px var(--textMain); }
+
+    .next-indicator{
+      position:absolute;
+      bottom: 12px;
+      right: 16px;
+      width: 12px;
+      height: 12px;
+      background: var(--textMain);
+      animation: blink3 3s infinite;
+      cursor:pointer;
+      box-shadow: 0 0 5px var(--textMain);
+      touch-action: manipulation;
+    }
+
+    .coord-strip{
+      height: var(--coord-h);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 0 12px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      border-bottom: 2px solid var(--accent);
+      background:#000;
+    }
+    .press-space-label{ color: var(--textDim); animation: blink3 3s infinite; transition: opacity .2s ease; }
+    .invisible{ opacity:0 !important; animation:none !important; }
+    .coord-value{ color: var(--textMain); text-align:right; }
+
+    .runner-strip{
+      height: var(--runner-h);
+      background:#000;
+      position:relative;
+      overflow:hidden;
+    }
+    .runner-strip canvas{
+      width:100%;
+      height:100%;
+      display:block;
+      image-rendering: pixelated;
+      touch-action: none;
+    }
+    .score{
+      position:absolute;
+      top:4px;
+      right:8px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      pointer-events:none;
+    }
+    .runner-overlay{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      opacity:0;
+      transition: opacity .2s ease;
+      text-shadow: 0 0 5px var(--main-magenta);
+    }
+    .runner-overlay.show{ opacity: 0.9; animation: blink3 3s infinite; }
+
+    /* MOBILE: Portrait / Info / Text = 5 : 2 : 3 */
+    @media (max-width: 820px){
+      .game-shell{
+        width: 100vw;
+        height: calc(100vh - var(--header-offset));
+        border-left:none; border-right:none; border-bottom:none;
+        box-shadow:none;
+
+        display: grid;
+        grid-template-rows: 5fr 2fr 3fr var(--coord-h) var(--runner-h);
+      }
+      .main-area{ display: contents; }
+      .dialogue-wrap{ display: contents; }
+
+      .bg-panel{ grid-row: 1; padding: 10px; }
+      .bg-monitor{ inset: 10px; }
+
+      .side-panel{
+        grid-row: 2;
+        padding: 10px;
+        min-width:0;
+
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .side-panel > .side-box:nth-child(1){ grid-column: 1; grid-row: 1; }
+      .side-panel > .side-box:nth-child(2){ grid-column: 1; grid-row: 2; }
+      .side-panel > .side-box:nth-child(3){ grid-column: 1; grid-row: 3; }
+      .side-panel > .side-box:nth-child(4){ grid-column: 2; grid-row: 1; }
+      .side-panel > .logo-box{             grid-column: 2; grid-row: 2 / span 2; }
+
+      .side-box{
+        padding: 7px 9px;
+        grid-template-columns: 70px 1fr;
+        column-gap: 8px;
+      }
+      .side-box-title{ font-size: 9px; letter-spacing: 0.12em; }
+      .side-box > div:last-child{ font-size: 12px; line-height: 1.15; }
+
+      .dialogue-panel{
+        grid-row: 3;
+        height: auto;
+        padding: 12px 12px;
+      }
+      .time-container{ width: 68px; }
+      .time-label{ font-size: 10px; }
+      .coffee-ascii{ font-size: 9px; line-height: 9px; }
+
+      .coord-strip{ grid-row: 4; font-size: 9px; padding: 0 10px; }
+      .runner-strip{ grid-row: 5; height: var(--runner-h); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- mobile rotator (from contact.html) -->
+  <div class="mobile-rotator en" id="mobileRotator" aria-live="polite" aria-hidden="true">of time, souls and cities.</div>
+
+  <!-- header (from contact.html) -->
+  <div class="header-bar" role="navigation" aria-label="primary">
+    <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
+    <nav class="nav-links" aria-label="site">
+      <a href="iching.html" class="iching" aria-label="iching / i ching">
+        <span class="blink-block" aria-hidden="true">■</span>
+        <span class="label sr-only">I Ching</span>
+      </a>
+      <a href="index.html">about</a>
+      <a href="gallery.html">gallery</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+
+  <div class="crt-scanlines"></div>
+
+  <div class="game-shell">
+    <div class="screen-flash" id="screenFlash"></div>
+
+    <div class="main-area">
+      <div class="bg-panel">
+        <div class="bg-monitor">
+          <canvas id="pixelPortrait" width="560" height="420"></canvas>
+        </div>
+      </div>
+
+      <div class="side-panel">
+        <div class="side-box"><div class="side-box-title">Guest</div><div id="ui-guest">G</div></div>
+        <div class="side-box"><div class="side-box-title">Occupation</div><div id="ui-occupation"></div></div>
+        <div class="side-box"><div class="side-box-title">Age</div><div id="ui-age">17</div></div>
+        <div class="side-box"><div class="side-box-title">Star</div><div id="ui-star">κ Virginis</div></div>
+        <div class="logo-box">
+          <div class="ascii-carousel-wrapper" id="asciiWrapper"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialogue-wrap">
+      <div class="dialogue-panel" id="dialoguePanel">
+        <div class="speaker-area"><div class="speaker" id="speaker">kagami</div></div>
+        <div class="time-container">
+          <div class="time-label">GMT+8 <span id="clockGmt8">--:--</span></div>
+          <pre class="coffee-ascii" id="coffeeAnim"></pre>
+        </div>
+        <div class="dialogue-content-area">
+          <div class="dialogue-text" id="dialogueText">……</div>
+          <div class="choices" id="choices"></div>
+        </div>
+        <div class="next-indicator" id="btnNext" style="display:none;"></div>
+      </div>
+
+      <div class="coord-strip">
+        <span class="press-space-label" id="pressSpaceLabel">▶ PRESS SPACEBAR TO START</span>
+        <span class="coord-value" id="coordStrip">Macau Peninsula --.-----°N ---.-----°E</span>
+      </div>
+
+      <div class="runner-strip" id="runnerStrip">
+        <canvas id="runner" width="920" height="54"></canvas>
+        <div class="score" id="scoreBox">05:F9:66:1A//0x0000000</div>
+        <div class="runner-overlay show" id="runnerOverlay">Recalibrating...</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function lockZoom(){
+    // Desktop zoom block
+    document.addEventListener('wheel', (e)=>{
+      if(e.ctrlKey || e.metaKey) e.preventDefault();
+    }, {passive:false});
+
+    // Mobile: block scroll/drag (keep taps)
+    document.addEventListener('touchmove', (e)=>{ e.preventDefault(); }, {passive:false});
+
+    // iOS pinch gestures
+    document.addEventListener('gesturestart', (e)=>{ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gesturechange', (e)=>{ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gestureend', (e)=>{ e.preventDefault(); }, {passive:false});
+  })();
+
+  /* ===== Header Rotator (100% from contact.html) ===== */
+  (function(){
+    const headerEl = document.getElementById('headerTitle');
+    const mobileEl = document.getElementById('mobileRotator');
+    const mqPhonePortrait = window.matchMedia('(max-width: 767px) and (orientation: portrait)');
+    const sentences = [
+      "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+      "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
+      "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
+      "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+      "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+      "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
+      "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
+      "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy.",
+      "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+      "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
+      "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+      "shanghai fog, yes.","悲喜千般同幻夢。",
+      "欲望屬於他者。",
+      "Desire is the desire of the Other.",
+      "世界無人始，亦無人終。",
+      "The world began and ends without man.",
+      "民為貴，君為輕。",
+      "Lucky Vicky～",
+      "Beauty will save the world.",
+      "深宮似海，人人自危。",
+      "一笑傾城，再笑傾國。",
+      "Better die with fragrance.",
+      "得寵易，守寵難。",
+      "Family comes first.",
+      "活下去",
+      "Friends don’t lie.",
+      "The crown must endure.",
+      "Power is better than sex.",
+      "Love is stronger than reason.",
+      "孤獨是命運。",
+      "Poetry belongs to people.",
+      "One word of truth.",
+      "El Psy Congroo",
+      "Just keep swimming.",
+      "We’re all undercover.",
+      "War never changes.",
+      "YOU-ARE-NOT-PREPARED.",
+      "Nothing is true？",
+      "I am a real boy.",
+      "Marriage is war.",
+      "A Royale with cheese.",
+      "Don’t call me Mr. Pink."
+    ];
+    const isCJK = (s)=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
+    let last=-1, timer=0;
+    function activeEl(){ return mqPhonePortrait.matches ? mobileEl : headerEl; }
+    function inactiveEl(){ return mqPhonePortrait.matches ? headerEl : mobileEl; }
+    function apply(el, txt){
+      if(!el) return; const c=isCJK(txt);
+      el.classList.toggle("ja", c); el.classList.toggle("en", !c);
+      el.setAttribute('lang', c ? 'ja' : 'en'); el.textContent = txt;
+    }
+    function step(){
+      let i; do{ i=Math.floor(Math.random()*sentences.length); } while(i===last); last=i;
+      const txt=sentences[i]; const show=activeEl(), hide=inactiveEl();
+      if(hide) hide.setAttribute('aria-hidden','true'); if(show) show.setAttribute('aria-hidden','false');
+      if(!window.gsap){ apply(show,txt); return; }
+      gsap.to(show,{y:-16,opacity:0,duration:.2,ease:'power1.in',onComplete(){
+        apply(show,txt); gsap.set(show,{y:16}); gsap.to(show,{y:0,opacity:1,duration:.28,ease:'power1.out'});
+      }});
+    }
+    function start(){ clearInterval(timer); step(); timer=setInterval(step,4000); }
+    mqPhonePortrait.addEventListener ? mqPhonePortrait.addEventListener('change', start) : mqPhonePortrait.addListener(start);
+    start();
+  })();
+
+  (function coffeeAnim(){
+    const el = document.getElementById('coffeeAnim');
+    const frames = [
+`     ( (
+      )) )
+  .______.
+((|      |
+  \\______/
+   \`----' `,
+`      ) )
+     ( (
+  .______.
+((|      |
+  \\______/
+   \`----' `
+    ];
+    let i=0;
+    setInterval(()=>{ el.textContent = frames[i]; i = (i+1)%frames.length; }, 600);
+  })();
+
+  const clockEl = document.getElementById('clockGmt8');
+  function updateClock(){
+    clockEl.textContent = new Date().toLocaleTimeString('en-GB', {
+      timeZone:'Asia/Hong_Kong', hour:'2-digit', minute:'2-digit', hour12:false
+    });
+  }
+  updateClock(); setInterval(updateClock, 10000);
+
+  /* Portrait: PIX=64, Slower Shake, Magenta Tint */
+  (function pixelPortrait(){
+    const canvas = document.getElementById('pixelPortrait');
+    const ctx = canvas.getContext('2d');
+
+    function fit(){
+      const r = canvas.parentElement.getBoundingClientRect();
+      const w = Math.floor(r.width);
+      const h = Math.floor(r.height);
+      if(canvas.width!==w || canvas.height!==h) { canvas.width=w; canvas.height=h; }
+    }
+    window.addEventListener('resize', fit);
+
+    const img = new Image();
+    img.src = 'guest-portrait.png';
+    img.onload = ()=>start(img);
+    img.onerror = ()=>{ fit(); ctx.fillStyle="#1a0017"; ctx.fillRect(0,0,canvas.width,canvas.height); };
+
+    function start(img){
+      let t=0;
+      const off=document.createElement('canvas');
+      const octx=off.getContext('2d');
+
+      function draw(){
+        t++; fit();
+        const cw=canvas.width, ch=canvas.height;
+        const PIX=64;
+
+        off.width=PIX;
+        off.height=Math.max(1, Math.round(PIX*(ch/cw)));
+
+        const sc=Math.max(cw/img.width, ch/img.height);
+        octx.drawImage(
+          img,
+          (img.width-cw/sc)/2, (img.height-ch/sc)/2, cw/sc, ch/sc,
+          0, 0, off.width, off.height
+        );
+
+        ctx.imageSmoothingEnabled=false;
+        ctx.drawImage(off, 0,0,off.width,off.height, Math.sin(t/60)*0.5, Math.cos(t/50)*0.5, cw, ch);
+
+        ctx.globalCompositeOperation = 'overlay';
+        ctx.fillStyle='rgba(255, 0, 232, 0.15)';
+        ctx.fillRect(0,0,cw,ch);
+        ctx.globalCompositeOperation = 'source-over';
+
+        ctx.globalAlpha=0.15;
+        ctx.fillStyle='#000';
+        for(let y=0;y<ch;y+=2) ctx.fillRect(0,y,cw,1);
+        ctx.globalAlpha=1;
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  })();
+
+  const Crack = (function(){
+    const SET="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    function startOn(el){
+      const original = el.textContent;
+      let steps=0;
+      const t = setInterval(()=>{
+        el.textContent = original.split('').map((c,i)=> (i<steps || /\s/.test(c)) ? c : SET[Math.random()*SET.length|0]).join('');
+        steps+=1/3;
+        if(steps>=original.length) clearInterval(t);
+      }, 30);
+    }
+    return {startOn};
+  })();
+
+  /* ===== Dialogue engine ===== */
+  const script = [
+    { id:"start", speaker:"kagami", text:"placeholder" },
+    { speaker:"GUEST", text:"……" },
+    { type:"choice", speaker:"kagami", text:"placeholder", choices:[
+      {label:"1, A route placeholder", jump:"a"},
+      {label:"2, B route placeholder", jump:"b"}
+    ] },
+    { id:"a", speaker:"kagami", text:"（A route placeholder）" },
+    { type:"jump", target:"end" },
+    { id:"b", speaker:"kagami", text:"（B route placeholder）" },
+    { type:"jump", target:"end" },
+    { id:"end", speaker:"kagami", text:"（END placeholder）" }
+  ];
+
+  let idx=0;
+  const idMap={}; script.forEach((n,i)=>{ if(n.id) idMap[n.id]=i; });
+
+  const elSpk=document.getElementById('speaker');
+  const elTxt=document.getElementById('dialogueText');
+  const elCh=document.getElementById('choices');
+  const elBtn=document.getElementById('btnNext');
+  const elPanel=document.getElementById('dialoguePanel');
+
+  function show(i){
+    const n=script[i]; if(!n) return;
+    elCh.innerHTML="";
+    elBtn.style.display="block";
+
+    if(n.type==="jump") { idx=idMap[n.target]; show(idx); return; }
+
+    elSpk.textContent=n.speaker||"";
+    elTxt.textContent=n.text||"";
+    Crack.startOn(elTxt);
+
+    if(n.type==="choice"){
+      elBtn.style.display="none";
+      n.choices.forEach(c=>{
+        const b=document.createElement('button');
+        b.className='choice-btn';
+        b.textContent=c.label;
+        b.onclick=(e)=>{
+          e.stopPropagation();
+          idx=idMap[c.jump];
+          show(idx);
+        };
+        b.addEventListener('pointerdown', (e)=>{ e.stopPropagation(); }, {passive:false});
+        b.addEventListener('touchstart', (e)=>{ e.stopPropagation(); }, {passive:false});
+        elCh.appendChild(b);
+      });
+    }
+  }
+
+  function next(){
+    if(script[idx].type!=="choice"){
+      idx=Math.min(script.length-1, idx+1);
+      show(idx);
+    }
+  }
+
+  elBtn.onclick=next;
+  document.body.onkeydown=(e)=>{ if(e.key==='Enter') next(); };
+  show(0);
+
+  // Tap/click advance: TEXT ONLY (not runner)
+  function shouldAdvanceFromEvent(e){
+    const n = script[idx];
+    if(!n || n.type==="choice") return false;
+    const t = e.target;
+    if(!t) return true;
+    if(t.closest('a, button')) return false;
+    if(t.closest('#choices')) return false;
+    if(t.closest('#runnerStrip')) return false;
+    return true;
+  }
+
+  const advanceHandler = (e)=>{
+    if(!shouldAdvanceFromEvent(e)) return;
+    e.preventDefault?.();
+    next();
+  };
+
+  if(window.PointerEvent){
+    elPanel.addEventListener('pointerdown', advanceHandler, {passive:false});
+    elBtn.addEventListener('pointerdown', (e)=>{ e.preventDefault(); e.stopPropagation(); next(); }, {passive:false});
+  } else {
+    elPanel.addEventListener('touchstart', advanceHandler, {passive:false});
+    elBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); e.stopPropagation(); next(); }, {passive:false});
+  }
+
+  // Mobile helper text
+  (function(){
+    const elPress = document.getElementById('pressSpaceLabel');
+    const isTouch = ('ontouchstart' in window) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    if(isTouch && elPress) elPress.textContent = "▶ TAP TEXT TO ADVANCE / TAP RUNNER TO JUMP";
+  })();
+
+  /* ===== ASCII Carousel: auto scale to fit container ===== */
+  (function asciiCarousel(){
+    const LOGOS = [
+      String.raw`
   》》》80-91-11
   》》》
   echo "      dBP     dBP dBP dBP dBP dBP dBP dBBBBBBb dBBBb dBBBBb 
@@ -206,3 +1004,270 @@
         _\//\\\\\\\\\\\\/__\/\\\\\\\\\\\\\\\_\/\\\___\//\\\\\_ 
           __\////////////____\///////////////__\///_____\/////__     
   `
+    ];
+
+    const wrapper = document.getElementById('asciiWrapper');
+    let currentIdx = 0;
+    let currentEl = null;
+    let busy = false;
+
+    function createPre(content){
+      const p = document.createElement('pre');
+      p.className = 'ascii-logo-small flicker';
+      p.textContent = content;
+      return p;
+    }
+
+    function fitPre(pre){
+      const r = wrapper.getBoundingClientRect();
+      const cw = Math.max(1, r.width);
+      const ch = Math.max(1, r.height);
+
+      pre.style.transform = 'translate(-50%, -50%) scale(1)';
+      const w = Math.max(1, pre.scrollWidth);
+      const h = Math.max(1, pre.scrollHeight);
+
+      const pad = 0.92;
+      const s = Math.min((cw * pad) / w, (ch * pad) / h);
+
+      pre.style.transform = `translate(-50%, -50%) scale(${s})`;
+    }
+
+    function mountInitial(){
+      currentEl = createPre(LOGOS[0]);
+      wrapper.appendChild(currentEl);
+      requestAnimationFrame(()=> fitPre(currentEl));
+      if(window.gsap) gsap.set(currentEl, { autoAlpha: 1, force3D: true });
+    }
+
+    function slideTo(nextIdx){
+      if(busy) return;
+      busy = true;
+
+      const nextEl = createPre(LOGOS[nextIdx]);
+      wrapper.appendChild(nextEl);
+      requestAnimationFrame(()=> fitPre(nextEl));
+
+      if(!window.gsap){
+        currentEl?.parentNode?.removeChild(currentEl);
+        currentEl = nextEl;
+        currentIdx = nextIdx;
+        busy = false;
+        return;
+      }
+
+      gsap.set(nextEl, { xPercent: -110, autoAlpha: 0, force3D: true });
+      gsap.set(currentEl, { xPercent: 0, autoAlpha: 1, force3D: true });
+
+      gsap.timeline({
+        defaults: { duration: 0.75, ease: "power2.inOut" },
+        onComplete: () => {
+          currentEl?.parentNode?.removeChild(currentEl);
+          currentEl = nextEl;
+          currentIdx = nextIdx;
+          busy = false;
+          requestAnimationFrame(()=> fitPre(currentEl));
+        }
+      })
+      .to(currentEl, { xPercent: 110, autoAlpha: 0 }, 0)
+      .to(nextEl,   { xPercent: 0,   autoAlpha: 1 }, 0);
+    }
+
+    mountInitial();
+    setInterval(()=> slideTo((currentIdx + 1) % LOGOS.length), 7000);
+
+    window.addEventListener('resize', ()=>{
+      if(currentEl) requestAnimationFrame(()=> fitPre(currentEl));
+    });
+  })();
+
+  /* ===== Runner Engine (tap to jump) ===== */
+  (function runnerGame(){
+    const c=document.getElementById('runner'), ctx=c.getContext('2d');
+    const elCoord=document.getElementById('coordStrip');
+    const elScore=document.getElementById('scoreBox');
+    const elOver=document.getElementById('runnerOverlay');
+    const elPress = document.getElementById('pressSpaceLabel');
+
+    function resize(){
+      const r=c.parentElement.getBoundingClientRect();
+      c.width=Math.floor(r.width);
+      c.height=Math.floor(r.height);
+    }
+    window.addEventListener('resize',resize); resize();
+
+    let auto=true, playerVis=false, lastMan=0, passed=0;
+
+    const SPAWN_FREQ_MULT = 0.8;
+    const SPAWN_MIN_BASE = 1.2;
+    const SPAWN_MAX_BASE = 2.2;
+    const SPAWN_MIN = SPAWN_MIN_BASE * SPAWN_FREQ_MULT;
+    const SPAWN_MAX = SPAWN_MAX_BASE * SPAWN_FREQ_MULT;
+
+    const G = -1400;
+    const JUMP_VELOCITY = 550;
+
+    const GAME_HEIGHT = 54;
+    const GROUND_HEIGHT = 6;
+    const maxJumpHeight = (JUMP_VELOCITY * JUMP_VELOCITY) / (2 * Math.abs(G));
+    const maxAllowedObstacleHeight = Math.max(12, GAME_HEIGHT - GROUND_HEIGHT - 20);
+
+    let OBSTACLE_HEIGHT_MIN = Math.max(8, Math.round(maxJumpHeight * 0.35));
+    const OBSTACLE_HEIGHT_MAX = Math.min(maxAllowedObstacleHeight, Math.round(maxJumpHeight * 0.75));
+    if (OBSTACLE_HEIGHT_MIN > OBSTACLE_HEIGHT_MAX) OBSTACLE_HEIGHT_MIN = Math.min(8, OBSTACLE_HEIGHT_MAX);
+
+    const BASE_SPEED=240;
+    const MAX_H=()=>c.height-GROUND_HEIGHT;
+
+    let player={x:44,y:0,vy:0,gr:true}, obst=[], rain=[];
+
+    function setAuto(on){
+      auto=on;
+      elOver.classList.toggle('show', on);
+      if(elPress) {
+        if (!on) elPress.classList.add('invisible');
+        else elPress.classList.remove('invisible');
+      }
+      playerVis=!on;
+      if(on) { passed=0; elScore.textContent="05:F9:66:1A//0x0000000"; }
+    }
+
+    function jumpAction(e){
+      if(e && e.type==='keydown' && (e.key!==' ' && e.key!=='ArrowUp')) return;
+
+      lastMan=performance.now();
+      if(auto) setAuto(false);
+      if(player.gr){ player.vy=JUMP_VELOCITY; player.gr=false; }
+
+      if(e){
+        e.preventDefault?.();
+        e.stopPropagation?.(); // important: do NOT advance dialogue
+      }
+    }
+
+    document.addEventListener('keydown', jumpAction);
+    if(window.PointerEvent){
+      c.addEventListener('pointerdown', jumpAction, {passive:false});
+    } else {
+      c.addEventListener('touchstart', jumpAction, {passive:false});
+    }
+
+    setInterval(()=>{
+      const lat = (22.1 + Math.random()*0.1).toFixed(6);
+      const lon = (113.5 + Math.random()*0.1).toFixed(6);
+      elCoord.textContent = `Macau Peninsula ${lat}°N ${lon}°E`;
+    }, 800);
+
+    function createBuilding(x){
+      const w=20+Math.random()*30;
+      const h = OBSTACLE_HEIGHT_MIN + Math.random()*(OBSTACLE_HEIGHT_MAX - OBSTACLE_HEIGHT_MIN);
+      const rows=Math.max(1, Math.floor(h/6)), cols=Math.max(1, Math.floor(w/6));
+      const wins=[];
+      for(let r=0;r<rows;r++) for(let c2=0;c2<cols;c2++) if(Math.random()<0.2) wins.push({r,c:c2});
+      return {type:0, x, w, h, wins, rows, cols, passed:false};
+    }
+    function createLamp(x){ return {type:1, x, w:2, h:15+Math.random()*10, passed:false}; }
+
+    let lastT=performance.now(), speed=BASE_SPEED, spawnTimer=0, nextSpawn=SPAWN_MIN;
+
+    function loop(now){
+      const dt = (now - lastT) / 1000;
+      lastT = now;
+      if (dt > 0.1) return requestAnimationFrame(loop);
+
+      if(!auto && now-lastMan>6500) setAuto(true);
+
+      if(auto) {
+        const o=obst.find(o=>o.x>player.x-o.w);
+        if(o && o.x-player.x<110 && player.gr) { player.vy=JUMP_VELOCITY; player.gr=false; }
+      }
+
+      if(!player.gr){
+        player.y+=player.vy*dt;
+        player.vy+=G*dt;
+        if(player.y<=0){ player.y=0; player.vy=0; player.gr=true; }
+      }
+
+      if(Math.random()<0.4) {
+        const drops = 2 + (Math.random()*3|0);
+        for(let k=0; k<drops; k++) rain.push({x:Math.random()*c.width, y:-10, v:300 + Math.random()*100});
+      }
+      rain.forEach(r=>{ r.y+=r.v*dt; r.x-=r.v*0.2*dt; });
+      rain=rain.filter(r=>r.y<c.height+10);
+
+      spawnTimer += dt;
+      if(spawnTimer >= nextSpawn) {
+        spawnTimer = 0;
+        nextSpawn = SPAWN_MIN + Math.random()*(SPAWN_MAX - SPAWN_MIN);
+        if(Math.random()<0.4) obst.push(createLamp(c.width));
+        else obst.push(createBuilding(c.width));
+      }
+
+      obst.forEach(o=>{
+        o.x-=speed*dt;
+        if(!o.passed && o.x+o.w<player.x){
+          o.passed=true;
+          passed++;
+          elScore.textContent=`05:F9:66:1A//0x${passed.toString(16).toUpperCase().padStart(7,'0')}`;
+        }
+      });
+      obst=obst.filter(o=>o.x>-50);
+
+      const mh = MAX_H();
+      if(playerVis){
+        const px=player.x, py=mh-player.y;
+        if(obst.some(o=> px<o.x+o.w && px+8>o.x && py-8<mh && py>mh-o.h)){
+          obst=[]; setAuto(true);
+        }
+      }
+
+      ctx.fillStyle='#000';
+      ctx.fillRect(0,0,c.width,c.height);
+
+      ctx.strokeStyle='#ff00e8';
+      ctx.beginPath();
+      rain.forEach(r=>{ ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-2,r.y+5); });
+      ctx.stroke();
+
+      obst.forEach(o=>{
+        if(o.type===0){
+          ctx.fillStyle='#2e002a';
+          ctx.fillRect(o.x, mh-o.h, o.w, o.h);
+          ctx.strokeStyle='#ff00e8';
+          ctx.strokeRect(o.x, mh-o.h, o.w, o.h);
+          ctx.fillStyle='#ff00e8';
+          const ww=o.w/o.cols, wh=o.h/o.rows;
+          o.wins.forEach(w=>{ ctx.fillRect(o.x+w.c*ww+2, mh-o.h+w.r*wh+2, ww-3, wh-3); });
+        } else {
+          const lx = o.x, ly = mh - o.h;
+          ctx.fillStyle='#ff00e8';
+          ctx.fillRect(lx, ly, o.w, o.h);
+          ctx.fillRect(lx-2, ly, o.w+4, 2);
+          ctx.fillStyle='rgba(255, 0, 232, 0.6)';
+          ctx.fillRect(lx-1, ly+2, o.w+2, 3);
+        }
+      });
+
+      ctx.strokeStyle='#ff00e8';
+      ctx.beginPath();
+      ctx.moveTo(0,mh);
+      ctx.lineTo(c.width,mh);
+      ctx.stroke();
+
+      if(playerVis){
+        ctx.save();
+        ctx.shadowColor = '#ff00e8';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = '#ff00e8';
+        ctx.font = 'bold 20px "Courier New", monospace';
+        ctx.fillText('$', player.x, mh-player.y-2);
+        ctx.restore();
+      }
+
+      requestAnimationFrame(loop);
+    }
+    loop(lastT);
+  })();
+</script>
+</body>
+</html>
