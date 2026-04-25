@@ -30,7 +30,7 @@
       --ja: "Noto Serif JP", serif;
       --ivory: #f4f2f0;
       --ink: #000;
-      --max-bound: 1440px; /* 確立絕對真理的邊界極限 */
+      --max-bound: 1440px; 
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,13 +48,12 @@
       background: #000;
       color: var(--ink);
       -webkit-text-size-adjust: 100%;
-      /* 空間補償：取代毫無語義的 header-spacer */
       padding-top: 60px; 
     }
 
+    /* 強制 CJK 字體權重 */
     [lang="ja"], .ja { font-family: var(--ja) !important; font-weight: 200 !important; }
 
-    /* 鎖死捲動：僅在 Lightbox 開啟時觸發 */
     body.scroll-lock {
       overflow: hidden;
       touch-action: none;
@@ -70,7 +69,6 @@
     }
 
     .header-title { margin-right: auto; font-size: 18px; white-space: nowrap; overflow: hidden; }
-    .header-title.ja { font-family: var(--ja); }
 
     .nav-links { display: flex; align-items: center; margin-left: auto; gap: 40px; }
     .header-bar a {
@@ -110,10 +108,9 @@
     .filter-btn:hover { background: var(--ivory); color: #000; }
     .filter-btn.active { border-color: #e74c3c; background: #000; color: var(--ivory); }
 
-    /* ===== 藝廊 (Gallery Container) ===== */
+    /* ===== 藝廊與遮罩動畫 ===== */
     .gallery-wrapper {
       max-width: var(--max-bound); margin: 0 auto; 
-      /* 確保與 Filter Bar 維持純粹的空間間隔 */
       padding: 20px 40px; 
     }
 
@@ -135,6 +132,36 @@
     }
 
     .ph img.loaded { opacity: 1; transform: translateY(0); }
+
+    /* --- Recalibrating Masking --- */
+    .ph-mask {
+      position: absolute; inset: 0; background: #000; color: var(--ivory);
+      display: flex; align-items: center; justify-content: center; font-family: var(--mono);
+      user-select: none; pointer-events: none; opacity: 1; transition: opacity 0.25s ease;
+      z-index: 2;
+    }
+    .ph-mask::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0) 60%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px);
+      mix-blend-mode: overlay; opacity: .25;
+      animation: scan 3.2s linear infinite;
+    }
+    @keyframes scan { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+    .ph-mask.fade { opacity: 0; }
+    .ph-txt { position: relative; text-align: center; white-space: pre; font-size: 11px; line-height: 1.25; opacity: .95; }
+    .ph-txt .blink { opacity: .45; animation: blinkFast 1.8s ease-in-out infinite; }
+    @keyframes blinkFast { 0%, 100% { opacity: .35; } 50% { opacity: .95; } }
+
+    /* --- 偽元素座標發光點 --- */
+    .ph[data-has-mask="true"]::before {
+      content: ""; position: absolute; pointer-events: none; width: 6px; height: 6px; border-radius: 999px; background: #9df3bf;
+      transform: translate(calc(var(--dot-x, 50%) - 50%), calc(var(--dot-y, 50%) - 50%)); 
+      box-shadow: 0 0 10px rgba(157,243,191,.65); opacity: .85; z-index: 3; transition: opacity 0.25s ease;
+    }
+    
+    .ph.is-loaded::before { opacity: 0; }
 
     /* ===== 分頁控制 ===== */
     .load-more-wrap { display: flex; justify-content: center; padding: 40px 0; }
@@ -159,7 +186,7 @@
 
     /* ===== 手機版 (Mobile Portrait) ===== */
     @media (max-width: 767px) {
-      body { padding-top: 96px; } /* 36px Rotator + 60px Header */
+      body { padding-top: 96px; }
       
       .mobile-rotator { display: flex; }
       .header-bar { top: 36px; padding: 0; }
@@ -169,6 +196,7 @@
         grid-template-columns: 2.2ch 1fr 1fr 1fr; align-items: center; justify-items: center;
       }
       .filter-bar { top: 96px; padding: 10px 16px; }
+      
       .gallery-wrapper { padding: 2px 10px 10px; }
       .ph { flex: 0 0 calc(50% - 5px); }
     }
@@ -583,7 +611,14 @@
 
     const BATCH_SIZE = 24;
     let currentOffset = 0;
-    let currentFilter = ''; // 空字串代表沒有篩選 (顯示全部)
+    let currentFilter = ''; 
+
+    // 生成澳門限定的地理座標
+    function getMacauCoords() {
+      const lat = (22.10 + Math.random() * 0.13).toFixed(6);
+      const lon = (113.49 + Math.random() * 0.12).toFixed(6);
+      return { lat, lon };
+    }
 
     function getSeededOrder() {
       const today = new Date().toISOString().slice(0, 10);
@@ -598,10 +633,11 @@
     const shuffledOrder = getSeededOrder();
     const galleryEl = document.getElementById('mainGallery');
     const loadMoreBtn = document.getElementById('loadMore');
+    const isNarrow = window.innerWidth <= 480;
 
     function renderBatch() {
       const filtered = shuffledOrder.filter(idx => {
-        if (!currentFilter) return true; // 無篩選時顯示全部
+        if (!currentFilter) return true;
         return IMAGE_DATA[idx].cat.includes(currentFilter);
       });
 
@@ -611,6 +647,20 @@
         const item = IMAGE_DATA[idx];
         const container = document.createElement('div');
         container.className = 'ph';
+        container.dataset.hasMask = 'true';
+        
+        // 鑄造遮罩所需的神經網路（DOM）
+        const { lat, lon } = getMacauCoords();
+        const tail = isNarrow ? 'recalibrating' : 'recalibrating...';
+        const labelText = `${lat}\n${lon}\n${tail}`;
+        
+        container.style.setProperty('--dot-x', Math.round(Math.random() * 64 + 18) + '%');
+        container.style.setProperty('--dot-y', Math.round(Math.random() * 64 + 18) + '%');
+        container.dataset.phLabel = labelText;
+
+        const mask = document.createElement('div');
+        mask.className = 'ph-mask';
+        mask.innerHTML = `<div class="ph-txt">${lat}\n${lon}\n<span class="blink">${tail}</span></div>`;
         
         const img = new Image();
         img.src = item.src;
@@ -618,10 +668,30 @@
         img.loading = (currentOffset + i < 8) ? 'eager' : 'lazy';
         if (currentOffset + i < 8) img.setAttribute('fetchpriority', 'high');
         
-        img.onload = () => img.classList.add('loaded');
+        // 絕對湮滅法則：加載完成後移除遮罩節點
+        const cleanUp = () => {
+          img.classList.add('loaded');
+          container.classList.add('is-loaded');
+          mask.classList.add('fade');
+          setTimeout(() => mask.remove(), 250); 
+        };
+
+        if (img.complete && img.naturalWidth > 0) {
+          cleanUp();
+        } else {
+          img.onload = cleanUp;
+          img.onerror = () => {
+            // 發生 404 死圖時，觸發物理性隔離，將瀏覽器預設破圖隱藏
+            img.style.display = 'none';
+            // 遮罩永久保留，並解除 onclick，防止開啟死連結 Lightbox
+            container.onclick = null;
+          };
+        }
+        
         img.onclick = () => openLightbox(img.src);
         
         container.appendChild(img);
+        container.appendChild(mask);
         galleryEl.appendChild(container);
       });
 
@@ -629,19 +699,15 @@
       loadMoreBtn.style.display = (currentOffset >= filtered.length) ? 'none' : 'inline-flex';
     }
 
-    // 嚴格還原：切換式篩選邏輯 (Toggle Logic)
+    // 篩選邏輯
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.onclick = () => {
         const wasActive = btn.classList.contains('active');
-        
-        // 移除所有按鈕的 active 狀態
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         
         if (wasActive) {
-          // 如果點擊的是原本已啟用的按鈕，則取消篩選
           currentFilter = '';
         } else {
-          // 否則啟用該篩選
           btn.classList.add('active');
           currentFilter = btn.dataset.filter;
         }
@@ -667,22 +733,53 @@
       document.body.classList.remove('scroll-lock');
     };
 
-    // Header 文字旋轉
+    // Header 文字旋轉與 CJK 字體還原
     (function rotateHeader() {
-      const phrases = ["of time, souls and cities.", "know thyself.", "静かな光。", "10% off for rescued animals."];
+      const phrases = [
+        "of time, souls and cities.","know thyself.","静かな光。","10% off for rescued animals.","yyj > yvr",
+        "get a quote today for free！","絢爛如電 虛幻如霧","wake the fuck up, samurai—","father anderson...",
+        "also try max noodle house","晚星墜落處，自成橋梁。","elegance is about breaking the rules.","hesitation is defeat","賺菲林錢",
+        "假作真時真亦假，無為有處有還無。","死生契闊，與子成說。","ネットは広大だわ。","恥の多い生涯を送ってきました。",
+        "demain, dès l’aube…","je pense, donc je suis.","il faut imaginer sisyphe heureux.","stay gold, ponyboy.",
+        "what’s in a name? that which we call a rose…","i drink your milkshake!","the horror! the horror!","le temps détruit tout。",
+        "翩翩不富，皆失實也。","雲上於天，需；君子以飲食宴樂。","天下有山，遯。","元者，善之長也；亨者，嘉之會也。",
+        "男性は本質を愛し、女性は習慣を愛する。","い～や　い～や　い～や","sksksk","come on and join our convoy.",
+        "i am in flames!","cbt is a lie, try carl jung.","be your own reason to smile.","其為質則金玉不足喻其貴。","写真は記憶だ。","影は真實を語る。",
+        "빛은 거짓말하지 않아.","light reveals. shadow defines.","some people are worth melting for.","ひとりって切ないくらい自由。",
+        "the name of the rose is all that remains.","οἷ’ ἥβης ἄνθεα...*","φαίνεταί μοι","(づ｡◕ ‿‿ ◕｡)づ","(⁄ ⁄•⁄ω⁄•⁄ ⁄)♡",
+        "shanghai fog, yes.","悲喜千般同幻夢。","欲望屬於他者。","Desire is the desire of the Other.",
+        "世界無人始，亦無人終。","The world began and ends without man.","民為貴，君為輕。","Lucky Vicky～",
+        "Beauty will save the world.","深宮似海，人人自危。","一笑傾城，再笑傾國。","Better die with fragrance.",
+        "得寵易，守寵難。","Family comes first.","活下去","Friends don’t lie.","The crown must endure.",
+        "Power is better than sex.","Love is stronger than reason.","孤獨是命運。","Poetry belongs to people.",
+        "One word of truth.","El Psy Congroo","Just keep swimming.","We’re all undercover.",
+        "War never changes.","YOU-ARE-NOT-PREPARED.","Nothing is true？","I am a real boy.",
+        "Marriage is war.","A Royale with cheese.","Don’t call me Mr. Pink."
+      ];
+      
+      const isCJK = (s) => /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
       let i = 0;
       const el = document.getElementById('headerTitle');
       const mel = document.getElementById('mobileRotator');
+
       setInterval(() => {
         if (document.hidden) return;
         i = (i + 1) % phrases.length;
+        const txt = phrases[i];
+        const isJap = isCJK(txt);
+
         [el, mel].forEach(t => {
           if(!t) return;
           t.style.transition = 'opacity 0.3s, transform 0.3s';
           t.style.opacity = '0';
           t.style.transform = 'translateY(-10px)';
+          
           setTimeout(() => {
-            t.textContent = phrases[i];
+            // 還原排版正義：動態注入 CJK 樣式
+            t.classList.toggle("ja", isJap);
+            t.setAttribute('lang', isJap ? 'ja' : 'en');
+            t.textContent = txt;
+            
             t.style.transform = 'translateY(10px)';
             setTimeout(() => {
               t.style.opacity = '1';
@@ -693,7 +790,6 @@
       }, 4000);
     })();
 
-    // 啟動首屏
     renderBatch();
   </script>
 </body>
