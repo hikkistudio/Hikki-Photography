@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>hikki photography</title>
 
-  <!-- Canonical / Robots -->
   <link rel="canonical" href="https://hikki.ca/">
   <meta name="robots" content="index,follow,max-image-preview:large"/>
 
-  <!-- Meta -->
   <meta name="description" content="hikki photography & philosophy — filmic portraits, weddings, and cities. Based in Vancouver, Hong Kong, and Macau."/>
   <meta name="keywords" content="hikki, hikki photography, hikki photo, portrait, wedding, city, vancouver, hong kong, macau, film look"/>
   <meta name="theme-color" content="#000000"/>
   <meta name="author" content="hikki photography & philosophy"/>
   <meta name="language" content="zh-Hant"/>
 
-  <!-- ===================== SEO Add-ons ===================== -->
   <meta name="application-name" content="hikki photography | hikki photo"/>
   <meta name="apple-mobile-web-app-title" content="hikki photography"/>
   <meta name="googlebot" content="index,follow,max-image-preview:large"/>
@@ -26,7 +23,6 @@
   <meta property="og:locale:alternate" content="zh_TW"/>
   <meta property="og:locale:alternate" content="ja_JP"/>
 
-  <!-- Open Graph -->
   <meta property="og:title" content="hikki photography"/>
   <meta property="og:description" content="portraits, weddings, and cities — emotions over perfection."/>
   <meta property="og:type" content="website"/>
@@ -38,247 +34,227 @@
   <meta property="og:image:height" content="512"/>
   <meta property="og:locale" content="zh_HK"/>
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="hikki photography"/>
   <meta name="twitter:description" content="portraits, weddings, and cities — emotions over perfection."/>
   <meta name="twitter:image" content="https://hikki.ca/favicon.png"/>
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.png" type="image/png"/>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&display=swap" rel="stylesheet"/>
 
-  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
-    :root{
+    :root {
       --font-sans: Helvetica, Arial, system-ui, -apple-system, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
       --font-ja: "Noto Serif JP", serif;
       --ivory: #f4f2f0;
       --ink: #000;
       --bg: #000;
+      /* 確立絕對真理的邊界極限 */
+      --max-bound: 1440px; 
     }
-    *{ margin:0; padding:0; box-sizing:border-box }
-    html, body{
-      height:100%;
-      overflow-x:hidden !important;
-      background:var(--bg);
-      color:var(--ink);
-      touch-action:pan-y;
-      overscroll-behavior-x:contain;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      touch-action: pan-y;
+      overscroll-behavior-x: contain;
+      /* 拔除 !important 的暴政，回歸結構層級 */
+      overflow-x: hidden; 
     }
-    body{ font-family:var(--font-sans); position:relative; min-height:200vh; }
+    body { font-family: var(--font-sans); position: relative; min-height: 200vh; }
 
-    [lang="ja"] { font-family: var(--font-ja); font-weight:200; }
+    [lang="ja"] { font-family: var(--font-ja); font-weight: 200; }
     [lang="en"] { font-family: var(--font-mono); }
 
-    /* 額外：強制使用日文字體（給 JS 插入的段落包一層用） */
-    .use-ja{ font-family: var(--font-ja) !important; font-weight:200 !important; }
+    /* 利用選擇器權重取代 !important */
+    body .use-ja { font-family: var(--font-ja); font-weight: 200; }
 
-    /* ==== 統一：gallery 的柔和閃爍 ==== */
-    .blink-block{ display:inline-block; animation:blink3 3s infinite; }
-    @keyframes blink3 { 0%,50%,100%{opacity:1} 25%,75%{opacity:0} }
+    .blink-block { display: inline-block; animation: blink3 3s infinite; }
+    @keyframes blink3 { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
 
-    .sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     /* ===== Header ===== */
-    .header-bar{
-      position:fixed; top:0; left:0; width:100%; height:60px;
-      background:var(--ivory); z-index:9999; border-bottom:1px solid var(--ivory);
-      display:flex; align-items:center; padding:0 40px;
-      will-change:transform,opacity; transform:translateZ(0);
+    .header-bar {
+      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+      background: var(--ivory); z-index: 9999; border-bottom: 1px solid var(--ivory);
+      display: flex; align-items: center; padding: 0 40px;
+      will-change: transform, opacity; transform: translateZ(0);
     }
-    .header-title{ margin-right:auto; font-family:var(--font-mono); font-size:18px; color:var(--ink); white-space:nowrap; overflow:hidden; }
-    .header-title.ja{ font-family: var(--font-ja); font-weight:200; }
-    .nav-links{ display:flex; align-items:center; margin-left:auto; gap:40px; }
-    .header-bar a{
-      font-family: var(--font-mono); font-size:18px; color:var(--ink); text-decoration:none;
-      display:inline-flex; align-items:center; justify-content:center;
-      min-width:24px; height:28px; line-height:1; transition:color .25s ease;
+    .header-title { margin-right: auto; font-family: var(--font-mono); font-size: 18px; color: var(--ink); white-space: nowrap; overflow: hidden; }
+    .header-title.ja { font-family: var(--font-ja); font-weight: 200; }
+    .nav-links { display: flex; align-items: center; margin-left: auto; gap: 40px; }
+    .header-bar a {
+      font-family: var(--font-mono); font-size: 18px; color: var(--ink); text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 24px; height: 28px; line-height: 1; transition: color .25s ease;
     }
-    .header-bar a:hover{ color:#f1c232 }
-    .header-bar a.active{ color:#e74c3c }
-    .nav-links a.iching .label{ display:none; }
-    .nav-links a.iching .blink-block{ font-size:18px; }
+    .header-bar a:hover { color: #f1c232; }
+    .header-bar a.active { color: #e74c3c; }
+    .nav-links a.iching .label { display: none; }
+    .nav-links a.iching .blink-block { font-size: 18px; }
 
-    /* 手機上方 rotator（只在直向手機顯示） */
-    .mobile-rotator{
-      position:fixed; top:0; left:0; width:100%; height:36px;
-      background:var(--ivory); color:var(--ink);
-      display:none; align-items:center; justify-content:center;
-      padding:0 12px; z-index:10001; font-size:14px; line-height:1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--font-mono);
-      will-change:transform,opacity; transform:translateZ(0);
+    .mobile-rotator {
+      position: fixed; top: 0; left: 0; width: 100%; height: 36px;
+      background: var(--ivory); color: var(--ink);
+      display: none; align-items: center; justify-content: center;
+      padding: 0 12px; z-index: 10001; font-size: 14px; line-height: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono);
+      will-change: transform, opacity; transform: translateZ(0);
     }
-    .mobile-rotator.ja{ font-family:var(--font-ja); font-weight:200; }
+    .mobile-rotator.ja { font-family: var(--font-ja); font-weight: 200; }
 
-    .bg-video{
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      background: #000;
-      pointer-events: none;
+    .bg-video {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0; background: #000; pointer-events: none;
     }
 
-    /* 第一階段 */
-    .content{ position:absolute; top:80px; left:60px; z-index:1; right:60px; }
-    h1, h2 { font-family: var(--font-sans) !important; }
-    h1{ position:relative; left:-0.14ch; font-size:250px; line-height:200px; font-weight:bold; letter-spacing:-0.02em; }
+    /* ===== 第一階段（約束邊界與流體排版） ===== */
+    .content {
+      position: absolute; top: 80px; left: 0; right: 0; z-index: 1;
+      max-width: var(--max-bound); margin: 0 auto; padding: 0 60px;
+    }
+    h1, h2 { font-family: var(--font-sans); }
+    /* 引入 clamp 進行線性插值約束，抵禦無限拉伸 */
+    h1 { position: relative; left: -0.14ch; font-size: clamp(80px, 15vw, 250px); line-height: 0.8; font-weight: bold; letter-spacing: -0.02em; }
 
-    .grid-container{
-      display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto;
-      grid-template-areas:"subtitle subtitle" "left chinese";
-      column-gap:60px; row-gap:60px; margin-top:8px;
+    .grid-container {
+      display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
+      grid-template-areas: "subtitle subtitle" "left chinese";
+      column-gap: clamp(20px, 4vw, 60px); row-gap: clamp(20px, 4vw, 60px); margin-top: 8px;
     }
-    h2{ grid-area:subtitle; font-size:60px; line-height:20px; text-decoration:underline; letter-spacing:-0.01em; }
+    h2 { grid-area: subtitle; font-size: clamp(32px, 5vw, 60px); line-height: 1.2; text-decoration: underline; letter-spacing: -0.01em; }
 
-    .left{ grid-area:left }
-    .left h3{
-      position:relative; left:-0.1ch; font-family: var(--font-mono);
-      font-weight:100; font-size:30px; line-height:10px; white-space:nowrap; letter-spacing:-0.01em; margin-top:-20px;
+    .left { grid-area: left; }
+    .left h3 {
+      position: relative; left: -0.1ch; font-family: var(--font-mono);
+      font-weight: 100; font-size: 30px; line-height: 10px; white-space: nowrap; letter-spacing: -0.01em; margin-top: -20px;
     }
-    .locations{
-      margin-top:22px; list-style:none; font-family: var(--font-mono);
-      font-size:20px; line-height:18px; letter-spacing:-0.005em;
+    .locations {
+      margin-top: 22px; list-style: none; font-family: var(--font-mono);
+      font-size: 20px; line-height: 18px; letter-spacing: -0.005em;
     }
-    .locations li + li{ margin-top:4px }
+    .locations li + li { margin-top: 4px; }
 
-    /* 左下角大方塊：與 blink-block 同步 */
-    .square{
-      position:fixed; bottom:0; left:0; width:70px; height:70px; background:#000;
-      animation:blink3 3s infinite;
-      transform-origin:bottom left; transform:scale(1);
-      z-index:2; will-change:transform,opacity; transform:translateZ(0) scale(1);
+    .square {
+      position: fixed; bottom: 0; left: 0; width: 70px; height: 70px; background: #000;
+      animation: blink3 3s infinite; transform-origin: bottom left; transform: scale(1);
+      z-index: 2; will-change: transform, opacity; transform: translateZ(0) scale(1);
     }
 
-    .chinese{
-      grid-area:chinese; font-family: var(--font-ja); font-weight:200;
-      font-size:16px; line-height:24px; max-width:400px; letter-spacing:0;
+    .chinese {
+      grid-area: chinese; font-family: var(--font-ja); font-weight: 200;
+      font-size: 16px; line-height: 24px; max-width: 400px; letter-spacing: 0;
     }
-    .chinese .english{ display:block; margin-top:1ch; font-family: var(--font-mono); letter-spacing:-0.005em; }
+    .chinese .english { display: block; margin-top: 1ch; font-family: var(--font-mono); letter-spacing: -0.005em; }
 
-    .overlay{ display:none; position:fixed; inset:0; background:#000; z-index:3; }
+    .overlay { display: none; position: fixed; inset: 0; background: #000; z-index: 3; }
 
-    /* 第三階段（電腦：完全回到原版） */
-    .post{
-      position:fixed; top:80px; left:60px; width:calc(100% - 120px); height:calc(100vh - 80px);
-      display:grid; grid-template-columns:2fr 3fr; grid-template-rows:80px 1fr auto;
-      grid-template-areas:"hl right" "txt right" "sig right";
-      column-gap:60px; row-gap:24px; opacity:0; z-index:4;
-      /* 進場更快 */
-      transition:opacity .18s ease-out .08s; pointer-events:none;
+    /* ===== 第三階段（邏輯網格天花板） ===== */
+    .post {
+      position: fixed; top: 80px; left: 0; right: 0; 
+      max-width: var(--max-bound); margin: 0 auto; padding: 0 60px;
+      width: 100%; height: calc(100vh - 80px);
+      display: grid; 
+      /* 以 minmax 鎖死文字區塊擴張的極限，維護行長（Measure）的閱讀性 */
+      grid-template-columns: minmax(auto, 480px) 1fr; 
+      grid-template-rows: 80px 1fr auto;
+      grid-template-areas: "hl right" "txt right" "sig right";
+      column-gap: 60px; row-gap: 24px; opacity: 0; z-index: 4;
+      transition: opacity .18s ease-out .08s; pointer-events: none;
     }
-    .post > *{
-      opacity:0;
-      transition:opacity .48s ease-out .1s, transform .48s ease-out .1s;
+    .post > * {
+      opacity: 0; transition: opacity .48s ease-out .1s, transform .48s ease-out .1s;
     }
-    .post .highlight, .post .text, .post .signature-block{ transform:translateX(-100%) }
-    .post .post-right { transform:translateX(100%) }
-    .post .highlight{ grid-area:hl; }
-    .post .text{
-      grid-area:txt; font-family: var(--font-mono); font-size:14px; line-height:14px;
-      color:var(--ivory); overflow-y:auto; align-self:start; letter-spacing:-0.02em;
+    .post .highlight, .post .text, .post .signature-block { transform: translateX(-100%); }
+    .post .post-right { transform: translateX(100%); }
+    .post .highlight { grid-area: hl; max-height: 100%; }
+    .post .text {
+      grid-area: txt; font-family: var(--font-mono); font-size: 14px; line-height: 14px;
+      color: var(--ivory); overflow-y: auto; align-self: start; letter-spacing: -0.02em;
     }
-    .post .signature-block{ grid-area:sig; display:flex; flex-direction:column; justify-content:flex-end; }
-    .post-right{ grid-area:right; overflow:hidden; position:relative; background:transparent; }
-    .team-container{ display:flex; width:400%; height:100%; transition:transform .8s ease; }
-    .team{ flex:0 0 25%; display:flex; height:100%; }
+    .post .signature-block { grid-area: sig; display: flex; flex-direction: column; justify-content: flex-end; }
+    .post-right { grid-area: right; overflow: hidden; position: relative; background: transparent; }
+    .team-container { display: flex; width: 400%; height: 100%; transition: transform .8s ease; }
+    .team { flex: 0 0 25%; display: flex; height: 100%; }
 
-    /* —— 修正：desktop team slide 文字一律用 Courier New —— */
-    .team-text{
+    .team-text {
       font-family: var(--font-mono);
-      flex:0 0 auto; display:flex; align-items:flex-end; justify-content:flex-end;
-      padding:0 20px 20px; background:rgba(0,0,0,0.5);
+      flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: 0 20px 20px; background: rgba(0,0,0,0.5);
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
-    .team-info{
-      font-family: var(--font-mono);
-      color:var(--ivory); font-size:16px; line-height:18px; text-align:right;
-      letter-spacing:-0.005em;
+    .team-info {
+      font-family: var(--font-mono); color: var(--ivory); font-size: 16px; line-height: 18px; text-align: right; letter-spacing: -0.005em;
     }
-    .team-info .name{
-      font-family: var(--font-mono);
-      font-size:50px; line-height:24px; white-space:nowrap;
-      letter-spacing:-0.01em;
+    .team-info .name {
+      font-family: var(--font-mono); font-size: 50px; line-height: 24px; white-space: nowrap; letter-spacing: -0.01em;
     }
-    .team .photo{ flex:2; background-size:cover; background-position:center; }
+    .team .photo { flex: 2; background-size: cover; background-position: center; }
 
-    .post.enter{ opacity:1; pointer-events:auto; }
-    .post.enter > .highlight, .post.enter > .text, .post.enter > .signature-block, .post.enter > .post-right{ opacity:1; transform:translateX(0); }
+    .post.enter { opacity: 1; pointer-events: auto; }
+    .post.enter > .highlight, .post.enter > .text, .post.enter > .signature-block, .post.enter > .post-right { opacity: 1; transform: translateX(0); }
 
-    /* —— 手機直向 —— */
-    .team-grid{ display:none; }
-    @media (max-width: 767px) and (orientation: portrait){
-      .mobile-rotator{ display:flex; }
-      .header-bar{ top:36px; padding:0; }
-      .header-title{ display:none; }
-      .nav-links{
-        width: calc(100% - 4ch); margin:0 auto; display:grid;
-        grid-template-columns: 2.2ch 1fr 1fr 1fr; align-items:center; justify-items:center; gap:0;
+    /* ===== 手機直向 ===== */
+    .team-grid { display: none; }
+    @media (max-width: 767px) and (orientation: portrait) {
+      .mobile-rotator { display: flex; }
+      .header-bar { top: 36px; padding: 0; }
+      .header-title { display: none; }
+      .nav-links {
+        width: calc(100% - 4ch); margin: 0 auto; display: grid;
+        grid-template-columns: 2.2ch 1fr 1fr 1fr; align-items: center; justify-items: center; gap: 0;
       }
-      .header-bar a{ margin:0; min-width:0; height:36px; line-height:36px; }
-      .nav-links a.iching{ justify-self:start; }
+      .header-bar a { margin: 0; min-width: 0; height: 36px; line-height: 36px; }
+      .nav-links a.iching { justify-self: start; }
 
-      .content{ position:relative; top:auto; left:auto; right:auto; padding:116px 20px 20px; }
-      .grid-container{ display:block; margin-top:2px !important; }
-      .content h1{ font-size:65px; line-height:1; margin-bottom:6px !important; }
-      .grid-container h2{ font-size:22px; line-height:1.1; margin:0 0 10px !important; }
-      .left h3{ font-size:20px; line-height:1.1; margin:14px 0 12px !important; }
-      .locations{ margin-top:8px !important; }
-      .locations li{ font-size:10px; line-height:1; margin-bottom:4px; }
-      .content .chinese, .content .chinese .english{ font-family: var(--font-mono), var(--font-ja); font-size:10px; line-height:1.6; }
-      .square{ width:56px; height:56px; }
-      .post{
-        position:fixed; top:36px; left:0; right:0; bottom:0;
-        width:auto; height:auto; padding:76px 20px 20px;
-        display:grid; grid-template-columns:1fr; grid-template-rows:auto auto 1fr;
+      .content { position: relative; top: auto; padding: 116px 20px 20px; }
+      .grid-container { display: block; margin-top: 2px; }
+      h1 { font-size: clamp(50px, 18vw, 65px); line-height: 1; margin-bottom: 6px; }
+      h2 { font-size: 22px; line-height: 1.1; margin: 0 0 10px; }
+      .left h3 { font-size: 20px; line-height: 1.1; margin: 14px 0 12px; }
+      .locations { margin-top: 8px; }
+      .locations li { font-size: 10px; line-height: 1; margin-bottom: 4px; }
+      .content .chinese, .content .chinese .english { font-family: var(--font-mono), var(--font-ja); font-size: 10px; line-height: 1.6; }
+      .square { width: 56px; height: 56px; }
+      
+      .post {
+        position: fixed; top: 36px; left: 0; right: 0; bottom: 0;
+        width: auto; height: auto; padding: 76px 20px 20px;
+        display: grid; grid-template-columns: 1fr; grid-template-rows: auto auto 1fr;
         grid-template-areas: "txt" "sig" "right";
-        row-gap:16px; column-gap:0;
+        row-gap: 16px; column-gap: 0;
       }
-      .post .highlight{ display:none; }
-      .post .text{ grid-area:txt; font-size:12px; line-height:1.5; max-height:38vh; overflow:auto; }
-      .post .signature-block{ grid-area:sig; min-height:0; }
-      .post-right{ grid-area:right; }
-      .team-container{ display:none; }
-      .team-grid{
-        display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:16px; margin-top:8px;
+      .post .highlight { display: none; }
+      .post .text { grid-area: txt; font-size: 12px; line-height: 1.5; max-height: 38vh; overflow: auto; max-width: none; }
+      .post .signature-block { grid-area: sig; min-height: 0; }
+      .post-right { grid-area: right; }
+      .team-container { display: none; }
+      .team-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 16px; margin-top: 8px; }
+      .grid-card {
+        position: relative; aspect-ratio: 3/4; border-radius: 0px; overflow: hidden; background: #222; cursor: pointer; isolation: isolate;
       }
-      .grid-card{
-        position:relative; aspect-ratio:3/4; border-radius:0px; overflow:hidden; background:#222; cursor:pointer;
-        isolation:isolate;
+      .grid-card .ph { position: absolute; inset: 0; background-size: cover; background-position: center 38%; transition: opacity .2s ease; }
+      .grid-card .info {
+        position: absolute; inset: 0; background: #fff; color: #000; padding: 16px;
+        font-family: var(--font-mono); font-size: 12px; line-height: 1.4; opacity: 0; transition: opacity .2s ease;
       }
-      /* 手機：維持 3:4，但把構圖往上拉一點 */
-      .grid-card .ph{
-        position:absolute; inset:0;
-        background-size:cover;
-        background-position:center 38%;
-        transition:opacity .2s ease;
-      }
-      .grid-card .info{
-        position:absolute; inset:0; background:#fff; color:#000; padding:16px;
-        font-family:var(--font-mono); font-size:12px; line-height:1.4; opacity:0; transition:opacity .2s ease;
-      }
-      .grid-card.flipped .ph{ opacity:0; }
-      .grid-card.flipped .info{ opacity:1; }
+      .grid-card.flipped .ph { opacity: 0; }
+      .grid-card.flipped .info { opacity: 1; }
     }
   </style>
 
-  <!-- JSON-LD: WebSite -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"hikki photography","url":"https://hikki.ca/","potentialAction":{"@type":"SearchAction","target":"https://hikki.ca/?s={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
-
-  <!-- JSON-LD: Organization / Brand / LocalBusiness / Person / Nav -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"Brand","@id":"https://hikki.ca/#brand","name":"hikki photography & philosophy","alternateName":["hikki","hikki photography","hikki photo"],"url":"https://hikki.ca/","logo":"https://hikki.ca/favicon.png","sameAs":["https://www.instagram.com/hikki_with_her_camera"]},
@@ -292,10 +268,8 @@
   </script>
 </head>
 <body>
-  <!-- 手機版上方輪播列（僅直向手機顯示） -->
   <div class="mobile-rotator en" id="mobileRotator" aria-live="polite" aria-hidden="true">of time, souls and cities.</div>
 
-  <!-- Header -->
   <div class="header-bar" role="navigation" aria-label="primary">
     <div class="header-title en" id="headerTitle" aria-live="polite">of time, souls and cities.</div>
     <nav class="nav-links" aria-label="site">
@@ -309,12 +283,10 @@
     </nav>
   </div>
 
-  <!-- 背景影片（Hero） -->
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="hero_poster.jpg">
+  <video class="bg-video" autoplay muted loop playsinline preload="metadata" poster="hero_poster.jpg">
     <source src="hero.mp4" type="video/mp4">
   </video>
 
-  <!-- 第1階段 -->
   <div class="content">
     <h1>EMOTIONS,</h1>
     <div class="grid-container">
@@ -331,28 +303,20 @@
         <div class="square" id="square" aria-hidden="true"></div>
       </div>
       <div class="chinese" lang="ja">
-        ><br>
-        ><br>
+        ><br>><br>
         光在她睫毛下方折成一道道細影，微微顫動。她輕聲如耳語。穿透空氣的疲倦，像白襯衫上的海水乾了又濕。<br>
         <span class="english" lang="en">
-          Light breaks beneath her lashes—<br>
-          thin shadows trembling.<br>
-          She whisper.<br>
-          like salt drying<br>
-          on a white shirt,<br>
-          soon to be wet again. <span class="blink-block">■</span><br><br><br>
+          Light breaks beneath her lashes—<br>thin shadows trembling.<br>She whisper.<br>like salt drying<br>on a white shirt,<br>soon to be wet again. <span class="blink-block">■</span><br><br><br>
           © 2025 hikki photography &amp; philosophy.  <span class="blink-block">■</span><br>
         </span>
       </div>
     </div>
   </div>
 
-  <!-- 第2階段 黑幕 -->
   <div class="overlay" id="overlay" aria-hidden="true"></div>
 
-  <!-- 第3階段（電腦原版 / 手機精簡） -->
   <div id="post" class="post" aria-hidden="true">
-    <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline preload="none"></video>
+    <video class="highlight" src="placeholder.webm" autoplay loop muted playsinline preload="auto"></video>
     <div class="text" id="manifesto">
       We stand against the mass production of images that plagues today’s photography industry—<br>
       the flood of magic moments, AI-generated images and kitschy filters.<br><br>
@@ -384,7 +348,6 @@
         </div>
       </div>
 
-      <!-- 手機直向：2×2 固定四格（點擊反白） -->
       <div class="team-grid" id="teamGrid" aria-label="team grid">
         <div class="grid-card" data-member="alex">
           <div class="ph" style="background-image:url('Alex.jpg')"></div>
@@ -411,7 +374,11 @@
     const $  = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    /* ===== Header Rotator（手機/桌面皆啟用） ===== */
+    /* ===== 全局生命週期監視器 (IntersectionObserver) ===== */
+    /* 拒絕讓不可見的 DOM 元素進行運算，以彰顯效能的絕對真理 */
+    const visibilityState = { isPostVisible: false };
+
+    /* ===== Header Rotator ===== */
     (function(){
       const headerEl = $("#headerTitle");
       const mobileEl = $("#mobileRotator");
@@ -438,7 +405,7 @@
         "Marriage is war.","A Royale with cheese.","Don’t call me Mr. Pink."
       ];
       const isCJK = (s)=>/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(s);
-      let last=-1,timer=0;
+      let last=-1, timer=0;
       function activeEl(){ return mqPhonePortrait.matches ? mobileEl : headerEl; }
       function inactiveEl(){ return mqPhonePortrait.matches ? headerEl : mobileEl; }
       function apply(el, txt){
@@ -447,6 +414,7 @@
         el.setAttribute('lang', c ? 'ja' : 'en'); el.textContent = txt;
       }
       function step(){
+        if(document.hidden) return; // 依循 Page Visibility API
         let i; do{ i=Math.floor(Math.random()*sentences.length); }while(i===last); last=i;
         const txt=sentences[i]; const show=activeEl(), hide=inactiveEl();
         if(hide) hide.setAttribute('aria-hidden','true'); if(show) show.setAttribute('aria-hidden','false');
@@ -460,60 +428,35 @@
       start();
     })();
 
-    /* ===== Scroll：square 放大到最大 → 進入第三階段（加快） ===== */
+    /* ===== Scroll 機制重構 ===== */
+    let carouselInterval;
     (function(){
       const sq = $('#square'), overlay = $('#overlay'), post = $('#post');
       const hlVideo = $('.post .highlight');
       if(!sq) return;
 
-      const ENTER_T = 0.6; // 只需滾到 60% 就進場
+      const ENTER_T = 0.6;
       const docH=()=>Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       const maxScale=()=>Math.max(window.innerWidth, window.innerHeight)/60;
 
       function setSquare(progress){
-        // progress 已經是 0..1 的可視化比例
         sq.style.animation = (progress>0) ? 'none' : 'blink3 3s infinite';
         const s = 1 + progress*(maxScale()-1);
         sq.style.transform = `translateZ(0) scale(${s})`;
       }
-
-      let ticking=false, entered=false;
-      function onScroll(){
-        if(ticking) return; ticking=true;
-        requestAnimationFrame(()=>{
-          const max=docH()-window.innerHeight;
-          const rawPct=Math.min(max>0?window.scrollY/max:0,1);
-          const visPct=Math.min(rawPct/ENTER_T, 1); // 視覺同步提早滿格
-          setSquare(visPct);
-
-          if(rawPct>=ENTER_T && !entered){
-            overlay.style.display='block';
-            post.classList.add('enter'); post.setAttribute('aria-hidden','false');
-            hlVideo && hlVideo.play && hlVideo.play().catch(()=>{});
-            runCrackOnce(); startCarouselIfDesktop(); showMobileManifestSnippet();
-            entered=true;
-          }else if(rawPct<ENTER_T && entered){
-            overlay.style.display='none';
-            post.classList.remove('enter'); post.setAttribute('aria-hidden','true');
-            hlVideo && hlVideo.pause && hlVideo.pause();
-            entered=false;
-          }
-          ticking=false;
-        });
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      window.addEventListener('resize', onScroll, {passive:true});
-      onScroll();
 
       function startCarouselIfDesktop(){
         if (window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
         const wrap = $('#teamCarousel'); if(!wrap) return;
         let idx=0; const slides = $$('.team', wrap); if(!slides.length) return;
         const total=slides.length, step=100/total;
-        setInterval(()=>{ idx=(idx+1)%total; wrap.style.transform=`translateX(-${idx*step}%)`; }, 7000);
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(()=>{ 
+          if(document.hidden || !visibilityState.isPostVisible) return;
+          idx=(idx+1)%total; wrap.style.transform=`translateX(-${idx*step}%)`; 
+        }, 7000);
       }
 
-      // 手機版：只顯示宣言（中文用 font-ja）
       function showMobileManifestSnippet(){
         if (!window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
         const manifesto = document.getElementById('manifesto');
@@ -525,9 +468,40 @@
           '<span class="blink-block">■</span><br>' +
           '</span>';
       }
+
+      let ticking=false, entered=false;
+      function onScroll(){
+        if(ticking) return; ticking=true;
+        requestAnimationFrame(()=>{
+          const max=docH()-window.innerHeight;
+          const rawPct=Math.min(max>0?window.scrollY/max:0,1);
+          const visPct=Math.min(rawPct/ENTER_T, 1);
+          setSquare(visPct);
+
+          if(rawPct>=ENTER_T && !entered){
+            overlay.style.display='block';
+            post.classList.add('enter'); post.setAttribute('aria-hidden','false');
+            visibilityState.isPostVisible = true;
+            hlVideo && hlVideo.play && hlVideo.play().catch(()=>{});
+            runCrackOnce(); startCarouselIfDesktop(); showMobileManifestSnippet();
+            entered=true;
+          }else if(rawPct<ENTER_T && entered){
+            overlay.style.display='none';
+            post.classList.remove('enter'); post.setAttribute('aria-hidden','true');
+            visibilityState.isPostVisible = false;
+            hlVideo && hlVideo.pause && hlVideo.pause();
+            clearInterval(carouselInterval);
+            entered=false;
+          }
+          ticking=false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll, {passive:true});
+      onScroll();
     })();
 
-    /* ===== 手機 2×2 卡片點擊反白 ===== */
+    /* ===== 手機 2×2 卡片點擊 ===== */
     (function(){
       const grid = $('#teamGrid'); if(!grid) return;
       grid.addEventListener('click', e=>{
@@ -536,7 +510,7 @@
       }, {passive:true});
     })();
 
-    /* ===== Geolocation 漂移（不再關閉，所有裝置都跑） ===== */
+    /* ===== Geolocation 漂移 (修復非同步失控) ===== */
     (function(){
       const BOUNDS = {
         'Vancouver': { lat:[49.198, 49.315], lon:[-123.224, -123.022] },
@@ -544,8 +518,7 @@
         'Hong':      { lat:[22.1333,22.5833], lon:[113.8167,114.5167] },
         'Macau':     { lat:[22.06,  22.23  ], lon:[113.52,  113.68  ] }
       };
-      const TICK_MIN = 40, TICK_MAX = 120;
-      const CHANGES_MIN = 1, CHANGES_MAX = 3;
+      const TICK_MIN = 40, TICK_MAX = 120, CHANGES_MIN = 1, CHANGES_MAX = 3;
       const rint = (a,b) => a + Math.floor(Math.random()*(b-a+1));
       const toFixedLen = (num, decs) => Number(num).toFixed(decs);
 
@@ -559,9 +532,7 @@
       function parseCoordsPositions(flat){
         const m=flat.match(COORD_RE); if(!m||m.index==null) return null;
         const start=m.index, latStr=m[1], lonStr=m[2];
-        const latStart=start + m[0].indexOf(latStr);
-        const lonStart=start + m[0].lastIndexOf(lonStr);
-        return { latStr, lonStr, latStart, latLen:latStr.length, lonStart, lonLen:lonStr.length };
+        return { latStr, lonStr, latStart: start + m[0].indexOf(latStr), latLen:latStr.length, lonStart: start + m[0].lastIndexOf(lonStr), lonLen:lonStr.length };
       }
       function decimalsCount(s){ const i=s.indexOf('.'); return i>=0 ? (s.length-i-1) : 0; }
 
@@ -575,17 +546,13 @@
         }
         randomInBounds(){
           const b=BOUNDS[this.city]; if(!b) return null;
-          const lat=b.lat[0]+Math.random()*(b.lat[1]-b.lat[0]);
-          const lon=b.lon[0]+Math.random()*(b.lon[1]-b.lon[0]);
-          return {lat,lon};
+          return {lat: b.lat[0]+Math.random()*(b.lat[1]-b.lat[0]), lon: b.lon[0]+Math.random()*(b.lon[1]-b.lon[0])};
         }
         step(){
-          if(!this.coordPos) return;
+          if(!this.coordPos || document.hidden || visibilityState.isPostVisible) return; // 第一階段被遮蔽時停止運算
           const bounds=this.randomInBounds(); if(!bounds) return;
-          const latNew=toFixedLen(bounds.lat,this.latDecs);
-          const lonNew=toFixedLen(bounds.lon,this.lonDecs);
-          const picks=rint(CHANGES_MIN,CHANGES_MAX);
-          const curChars=this.cur.split('');
+          const latNew=toFixedLen(bounds.lat,this.latDecs), lonNew=toFixedLen(bounds.lon,this.lonDecs);
+          const picks=rint(CHANGES_MIN,CHANGES_MAX), curChars=this.cur.split('');
           const replaceSomeDigits=(start,len,targetStr)=>{
             const idxs=[]; for(let i=0;i<len;i++){ const ch=targetStr[i]; if(ch>='0'&&ch<='9') idxs.push(i); }
             for(let i=idxs.length-1;i>0;i--){ const j=Math.random()* (i+1) | 0; [idxs[i],idxs[j]]=[idxs[j],idxs[i]]; }
@@ -596,16 +563,15 @@
           replaceSomeDigits(this.coordPos.lonStart,this.coordPos.lonLen, lonNew.padStart(this.coordPos.lonLen,' '));
           this.cur=curChars.join(''); writeFlatToNodes(this.cur,this.map);
         }
-        loop(){ if(document.hidden){ this.timer=setTimeout(()=>this.loop(),400); return; } this.step(); const next=TICK_MIN+Math.random()*(TICK_MAX-TICK_MIN); this.timer=setTimeout(()=>this.loop(), next); }
+        loop(){ this.step(); this.timer=setTimeout(()=>this.loop(), TICK_MIN+Math.random()*(TICK_MAX-TICK_MIN)); }
         play(){ if(this.coordPos) this.loop(); }
         stop(){ if(this.timer) clearTimeout(this.timer); }
       }
       const items = $$('.locations li');
       const controllers = items.map(li=>{ const c=new DriftRow(li); c.play(); return c; });
-      window.addEventListener('beforeunload', ()=>controllers.forEach(c=>c.stop()));
     })();
 
-    /* ===== Code Cracking ===== */
+    /* ===== Code Cracking (效能鎮壓) ===== */
     const Crack = (function(){
       const LAT="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const CJK="乾坤屯蒙需訟師比小畜兮履泰否同人大有謙豫隨蠱臨觀兮噬嗑賁剝復無妄大畜頤大過坎離咸恆遯兮及大壯晉與明夷家人睽蹇解損益夬姤萃升困井革鼎震繼艮漸歸妹豐旅巽兌渙節兮中孚小過既濟兼未濟";
@@ -613,8 +579,7 @@
 
       function makeState(textNode){
         const target=textNode.nodeValue;
-        const hasCJK=/[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(target);
-        const set=hasCJK?CJK:LAT;
+        const set= /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/.test(target) ? CJK : LAT;
         const cur=[...target], locked=cur.map(ch=>/\s/.test(ch));
         for(let i=0;i<cur.length;i++){ if(!locked[i]) cur[i]=set[(Math.random()*set.length)|0]; }
         return {node:textNode,target:[...target],cur,locked,set};
@@ -636,7 +601,7 @@
         states.forEach(s=>s.node.nodeValue=s.cur.join(''));
         let raf=0,last=0,interval=1000/FPS;
         function scramble(now){
-          if(now-last>=interval){
+          if(now-last>=interval && !document.hidden){
             for(const s of states){
               const t=s.target,c=s.cur,L=s.locked,set=s.set;
               for(let i=0;i<c.length;i++){ if(!L[i] && !/\s/.test(t[i])) c[i]=set[(Math.random()*set.length)|0]; }
@@ -648,6 +613,7 @@
         }
         let timer=0;
         function lockSome(){
+          if(document.hidden){ timer=setTimeout(lockSome, 200); return; }
           let allDone=true;
           for(const s of states){
             const cand=[]; for(let i=0;i<s.locked.length;i++) if(!s.locked[i]) cand.push(i);
@@ -668,14 +634,12 @@
       return { collect, startOn };
     })();
 
-    // 第1階段：立即啟動（H1 / H2 / 詩句）
     Crack.startOn([
       ...Crack.collect(document.querySelector('.content h1')),
       ...Crack.collect(document.querySelector('.grid-container h2')),
       ...Crack.collect(document.querySelector('.chinese'))
     ]);
 
-    // 第3階段：進場時啟動一次（宣言 + team 文案/卡片文案）
     let crackedStage3=false;
     function runCrackOnce(){
       if(crackedStage3) return; crackedStage3=true;
