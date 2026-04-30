@@ -156,9 +156,9 @@
 
     /* --- 偽元素座標發光點 --- */
     .ph[data-has-mask="true"]::before {
-      content: ""; position: absolute; pointer-events: none; width: 6px; height: 6px; border-radius: 999px; background: #9df3bf;
+      content: ""; position: absolute; pointer-events: none; width: 6px; height: 6px; border-radius: 999px; background: #f4f2f0;
       transform: translate(calc(var(--dot-x, 50%) - 50%), calc(var(--dot-y, 50%) - 50%)); 
-      box-shadow: 0 0 10px rgba(157,243,191,.65); opacity: .85; z-index: 3; transition: opacity 0.25s ease;
+      box-shadow: 0 0 10px #f4f2f0; opacity: .85; z-index: 3; transition: opacity 0.25s ease;
     }
     
     .ph.is-loaded::before { opacity: 0; }
